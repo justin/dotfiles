@@ -1,0 +1,19 @@
+{{- $email := "" -}}
+{{- if hasKey . "email" -}}
+{{-   $email = .email -}}
+{{- else -}}
+{{-   $email = promptString "What is your email address?" $email -}}
+{{- end -}}
+
+sourceDir: {{ .chezmoi.sourceDir | quote }}
+format: yaml
+
+edit:
+  command: "code"
+  args:
+    - "--wait"
+
+data:
+  vendor: {{ if eq .chezmoi.os "darwin" }}"apple"{{ else }}"unknown"{{ end }}
+  name: "Justin Williams"
+  email: {{ $email }}
