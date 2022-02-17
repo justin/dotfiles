@@ -1,0 +1,22 @@
+# .env files
+.env
+.envrc
+
+# My weird xcode_switch file & its versioned Carthage directories.
+.xcoderc
+Carthage-*
+
+## User Specific Xcode Settings
+xcuserdata
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+## macOS
+.DS_Store
+
+## Sources:
+## https://github.com/github/gitignore/blob/master/Global/Xcode.gitignore
+## https://github.com/github/gitignore/blob/master/Swift.gitignore
+## https://github.com/github/gitignore/blob/master/Objective-C.gitignore

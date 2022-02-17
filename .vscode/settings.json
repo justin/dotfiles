@@ -1,5 +1,8 @@
 {
   "files.associations": {
+    "**/files/private_dot_config/private_git/config.tmpl": "properties",
+    "**/files/private_dot_config/private_git/attributes": "properties",
+    "**/files/private_dot_config/private_git/ignore": "ignore",
     "*.yaml.tmpl": "yaml",
   },
   "cSpell.words": [

@@ -1,0 +1,14 @@
+# show diffs for pbxproj
+*.pbxproj merge=union
+
+# Diff UTF-16 in Git.
+# http://blog.xk72.com/post/31456986659/diff-strings-files-in-git
+*.strings utf16 diff=localizablestrings
+
+# Diff Binary plists in Git.
+# http://confusatory.org/post/133141617492/git-diff-for-binary-apple-property-list-files
+*.plist diff=plist
+
+# Stats https://github.com/github/linguist
+Carthage/* linguist-vendored
+Pods/* linguist-vendored
