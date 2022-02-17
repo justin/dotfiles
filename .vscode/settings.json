@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.yaml.tmpl": "yaml",
+  },
+  "cSpell.words": [
+    "chezmoi",
+  ],
+}
