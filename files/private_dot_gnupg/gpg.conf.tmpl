@@ -1,0 +1,16 @@
+###################################
+######### Basic Options ###########
+###################################
+
+default-key {{ .gpg.default_key }}
+use-agent
+{{- if eq .chezmoi.os "darwin" }}
+{{/* Enable GnuPG signing with Tower on macOS. */}}
+no-tty
+{{- end }}
+
+###################################
+######## Keyserver Options ########
+###################################
+
+keyserver hkp://keys.gnupg.net 

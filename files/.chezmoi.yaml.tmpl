@@ -17,3 +17,6 @@ data:
   vendor: {{ if eq .chezmoi.os "darwin" }}"apple"{{ else }}"unknown"{{ end }}
   name: "Justin Williams"
   email: {{ $email }}
+
+  gpg:
+    default_key: 09073F89FE030A19
