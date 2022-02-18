@@ -4,6 +4,6 @@ LICENSE
 .gitignore
 .editorconfig
 
-{{- if eq .chezmoi.os "darwin" }}
+{{- if ne .chezmoi.os "darwin" }}
 .lldbinit
 {{- end }}
