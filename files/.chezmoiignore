@@ -1,0 +1,9 @@
+README.md
+LICENSE
+
+.gitignore
+.editorconfig
+
+{{- if eq .chezmoi.os "darwin" }}
+.lldbinit
+{{- end }}

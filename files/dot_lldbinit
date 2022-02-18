@@ -1,0 +1,20 @@
+settings set prompt [lldb]$
+
+# Quickly import UIKit or Foundation.
+# http://furbo.org/2015/05/11/an-import-ant-change-in-xcode/
+command alias uikit expr @import UIKit
+command alias foundation expr @import Foundation
+
+# settings set target.language swift
+
+command alias uikits expr import UIKit
+command alias foundations expr import Foundation
+command alias swiftuis expr import Foundation
+
+# Kaleidoscope / LLDB Integration
+# https://blog.kaleidoscope.app/2021/02/22/xcode-debugger-integration/
+command script import "~/Library/Application Support/Kaleidoscope/lldb_ksdiff.py"
+
+# Reveal / LLDB Integration
+# https://support.revealapp.com/hc/en-us/articles/4403215920793
+command script import "~/Library/Application Support/Reveal/RevealServerCommands.py"
