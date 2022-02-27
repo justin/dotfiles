@@ -1,0 +1,7 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env zsh
+#
+# Install Homebrew dependencies
+
+brew bundle --no-lock --file=$HOMEBREW_BUNDLE_FILE
+{{ end -}}
