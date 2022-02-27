@@ -1,0 +1,91 @@
+# ===== Config Directory =====
+#
+# This is based on XDG spec, as best as macOS can.
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_DIRS=/usr/local/share:/usr/share
+export CONFIG_HOME=$XDG_CONFIG_HOME
+export LIBRARY_HOME=$HOME/Library
+
+# The OS that we are running in.
+export OS="$( uname )"
+
+# ===== ZSH Customization =====
+# Where our zsh configuration is located.
+export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+# Where to store the autocomplete speedup file(s)
+export ZSH_COMPDUMP=$XDG_CACHE_HOME/zsh/zcompdump-${ZSH_VERSION}
+
+# ===== Editor of Choice =====
+{{- if eq .chezmoi.os "darwin" }}
+export EDITOR="code -nw"
+{{- else }}
+export EDITOR="vim"
+{{- end }}
+
+export VISUAL=$EDITOR
+
+{{- if eq .chezmoi.os "darwin" }}
+# ===== GPG =====
+export GPG_TTY="$(tty)"
+{{- end }}
+
+# ===== Xcode =====
+export XCODES_USERNAME={{ .email | quote }}
+export XCODE_USER_DATA=$LIBRARY_HOME/Developer/Xcode/UserData
+
+# ===== Python =====
+export PIP_CONFIG_FILE=$CONFIG_HOME/pip/pip.conf
+export PYENV_ROOT=$CONFIG_HOME/pyenv
+export POETRY_HOME=$CONFIG_HOME/pypoetry
+
+# Default virtualenv
+export WORKON_HOME=$XDG_DATA_HOME/virtualenvs
+export POETRY_CACHE_DIR=$XDG_CACHE_HOME/pypoetry
+
+# Disable auto-add virtualenv name to CLI prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+# ===== Vim =====
+export VIMINIT="set nocp | source ${CONFIG_HOME:-$HOME/.config}/vim/vimrc"
+
+# ===== Ruby =====
+export GEMRC=$CONFIG_HOME/rubygems/.gemrc
+export GEM_HOME=$XDG_DATA_HOME/rubygems
+export GEM_SPEC_CACHE=$XDG_DATA_HOME/rubygems
+export RUBY_PATH="/usr/local/opt/ruby"
+export PKG_CONFIG_PATH="$RUBY_PATH/lib/pkgconfig"
+export LDFLAGS="-L$RUBY_PATH/lib"
+export CPPFLAGS="-I$RUBY_PATH/include"
+
+# ===== Node =====
+export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
+export NVM_DIR=$CONFIG_HOME/nvm
+
+# ===== SSH =====
+export SSH_KEY_PATH=$HOME/.ssh/id_rsa
+
+# ===== Homebrew =====
+# New in 3.0.0. Use the Bootsnap gem if available to build and update.
+# https://github.com/Homebrew/brew/pull/10374
+export HOMEBREW_BOOTSNAP=1
+export HOMEBREW_EDITOR=$EDITOR
+
+# ===== Customize $fignore =====
+fignore=(
+  .DS_Store
+  $fignore
+)
+
+# Silence warning that shows up in macOS 11.0 when launching a new Terminal window:
+# `shell_session_history_check:2: scalar parameter SHELL_SESSION_DID_HISTORY_CHECK created globally in function shell_session_history_check`
+local SHELL_SESSION_DID_HISTORY_CHECK
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository, but you'll have access to them in your scripts.
+if [[ -a $HOME/.localrc ]]; then
+    source $HOME/.localrc
+fi

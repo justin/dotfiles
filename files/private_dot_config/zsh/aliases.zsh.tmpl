@@ -1,0 +1,78 @@
+# General
+alias mkdir='mkdir -p'
+alias pw='pwd'
+alias reload="source $ZDOTDIR/.zshrc | echo '=> ZSH profile reloaded.'"
+alias dot='chezmoi'
+
+{{- if eq .chezmoi.os "darwin" }}
+# Homebrew
+alias brews='brew list -1'
+alias bubo='brew update && brew outdated'
+alias bubc='brew upgrade && brew cleanup'
+alias bubu='bubo && bubc'
+{{- end }}
+
+# Git Stuff
+
+# Before fetching, remove any remote-tracking references that no longer exist on the remote
+alias gl='git pull --prune'
+# Push to the current branch on GitHub.
+alias gp='git push origin HEAD'
+# Shorthand for getting current Git Status
+alias gst='git status'
+# If you are deep in the directory tree, this will return to the project root.
+alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+
+# Pipe my public key to my clipboard.
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+
+# Python
+
+alias venv=". .venv/bin/activate"
+alias venv_create="$(which python3) -m venv .venv"
+
+{{- if eq .chezmoi.os "linux" }}
+#
+# Linux Specific
+#
+
+# Unlike macOS, Linux's ls command doesn't set directory colors by default.
+# This will fix that.
+alias ls='ls --color=auto'
+{{- end }}
+
+#
+# macOS Specific
+#
+{{- if eq .chezmoi.os "darwin" }}
+# Take the pasteboard and open it in BBEdit.
+alias bbpb='pbpaste | bbedit --clean --view-top'
+
+# Faster access to bbdif.
+alias bbd=bbdiff
+
+# If the bb command is called without an argument, launch BBEdit
+# If bb is passed a directory, cd to it and open it in BBEdit
+# If bb is passed a file, open it in BBEdit
+bb() {
+  if [[ -z "$1" ]]; then
+    bbedit --launch
+  else
+    bbedit "$1"
+    if [[ -d "$1" ]]; then
+      cd "$1"
+    fi
+  fi
+}
+
+# Easier access to the lsregister command for fiddling with Launch Services.
+alias lsregister='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister'
+
+# Flush the macOS DNS cache.
+alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+
+# Xcode
+alias ded="rm -rf $HOME/Library/Developer/Xcode/DerivedData"
+alias symbolicate="$DEVELOPER_DIR/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash"
+alias xcode="open -a Xcode"
+{{- end }}
