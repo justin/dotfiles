@@ -1,0 +1,217 @@
+#!/usr/bin/env zsh
+#
+# Sets macOS defaults to match my personal prefs.
+#
+# The original idea (and a couple settings) were grabbed from:
+#   https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+
+set -e
+
+# Loading Logging Functions
+source $ZDOTDIR/functions/_logging || return 1
+
+{{- if eq .chezmoi.os "darwin" }}
+
+info "Setting up macOS how I like it. . ."
+
+# Appearance For Buttons, Menus, and Windows
+# Blue     : 1 (default)
+# Graphite : 6
+defaults write .GlobalPreferences AppleAquaColorVariant -int 6
+
+# Use dark menu bar and Dock
+defaults write .GlobalPreferences AppleInterfaceStyle -string "Dark"
+
+# Highlight color
+# Red      : `1.000000 0.733333 0.721569`
+# Orange   : `1.000000 0.874510 0.701961`
+# Yellow   : `1.000000 0.937255 0.690196`
+# Green    : `0.752941 0.964706 0.678431`
+# Blue     : `0.847059 0.847059 0.862745` (default)
+# Purple   : `0.968627 0.831373 1.000000`
+# Pink     : `0.968627 0.831373 1.000000`
+# Brown    : `0.929412 0.870588 0.792157`
+# Graphite : `0.847059 0.847059 0.862745`
+# Silver   : `0.776500 0.776500 0.776500` (custom)
+defaults write .GlobalPreferences AppleHighlightColor -string '0.847059 0.847059 0.862745'
+
+info "Dark Mode Configured"
+
+# Sidebar icon size
+# Small  : 1
+# Medium : 2 (default)
+# Large  : 3
+defaults write .GlobalPreferences NSTableViewDefaultSizeMode -int 2
+
+# Always open everything in Finder's list view. This is important.
+defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+
+# Keep drives off my desktop always
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
+
+# Always open new Finder windows into iCloud Drive.
+defaults write com.apple.finder NewWindowTarget -string PfID
+defaults write com.apple.finder NewWindowTargetPath -string "file:///${HOME}/Library/Mobile%20Documents/com~apple~CloudDocs/"
+
+# Show Path bar in Finder
+defaults write com.apple.finder ShowPathbar -bool true
+# Show Status bar in Finder
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Disable interface sounds.
+defaults write .GlobalPreferences com.apple.sound.uiaudio.enabled -bool false
+
+info "Setting Dock preferences."
+
+# Set the icon size of Dock items to 48 pixels
+defaults write com.apple.dock tilesize -int 48
+
+# Disable that recent app stuff in the Dock
+defaults write com.apple.dock show-recents -bool false
+
+info "I need your password to disable the guest mode account."
+# Disable guest account login
+sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
+
+info "Guest mode disabled."
+
+# Bottom left screen corner → Show Desktop"
+defaults write com.apple.dock wvous-bl-corner -int 4
+defaults write com.apple.dock wvous-bl-modifier -int 0;
+
+info "Lower-left hot corner now shows desktop."
+
+# Enable the Develop menu and the Web Inspector in Safari
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+
+info "Safari develop menu enabled."
+
+# Prefer DDG to Google for Search.
+defaults write com.apple.Safari SearchProviderIdentifier -string "com.duckduckgo"
+
+info "Safari now using DuckDuckGo for search"
+
+# Use scroll gesture with the Ctrl (^) modifier key to zoom
+defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+defaults write com.apple.universalaccess closeViewZoomFactor -bool true
+
+info "Control + Scroll = Zoom."
+
+# Don't allow Mac App Store apps to prompt me for reviews.
+defaults write com.apple.AppStore InAppReviewEnabled -bool false
+
+info "Disabled App Store review requests"
+
+defaults write com.apple.MobileSMS PlaySoundsKey -bool false
+
+info "Disabled sound effects in iMessage"
+
+###############################################################################
+# Power                                                                       #
+###############################################################################
+
+info "Adjusting battery power settings."
+# Battery
+
+# Computer sleep: 10 min
+sudo pmset -b sleep 10
+
+# Display sleep: 5 min
+sudo pmset -b displaysleep 5
+
+# Put the hard disk(s) to sleep when possible: 10 min
+sudo pmset -b disksleep 10
+
+# Slightly dim the display when using this power source
+sudo pmset -b lessbright 1
+
+# Automatically reduce brightness before display goes to sleep
+sudo pmset -b halfdim 1
+
+# Power Adapter
+
+info "Adjusting adapter / plugged-in power settings."
+# Computer sleep: 30 min
+sudo pmset -c sleep 30
+
+# Display sleep: 10 min
+sudo pmset -c displaysleep 10
+
+# Put the hard disk(s) to sleep when possible: 10 min
+sudo pmset -c disksleep 10
+
+# Wake for network access
+sudo pmset -c womp 1
+
+# Automatically reduce brightness before display goes to sleep
+sudo pmset -c halfdim 1
+
+# Start up automatically after a power failure
+sudo pmset -c autorestart 1
+
+###############################################################################
+# Xcode                                                                       #
+###############################################################################
+
+info "Setting Xcode preferences."
+# Show how long a build takes in Xcode.
+defaults write com.apple.dt.Xcode ShowBuildOperationDuration -bool YES
+
+# When an .xcconfig file contains multiple assignments of the same build setting, later
+# assignments using $(inherited) will inherit from earlier assignments when using the new
+# build system. The old build system discards all except the last assignment. This can cause the
+# evaluated result to be different if $(inherited) is used in the value
+defaults write com.apple.dt.XCBuild EnableCompatibilityWarningsForXCBuildTransition YES
+
+# Set my keybindings to the defaults.
+defaults write com.apple.dt.Xcode IDEKeyBindingCurrentPreferenceSet "JWW.idekeybindings"
+
+# Warn if the new Swift build system is not pleased with my xcconfig files. New in Xcode 10.
+defaults write com.apple.dt.XCBuild EnableCompatibilityWarningsForXCBuildTransition -bool NO
+
+# Disable SVN and CVS support for agvtool since its 2018.
+defaults write agvtool SVNEnabled NO
+defaults write agvtool CVSEnabled NO
+
+# Set the page guide to 150 characters.
+defaults write com.apple.dt.Xcode DVTTextPageGuideLocation 150
+defaults write com.apple.dt.Xcode DVTTextShowPageGuide -bool YES
+
+# Always shode code coverage in the gutter.
+defaults write com.apple.dt.Xcode DVTTextShowCodeCoverage -bool YES
+
+# Enable code folding.
+defaults write com.apple.dt.Xcode DVTTextShowFoldingSidebar -bool YES
+
+# Trim whitespace only lines when saving a file.
+defaults write com.apple.dt.Xcode DVTTextEditorTrimWhitespaceOnlyLines -bool YES
+
+# Use my preferred theme by default.
+defaults write com.apple.dt.Xcode XCFontAndColorCurrentDarkTheme "JWW.xccolortheme"
+
+# Xcode 13.2 - The build system and Swift compiler have a new mode that better utilizes available cores,
+# resulting in faster builds for Swift projects
+defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
+
+info "Setting default file extension preferences."
+# https://superuser.com/questions/273756/how-to-change-default-app-for-all-files-of-particular-file-type-through-terminal
+duti -s com.microsoft.VSCode md all
+duti -s com.microsoft.VSCode json all
+duti -s com.microsoft.VSCode txt all
+duti -s com.microsoft.VSCode js all
+duti -s com.microsoft.VSCode css all
+duti -s com.microsoft.VSCode yml all
+duti -s com.microsoft.VSCode cfg all
+duti -s com.microsoft.VSCode sh all
+duti -s com.readdle.PDFExpert-Mac pdf all
+
+for app in "Dock" "Finder" "SystemUIServer" "Xcode"; do
+  killall "${app}" > /dev/null 2>&1
+done
+
+success "macOS successfully configured!"
+
+{{ end -}}
