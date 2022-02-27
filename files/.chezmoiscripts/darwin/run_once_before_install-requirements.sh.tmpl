@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -eux
+
+{{- if eq .chezmoi.os "darwin" }}
+  if ! [ -x "$(command -v brew)" ]; then
+    echo "Homebrew not found. Installing!"
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  eval "$(/usr/local/bin/brew shellenv)"
+
+  {{- if eq .chezmoi.arch "arm64" }}
+    echo "M1 Mac detected. Installing Rosetta."
+    sudo softwareupdate --install-rosetta
+  {{ end -}}
+{{ end -}}
