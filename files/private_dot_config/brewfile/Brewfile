@@ -2,12 +2,12 @@
 tap "homebrew/core"
 tap "homebrew/bundle"
 tap "homebrew/cask"
-tap "homebrew/core"
+tap "homebrew/cask-fonts"
 tap "majd/repo", "https://github.com/majd/homebrew-repo.git"                            # ipatool
 tap "peripheryapp/periphery", "https://github.com/peripheryapp/homebrew-periphery.git"  # periphery
 tap "robotsandpencils/made", "https://github.com/RobotsAndPencils/homebrew-made.git"    # xcodes
 
-# Taps
+# Settings
 cask_args appdir: "/Applications"
 
 brew "autojump"
@@ -75,7 +75,7 @@ cask "vanilla"
 cask "vmware-fusion"
 cask "xcodes"
 
-# MAS
+# Mac App Store
 mas "1Blocker", id: 1365531024
 mas "1Password 7", id: 1333542190
 mas "A Companion for SwiftUI", id: 1485436674
@@ -123,3 +123,11 @@ mas "xScope", id: 889428659
 
 # Not supported by Homebrew (yet)
 # SD Notary - https://latenightsw.com/sd-notary-notarizing-made-easy/
+
+# Fonts
+# Apple / iOS https://developer.apple.com/fonts/
+cask "font-new-york"
+cask "font-sf-compact"
+cask "font-sf-pro"
+cask "font-sf-arabic"
+cask "font-sf-mono"
