@@ -30,7 +30,7 @@ path=(
   $HOME/.local/bin(N)
   $PYENV_ROOT/bin(N)
   /usr/local/sbin
-  /Applications/Visual Studio Code.app/Contents/Resources/app/bin(N)
+  "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"(N)
   $path
 )
 
@@ -39,7 +39,7 @@ for zsh_file ($ZDOTDIR/*.zsh) source $zsh_file
 
 {{- if eq .chezmoi.os "darwin" }}
 # Compiling stuff on OS X
-[[ -e $commands[brew] ]] && export ARCHFLAGS="-arch x86_64"
+[[ -e $commands[brew] ]] && export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
 {{- end }}
 
 # PyEnv
@@ -58,12 +58,7 @@ fi
 
 # AutoJump
 # https://olivierlacan.com/posts/cd-is-wasting-your-time/
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-
-{{- if eq .chezmoi.os "darwin" }}
-# NVM
-  [ -s "$(brew --prefix nvm)" ] && \. "$(brew --prefix nvm)"/nvm.sh --no-use
-{{- end }}
+[ -f {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh ] && . {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh
 
 # iTerm 2 Integration
 test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2_shell_integration.zsh"

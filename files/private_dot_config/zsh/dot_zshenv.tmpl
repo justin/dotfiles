@@ -31,11 +31,21 @@ export VISUAL=$EDITOR
 {{- if eq .chezmoi.os "darwin" }}
 # ===== GPG =====
 export GPG_TTY="$(tty)"
-{{- end }}
 
 # ===== Xcode =====
 export XCODES_USERNAME={{ .email | quote }}
 export XCODE_USER_DATA=$LIBRARY_HOME/Developer/Xcode/UserData
+
+# ===== Homebrew =====
+# New in 3.0.0. Use the Bootsnap gem if available to build and update.
+# https://github.com/Homebrew/brew/pull/10374
+export HOMEBREW_BOOTSNAP=1
+export HOMEBREW_EDITOR=$EDITOR
+export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/brewfile/Brewfile"
+
+# Ensure we explicitly set all homebrew related environment variables.
+eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
+{{- end }}
 
 # ===== Python =====
 export PIP_CONFIG_FILE=$CONFIG_HOME/pip/pip.conf
@@ -67,13 +77,6 @@ export NVM_DIR=$CONFIG_HOME/nvm
 
 # ===== SSH =====
 export SSH_KEY_PATH=$HOME/.ssh/id_rsa
-
-# ===== Homebrew =====
-# New in 3.0.0. Use the Bootsnap gem if available to build and update.
-# https://github.com/Homebrew/brew/pull/10374
-export HOMEBREW_BOOTSNAP=1
-export HOMEBREW_EDITOR=$EDITOR
-export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/brewfile/Brewfile"
 
 # ===== Customize $fignore =====
 fignore=(

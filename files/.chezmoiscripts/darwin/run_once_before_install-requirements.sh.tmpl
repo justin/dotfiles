@@ -7,7 +7,7 @@ set -eux
     echo "Homebrew not found. Installing!"
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
-  eval "$(/usr/local/bin/brew shellenv)"
+  eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
 
   {{- if eq .chezmoi.arch "arm64" }}
     echo "M1 Mac detected. Installing Rosetta."

@@ -3,5 +3,5 @@
 #
 # Install Homebrew dependencies
 
-brew bundle --no-lock --file=$HOMEBREW_BUNDLE_FILE
+{{ .homebrew.prefix }}/bin/brew bundle --no-lock --file=$HOMEBREW_BUNDLE_FILE
 {{ end -}}

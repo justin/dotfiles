@@ -72,7 +72,7 @@
 
 {{- if eq .chezmoi.os "darwin" }}
 [gpg]
-  program = /usr/local/bin/gpg
+  program = {{ env "HOMEBREW_PREFIX" }}/bin/gpg
 [tag]
   gpgsign = true
 [commit]

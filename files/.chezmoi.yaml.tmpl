@@ -19,5 +19,16 @@ data:
   email: {{ $email }}
   username: "justin"
 
+  homebrew:
+    prefix: {{ if eq .chezmoi.os "darwin" }}
+        {{ if eq .chezmoi.arch "arm64" }}
+        "/opt/homebrew"
+        {{ else }}
+        "/usr/local"
+        {{ end -}}
+      {{ else }}
+      "/home/linuxbrew/.linuxbrew"
+      {{ end }}
+
   gpg:
     default_key: 09073F89FE030A19
