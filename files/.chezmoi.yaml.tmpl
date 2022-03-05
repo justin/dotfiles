@@ -32,3 +32,8 @@ data:
 
   gpg:
     default_key: 09073F89FE030A19
+
+{{ if eq .chezmoi.os "darwin" }}
+  macos:
+    dock_tile_size: {{ if eq .chezmoi.hostname "mbp" }}48{{ else }}80{{ end }}
+{{ end -}}

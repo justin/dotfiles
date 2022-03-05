@@ -17,10 +17,13 @@ info "Setting up macOS how I like it. . ."
 # Appearance For Buttons, Menus, and Windows
 # Blue     : 1 (default)
 # Graphite : 6
-defaults write .GlobalPreferences AppleAquaColorVariant -int 6
+defaults write .GlobalPreferences AppleAquaColorVariant -int 1
 
-# Use dark menu bar and Dock
+# Prefer menu bar and Dock
 defaults write .GlobalPreferences AppleInterfaceStyle -string "Dark"
+
+# But adjust it based on the time of day.
+defaults write .GlobalPreferences AppleInterfaceStyleSwitchesAutomatically -int 1
 
 # Highlight color
 # Red      : `1.000000 0.733333 0.721569`
@@ -36,6 +39,9 @@ defaults write .GlobalPreferences AppleInterfaceStyle -string "Dark"
 defaults write .GlobalPreferences AppleHighlightColor -string '0.847059 0.847059 0.862745'
 
 info "Dark Mode Configured"
+
+# Always restore windows when reopening an application that was previously quit.
+defaults write .GlobalPreferences NSQuitAlwaysKeepsWindows -int 1
 
 # Sidebar icon size
 # Small  : 1
@@ -66,8 +72,8 @@ defaults write .GlobalPreferences com.apple.sound.uiaudio.enabled -bool false
 
 info "Setting Dock preferences."
 
-# Set the icon size of Dock items to 48 pixels
-defaults write com.apple.dock tilesize -int 48
+# Set the icon size of Dock items to 48 pixels on mbp and 80 on iMac.
+defaults write com.apple.dock tilesize -int {{ .macos.dock_tile_size }}
 
 # Disable that recent app stuff in the Dock
 defaults write com.apple.dock show-recents -bool false
