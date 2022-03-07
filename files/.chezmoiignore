@@ -6,4 +6,5 @@ LICENSE
 
 {{- if ne .chezmoi.os "darwin" }}
 .lldbinit
+dot_local/bin/darwin
 {{- end }}

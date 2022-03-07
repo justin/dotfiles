@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+#
+# Show the current battery percentage on an Apple laptop.
+#
+# This is the default output we get from `pmset -g batt`
+#
+# Now drawing from 'Battery Power'
+# -InternalBattery-0 (id=4063331)	100%; discharging; 20:00 remaining present: true
+
+readonly smart_battery_status=$(pmset -g batt)
+readonly pct_left=$(echo $smart_battery_status |
+  tail -1 |                   # Last Line
+  cut -f2 |                   # Trim everything before tab delimeter
+  awk -F"%; " '{print $1}' |  # Get the %
+  cut -d' ' -f1
+) || exit 1
+
+if [[ -n $(echo $smart_battery_status | grep  "Now drawing from 'AC Power'") ]]; then
+  exit 0
+fi
+
+echo "${pct_left}%%🔋"
+
+exit 0

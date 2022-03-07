@@ -1,0 +1,74 @@
+#!/usr/bin/env zsh
+#
+# Check for the existence of an .xcoderc in the root of a project and update the DEVELOPER_DIR
+# to point to that specific version of Xcode. Update Carthage dependencies as well.
+#
+# This is useful for all the switching between Xcode 10.x and 11.x as I am doing presently.
+#
+# Usage:
+#   xcode_switch [--no-bootstrap] [version_number]
+#
+#     --no-bootstrap  skips the Carthage boostrap phase.
+
+readonly SOURCE_DIR=$( pwd )
+local show_help
+local skip_bootstrap
+zparseopts -E -D -A opts h -help -no-bootstrap || exit 1
+
+(( ${+opts[-h]} + ${+opts[--help]} )) && show_help="1"
+(( ${+opts[--no-bootstrap]} )) && skip_bootstrap="1"
+
+if [[ $show_help ]]; then
+  echo "Usage: xcode_switch [--no-bootstrap] [version_number]"
+  exit 1
+fi
+
+local requested_version=${1}
+if [[ -z $requested_version ]]; then
+  # Check if the .xcoderc file exists in the directory we are in, otherwise exit.
+  if ! [[ -f .xcoderc ]]; then
+    echo "Can't find an '.xcoderc' in this directory."
+    echo "DEVELOPER_DIR is currently: $(echo $DEVELOPER_DIR)"
+    echo "swift version is currently: $(swift -version)"
+    exit 0
+  fi
+
+  requested_version=$(cat .xcoderc)
+fi
+
+local requested_version_path=`mdfind "kMDItemCFBundleIdentifier == 'com.apple.dt.Xcode' && kMDItemVersion == '$requested_version'"`
+
+if [ -z $requested_version_path ]; then
+  echo "Can't find installed version of Xcode $requested_version."
+  exit 1
+fi
+
+echo "Switching to Xcode ${requested_version} at $requested_version_path."
+
+# This isn't set globally. Just for this session.
+export DEVELOPER_DIR="$requested_version_path"
+
+echo "DEVELOPER_DIR is currently: $(echo $DEVELOPER_DIR)"
+echo "swift version is currently: $(swift -version)"
+
+echo ${requested_version} > "$SOURCE_DIR/.xcoderc"
+
+if [[ -f Cartfile ]]; then
+  carthage_symlinked_dir="$SOURCE_DIR/Carthage"
+  versioned_carthage_dir="$SOURCE_DIR/Carthage-${requested_version}"
+
+  echo "Symlinking ${versioned_carthage_dir} to ${carthage_symlinked_dir}"
+
+  mkdir -p "$versioned_carthage_dir"
+  rm -rf $carthage_symlinked_dir
+  ln -sf "$versioned_carthage_dir" "Carthage"
+
+  if [[ $skip_bootstrap ]]; then
+    exit 0
+  fi
+
+  echo "Bootstrapping Carthage for new Xcode and Swift versions."
+  carthage bootstrap --cache-builds --platform ios || exit 1
+fi
+
+exit 0
