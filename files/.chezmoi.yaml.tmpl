@@ -5,31 +5,25 @@
 {{-   $email = promptString "What is your email address?" $email -}}
 {{- end -}}
 
-sourceDir: {{ .chezmoi.sourceDir | quote }}
-format: yaml
-
-edit:
-  command: "code"
-  args:
-    - "--wait"
-
+################################
+# dot data
+################################
 data:
-  vendor: {{ if eq .chezmoi.os "darwin" }}"apple"{{ else }}"unknown"{{ end }}
   name: "Justin Williams"
-  email: {{ $email }}
+  email: {{ $email | quote }}
   username: "justin"
   url: "https://justinw.me"
 
   homebrew:
-    prefix: {{ if eq .chezmoi.os "darwin" }}
-        {{ if eq .chezmoi.arch "arm64" }}
-        "/opt/homebrew"
-        {{ else }}
-        "/usr/local"
-        {{ end -}}
-      {{ else }}
-      "/home/linuxbrew/.linuxbrew"
-      {{ end }}
+{{- if eq .chezmoi.os "darwin" }}
+  {{- if eq .chezmoi.arch "arm64" }}
+    prefix: "/opt/homebrew"
+  {{- else }}
+    prefix: "/usr/local"
+  {{ end }}
+{{ else }}
+    prefix: "/home/linuxbrew/.linuxbrew"
+{{- end }}
 
   gpg:
     default_key: 09073F89FE030A19
@@ -38,3 +32,10 @@ data:
   macos:
     dock_tile_size: {{ if eq .chezmoi.hostname "mbp" }}48{{ else }}80{{ end }}
 {{ end -}}
+
+################################
+# chezmoi configuration
+################################
+
+sourceDir: {{ .chezmoi.sourceDir | quote }}
+format: yaml
