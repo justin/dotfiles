@@ -30,7 +30,10 @@ data:
 
 {{ if eq .chezmoi.os "darwin" }}
   macos:
+    # The preferred dock icon size for a Mac.
     dock_tile_size: {{ if eq .chezmoi.hostname "mbp" }}48{{ else }}80{{ end }}
+    # The number of minutes until a Mac should go to sleep.
+    sleep_minutes: {{ if eq .chezmoi.hostname "mbp" }}30{{ else }}0{{ end }}
 {{ end -}}
 
 ################################
