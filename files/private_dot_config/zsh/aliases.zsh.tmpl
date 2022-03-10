@@ -45,6 +45,10 @@ alias ls='ls --color=auto'
 # macOS Specific
 #
 {{- if eq .chezmoi.os "darwin" }}
+# Alias to fix issue with PyEnv throwing a warning with `brew doctor`
+# https://github.com/pyenv/pyenv#homebrew-in-macos
+alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+
 # Take the pasteboard and open it in BBEdit.
 alias bbpb='pbpaste | bbedit --clean --view-top'
 
