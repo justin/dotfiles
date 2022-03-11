@@ -25,18 +25,10 @@ defaults write .GlobalPreferences AppleInterfaceStyle -string "Dark"
 # But adjust it based on the time of day.
 defaults write .GlobalPreferences AppleInterfaceStyleSwitchesAutomatically -int 1
 
-# Highlight color
-# Red      : `1.000000 0.733333 0.721569`
-# Orange   : `1.000000 0.874510 0.701961`
-# Yellow   : `1.000000 0.937255 0.690196`
-# Green    : `0.752941 0.964706 0.678431`
-# Blue     : `0.847059 0.847059 0.862745` (default)
-# Purple   : `0.968627 0.831373 1.000000`
-# Pink     : `0.968627 0.831373 1.000000`
-# Brown    : `0.929412 0.870588 0.792157`
-# Graphite : `0.847059 0.847059 0.862745`
-# Silver   : `0.776500 0.776500 0.776500` (custom)
-defaults write .GlobalPreferences AppleHighlightColor -string '0.847059 0.847059 0.862745'
+# Use the multicolor highlight option by removing these settings.
+# "|| true" will ignore error on non-existing delete
+defaults delete -g AppleHighlightColor >/dev/null 2>&1 || true
+defaults delete -g AppleAccentColor >/dev/null 2>&1 || true
 
 info "Dark Mode Configured"
 
