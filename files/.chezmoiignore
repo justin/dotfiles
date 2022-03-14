@@ -3,6 +3,7 @@ LICENSE
 
 .gitignore
 .editorconfig
+xcode
 
 {{- if ne .chezmoi.os "darwin" }}
 .lldbinit
