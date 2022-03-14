@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>rawrep</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>TopLevel</string>
+		<string>All</string>
+		<string>ClassImplementation</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>/**
+ &lt;# Documentation #&gt;
+*/
+struct &lt;# Name #&gt;: Hashable, Equatable, RawRepresentable {
+    typealias RawValue = &lt;# Type #&gt;
+    var rawValue: RawValue
+
+    init(rawValue: RawValue) {
+        self.rawValue = rawValue
+    }
+
+    init(_ rawValue: RawValue) {
+        self.rawValue = rawValue
+    }
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>4594294A-0FEA-46F7-A97B-004D15ECF54A</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Generate a RawRepresentable struct</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>RawRepresentable Value Type</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

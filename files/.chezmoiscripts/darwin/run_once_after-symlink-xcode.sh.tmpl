@@ -1,0 +1,42 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env zsh
+#
+# Symlink the contents of the xcode directory.
+
+set -e
+
+# Loading Logging Functions
+source $ZDOTDIR/functions/_logging || return 1
+
+local source_dir={{ .chezmoi.sourceDir }}/xcode
+local destination_dir=$XCODE_USER_DATA
+
+if ! [ -d $XCODE_USER_DATA ]; then
+  info "Creating directory at ${XCODE_USER_DATA}."
+  mkdir -m 700 -p $XCODE_USER_DATA
+fi
+
+echo "==> Symlinking Xcode Configuration and Settings."
+rm -rf $destination_dir/CodeSnippets
+ln -s $source_dir/snippets $destination_dir/CodeSnippets
+
+rm -rf $destination_dir/FontAndColorThemes
+ln -s $source_dir/themes $destination_dir/FontAndColorThemes
+
+rm -rf $destination_dir/KeyBindings
+ln -s $source_dir/bindings $destination_dir/KeyBindings
+
+rm -rf $destination_dir/Scripts
+ln -s $source_dir/scripts $destination_dir/Scripts
+
+rm -rf $destination_dir/xcdebugger
+ln -s $source_dir/xcdebugger $destination_dir/xcdebugger
+
+# Install Custom Xcode Templates
+local template_dir=$LIBRARY_HOME/Developer/Xcode/Templates
+if ! [ -d $template_dir ]; then
+  echo "==> Creating Xcode Template Directory."
+  mkdir -p $template_dir
+fi
+
+{{ end -}}
