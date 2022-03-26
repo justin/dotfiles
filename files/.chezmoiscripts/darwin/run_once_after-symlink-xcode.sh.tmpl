@@ -39,4 +39,8 @@ if ! [ -d $template_dir ]; then
   mkdir -p $template_dir
 fi
 
+pushd {{ .chezmoi.sourceDir }}
+git update-index --assume-unchanged "{{ .chezmoi.sourceDir }}/xcode/xcdebugger/Breakpoints_v2.xcbkptlist"
+popd
+
 {{ end -}}
