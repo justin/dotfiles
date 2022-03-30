@@ -38,6 +38,7 @@ brew "xcodes"
 
 # Cask Apps
 cask "alfred"
+cask "bartender"
 cask "base"
 cask "bbedit"
 cask "choosy"
@@ -72,7 +73,6 @@ cask "telegram"
 cask "typora"
 cask "sublime-text"
 cask "transmit"
-cask "vanilla"
 cask "vmware-fusion"
 cask "xcodes"
 
@@ -116,8 +116,6 @@ mas "Sourcery Pro", id: 1561780836
 mas "Soulver 3", id: 1508732804
 mas "Transloader", id: 572281534
 mas "Twitter", id: 1482454543
-mas "Ulysses", id: 1225570693
-mas "Wire", id: 931134707
 mas "Xcode", id: 497799835
 mas "xScope", id: 889428659
 
