@@ -1,0 +1,13 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env zsh
+#
+# Install Homebrew dependencies
+
+{{ .homebrew.prefix }}/bin/brew bundle --no-lock --file=$HOMEBREW_BUNDLE_FILE
+
+{{- if eq .chezmoi.arch "arm64" }}
+if [[ -z $(brew services list | grep "sudo-touchid") ]]; then
+  sudo {{ .homebrew.prefix }}/bin/brew services start sudo-touchid
+fi
+{{ end -}}
+{{ end -}}
