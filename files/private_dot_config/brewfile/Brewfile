@@ -3,6 +3,7 @@ tap "homebrew/core"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
+tap "microsoft/git"
 tap "majd/repo", "https://github.com/majd/homebrew-repo.git"                            # ipatool
 tap "peripheryapp/periphery", "https://github.com/peripheryapp/homebrew-periphery.git"  # periphery
 tap "robotsandpencils/made", "https://github.com/RobotsAndPencils/homebrew-made.git"    # xcodes
@@ -19,6 +20,7 @@ brew "duti"
 brew "ffmpeg"
 brew "gh"
 brew "git"
+cask "git-credential-manager-core"
 brew "gnupg"
 cask "ipatool"
 brew "jq"
