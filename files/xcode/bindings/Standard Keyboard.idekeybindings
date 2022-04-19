@@ -356,6 +356,26 @@
 			</dict>
 			<dict>
 				<key>Action</key>
+				<string>copyFileAndLine:</string>
+				<key>Alternate</key>
+				<string>NO</string>
+				<key>CommandID</key>
+				<string>Xcode.IDEKit.CmdDefinition.CopyFileAndLine</string>
+				<key>Group</key>
+				<string>Edit Menu</string>
+				<key>GroupID</key>
+				<string>Xcode.IDEKit.MenuDefinition.Main</string>
+				<key>GroupedAlternate</key>
+				<string>NO</string>
+				<key>Navigation</key>
+				<string>NO</string>
+				<key>Parent Title</key>
+				<string>Copy</string>
+				<key>Title</key>
+				<string>Copy File and Line</string>
+			</dict>
+			<dict>
+				<key>Action</key>
 				<string>searchDocumentationForSelectedText:</string>
 				<key>Alternate</key>
 				<string>NO</string>
