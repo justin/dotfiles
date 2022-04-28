@@ -23,7 +23,7 @@ export ZSH_COMPDUMP=$XDG_CACHE_HOME/zsh/zcompdump-${ZSH_VERSION}
 {{- if eq .chezmoi.os "darwin" }}
 export EDITOR="code -nw"
 {{- else }}
-export EDITOR="vim"
+export EDITOR="micro"
 {{- end }}
 
 export VISUAL=$EDITOR
