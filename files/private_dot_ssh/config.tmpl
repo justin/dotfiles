@@ -1,0 +1,34 @@
+Host *
+{{- if eq .chezmoi.os "darwin" }}
+  UseKeychain yes
+{{- end }}
+  AddKeysToAgent yes
+  ServerAliveInterval 120
+  ServerAliveCountMax 30
+
+Host homelab
+  User justin
+  HostName homelab.local
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
+
+Host nas
+  User justinwme
+  HostName nas.local
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
+
+Host imac
+  User justin
+  HostName imac.local
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
+
+Host mbp
+  User justinwilliams
+  HostName mbp.local
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
+
+Host udm
+  User root
+  HostName 10.0.1.1
+  ServerAliveCountMax 5
+  StrictHostKeyChecking yes
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
