@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env zsh
 #
 # Set default preferences for iTerm 2 on macOS.
@@ -8,3 +9,4 @@ set -e
 defaults write com.googlecode.iterm2 DynamicProfilesPath -string "$XDG_CONFIG_HOME/iterm2/DynamicProfiles"
 defaults write com.googlecode.iterm2 NoSyncDynamicProfileChangeWillBeLost_SilenceUntil -float 31536000000000
 defaults write com.googlecode.iterm2 NoSyncDynamicProfileChangeWillBeLost_selection -int 0
+{{ end -}}
