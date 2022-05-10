@@ -1,0 +1,20 @@
+{
+  "Profiles" : [
+    {
+      "Name": "macOS Base",
+      "Guid": "3E2CA0BB-C7DD-4601-BB67-0DA6A9DEB628",
+      "Dynamic Profile Parent Name": "Default",
+      "Normal Font": "OperatorMonoSSm-Book 16",
+      "Non Ascii Font": "OperatorMonoSSm-Book 16",
+      "Only The Default BG Color Uses Transparency" : false,
+      "Blur Radius" : 16.080635233128323,
+      "Blur" : true,
+      "Show Status Bar": true,
+      "Silence Bell": false,
+      "Use Bright Bold": true,
+      "Unlimited Scrollback": true,
+      "Rows" : 40,
+      "Columns" : 150
+    }
+  ]
+}

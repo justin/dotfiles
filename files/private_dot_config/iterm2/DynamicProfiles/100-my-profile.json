@@ -1,0 +1,10 @@
+{
+  "Profiles" : [
+    {
+      "Name": "JWW",
+      "Guid": "C8A81164-376E-4248-8912-DFA7D65532BD",
+      "Dynamic Profile Parent Name": "macOS Keys",
+      "Description": "My preferred iTerm2 profile."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "Profiles": [
+    {
+      "Name": "macOS Keys",
+      "Guid": "7D9ECBE9-6FE6-4E34-B2F9-A054E6AB1637",
+      "Dynamic Profile Parent Name": "macOS Base",
+      "Keyboard Map": {
+          "0x20-0x20000-0x31": {
+            "Version": 1,
+            "Action": 10,
+            "Text": "[5~",
+            "Label": "PageUp for Shift-Space"
+          }
+      }
+    }
+  ]
+}
