@@ -41,6 +41,7 @@ brew "wget"
 brew "xcbeautify"
 brew "XCTestHtmlReport/xchtmlreport/xchtmlreport"
 brew "xcodes"
+brew "zsh"
 
 # Cask Apps
 cask "bartender"
