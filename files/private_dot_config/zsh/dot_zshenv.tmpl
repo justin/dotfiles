@@ -78,6 +78,9 @@ export NVM_DIR=$CONFIG_HOME/nvm
 # ===== SSH =====
 export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 
+# ===== GitHub Access =====
+export GITHUB_TOKEN={{ (onepasswordDetailsFields "GitHub Access Token - dotfiles").password.value }}
+
 # ===== Customize $fignore =====
 fignore=(
   .DS_Store
