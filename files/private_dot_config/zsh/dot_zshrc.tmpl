@@ -61,6 +61,10 @@ else
     eval $(gpg-agent --daemon)
 fi
 
+# 1Password CLI
+# https://developer.1password.com/docs/cli
+eval "$(op completion zsh)"; compdef _op op
+
 # AutoJump
 # https://olivierlacan.com/posts/cd-is-wasting-your-time/
 [ -f {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh ] && . {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh

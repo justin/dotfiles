@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+#
+# Functions that help with various scripts and templates in this repository.
+
+type_exists() {
+  if [ $(whence -p $1) ]; then
+    return 0
+  fi
+  return 1
+}

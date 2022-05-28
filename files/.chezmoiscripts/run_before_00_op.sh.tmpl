@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+#
+# Verify that the 1Password CLI is installed and configured.
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+info "Validating 1Password CLI before proceeding"
+
+if ! type_exists 'op'; then
+  fail "Please install the 1Password CLI first."
+fi
+
+if ! [[ $(op account get) ]]; then
+  fail "Please sign into 1Password CLI."
+fi
+
+[[ $? ]] && success "Successfully signed into 1Password."
