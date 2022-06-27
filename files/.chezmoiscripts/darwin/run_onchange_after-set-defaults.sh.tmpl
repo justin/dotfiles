@@ -206,6 +206,8 @@ duti -s com.microsoft.VSCode cfg all
 duti -s com.microsoft.VSCode sh all
 duti -s com.readdle.PDFExpert-Mac pdf all
 
+duti "$XDG_CONFIG_HOME/macos/duti-uti-mappings.plist"
+
 for app in "Dock" "Finder"; do
   killall "${app}" > /dev/null 2>&1
 done

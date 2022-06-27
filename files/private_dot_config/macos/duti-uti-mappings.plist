@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DUTISettings</key>
+	<array>
+		<dict>
+			<key>DUTIBundleIdentifier</key>
+			<string>com.vladbadea.csveditor</string>
+			<key>DUTIUniformTypeIdentifier</key>
+			<string>public.comma-separated-values-text</string>
+			<key>DUTIRole</key>
+			<string>all</string>
+		</dict>
+		<dict>
+			<key>DUTIBundleIdentifier</key>
+			<string>com.vladbadea.plisteditor</string>
+			<key>DUTIUniformTypeIdentifier</key>
+			<string>com.apple.property-list</string>
+			<key>DUTIRole</key>
+			<string>all</string>
+		</dict>
+		<dict>
+			<key>DUTIBundleIdentifier</key>
+			<string>com.colliderli.iina</string>
+			<key>DUTIUniformTypeIdentifier</key>
+			<string>public.video</string>
+			<key>DUTIRole</key>
+			<string>viewer</string>
+		</dict>
+	</array>
+</dict>
+</plist>
