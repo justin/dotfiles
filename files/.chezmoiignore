@@ -7,8 +7,8 @@ xcode
 
 {{- if ne .chezmoi.os "darwin" }}
 .lldbinit
-dot_local/bin/darwin
+bin/darwin
 .chezmoiscripts/darwin
-private_dot_config/iterm2
+.config/iterm2
 .config/macos
 {{- end }}
