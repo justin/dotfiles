@@ -41,7 +41,7 @@ export XCODE_USER_DATA=$LIBRARY_HOME/Developer/Xcode/UserData
 # https://github.com/Homebrew/brew/pull/10374
 export HOMEBREW_BOOTSNAP=1
 export HOMEBREW_EDITOR=$EDITOR
-export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/brewfile/Brewfile"
+export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/macos/Brewfile"
 
 # Ensure we explicitly set all homebrew related environment variables.
 eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
