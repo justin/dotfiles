@@ -6,6 +6,11 @@
 
 set -e
 
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+info "Configuring iTerm 2"
+
 defaults write com.googlecode.iterm2 DynamicProfilesPath -string "$XDG_CONFIG_HOME/iterm2/DynamicProfiles"
 defaults write com.googlecode.iterm2 NoSyncDynamicProfileChangeWillBeLost_SilenceUntil -float 31536000000000
 defaults write com.googlecode.iterm2 NoSyncDynamicProfileChangeWillBeLost_selection -int 0

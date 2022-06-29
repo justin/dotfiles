@@ -8,7 +8,8 @@
 set -e
 
 # Loading Logging Functions
-source $ZDOTDIR/functions/_logging || return 1
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
 {{- if eq .chezmoi.os "darwin" }}
 

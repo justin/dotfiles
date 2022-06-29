@@ -5,6 +5,9 @@
 
 set -e
 
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
 # Loading Logging Functions
 source $ZDOTDIR/functions/_logging || return 1
 
