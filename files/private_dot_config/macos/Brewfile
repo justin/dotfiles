@@ -83,6 +83,7 @@ cask "telegram"
 cask "typora"
 cask "sublime-text"
 cask "transmit"
+cask "unite"
 cask "vmware-fusion"
 cask "xcodes"
 
@@ -113,7 +114,6 @@ mas "Microsoft PowerPoint", id: 462062816
 mas "Microsoft Word", id: 462054704
 mas "MindNode", id: 1289197285
 mas "Numbers", id: 409203825
-mas "OmniFocus", id: 1346203938
 mas "OmniOutliner", id: 1142578772
 mas "Pages", id: 409201541
 mas "Paprika Recipe Manager 3", id: 1303222628
@@ -127,7 +127,6 @@ mas "Slack", id: 803453959
 mas "Sourcery Pro", id: 1561780836
 mas "Soulver 3", id: 1508732804
 mas "Transloader", id: 572281534
-mas "Twitter", id: 1482454543
 mas "Xcode", id: 497799835
 mas "xScope", id: 889428659
 
