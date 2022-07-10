@@ -1,3 +1,6 @@
+#
+# .zshenv is always sourced, whether its an interactive or login shell.
+#
 # ===== Config Directory =====
 #
 # This is based on XDG spec, as best as macOS can.
@@ -8,10 +11,9 @@ export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
 export CONFIG_HOME=$XDG_CONFIG_HOME
+{{- if eq .chezmoi.os "darwin" }}
 export LIBRARY_HOME=$HOME/Library
-
-# The OS that we are running in.
-export OS="$( uname )"
+{{- end }}
 
 # ===== ZSH Customization =====
 # Where our zsh configuration is located.
@@ -27,6 +29,19 @@ export EDITOR="micro"
 {{- end }}
 
 export VISUAL=$EDITOR
+
+# The OS that we are running in.
+export OS="$( uname )"
+
+# Silence warning that shows up in macOS 11.0 when launching a new Terminal window:
+# `shell_session_history_check:2: scalar parameter SHELL_SESSION_DID_HISTORY_CHECK created globally in function shell_session_history_check`
+local SHELL_SESSION_DID_HISTORY_CHECK
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository, but you'll have access to them in your scripts.
+if [[ -a $HOME/.localrc ]]; then
+  source $HOME/.localrc
+fi
 
 {{- if eq .chezmoi.os "darwin" }}
 # ===== GPG =====
@@ -71,10 +86,6 @@ export PKG_CONFIG_PATH="$RUBY_PATH/lib/pkgconfig"
 export LDFLAGS="-L$RUBY_PATH/lib"
 export CPPFLAGS="-I$RUBY_PATH/include"
 
-# ===== Node =====
-export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
-export NVM_DIR=$CONFIG_HOME/nvm
-
 # ===== SSH =====
 export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 
@@ -87,12 +98,32 @@ fignore=(
   $fignore
 )
 
-# Silence warning that shows up in macOS 11.0 when launching a new Terminal window:
-# `shell_session_history_check:2: scalar parameter SHELL_SESSION_DID_HISTORY_CHECK created globally in function shell_session_history_check`
-local SHELL_SESSION_DID_HISTORY_CHECK
+# ==== Customize $FPATH =====
+# Prevent duplicates within search paths
+typeset -U fpath
+# Make user functions available
+fpath=(
+  $ZDOTDIR/functions
+  $fpath
+)
 
-# Stash your environment variables in ~/.localrc. This means they'll stay out
-# of your main dotfiles repository, but you'll have access to them in your scripts.
-if [[ -a $HOME/.localrc ]]; then
-    source $HOME/.localrc
-fi
+# ===== Customize $PATH =====
+# U for Unique, like a set;
+# (N) == only if exists
+typeset -U path   # Prevent duplicates within search paths
+path=(
+  $HOMEBREW_PREFIX/bin(N)
+  $RUBY_PATH/bin(N)
+  $GEM_HOME/bin(N)
+  $CONFIG_HOME/pypoetry/bin(N)
+  $HOME/.local/bin
+  {{- if eq .chezmoi.os "darwin" }}
+  $HOME/.local/bin/darwin
+  {{ else }}
+  $HOME/.local/bin/linux(N)
+  {{ end -}}
+  $PYENV_ROOT/bin(N)
+  /usr/local/sbin
+  "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"(N)
+  $path
+)

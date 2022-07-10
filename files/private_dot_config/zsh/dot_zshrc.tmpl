@@ -1,3 +1,6 @@
+# .zshrc is for interactive shells.
+# You set options for the interactive shell there with the setopt and unsetopt commands.
+#
 # Shut up and don't beep on error
 setopt no_beep
 # Print a warning message when a global parameter is created in a function by an assignment
@@ -11,41 +14,8 @@ setopt extended_glob
 # zmv support
 autoload -U zmv
 
-# ==== Customize $FPATH =====
-typeset -U fpath
-fpath=(
-  $XDG_CONFIG_HOME/zsh/functions/
-  $fpath
-)
-
-# ===== Customize $PATH =====
-# U for Unique, like a set;
-# (N) == only if exists
-typeset -U path
-path=(
-  $HOMEBREW_PREFIX/bin(N)
-  $RUBY_PATH/bin(N)
-  $GEM_HOME/bin(N)
-  $CONFIG_HOME/pypoetry/bin(N)
-  $HOME/.local/bin
-  {{- if eq .chezmoi.os "darwin" }}
-  $HOME/.local/bin/darwin
-  {{ else }}
-  $HOME/.local/bin/linux(N)
-  {{ end -}}
-  $PYENV_ROOT/bin(N)
-  /usr/local/sbin
-  "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"(N)
-  $path
-)
-
 # Source any file with a *.zsh extension. They have additional settings.
 for zsh_file ($ZDOTDIR/*.zsh) source $zsh_file
-
-{{- if eq .chezmoi.os "darwin" }}
-# Compiling stuff on OS X
-[[ -e $commands[brew] ]] && export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
-{{- end }}
 
 # PyEnv
 if [[ -x $(which pyenv) ]]; then
@@ -63,7 +33,9 @@ fi
 
 # 1Password CLI
 # https://developer.1password.com/docs/cli
-eval "$(op completion zsh)"; compdef _op op
+if [[ -x $(which op) ]]; then
+  eval "$(op completion zsh)"; compdef _op op
+fi
 
 # AutoJump
 # https://olivierlacan.com/posts/cd-is-wasting-your-time/
@@ -71,4 +43,3 @@ eval "$(op completion zsh)"; compdef _op op
 
 # iTerm 2 Integration
 test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2_shell_integration.zsh"
-
