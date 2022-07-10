@@ -84,7 +84,6 @@ cask "typora"
 cask "sublime-text"
 cask "transmit"
 cask "unite"
-cask "vmware-fusion"
 cask "xcodes"
 
 # Mac App Store
