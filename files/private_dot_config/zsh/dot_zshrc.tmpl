@@ -19,7 +19,7 @@ for zsh_file ($ZDOTDIR/*.zsh) source $zsh_file
 
 # PyEnv
 if [[ -x $(which pyenv) ]]; then
-  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
 

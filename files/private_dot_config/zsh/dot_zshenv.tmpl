@@ -67,10 +67,6 @@ export PIP_CONFIG_FILE=$CONFIG_HOME/pip/pip.conf
 export PYENV_ROOT=$CONFIG_HOME/pyenv
 export POETRY_HOME=$CONFIG_HOME/pypoetry
 
-# Default virtualenv
-export WORKON_HOME=$XDG_DATA_HOME/virtualenvs
-export POETRY_CACHE_DIR=$XDG_CACHE_HOME/pypoetry
-
 # Disable auto-add virtualenv name to CLI prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
@@ -123,6 +119,7 @@ path=(
   $HOME/.local/bin/linux(N)
   {{ end -}}
   $PYENV_ROOT/bin(N)
+  $POETRY_HOME/bin(N)
   /usr/local/sbin
   "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"(N)
   $path

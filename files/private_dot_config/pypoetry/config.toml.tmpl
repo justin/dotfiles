@@ -1,6 +1,5 @@
-cache-dir = "{{ env "XDG_CACHE_HOME" }}/pypoetry"
-
 [virtualenvs]
-create = true
-in-project = false
+cache-dir = "{{ env "XDG_CACHE_HOME" }}/pypoetry"
 path = "{cache-dir}/virtualenvs"
+create = true
+in-project = true
