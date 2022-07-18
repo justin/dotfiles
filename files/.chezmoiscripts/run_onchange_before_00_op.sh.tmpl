@@ -11,8 +11,8 @@ if ! type_exists 'op'; then
   fail "Please install the 1Password CLI first."
 fi
 
-if ! [[ $(op account get --account compound) ]]; then
-  eval $(op signin --account compound) || fail "Please sign into 1Password CLI."
+if ! [[ $(op account get --account M4GXOUJAFFCVRACF3EDH5RWLAU) ]]; then
+  eval $(op signin --account M4GXOUJAFFCVRACF3EDH5RWLAU) || fail "Please sign into 1Password CLI."
 fi
 
 [[ $? ]] && success "Successfully signed into 1Password."
