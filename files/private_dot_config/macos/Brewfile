@@ -8,12 +8,11 @@ tap "microsoft/git"
 tap "majd/repo", "https://github.com/majd/homebrew-repo.git"                            # ipatool
 tap "peripheryapp/periphery", "https://github.com/peripheryapp/homebrew-periphery.git"  # periphery
 tap "robotsandpencils/made", "https://github.com/RobotsAndPencils/homebrew-made.git"    # xcodes
-tap "1password/tap/1password-cli"
 
 # Settings
 cask_args appdir: "/Applications"
 
-brew "1password-cli"
+cask "1password/tap/1password-cli"
 brew "aria2"
 brew "autojump"
 brew "chezmoi"
