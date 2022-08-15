@@ -2,6 +2,8 @@
 .env
 .envrc
 
+.venv/
+
 # My weird xcode_switch file & its versioned Carthage directories.
 .xcoderc
 Carthage-*
