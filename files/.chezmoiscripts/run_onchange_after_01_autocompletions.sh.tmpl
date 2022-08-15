@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+#
+# Install autocompletions for zsh.
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+# info "Validating 1Password CLI before proceeding"
+
+if type_exists 'swift'; then
+  swift package completion-tool generate-zsh-script > "$ZDOTDIR/functions/_swift"
+  success "Successfully generated Swift Package autocompletions."
+fi
+
+if type_exists 'poetry'; then
+  poetry completions zsh > "$ZDOTDIR/functions/_poetry"
+  success "Successfully generated Poetry autocompletions."
+fi
+
+if type_exists 'chezmoi'; then
+  chezmoi completion zsh --output="$ZDOTDIR/functions/_chezmoi"
+  success "Successfully generated Chezmoi autocompletions."
+fi
