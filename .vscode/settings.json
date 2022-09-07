@@ -6,6 +6,8 @@
     "**/files/private_dot_config/git/ignore": "ignore",
     "*.yaml.tmpl": "yaml",
     "*.sh.tmpl": "shellscript",
+    "Brewfile*": "ruby",
+    ".chezmoi*": "yaml",
   },
   "cSpell.words": [
     "chezmoi",
