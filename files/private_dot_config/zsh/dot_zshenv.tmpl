@@ -73,14 +73,16 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 # ===== Vim =====
 export VIMINIT="set nocp | source ${CONFIG_HOME:-$HOME/.config}/vim/vimrc"
 
+{{- if eq .chezmoi.os "darwin" }}
 # ===== Ruby =====
 export GEMRC=$CONFIG_HOME/rubygems/.gemrc
 export GEM_HOME=$XDG_DATA_HOME/rubygems
 export GEM_SPEC_CACHE=$XDG_DATA_HOME/rubygems
-export RUBY_PATH="/usr/local/opt/ruby"
+export RUBY_PATH="$(brew --prefix ruby)"
 export PKG_CONFIG_PATH="$RUBY_PATH/lib/pkgconfig"
 export LDFLAGS="-L$RUBY_PATH/lib"
 export CPPFLAGS="-I$RUBY_PATH/include"
+{{ end }}
 
 # ===== SSH =====
 export SSH_KEY_PATH=$HOME/.ssh/id_rsa
