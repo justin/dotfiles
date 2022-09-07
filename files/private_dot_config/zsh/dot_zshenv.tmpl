@@ -90,6 +90,12 @@ export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 # ===== GitHub Access =====
 export GITHUB_TOKEN={{ (onepasswordDetailsFields "dyumpojxxzfafhiqrbymrmegn4" "z5wqsos7ngtfs7e5dbb6nxxw64" "M4GXOUJAFFCVRACF3EDH5RWLAU").password.value }}
 
+{{ if .pff }}
+# ===== ASDF Configuration =====
+export ASDF_CONFIG_FILE=$CONFIG_HOME/asdf/asdfrc
+export ASDF_DATA_DIR=$XDG_DATA_HOME/asdf
+{{ end }}
+
 # ===== Customize $fignore =====
 fignore=(
   .DS_Store

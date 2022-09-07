@@ -1,0 +1,10 @@
+# Taps
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "homebrew/cask"
+
+# Settings
+cask_args appdir: "/Applications"
+
+brew "asdf"
+brew "yarn"

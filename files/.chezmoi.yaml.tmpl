@@ -1,8 +1,14 @@
 {{- $email := "" -}}
+{{- $pff := false -}} {{/* true if this machine be configured with PFF related stuff */}}
+
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
 {{- else -}}
 {{-   $email = promptString "What is your email address?" $email -}}
+{{- end -}}
+
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $pff = promptBool "Do you want to configure this machine with PFF related stuff?" $pff -}}
 {{- end -}}
 
 ################################
@@ -13,6 +19,7 @@ data:
   email: {{ $email | quote }}
   username: "justin"
   url: "https://justinw.me"
+  pff: {{ $pff }}
 
   homebrew:
 {{- if eq .chezmoi.os "darwin" }}

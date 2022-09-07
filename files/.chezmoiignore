@@ -1,3 +1,6 @@
+# Reference
+# https://www.chezmoi.io/reference/special-files-and-directories/chezmoiignore/
+
 README.md
 LICENSE
 
@@ -12,3 +15,7 @@ bin/darwin
 .config/iterm2
 .config/macos
 {{- end }}
+
+{{- if not .pff }}
+.asdf
+{{ end}}
