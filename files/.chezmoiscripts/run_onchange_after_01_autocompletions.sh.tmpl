@@ -5,8 +5,6 @@
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
-# info "Validating 1Password CLI before proceeding"
-
 if type_exists 'swift'; then
   swift package completion-tool generate-zsh-script > "$ZDOTDIR/functions/_swift"
   success "Successfully generated Swift Package autocompletions."
