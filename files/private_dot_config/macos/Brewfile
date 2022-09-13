@@ -122,7 +122,6 @@ mas "Slack", id: 803453959
 mas "Sourcery Pro", id: 1561780836
 mas "Soulver 3", id: 1508732804
 mas "Transloader", id: 572281534
-mas "Xcode", id: 497799835
 mas "xScope", id: 889428659
 
 # Not supported by Homebrew (yet)

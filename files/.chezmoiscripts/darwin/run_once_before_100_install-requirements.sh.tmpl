@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 set -e
 
@@ -6,11 +6,11 @@ source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
 {{- if eq .chezmoi.os "darwin" }}
-  if ! [ -x "$(command -v brew)" ]; then
-    info "Homebrew not found. Installing!"
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  fi
-  eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
+  info "Installing xcodes cli."
+  brew install robotsandpencils/made/xcodes
+
+  info "Installing latest release of Xcode."
+  xcodes install --latest
 
   {{- if eq .chezmoi.arch "arm64" }}
     info "M1 Mac detected. Installing Rosetta."
