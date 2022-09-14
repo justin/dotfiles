@@ -46,10 +46,12 @@ brew "zsh"
 
 # Cask Apps
 cask "1password"
+cask "adobe-creative-suite"
 cask "bartender"
 cask "bbedit"
 cask "choosy"
 cask "dash"
+cask "docker"
 cask "downie"
 cask "fastscripts"
 cask "firefox"
@@ -81,7 +83,9 @@ cask "telegram"
 cask "typora"
 cask "transmit"
 cask "unite"
+cask "visual-studio-code"
 cask "xcodes"
+cask "zoom"
 
 # Mac App Store
 mas "1Blocker", id: 1365531024
@@ -90,6 +94,7 @@ mas "Apple Configurator 2", id: 1037126344
 mas "CARROT Weather", id: 993487541
 mas "Channels Pro - IPTV Player", id: 1552284117
 mas "Codeshot", id: 1541665460
+mas "Craft", id: 1487937127
 mas "Darkroom: Photo & Video Editor", id: 953286746
 mas "Day One", id: 1055511498
 mas "DevCleaner", id: 1388020431
@@ -126,6 +131,7 @@ mas "xScope", id: 889428659
 
 # Not supported by Homebrew (yet)
 # SD Notary - https://latenightsw.com/sd-notary-notarizing-made-easy/
+# Opal - https://opalcamera.com
 
 # Fonts
 # Apple / iOS https://developer.apple.com/fonts/
