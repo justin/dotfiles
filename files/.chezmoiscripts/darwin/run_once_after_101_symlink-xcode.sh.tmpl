@@ -8,9 +8,6 @@ set -e
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
-# Loading Logging Functions
-source $ZDOTDIR/functions/_logging || return 1
-
 local source_dir={{ .chezmoi.sourceDir }}/xcode
 local destination_dir=$XCODE_USER_DATA
 
