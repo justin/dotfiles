@@ -26,6 +26,7 @@ if [ $PLATFORM = "Darwin" ]; then
 
   if command -v brew >/dev/null 2>&1; then # only install Homebrew if not installed
     echo "${GREEN}✅ Homebrew already installed.${NC}"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
     if command -v chezmoi >/dev/null 2>&1; then # only install chezmoi if not installed
       echo "${GREEN}✅ Chezmoi already installed.${NC}"
@@ -36,6 +37,7 @@ if [ $PLATFORM = "Darwin" ]; then
   else
     echo "${BOLD}⏳ Installing Homebrew...${NC}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
     echo "${BOLD}Installing chezmoi via homebrew.${NC}"
     brew install chezmoi
   fi
