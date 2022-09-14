@@ -42,6 +42,15 @@ Host mbp
   IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
   {{- end }}
 
+Host studio
+  User justinwilliams
+  HostName studio.local
+  {{- if eq .chezmoi.os "darwin" }}
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  {{ else }}
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
+  {{- end }}
+
 Host udm
   User root
   HostName 10.0.1.1
