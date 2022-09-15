@@ -1,0 +1,4 @@
+.vim/pack/jww/start/editorconfig-vim:
+  type: git-repo
+  url: https://github.com/editorconfig/editorconfig-vim.git
+  refreshPeriod: "168h"
