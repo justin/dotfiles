@@ -32,12 +32,21 @@ ln -s $source_dir/scripts $destination_dir/Scripts
 rm -rf $destination_dir/xcdebugger
 ln -s $source_dir/xcdebugger $destination_dir/xcdebugger
 
+
+
 # Install Custom Xcode Templates
 local template_dir=$LIBRARY_HOME/Developer/Xcode/Templates
 if ! [ -d $template_dir ]; then
   echo "==> Creating Xcode Template Directory."
   mkdir -p $template_dir
 fi
+
+echo "==> Symlinking File and Project Templates."
+rm -rf "$template_dir/File Templates"
+ln -s $source_dir/templates/file "$template_dir/File Templates"
+
+rm -rf "$template_dir/Project Templates"
+ln -s $source_dir/templates/project "$template_dir/Project Templates"
 
 pushd {{ .chezmoi.sourceDir }}
 git update-index --assume-unchanged "{{ .chezmoi.sourceDir }}/xcode/xcdebugger/Breakpoints_v2.xcbkptlist"
