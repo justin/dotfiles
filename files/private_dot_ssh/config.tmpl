@@ -10,7 +10,7 @@ Host homelab
   User justin
   HostName homelab.local
   {{- if eq .chezmoi.os "darwin" }}
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  IdentityAgent "{{ .chezmoi.homeDir }}/.config/1password/t/agent.sock"
   {{ else }}
   IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
   {{- end }}
@@ -19,7 +19,7 @@ Host nas
   User justinwme
   HostName nas.local
   {{- if eq .chezmoi.os "darwin" }}
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  IdentityAgent "{{ .chezmoi.homeDir }}/.config/1password/t/agent.sock"
   {{ else }}
   IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
   {{- end }}
@@ -28,7 +28,7 @@ Host imac
   User justin
   HostName imac.local
   {{- if eq .chezmoi.os "darwin" }}
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  IdentityAgent "{{ .chezmoi.homeDir }}/.config/1password/t/agent.sock"
   {{ else }}
   IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
   {{- end }}
@@ -37,7 +37,7 @@ Host mbp
   User justinwilliams
   HostName mbp.local
   {{- if eq .chezmoi.os "darwin" }}
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  IdentityAgent "{{ .chezmoi.homeDir }}/.config/1password/t/agent.sock"
   {{ else }}
   IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
   {{- end }}
@@ -46,7 +46,7 @@ Host studio
   User justinwilliams
   HostName studio.local
   {{- if eq .chezmoi.os "darwin" }}
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  IdentityAgent "{{ .chezmoi.homeDir }}/.config/1password/t/agent.sock"
   {{ else }}
   IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
   {{- end }}
@@ -57,7 +57,7 @@ Host udm
   ServerAliveCountMax 5
   StrictHostKeyChecking yes
   {{- if eq .chezmoi.os "darwin" }}
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  IdentityAgent "{{ .chezmoi.homeDir }}/.config/1password/t/agent.sock"
   {{ else }}
   IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
   {{- end }}
