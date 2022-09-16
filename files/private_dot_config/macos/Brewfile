@@ -23,6 +23,7 @@ brew "ffmpeg"
 brew "gh"
 brew "git"
 cask "git-credential-manager-core"
+brew "git-lfs"
 brew "gnupg"
 cask "ipatool"
 brew "jq"
@@ -47,6 +48,8 @@ brew "zsh"
 # Cask Apps
 cask "1password"
 cask "adobe-creative-suite"
+cask "anki"
+cask "arq"
 cask "bartender"
 cask "bbedit"
 cask "choosy"
@@ -94,6 +97,7 @@ mas "Apple Configurator 2", id: 1037126344
 mas "CARROT Weather", id: 993487541
 mas "Channels Pro - IPTV Player", id: 1552284117
 mas "Codeshot", id: 1541665460
+mas "Core Data Lab", id: 1460684638
 mas "Craft", id: 1487937127
 mas "Darkroom: Photo & Video Editor", id: 953286746
 mas "Day One", id: 1055511498
@@ -104,10 +108,12 @@ mas "Expressions", id: 913158085
 mas "Focus - Time Management", id: 777233759
 mas "Home Assistant", id: 1099568401
 mas "HomePass for HomeKit", id: 1330266650
+mas "Hush Nag Blocker", id: 1544743900
 mas "Infuse 7", id: 1136220934
 mas "JSON Editor", id: 567740330
 mas "Keep It", id: 1272768911
 mas "Keynote", id: 409183694
+mas "Mate", id: 1005088137
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft PowerPoint", id: 462062816
 mas "Microsoft Word", id: 462054704
@@ -120,13 +126,17 @@ mas "Parcel - Delivery Tracking", id: 639968404
 mas "PCalc", id: 403504866
 mas "PLIST Editor", id: 1157491961
 mas "PDF Expert", id: 1055273043
+mas "PocketTube for Safari", id: 1533703891
 mas "Renamer 6", id: 1460229011
 mas "Save to Upnext", id: 1583423832
 mas "Screens", id: 1224268771
 mas "Slack", id: 803453959
 mas "Sourcery Pro", id: 1561780836
 mas "Soulver 3", id: 1508732804
+mas "Tailscale", id: 1475387142
 mas "Transloader", id: 572281534
+mas "Tweaks for Twitter", id: 1567751529
+mas "UserScripts", id: 1463298887
 mas "xScope", id: 889428659
 
 # Not supported by Homebrew (yet)
