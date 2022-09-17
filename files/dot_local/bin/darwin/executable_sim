@@ -20,8 +20,9 @@ function printHelp() {
     echo "  booted                Prints the UUIDs of the currently booted simulators"
     echo "  delete_all_devices    Remove all simulator devices"
     echo "  open_container        Opens an app container for the currently booted simulators in the Finder"
-    echo "  getenv                Prints the value of an environment variable from the booted simulator"
-    echo "  openurl               Opens a URL in the booted simulator"
+    echo "  get_env                Prints the value of an environment variable from the booted simulator"
+    echo "  open_url               Opens a URL in the booted simulator"
+    echo "  add_media             Adds a media file to the booted simulator"
 }
 
 ##############################################################
@@ -96,6 +97,20 @@ function openUrl {
     xcrun simctl openurl $(sim booted) $@
 }
 
+###########################################################################
+# Copy the media file(s) from the passed in path to the booted devices.
+# Globals:
+#   None
+# Arguments:
+#   The path to a media file or folder of media files.
+# Outputs:
+#   None
+###########################################################################
+function addMedia {
+    local files=(${(f)"$(find $1 -not -path '*/[@.]*' -type f)"})
+    xcrun simctl addmedia $(sim booted) $files
+}
+
 case "$1" in
     booted)
         booted
@@ -106,11 +121,14 @@ case "$1" in
     open_container)
         openContainer $2 $3
         ;;
-    getenv)
+    get_env)
         getEnvironmentVariable $2
         ;;
-    openurl)
+    open_url)
         openUrl $2
+        ;;
+    add_media)
+        addMedia $2
         ;;
     *)  # If we can't determine the proper argument, just print help.
         printHelp >&2
