@@ -1,0 +1,119 @@
+#!/usr/bin/env zsh
+
+set -e
+
+#######################################
+# Print the help message and exit.
+# Globals:
+#   ZSH_ARGZERO
+# Arguments:
+#   None
+# Outputs:
+#   Writes help message to stdout.
+#######################################
+function printHelp() {
+    echo "OVERVIEW: Perform operations related to iOS simulators.\n"
+
+    echo "Usage: $ZSH_ARGZERO:t <options> <subcommand>\n"
+    echo "Available commands:"
+    echo
+    echo "  booted                Prints the UUIDs of the currently booted simulators"
+    echo "  delete_all_devices    Remove all simulator devices"
+    echo "  open_container        Opens an app container for the currently booted simulators in the Finder"
+    echo "  getenv                Prints the value of an environment variable from the booted simulator"
+    echo "  openurl               Opens a URL in the booted simulator"
+}
+
+##############################################################
+# Generate a list of booted simulators and return their UUIDs.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Outputs:
+#   A list of UUIDs of the currently booted simulators.
+##############################################################
+function booted {
+    xcrun simctl list devices | grep "Booted" | egrep -o -i "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    exit 0
+}
+
+##############################################################
+# Remove all simulators from the system.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Outputs:
+#   0 if all simulators were deleted, non-zero on error.
+##############################################################
+function removeAllSimulators {
+    xcrun simctl list | egrep -o -i '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | xargs -L1 xcrun simctl delete
+    exit 0
+}
+
+###########################################################################
+# Get the path of the installed app's container and open it in the Finder.
+# Globals:
+#   None
+# Arguments:
+#   The app bundle identifier
+#   The optional container type to open. Defaults to "app".
+#       app                 The .app bundle
+#       data                The application's data container
+#       groups              The App Group containers
+#       <group identifier>  A specific App Group container
+# Outputs:
+#   None
+###########################################################################
+function openContainer {
+    open -R $(xcrun simctl get_app_container $(sim booted) $@)
+}
+
+###########################################################################
+# Print an environment variable from the booted devices.
+# Globals:
+#   None
+# Arguments:
+#   The environment variable name
+# Outputs:
+#   None
+###########################################################################
+function getEnvironmentVariable {
+    xcrun simctl getenv $(sim booted) $@
+}
+
+###########################################################################
+# Open the passed in URL on the the booted devices.
+# Globals:
+#   None
+# Arguments:
+#   The URL to open in the booted simulators.
+# Outputs:
+#   None
+###########################################################################
+function openUrl {
+    xcrun simctl openurl $(sim booted) $@
+}
+
+case "$1" in
+    booted)
+        booted
+        ;;
+    delete_all_devices)
+        removeAllSimulators
+        ;;
+    open_container)
+        openContainer $2 $3
+        ;;
+    getenv)
+        getEnvironmentVariable $2
+        ;;
+    openurl)
+        openUrl $2
+        ;;
+    *)  # If we can't determine the proper argument, just print help.
+        printHelp >&2
+        exit 1
+        ;;
+esac
