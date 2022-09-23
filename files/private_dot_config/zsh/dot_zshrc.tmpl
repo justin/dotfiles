@@ -3,8 +3,6 @@
 #
 # Shut up and don't beep on error
 setopt no_beep
-# Print a warning message when a global parameter is created in a function by an assignment
-setopt warn_create_global
 # Offer to fix spelling fuckups for commands
 setopt correct
 # Offer to fix spelling fuckups for arguments
@@ -41,8 +39,10 @@ fi
 # https://olivierlacan.com/posts/cd-is-wasting-your-time/
 [ -f {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh ] && . {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh
 
-# iTerm 2 Integration
-test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2_shell_integration.zsh"
+# Keep this at the end
+if [[ -e "$HOME/.cache/iterm2/iterm2_shell_integration.zsh" ]]; then
+  source "$HOME/.cache/iterm2/iterm2_shell_integration.zsh" || true
+fi
 
 {{ if .pff }}
 # Source asdf.
@@ -50,4 +50,6 @@ test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2
 if [ -f $(brew --prefix asdf)/libexec/asdf.sh ]; then
   source $(brew --prefix asdf)/libexec/asdf.sh
 fi
+
+export PFF_API_KEY=B4A2865B-8511-40DC-A942-33DD1140D55A
 {{ end }}

@@ -18,3 +18,5 @@ command script import "~/Library/Application Support/Kaleidoscope/lldb_ksdiff.py
 # Reveal / LLDB Integration
 # https://support.revealapp.com/hc/en-us/articles/4403215920793
 command script import "~/Library/Application Support/Reveal/RevealServerCommands.py"
+
+command script import "~/.local/share/xcode/lldb-scripts/lldb_commands/dslldb.py"
