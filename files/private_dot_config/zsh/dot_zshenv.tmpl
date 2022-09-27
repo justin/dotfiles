@@ -44,9 +44,6 @@ if [[ -a $HOME/.localrc ]]; then
 fi
 
 {{- if eq .chezmoi.os "darwin" }}
-# ===== GPG =====
-export GPG_TTY="$(tty)"
-
 # ===== Xcode =====
 export XCODES_USERNAME={{ .email | quote }}
 export XCODE_USER_DATA=$LIBRARY_HOME/Developer/Xcode/UserData

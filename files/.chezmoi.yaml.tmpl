@@ -32,9 +32,6 @@ data:
     prefix: "/home/linuxbrew/.linuxbrew"
 {{- end }}
 
-  gpg:
-    default_key: 09073F89FE030A19
-
 {{ if eq .chezmoi.os "darwin" }}
   macos:
     # The preferred dock icon size for a Mac.

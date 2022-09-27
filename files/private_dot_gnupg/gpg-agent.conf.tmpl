@@ -1,7 +1,0 @@
-{{- if eq .chezmoi.os "darwin" }}
-# Connects gpg-agent to the macOS keychain via the brew-installed
-# pinentry program from GPGtools. This is the macOS 'magic sauce',
-# allowing the gpg key's passphrase to be stored in the login
-# keychain, enabling automatic key signing.
-pinentry-program {{ env "HOMEBREW_PREFIX" }}/bin/pinentry-mac
-{{- end }}
