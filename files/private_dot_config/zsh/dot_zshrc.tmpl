@@ -29,7 +29,11 @@ fi
 
 # AutoJump
 # https://olivierlacan.com/posts/cd-is-wasting-your-time/
+{{ if eq .chezmoi.os "linux" }}
+[ -f /usr/share/autojump/autojump.sh ] && . /usr/share/autojump/autojump.sh
+{{ else }}
 [ -f {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh ] && . {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh
+{{- end -}}
 
 # Keep this at the end
 if [[ -e "$HOME/.cache/iterm2/iterm2_shell_integration.zsh" ]]; then
