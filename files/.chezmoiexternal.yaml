@@ -6,6 +6,23 @@
   url: https://github.com/editorconfig/editorconfig-vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+.config/zsh/functions/_docker-compose:
+  type: file
+  url: https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
+.config/zsh/functions/_docker:
+  type: file
+  url: https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
+.cache/zsh/external/zsh-syntax-highlighting:
+  type: archive
+  url: https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz
+  exact: true
+  stripComponents: 1
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
 {{ if eq .chezmoi.os "darwin" }}
 .local/share/xcode/lldb-scripts:
   type: git-repo

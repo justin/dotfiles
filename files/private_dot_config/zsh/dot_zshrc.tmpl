@@ -47,3 +47,9 @@ if [ -f $(brew --prefix asdf)/libexec/asdf.sh ]; then
   source $(brew --prefix asdf)/libexec/asdf.sh
 fi
 {{ end }}
+
+# Source zsh-syntax-highlighting extension.
+# https://github.com/zsh-users/zsh-syntax-highlighting
+if [[ -e "$HOME/.cache/zsh/external/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source "$HOME/.cache/zsh/external/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" || true
+fi
