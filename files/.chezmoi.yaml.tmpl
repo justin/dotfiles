@@ -1,5 +1,16 @@
+{{/* boolean feature tags */}}
+{{- $ephemeral := false -}}{{/* true if the machine is a cloud or VM instance */}}
+{{- $headless := false -}}{{/* true if the machine does not have a screen and keyboard */}}
+{{- "" -}}
+
 {{- $email := "" -}}
 {{- $pff := false -}} {{/* true if this machine be configured with PFF related stuff */}}
+
+{{/* detect GitHub codespaces, VSCode remote containers or Docker containers */}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "root" "ubuntu" "vscode") -}}
+{{-   $ephemeral = true -}}
+{{-   $headless = true -}}
+{{- end -}}
 
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
@@ -20,6 +31,8 @@ data:
   username: "justin"
   url: "https://justinw.me"
   pff: {{ $pff }}
+  ephemeral: {{ $ephemeral }}
+  headless: {{ $headless }}
 
   homebrew:
 {{- if eq .chezmoi.os "darwin" }}
