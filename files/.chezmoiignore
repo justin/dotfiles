@@ -7,12 +7,14 @@ functions
 
 {{- if ne .chezmoi.os "darwin" }}
 .lldbinit
-bin/darwin
+.local/bin/darwin
 .chezmoiscripts/darwin
 .config/iterm2
 .config/macos
+.ssh
 {{- end }}
 
 {{- if not .pff }}
 .asdf
+.config/asdf
 {{ end}}
