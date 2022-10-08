@@ -15,7 +15,11 @@
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
 {{- else -}}
-{{-   $email = promptString "What is your email address?" $email -}}
+  {{- if stdinIsATTY -}}
+    {{-   $email = promptString "What is your email address?" $email -}}
+  {{- else -}}
+    {{-   $email = "justin@users.noreply.github.com" -}}
+  {{- end -}}
 {{- end -}}
 
 {{- if eq .chezmoi.os "darwin" -}}
