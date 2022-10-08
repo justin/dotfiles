@@ -73,8 +73,10 @@ export VIMINIT="set nocp | source ${CONFIG_HOME:-$HOME/.config}/vim/vimrc"
 # ===== SSH =====
 export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 
+{{- if and (not .headless) (not .ephemeral) -}}
 # ===== GitHub Access =====
 export GITHUB_TOKEN={{ (onepasswordDetailsFields "dyumpojxxzfafhiqrbymrmegn4" "z5wqsos7ngtfs7e5dbb6nxxw64" "M4GXOUJAFFCVRACF3EDH5RWLAU").password.value }}
+{{- end -}}
 
 {{ if .pff }}
 # ===== ASDF Configuration =====
