@@ -1,3 +1,5 @@
+{{ if and (eq .chezmoi.os "darwin" "linux") (not .headless) (not .ephemeral) -}}
+
 #!/usr/bin/env zsh
 #
 # Verify that the 1Password CLI is installed and configured.
@@ -16,3 +18,5 @@ if ! [[ $(op account get --account M4GXOUJAFFCVRACF3EDH5RWLAU) ]]; then
 fi
 
 [[ $? ]] && success "Successfully signed into 1Password."
+
+{{ end -}}
