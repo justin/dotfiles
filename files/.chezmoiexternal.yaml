@@ -16,6 +16,13 @@
   url: https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+{{ if .pff }}
+.config/zsh/functions/_asdf:
+  type: file
+  url: https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
+  refreshPeriod: {{ $refreshPeriodWeek }}
+{{ end }}
+
 .cache/zsh/external/zsh-syntax-highlighting:
   type: archive
   url: https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz
