@@ -4,6 +4,7 @@
 .gitignore
 xcode
 functions
+*.idekeybindings
 
 {{- if ne .chezmoi.os "darwin" }}
 .lldbinit
