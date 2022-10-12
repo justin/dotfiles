@@ -15,12 +15,6 @@ autoload -U zmv
 # Source any file with a *.zsh extension. They have additional settings.
 for zsh_file ($ZDOTDIR/*.zsh) source $zsh_file
 
-# PyEnv
-if [[ -x $(which pyenv) ]]; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
-
 # 1Password CLI
 # https://developer.1password.com/docs/cli
 if [[ -x $(which op) ]]; then
@@ -45,6 +39,12 @@ fi
 # https://asdf-vm.com/
 if [ -f $(brew --prefix asdf)/libexec/asdf.sh ]; then
   source $(brew --prefix asdf)/libexec/asdf.sh
+fi
+{{ else }}
+# PyEnv
+if [[ -x $(which pyenv) ]]; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 {{ end }}
 
