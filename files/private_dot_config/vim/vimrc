@@ -11,3 +11,19 @@ set number
 set hlsearch
 set ignorecase
 set incsearch
+
+hi Comment ctermfg=40
+hi Constant ctermfg=39
+hi Cursor ctermbg=231
+hi CursorLine ctermbg=16
+hi Function ctermfg=48
+hi Identifier ctermfg=48
+hi NonText ctermfg=16
+hi Normal ctermbg=16 ctermfg=231
+hi Number ctermfg=99
+hi PreCondit ctermfg=172
+hi PreProc ctermfg=172
+hi Statement ctermfg=162
+hi String ctermfg=196
+hi Type ctermfg=39
+hi Visual ctermbg=16
