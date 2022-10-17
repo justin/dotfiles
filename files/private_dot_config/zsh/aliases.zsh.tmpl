@@ -83,3 +83,13 @@ alias xcode="open -a Xcode"
 
 alias gt="gittower"
 {{- end }}
+
+# If pigz is available, alias gzip/gunzip to prefer it.
+# https://zlib.net/pigz/
+(( ${+commands[pigz]} )) && alias gzip='pigz'
+(( ${+commands[unpigz]} )) && alias gunzip='unpigz'
+
+# If pbzip2 is available, alias bzip2/bunzip2 to prefer it.
+# https://github.com/cosnicolaou/pbzip2
+(( ${+commands[pbzip2]} )) && alias bzip2='pbzip2'
+(( ${+commands[pbunzip2]} )) && alias bunzip2='pbunzip2'
