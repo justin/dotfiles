@@ -75,12 +75,12 @@ export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 
 {{ if and (not .headless) (not .ephemeral) }}
 # ===== GitHub Access =====
-export GITHUB_TOKEN={{ (onepasswordDetailsFields "dyumpojxxzfafhiqrbymrmegn4" "z5wqsos7ngtfs7e5dbb6nxxw64" "M4GXOUJAFFCVRACF3EDH5RWLAU").password.value }}
+export GITHUB_TOKEN={{- onepasswordRead "op://Personal/GitHub API Token - dotfiles/credential" .onepasswordAccount | trim -}}
 {{ end }}
 
 {{ if .pff }}
 # ===== ASDF Configuration =====
 export ASDF_CONFIG_FILE=$CONFIG_HOME/asdf/asdfrc
 export ASDF_DATA_DIR=$XDG_DATA_HOME/asdf
-export PFF_API_KEY={{ (onepasswordDetailsFields "hn7zacmrqtnns4muhrja3iv6sm").credential.value }}
+export PFF_API_KEY={{- onepasswordRead "op://PFF/PFF Consumer API/credential" .onepasswordAccount | trim -}}
 {{ end }}

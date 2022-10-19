@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env zsh
 
 {{ if eq .chezmoi.os "darwin" -}}
 ssh-add --apple-use-keychain {{ .chezmoi.homeDir }}/.ssh/id_rsa
