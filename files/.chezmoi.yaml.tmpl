@@ -7,10 +7,9 @@
 {{- $pff := false -}} {{/* true if this machine be configured with PFF related stuff */}}
 
 {{- $osID := .chezmoi.os -}}
-{{- with .chezmoi.osRelease -}}
-  {{- if hasKey .chezmoi.osRelease "id" -}}
-  {{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
-  {{- end -}}
+
+{{- if not (kindIs "invalid" .chezmoi.osRelease) -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
 
 {{/* detect GitHub codespaces, VSCode remote containers or Docker containers */}}
