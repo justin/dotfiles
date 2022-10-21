@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "darwin" }}
 #!/usr/bin/env zsh
 #
 # Sets macOS defaults to match my personal prefs.
@@ -10,8 +11,6 @@ set -e
 # Loading Logging Functions
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
-
-{{- if eq .chezmoi.os "darwin" }}
 
 info "Setting up macOS how I like it. . ."
 

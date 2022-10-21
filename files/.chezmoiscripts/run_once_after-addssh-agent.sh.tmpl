@@ -2,6 +2,6 @@
 
 {{ if eq .chezmoi.os "darwin" -}}
 ssh-add --apple-use-keychain {{ .chezmoi.homeDir }}/.ssh/id_rsa
-{{ else if eq .chezmoi.os "linux" -}}
+{{ else if and (eq .chezmoi.os "linux") (not .headless) (not .ephemeral) (not .synology) -}}
 ssh-add {{ .chezmoi.homeDir }}/.ssh/id_rsa
 {{ end -}}

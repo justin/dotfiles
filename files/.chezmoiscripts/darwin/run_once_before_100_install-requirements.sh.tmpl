@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env zsh
 
 set -e
@@ -5,15 +6,14 @@ set -e
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
-{{- if eq .chezmoi.os "darwin" }}
-  info "Installing xcodes cli."
-  brew install robotsandpencils/made/xcodes
+info "Installing xcodes cli."
+brew install robotsandpencils/made/xcodes
 
-  info "Installing latest release of Xcode."
-  xcodes install --latest
+info "Installing latest release of Xcode."
+xcodes install --latest
 
-  {{- if eq .chezmoi.arch "arm64" }}
-    info "M1 Mac detected. Installing Rosetta."
-    sudo softwareupdate --install-rosetta
-  {{ end -}}
+{{- if eq .chezmoi.arch "arm64" }}
+  info "M1 Mac detected. Installing Rosetta."
+  sudo softwareupdate --install-rosetta
+{{ end -}}
 {{ end -}}
