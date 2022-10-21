@@ -1,6 +1,7 @@
 {{/* boolean feature tags */}}
 {{- $ephemeral := false -}}{{/* true if the machine is a cloud or VM instance */}}
 {{- $headless := false -}}{{/* true if the machine does not have a screen and keyboard */}}
+{{- $synology := false -}}{{/* true if the machine being installed on is a Synology NAS */}}
 {{- "" -}}
 
 {{- $email := "" -}}
@@ -32,6 +33,10 @@
 {{-   $pff = promptBool "Do you want to configure this machine with PFF related stuff?" $pff -}}
 {{- end -}}
 
+{{- if and (eq .chezmoi.os "linux") (contains "/syno/" (env "PATH")) -}}
+  {{- $synology = true -}}
+{{- end -}}
+
 ################################
 # dot data
 ################################
@@ -43,21 +48,17 @@ data:
   url: "https://justinw.me"
   pff: {{ $pff }}
   ephemeral: {{ $ephemeral }}
+  synology: {{ $synology }}
   headless: {{ $headless }}
   osid: {{ $osID | quote }}
 
-  homebrew:
 {{- if eq .chezmoi.os "darwin" }}
+  homebrew:
   {{- if eq .chezmoi.arch "arm64" }}
     prefix: "/opt/homebrew"
   {{- else }}
     prefix: "/usr/local"
   {{ end }}
-{{ else }}
-    prefix: "/home/linuxbrew/.linuxbrew"
-{{- end }}
-
-{{ if eq .chezmoi.os "darwin" }}
   macos:
     # The preferred dock icon size for a Mac.
     dock_tile_size: {{ if eq .chezmoi.hostname "mbp" }}48{{ else }}80{{ end }}
@@ -69,5 +70,8 @@ data:
 # chezmoi configuration
 ################################
 
+{{ if .synology }}
+scriptTempDir: "~/tmp"
+{{ end }}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 format: yaml
