@@ -33,10 +33,10 @@ fpath=(
 # (N) == only if exists
 typeset -U path   # Prevent duplicates within search paths
 path=(
-  {{ .homebrew.prefix }}/bin(N)
   $CONFIG_HOME/pypoetry/bin(N)
   $HOME/.local/bin
   {{- if eq .chezmoi.os "darwin" }}
+  {{ .homebrew.prefix }}/bin(N)
   $HOME/.local/bin/darwin
   {{ else }}
   $HOME/.local/bin/linux(N)
