@@ -30,6 +30,12 @@
   stripComponents: 1
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+.cache/zsh/external/zsh-autosuggestions:
+  type: git-repo
+  url: https://github.com/zsh-users/zsh-autosuggestions
+  exact: true
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
 {{ if eq .chezmoi.os "darwin" }}
 .local/share/xcode/lldb-scripts:
   type: git-repo

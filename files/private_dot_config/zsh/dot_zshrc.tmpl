@@ -89,3 +89,10 @@ fi
 if [[ -e "$HOME/.cache/zsh/external/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
   source "$HOME/.cache/zsh/external/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" || true
 fi
+
+# Source zsh-autosuggestions extension.
+# https://github.com/zsh-users/zsh-autosuggestions
+if [[ -e "$HOME/.cache/zsh/external/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+  source "$HOME/.cache/zsh/external/zsh-autosuggestions/zsh-autosuggestions.zsh" || true
+fi
+
