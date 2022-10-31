@@ -22,6 +22,7 @@ export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 export ZSH_COMPDUMP=$XDG_CACHE_HOME/zsh/zcompdump-${ZSH_VERSION}
 # Prevent zsh from suggesting a large buffer.
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+export ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *"
 
 # ===== Editor of Choice =====
 {{- if eq .chezmoi.os "darwin" }}
