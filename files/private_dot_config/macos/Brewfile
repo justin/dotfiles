@@ -48,7 +48,6 @@ brew "zsh"
 # Cask Apps
 cask "1password"
 cask "adobe-creative-suite"
-cask "anki"
 cask "arq"
 cask "bartender"
 cask "bbedit"
