@@ -6,14 +6,13 @@
 [github]
   user = {{ .username }}
 
-{{- if not .ephemeral }}
+{{ if not .ephemeral }}
 # Always use SSH authentication, even if the remote URL specifies https:// or git://
 # via: http://engineering.pivotal.io/post/git-push-instead-of/
 [url "git@github.com:"]
   pushInsteadOf = https://github.com/
   pushInsteadOf = git://github.com/
-{{- end -}}
-
+{{ end }}
 ########################################################################
 
 [init]
@@ -81,6 +80,7 @@
   format = ssh
 [gpg "ssh"]
   defaultKeyCommand = ssh-add -L
+  allowedSignersFile = ~/.ssh/allowed_signers
 [tag]
   gpgsign = true
 [commit]
