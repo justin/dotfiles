@@ -1,4 +1,11 @@
 #!/usr/bin/env zsh
+#
+# Convenience wrapper around the simctl command to perform operations related to iOS simulators.
+# Author: Justin Williams (@justin)
+#
+# Usage: sim <options> <subcommand>
+#
+# This script is designed to work with ZSH. ymmv with other shells.
 
 set -e
 
@@ -18,11 +25,46 @@ function printHelp() {
     echo "Available commands:"
     echo
     echo "  booted                Prints the UUIDs of the currently booted simulators"
+    echo "  create_device         Create a new simulator with the latest SDK (iphone or ipad)"
     echo "  delete_all_devices    Remove all simulator devices"
     echo "  open_container        Opens an app container for the currently booted simulators in the Finder"
-    echo "  get_env                Prints the value of an environment variable from the booted simulator"
-    echo "  open_url               Opens a URL in the booted simulator"
+    echo "  get_env               Prints the value of an environment variable from the booted simulator"
+    echo "  open_url              Opens a URL in the booted simulator"
     echo "  add_media             Adds a media file to the booted simulator"
+}
+
+##############################################################
+# Create a new simulator with currently selected SDK (via `xcode-select`).
+# Globals:
+#   None
+# Arguments:
+#   The simulator type to create. Defaults to "iphone".
+#       iphone      Create an iPhone simulator (default).
+#       ipad        Create an iPad simulator (default).
+#   The optional name of the simulator to create. Defaults to the device type and runtime version.
+# Outputs:
+#   0 if the simulator was created, non-zero on error.
+##############################################################
+function create_device {
+    local os=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-16-" | tail -1 | awk '{print $2}'`
+    local device_type="iPhone 14"
+    local device_os="iOS ${os}"
+    local device_name="${device_type} (${device_os})"
+    local runtime=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-16-" | tail -1 | awk '{print $7}'`
+
+    if [[ $1 == "ipad" ]]; then
+        device_type="iPad Air (5th generation)"
+        device_os="iPadOS ${os}"
+        device_name="${device_type} (${device_os})"
+    fi
+
+    if [[ $2 != "" ]]; then
+        device_name="$2"
+    fi
+
+    echo "Creating ${device_name}..."
+    xcrun simctl create "$device_name" "$device_type" "$runtime"
+    exit 0
 }
 
 ##############################################################
@@ -49,7 +91,7 @@ function booted {
 #   0 if all simulators were deleted, non-zero on error.
 ##############################################################
 function removeAllSimulators {
-    xcrun simctl list | egrep -o -i '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | xargs -L1 xcrun simctl delete
+    xcrun simctl delete all
     exit 0
 }
 
@@ -114,6 +156,9 @@ function addMedia {
 case "$1" in
     booted)
         booted
+        ;;
+    create_device)
+        create_device $2 $3
         ;;
     delete_all_devices)
         removeAllSimulators
