@@ -1,0 +1,40 @@
+{{- if .pff -}}
+#!/usr/bin/env zsh
+#
+# Add Poetry plugins and install latest versions of each tool.
+
+set -e
+
+# Loading Logging Functions
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+if [[ `which asdf` > /dev/null ]]; then
+  success "asdf installed. . ."
+elif [ -f $(brew --prefix asdf)/libexec/asdf.sh ]; then
+  info "Sourcing asdf. . ."
+  source $(brew --prefix asdf)/libexec/asdf.sh
+else
+  error "asdf not installed. . ."
+  exit 1
+fi
+
+info "Configuring asdf. . ."
+
+if [[ `asdf plugin list | grep python` > /dev/null ]]; then
+  info "Updating asdf plugins. . ."
+  asdf plugin-update --all > /dev/null
+else
+  info "Installing asdf plugins. . ."
+  asdf plugin-add python
+  asdf plugin-add ruby
+  asdf plugin-add yarn
+  asdf plugin-add nodejs
+  asdf plugin-add poetry https://github.com/asdf-community/asdf-poetry.git
+fi
+
+info "Installing asdf tools. . ."
+asdf install
+
+success "asdf configured!"
+{{- end -}}
