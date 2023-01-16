@@ -10,6 +10,7 @@
       "Blur Radius" : 16.080635233128323,
       "Blur" : true,
       "Show Status Bar": true,
+      "Custom Window Title" : "\\(currentTab.currentSession.path)",
       "Silence Bell": false,
       "Use Bright Bold": true,
       "Unlimited Scrollback": true,
