@@ -49,9 +49,13 @@
   quotepath = false
   trustctime = false
 
-{{- if eq .chezmoi.os "darwin" }}
 [credential]
-  helper = /usr/local/share/gcm-core/git-credential-manager-core
+	helper =
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+
+{{- if eq .chezmoi.os "darwin" }}
 [difftool "Kaleidoscope"]
   cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff "localizablestrings"]
