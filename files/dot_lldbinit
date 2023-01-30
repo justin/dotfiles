@@ -1,4 +1,26 @@
 settings set prompt [lldb]$
+settings set target.language swift
+
+# Easily get info about a view controller or view in AppKit.
+# Example: po $vc(0x128027ad400)
+# https://www.merowing.info/swift-debugging-tips/
+breakpoint set -r NSWindow.initialFirstResponder --one-shot true --auto-continue true
+breakpoint command add
+e import AppKit
+e import Foundation
+e func $vc<T>(_ input: T) -> NSViewController { unsafeBitCast(input, to: NSViewController.self) }
+e func $view<T>(_ input: T) -> NSView { unsafeBitCast(input, to: NSView.self) }
+DONE
+
+# Easily get info about a view controller or view in UIKit.
+# Example: po $vc(0x128027ad400)
+breakpoint set -n UIApplicationMain --one-shot true --auto-continue true
+breakpoint command add
+e import UIKit
+e import Foundation
+e func $vc<T>(_ input: T) -> UIViewController { unsafeBitCast(input, to: UIViewController.self) }
+e func $view<T>(_ input: T) -> UIView { unsafeBitCast(input, to: UIView.self) }
+DONE
 
 # Quickly import UIKit or Foundation.
 # http://furbo.org/2015/05/11/an-import-ant-change-in-xcode/
