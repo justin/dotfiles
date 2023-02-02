@@ -35,9 +35,9 @@ command alias swiftuis expr import Foundation
 
 # Kaleidoscope / LLDB Integration
 # https://blog.kaleidoscope.app/2021/02/22/xcode-debugger-integration/
-command script import "~/Library/Application Support/Kaleidoscope/lldb_ksdiff.py"
+command script import ~/Library/Application\ Support/Kaleidoscope/lldb_ksdiff.py
 
 # Reveal / LLDB Integration
-command script import "~/Library/Application Support/Reveal/RevealLLDBCommands/reveallldb"
+command script import ~/Library/Application\ Support/Reveal/RevealLLDBCommands/reveallldb
 
 command script import "~/.local/share/xcode/lldb-scripts/lldb_commands/dslldb.py"
