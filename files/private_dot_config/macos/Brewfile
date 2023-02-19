@@ -1,8 +1,7 @@
 # Taps
-tap "homebrew/core"
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-fonts"
+tap "homebrew/cask-drivers"
 tap "iina/homebrew-mpv-iina"
 tap "microsoft/git"
 tap "majd/repo", "https://github.com/majd/homebrew-repo.git"                            # ipatool
@@ -80,6 +79,7 @@ cask "reveal"
 cask "screens-connect"
 cask "script-debugger"
 cask "signal"
+cask "sony-ps-remote-play"
 cask "subler"
 cask "tableplus"
 cask "tower"
