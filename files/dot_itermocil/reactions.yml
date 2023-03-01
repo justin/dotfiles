@@ -1,0 +1,9 @@
+windows:
+  - name: Reactions - CloudKit Console
+    root: ~/src/justin/reactions-app
+    layout: tiled
+    panes:
+      - log stream --predicate 'process = "Reactions" AND (sender = "Core Data" or sender = "CloudKit")'
+      - log stream --predicate 'process = "dasd" AND message contains[cd] "com.apple.coredata.cloudkit.activity" AND message contains[cd] "A4BA356E-F38F-402C-B28E-C9BC39CBFC1D"'
+      - log stream --predicate 'process = "apsd" AND message contains [cd] "Reactions"'
+      - log stream --predicate 'process = "cloudd" AND message contains [cd] "iCloud.com.justinwme.reactions.app"'
