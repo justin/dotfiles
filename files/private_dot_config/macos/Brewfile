@@ -72,7 +72,6 @@ cask "omnigraffle"
 cask "openinterminal"
 cask "paw"
 cask "proxyman"
-cask "rocket"
 cask "permute"
 cask "plistedit-pro"
 cask "raycast"
@@ -130,6 +129,7 @@ mas "PLIST Editor", id: 1157491961
 mas "PDF Expert", id: 1055273043
 mas "PocketTube for Safari", id: 1533703891
 mas "Renamer 6", id: 1460229011
+mas "RocketSim for Xcode Simulator", id: 1504940162
 mas "Save to Upnext", id: 1583423832
 mas "Screens", id: 1224268771
 mas "Slack", id: 803453959
