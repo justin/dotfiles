@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+# Note: This script is intended to be run from the root of the project and assumes that you have
+# the react-native-pffkit repo adjacent to it. If you don't, you'll need to update the path below.
+
+set -e
+
+# Run build-xcframework.sh
+local source_dir="$HOME/src/pro-football-focus/pffkit"
+local react_project_dir="$HOME/src/pro-football-focus/react-native-pffkit"
+
+pushd "$source_dir"
+"$source_dir/Scripts/build-xcframework.sh"
+
+echo "Copying the xcframework to the react-native-pffkit project"
+tar -xzf "$source_dir/build/PFFKit.xcframework.tar.gz" -C "$react_project_dir/ios/vendor"
+popd
+
+# Bootstrap the new xcframework
+pushd "$react_project_dir"
+yarn bootstrap
+popd

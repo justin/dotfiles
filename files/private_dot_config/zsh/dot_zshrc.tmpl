@@ -41,6 +41,10 @@ path=(
   {{ else }}
   $HOME/.local/bin/linux(N)
   {{ end -}}
+
+  {{- if .pff }}
+  $HOME/.local/bin/pff
+  {{ end -}}
   $PYENV_ROOT/bin(N)
   $POETRY_HOME/bin(N)
   /usr/local/sbin

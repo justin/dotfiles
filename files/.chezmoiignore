@@ -18,4 +18,5 @@ functions
 {{- if not .pff }}
 .asdf
 .config/asdf
+.local/bin/pff
 {{ end}}
