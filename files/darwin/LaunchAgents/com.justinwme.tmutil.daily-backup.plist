@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.justinwme.tmutil.daily-backup</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/tmutil</string>
+    <string>startbackup</string>
+    <string>--auto</string>
+    <string>--rotation</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict>
+      <key>Hour</key>
+      <integer>00</integer>
+      <key>Minute</key>
+      <integer>59</integer>
+    </dict>
+  </array>
+</dict>
+</plist>

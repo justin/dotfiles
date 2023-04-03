@@ -1,0 +1,21 @@
+{{- if eq .chezmoi.hostname "Studio" -}}
+#!/usr/bin/env zsh
+#
+# Configure Time Machine to run nightly at 1am.
+# via https://geekanddad.wordpress.com/2022/02/07/automatic-once-a-day-time-machine-backups/#addendum-using-crontab
+
+set -e
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+# Copy the plist file to the correct location.
+sudo cp {{ joinPath .chezmoi.sourceDir "darwin/LaunchAgents/*" }} ~/Library/LaunchAgents
+
+for plist in ~/Library/LaunchAgents/com.justinwme.*; do
+  launchctl bootstrap gui/501/ "$plist"
+done
+
+sudo pmset repeat wake MTWRFSU 00:57:00
+
+{{ end -}}
