@@ -1,3 +1,7 @@
+{{- if eq .chezmoi.os "darwin" }}
+Include ~/.orbstack/ssh/config
+{{ end }}
+
 Host *
   IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
   AddKeysToAgent yes
