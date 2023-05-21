@@ -85,6 +85,12 @@ alias symbolicate="$DEVELOPER_DIR/Contents/SharedFrameworks/DVTFoundation.framew
 alias xcode="open -a Xcode"
 
 alias gt="gittower"
+
+# if VS Code - Insiders is installed, alias the `code` CLI to it.
+if [[ -x "$(command -v code-insiders)" ]]; then
+  alias ci="code-insiders"
+  alias code="code-insiders"
+fi
 {{- end }}
 
 # If pigz is available, alias gzip/gunzip to prefer it.
