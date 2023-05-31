@@ -10,7 +10,7 @@
 	</array>
 	<key>IDECodeSnippetContents</key>
 	<string>/// &lt;#Documentation#&gt;
-func test&lt;#Name#&gt;() throws {
+func test&lt;#Name#&gt;() async throws {
     &lt;#Statements#&gt;
 }
   </string>
