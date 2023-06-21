@@ -76,6 +76,9 @@ export VIMINIT="set nocp | source ${CONFIG_HOME:-$HOME/.config}/vim/vimrc"
 # ===== SSH =====
 export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 
+# ===== NPM =====
+export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
+
 {{ if and (not .headless) (not .ephemeral) (not .synology) }}
 # ===== GitHub Access =====
 export GITHUB_TOKEN={{- onepasswordRead "op://Personal/GitHub API Token - dotfiles/credential" .onepasswordAccount | trim -}}
