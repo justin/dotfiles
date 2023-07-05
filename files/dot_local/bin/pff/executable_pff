@@ -7,7 +7,8 @@ set -e
 
 # Run build-xcframework.sh
 local source_dir="$HOME/src/pro-football-focus/pffkit"
-local react_project_dir="$HOME/src/pro-football-focus/react-native-pffkit"
+local js_pffkit_dir="$HOME/src/pro-football-focus/js-pffkit"
+local react_project_dir="$js_pffkit_dir/packages/react-native"
 
 pushd "$source_dir"
 "$source_dir/Scripts/build-xcframework.sh"
@@ -17,6 +18,6 @@ tar -xzf "$source_dir/build/PFFKit.xcframework.tar.gz" -C "$react_project_dir/io
 popd
 
 # Bootstrap the new xcframework
-pushd "$react_project_dir"
-yarn bootstrap
+pushd "$js_pffkit_dir"
+npm run ios-setup --workspace=@pro-football-focus/pffkit-react-native
 popd
