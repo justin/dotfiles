@@ -9,8 +9,14 @@ set -e
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
+# If launchctl already lists this job, then we don't need to do anything.
+if launchctl list | grep -i com.justinwme.tmutil.daily-backup >/dev/null 2>&1; then
+  success "Time Machine is already configured to run."
+  exit 0
+fi
+
 # Copy the plist file to the correct location.
-sudo cp {{ joinPath .chezmoi.sourceDir "darwin/LaunchAgents/*" }} ~/Library/LaunchAgents
+cp {{ joinPath .chezmoi.sourceDir "darwin/LaunchAgents/*" }} "$HOME/Library/LaunchAgents"
 
 for plist in ~/Library/LaunchAgents/com.justinwme.*; do
   launchctl bootstrap gui/501/ "$plist"
