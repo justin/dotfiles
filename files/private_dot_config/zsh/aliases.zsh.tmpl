@@ -90,6 +90,10 @@ alias gt="gittower"
 if [[ -x "$(command -v code-insiders)" ]]; then
   alias ci="code-insiders"
   alias code="code-insiders"
+  alias c="code-insiders"
+else
+  alias ci="code"
+  alias c="code"
 fi
 {{- end }}
 
