@@ -22,6 +22,6 @@ darwin
 .local/bin/pff
 {{ end}}
 
-{{- if or .ephemeral .headless .synology }}
+{{- if or .codespaces .synology }}
 .aws
 {{- end }}

@@ -6,7 +6,7 @@
 [github]
   user = {{ .username }}
 
-{{ if not .ephemeral }}
+{{ if not .codespaces }}
 # Always use SSH authentication, even if the remote URL specifies https:// or git://
 # via: http://engineering.pivotal.io/post/git-push-instead-of/
 [url "git@github.com:"]

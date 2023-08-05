@@ -79,7 +79,7 @@ export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 # ===== NPM =====
 export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
 
-{{ if and (not .headless) (not .ephemeral) (not .synology) }}
+{{ if and (not .codespaces) (not .synology) }}
 # ===== GitHub Access =====
 export GITHUB_TOKEN={{- onepasswordRead "op://Personal/GitHub API Token - dotfiles/credential" .onepasswordAccount | trim -}}
 {{ end }}

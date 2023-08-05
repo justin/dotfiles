@@ -1,23 +1,11 @@
 {{/* boolean feature tags */}}
-{{- $ephemeral := false -}}{{/* true if the machine is a cloud or VM instance */}}
-{{- $headless := false -}}{{/* true if the machine does not have a screen and keyboard */}}
-{{- $synology := false -}}{{/* true if the machine being installed on is a Synology NAS */}}
-{{- "" -}}
+
+{{/* detect GitHub codespaces, VSCode remote containers or Docker containers */}}
+{{- $codespaces := env "CODESPACES" | not | not -}}
+{{- $synology := and (eq .chezmoi.os "linux") (contains "/syno/" (env "PATH")) -}} {{/* true if the machine being installed on is a Synology NAS */}}
 
 {{- $email := "" -}}
 {{- $pff := false -}} {{/* true if this machine be configured with PFF related stuff */}}
-
-{{- $osID := .chezmoi.os -}}
-
-{{- if not (kindIs "invalid" .chezmoi.osRelease) -}}
-{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
-{{- end -}}
-
-{{/* detect GitHub codespaces, VSCode remote containers or Docker containers */}}
-{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "root" "ubuntu" "vscode") -}}
-{{-   $ephemeral = true -}}
-{{-   $headless = true -}}
-{{- end -}}
 
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
@@ -33,10 +21,6 @@
 {{-   $pff = promptBool "Do you want to configure this machine with PFF related stuff?" $pff -}}
 {{- end -}}
 
-{{- if and (eq .chezmoi.os "linux") (contains "/syno/" (env "PATH")) -}}
-  {{- $synology = true -}}
-{{- end -}}
-
 ################################
 # dot data
 ################################
@@ -47,10 +31,8 @@ data:
   onepasswordAccount: "M4GXOUJAFFCVRACF3EDH5RWLAU"
   url: "https://justinw.me"
   pff: {{ $pff }}
-  ephemeral: {{ $ephemeral }}
+  codespaces: {{ $codespaces }}
   synology: {{ $synology }}
-  headless: {{ $headless }}
-  osid: {{ $osID | quote }}
 
 {{- if eq .chezmoi.os "darwin" }}
   homebrew:
