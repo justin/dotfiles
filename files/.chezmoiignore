@@ -24,4 +24,5 @@ darwin
 
 {{- if or .codespaces .synology }}
 .aws
+.ssh
 {{- end }}
