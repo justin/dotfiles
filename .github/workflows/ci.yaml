@@ -1,0 +1,19 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  clone-and-install:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/vscode/devcontainers/base:ubuntu
+      env:
+        CODESPACES: true
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./install.sh
+      - name: chezmoi data
+        run: '"$HOME/bin/chezmoi" data'
