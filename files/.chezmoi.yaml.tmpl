@@ -1,24 +1,24 @@
-{{/* boolean feature tags */}}
+{{- /* Checks if running interactively, which is not the case for GitHub Codespaces */ -}}
+{{- $interactive:= stdinIsATTY -}}
 
-{{/* detect GitHub codespaces, VSCode remote containers or Docker containers */}}
-{{- $codespaces := env "CODESPACES" | not | not -}}
-{{- $synology := and (eq .chezmoi.os "linux") (contains "/syno/" (env "PATH")) -}} {{/* true if the machine being installed on is a Synology NAS */}}
+{{- /* detect GitHub codespaces, VSCode remote containers or Docker containers */ -}}
+{{- $codespaces:= env "CODESPACES" | not | not -}}
+{{- $synology:= false -}}
 
-{{- $email := "" -}}
+{{- $email := "justin@users.noreply.github.com" -}}
 {{- $pff := false -}} {{/* true if this machine be configured with PFF related stuff */}}
-
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
-{{- else -}}
-  {{- if stdinIsATTY -}}
-    {{-   $email = promptString "What is your email address?" $email -}}
-  {{- else -}}
-    {{-   $email = "justin@users.noreply.github.com" -}}
-  {{- end -}}
+{{- else if $interactive -}}
+{{-   $email = promptString "What is your email address" $email -}}
 {{- end -}}
 
 {{- if eq .chezmoi.os "darwin" -}}
-{{-   $pff = promptBool "Do you want to configure this machine with PFF related stuff?" $pff -}}
+{{-   $pff = promptBool "Do you want to configure this machine with PFF related stuff" $pff -}}
+{{- end -}}
+
+{{- if $interactive -}}
+{{-   writeToStdout "💡 Tip: you can reconfigure with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
 
 ################################
@@ -52,8 +52,8 @@ data:
 # chezmoi configuration
 ################################
 
-{{ if .synology }}
+{{- if $synology -}}
 scriptTempDir: "~/tmp"
-{{ end }}
+{{- end -}}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 format: yaml
