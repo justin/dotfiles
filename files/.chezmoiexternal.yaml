@@ -6,6 +6,11 @@
   url: https://github.com/editorconfig/editorconfig-vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+.vim/pack/jww/start/vim-just:
+  type: git-repo
+  url: https://github.com/NoahTheDuke/vim-just.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
 .config/zsh/functions/_docker-compose:
   type: file
   url: https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
