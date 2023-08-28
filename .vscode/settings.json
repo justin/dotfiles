@@ -8,9 +8,8 @@
     "*.sh.tmpl": "shellscript",
     "Brewfile*": "ruby",
     ".chezmoi*": "yaml",
+    "janitor": "just"
   },
-  "cSpell.words": [
-    "chezmoi",
-  ],
-  "yaml.validate": false,
+  "cSpell.words": ["chezmoi"],
+  "yaml.validate": false
 }

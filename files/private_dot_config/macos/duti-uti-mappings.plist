@@ -7,26 +7,34 @@
 		<dict>
 			<key>DUTIBundleIdentifier</key>
 			<string>com.vladbadea.csveditor</string>
-			<key>DUTIUniformTypeIdentifier</key>
-			<string>public.comma-separated-values-text</string>
 			<key>DUTIRole</key>
 			<string>all</string>
+			<key>DUTIUniformTypeIdentifier</key>
+			<string>public.comma-separated-values-text</string>
 		</dict>
 		<dict>
 			<key>DUTIBundleIdentifier</key>
-			<string>com.vladbadea.plisteditor</string>
-			<key>DUTIUniformTypeIdentifier</key>
-			<string>com.apple.property-list</string>
+			<string>com.fatcatsoftware.pledpro</string>
 			<key>DUTIRole</key>
 			<string>all</string>
+			<key>DUTIUniformTypeIdentifier</key>
+			<string>com.apple.property-list</string>
 		</dict>
 		<dict>
 			<key>DUTIBundleIdentifier</key>
 			<string>com.colliderli.iina</string>
-			<key>DUTIUniformTypeIdentifier</key>
-			<string>public.video</string>
 			<key>DUTIRole</key>
 			<string>viewer</string>
+			<key>DUTIUniformTypeIdentifier</key>
+			<string>public.video</string>
+		</dict>
+		<dict>
+			<key>DUTIBundleIdentifier</key>
+			<string>com.readdle.PDFExpert-Mac</string>
+			<key>DUTIRole</key>
+			<string>all</string>
+			<key>DUTIUniformTypeIdentifier</key>
+			<string>com.adobe.pdf</string>
 		</dict>
 	</array>
 </dict>

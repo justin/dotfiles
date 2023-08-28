@@ -5,6 +5,8 @@ alias reload="source $ZDOTDIR/.zshrc | echo '=> ZSH profile reloaded.'"
 alias dot='chezmoi'
 alias m='micro'
 
+alias jst="$(which just) --justfile $HOME/.user.justfile" --working-directory .
+
 {{- if eq .chezmoi.os "darwin" }}
 # Homebrew
 alias brews='brew list -1'
@@ -108,6 +110,10 @@ fi
 (( ${+commands[pbzip2]} )) && alias bzip2='pbzip2'
 (( ${+commands[pbunzip2]} )) && alias bunzip2='pbunzip2'
 
+# For any recipe in my Justfile, create an alias for it.
+for recipe in `just --justfile ~/.user.justfile --summary`; do
+  alias $recipe="just --justfile ~/.user.justfile --working-directory . $recipe"
+done
 
 {{- if .pff }}
 alias jsp="code $HOME/src/pro-football-focus/js-pffkit/js-pffkit.code-workspace"

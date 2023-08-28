@@ -1,0 +1,33 @@
+set shell := ["zsh", "-cu"]
+
+vscode_bundle := "com.microsoft.VSCode"
+
+default:
+  @just --list --justfile {{justfile()}}
+
+# After a system update the Touch ID support for sudo is broken. This fixes it.
+fix-touchid:
+  @sudo `which sudo-touchid`
+
+# Periodically the UTI mappings get broken. This fixes it.
+[macos]
+fix-uti:
+  @echo "Fixing UTI mappings"
+
+  duti -s {{vscode_bundle}} md all
+  duti -s {{vscode_bundle}} json all
+  duti -s {{vscode_bundle}} txt all
+  duti -s {{vscode_bundle}} js all
+  duti -s {{vscode_bundle}} ts all
+  duti -s {{vscode_bundle}} css all
+  duti -s {{vscode_bundle}} yml all
+  duti -s {{vscode_bundle}} cfg all
+  duti -s {{vscode_bundle}} sh all
+  duti -s {{vscode_bundle}} rb all
+  duti -s {{vscode_bundle}} py all
+  duti -s com.colliderli.iina mp4 all
+  duti -s com.colliderli.iina mkv all
+  duti -s com.colliderli.iina mov all
+  duti -s com.colliderli.iina avi all
+  duti -s com.colliderli.iina m4v all
+  duti $XDG_CONFIG_HOME/macos/duti-uti-mappings.plist

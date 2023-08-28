@@ -201,31 +201,10 @@ defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
 # Set Kaleidoscope to use iTerm as the default terminal. (Use 0 for Terminal.app)
 defaults write app.kaleidoscope.v3 KALTerminalApp 1
 
-info "Setting default file extension preferences."
-
-bundle="com.microsoft.VSCode"
-if [[ -x "$(command -v code-insiders)" ]]; then
-  bundle="com.microsoft.VSCodeInsiders"
+if [[ -x $(which just) ]]; then
+  info "Setting default file extension preferences."
+  just --justfile $HOME/.local/bin/janitor fix-uti
 fi
-
-# https://superuser.com/questions/273756/how-to-change-default-app-for-all-files-of-particular-file-type-through-terminal
-duti -s $bundle md all
-duti -s $bundle json all
-duti -s $bundle txt all
-duti -s $bundle js all
-duti -s $bundle ts all
-duti -s $bundle css all
-duti -s $bundle yml all
-duti -s $bundle cfg all
-duti -s $bundle sh all
-duti -s $bundle rb all
-duti -s com.readdle.PDFExpert-Mac pdf all
-duti -s com.colliderli.iina mp4 all
-duti -s com.colliderli.iina mkv all
-duti -s com.colliderli.iina mov all
-duti -s com.colliderli.iina avi all
-duti -s com.colliderli.iina m4v all
-duti "$XDG_CONFIG_HOME/macos/duti-uti-mappings.plist"
 
 for app in "Dock" "Finder"; do
   killall "${app}" >/dev/null 2>&1

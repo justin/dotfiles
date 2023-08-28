@@ -25,6 +25,7 @@ typeset -U fpath
 # Make user functions available
 fpath=(
   $ZDOTDIR/functions
+  {{ .homebrew.prefix }}/share/zsh/site-functions
   $fpath
 )
 
@@ -98,4 +99,3 @@ fi
 if [[ -e "$HOME/.cache/zsh/external/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
   source "$HOME/.cache/zsh/external/zsh-autosuggestions/zsh-autosuggestions.zsh" || true
 fi
-
