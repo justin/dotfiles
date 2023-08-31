@@ -25,7 +25,9 @@ typeset -U fpath
 # Make user functions available
 fpath=(
   $ZDOTDIR/functions
+  {{- if eq .chezmoi.os "darwin" }}
   {{ .homebrew.prefix }}/share/zsh/site-functions
+  {{ end -}}
   $fpath
 )
 
