@@ -203,7 +203,7 @@ defaults write app.kaleidoscope.v3 KALTerminalApp 1
 
 if [[ -x $(which just) ]]; then
   info "Setting default file extension preferences."
-  just --justfile $HOME/.local/bin/janitor fix-uti
+  just --justfile $HOME/.user.justfile fix-uti
 fi
 
 for app in "Dock" "Finder"; do
