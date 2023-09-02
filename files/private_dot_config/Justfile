@@ -5,13 +5,12 @@ vscode_bundle := "com.microsoft.VSCode"
 default:
   @just --list --justfile {{justfile()}}
 
-# After a system update the Touch ID support for sudo is broken. This fixes it.
-fix-touchid:
+[macos]
+fix-touchid: # After a system update the Touch ID support for sudo is broken. This fixes it.
   @sudo `which sudo-touchid`
 
-# Periodically the UTI mappings get broken. This fixes it.
 [macos]
-fix-uti:
+fix-uti: # Periodically the UTI mappings get broken. This fixes it.
   @echo "Fixing UTI mappings"
 
   duti -s {{vscode_bundle}} md all
