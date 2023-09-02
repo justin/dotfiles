@@ -14,7 +14,6 @@ darwin
 .config/iterm2
 .config/macos
 .ssh
-.user.justfile
 {{- end }}
 
 {{- if not .pff }}

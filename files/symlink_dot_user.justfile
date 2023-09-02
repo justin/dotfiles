@@ -1,1 +1,1 @@
-.config/macos/Justfile
+.config/Justfile
