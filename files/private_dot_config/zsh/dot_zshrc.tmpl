@@ -12,7 +12,6 @@ setopt extended_glob
 # zmv support
 autoload -U zmv
 
-
 # ===== Customize $fignore =====
 fignore=(
   .DS_Store
@@ -63,13 +62,11 @@ if [[ -x $(which op) ]]; then
   eval "$(op completion zsh)"; compdef _op op
 fi
 
-# AutoJump
-# https://olivierlacan.com/posts/cd-is-wasting-your-time/
-{{ if eq .chezmoi.os "linux" }}
-[ -f /usr/share/autojump/autojump.sh ] && . /usr/share/autojump/autojump.sh
-{{ else }}
-[ -f {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh ] && . {{ env "HOMEBREW_PREFIX" }}/etc/profile.d/autojump.sh
-{{- end -}}
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+
+if [[ -x $(which zoxide) ]]; then
+  eval "$(zoxide init zsh --cmd cd)"
+fi
 
 # Keep this at the end
 if [[ -e "$HOME/.cache/iterm2/iterm2_shell_integration.zsh" ]]; then
