@@ -22,9 +22,9 @@ zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path $ZSH_COMPDUMP
 
-# compinit - Autocompletion
-autoload -U compinit; compinit
-compinit -i
+# Suggested by zsh-autocomplete
+# https://github.com/marlonrichert/zsh-autocomplete
+zstyle '*:compinit' arguments -D -i -u -C -w
 
 zmodload -i zsh/complist
 

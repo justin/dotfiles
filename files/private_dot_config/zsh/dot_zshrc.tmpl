@@ -56,6 +56,15 @@ path=(
 # Source any file with a *.zsh extension. They have additional settings.
 for zsh_file ($ZDOTDIR/*.zsh) source $zsh_file
 
+# Source zsh-autocomplete
+# https://github.com/marlonrichert/zsh-autocomplete
+if [[ -e "$HOME/.cache/zsh/external/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]]; then
+  {{- if eq .chezmoi.os "linux" }}
+  skip_global_compinit=1
+  {{ end }}
+  source "$HOME/.cache/zsh/external/zsh-autocomplete/zsh-autocomplete.plugin.zsh" || true
+fi
+
 # 1Password CLI
 # https://developer.1password.com/docs/cli
 if [[ -x $(which op) ]]; then

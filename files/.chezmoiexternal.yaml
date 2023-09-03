@@ -35,6 +35,13 @@
   stripComponents: 1
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+.cache/zsh/external/zsh-autocomplete:
+  type: git-repo
+  url: https://github.com/marlonrichert/zsh-autocomplete
+  exact: true
+  stripComponents: 1
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
 {{ if not .synology }}
 .cache/zsh/external/zsh-autosuggestions:
   type: git-repo
