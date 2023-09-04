@@ -30,3 +30,8 @@ fix-uti: # Periodically the UTI mappings get broken. This fixes it.
   duti -s com.colliderli.iina avi all
   duti -s com.colliderli.iina m4v all
   duti $XDG_CONFIG_HOME/macos/duti-uti-mappings.plist
+
+[macos]
+install-sdk platform='ios': # Install an Xcode SDK for a given platform: ios, macos, watchos, tvos
+ @echo "Installing SDK {{platform}}"
+ xcodebuild -downloadPlatform {{platform}}
