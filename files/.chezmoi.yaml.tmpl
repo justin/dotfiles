@@ -35,14 +35,15 @@ data:
   codespaces: {{ $codespaces }}
   synology: {{ $synology }}
 
-{{- if eq .chezmoi.os "darwin" }}
   homebrew:
-  {{- if eq .chezmoi.arch "arm64" }}
+{{- if eq .chezmoi.os "darwin" }}
     prefix: "/opt/homebrew"
-  {{- else }}
-    prefix: "/usr/local"
-  {{ end }}
-  macos:
+{{- else }}
+    prefix: "/home/linuxbrew/.linuxbrew"
+{{ end -}}
+
+{{- if eq .chezmoi.os "darwin" }}
+   macos:
     # The preferred dock icon size for a Mac.
     dock_tile_size: {{ if eq .chezmoi.hostname "mbp" }}48{{ else }}80{{ end }}
     # The number of minutes until a Mac should go to sleep.

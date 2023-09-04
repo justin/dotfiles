@@ -42,6 +42,8 @@ path=(
   $HOME/.local/bin/darwin
   {{ else }}
   $HOME/.local/bin/linux(N)
+  {{ .homebrew.prefix }}/bin(N)
+  {{ .homebrew.prefix }}/sbin(N)
   {{ end -}}
 
   {{- if .pff }}

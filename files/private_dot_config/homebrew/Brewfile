@@ -1,0 +1,7 @@
+brew "fzf"
+brew "jq"
+brew "just"
+brew "less"
+brew "zoxide"
+brew "zsh"
+brew "vim"

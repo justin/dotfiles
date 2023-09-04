@@ -8,13 +8,13 @@ alias m='micro'
 alias j="$(which just) --justfile $HOME/.user.justfile" --working-directory .
 alias jst='j'
 
-{{- if eq .chezmoi.os "darwin" }}
 # Homebrew
 alias brews='brew list -1'
 alias bubo='brew update && brew outdated'
 alias bubc='brew upgrade && brew cleanup'
 alias bubu='bubo && bubc'
 
+{{- if eq .chezmoi.os "darwin" }}
 # App shortcuts
 alias typora="open -a typora"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
