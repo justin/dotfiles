@@ -10,10 +10,10 @@ info "Installing xcodes cli."
 brew install robotsandpencils/made/xcodes
 
 info "Installing latest release of Xcode."
-xcodes install --latest
+xcodes install --latest-prerelease
 
 {{- if eq .chezmoi.arch "arm64" }}
-  info "M1 Mac detected. Installing Rosetta."
-  sudo softwareupdate --install-rosetta
+info "M1 Mac detected. Installing Rosetta."
+sudo softwareupdate --install-rosetta
 {{ end -}}
 {{ end -}}
