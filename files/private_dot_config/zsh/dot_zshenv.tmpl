@@ -15,6 +15,9 @@ export CONFIG_HOME=$XDG_CONFIG_HOME
 export LIBRARY_HOME=$HOME/Library
 {{- end }}
 
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
 # ===== ZSH Customization =====
 # Where our zsh configuration is located.
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
@@ -47,22 +50,6 @@ if [[ -a $HOME/.localrc ]]; then
   source $HOME/.localrc
 fi
 
-{{- if eq .chezmoi.os "darwin" }}
-# ===== Xcode =====
-export XCODES_USERNAME={{ .email | quote }}
-export XCODE_USER_DATA=$LIBRARY_HOME/Developer/Xcode/UserData
-{{- end }}
-
-# ===== Homebrew =====
-# New in 3.0.0. Use the Bootsnap gem if available to build and update.
-# https://github.com/Homebrew/brew/pull/10374
-export HOMEBREW_BOOTSNAP=1
-export HOMEBREW_EDITOR=$EDITOR
-export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/homebrew/Brewfile"
-
-# Ensure we explicitly set all homebrew related environment variables.
-eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
-
 # ===== Python =====
 export PIP_CONFIG_FILE=$CONFIG_HOME/pip/pip.conf
 export PYENV_ROOT=$CONFIG_HOME/pyenv
@@ -86,8 +73,6 @@ export GITHUB_TOKEN={{- onepasswordRead "op://Personal/GitHub API Token - dotfil
 {{ end }}
 
 {{ if .pff }}
-# ===== ASDF Configuration =====
-export ASDF_CONFIG_FILE=$CONFIG_HOME/asdf/asdfrc
-export ASDF_DATA_DIR=$XDG_DATA_HOME/asdf
+# ===== PFF Specific Configuration =====
 export PFF_API_KEY={{- onepasswordRead "op://PFF/PFF Consumer API/credential" .onepasswordAccount | trim -}}
 {{ end }}

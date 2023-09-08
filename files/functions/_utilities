@@ -8,3 +8,18 @@ type_exists() {
   fi
   return 1
 }
+
+# Returns true if the current operating system is Linux.
+is_linux() {
+  [[ $(uname) == "Linux" ]]
+}
+
+# Returns true if the current operating system is macOS.
+is_macos() {
+  [[ $(uname) == "Darwin" ]]
+}
+
+# Determine if a command exists on the system.
+is_cmd() {
+  command -v $1 &>/dev/null
+}

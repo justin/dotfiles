@@ -57,55 +57,7 @@ path=(
 
 # Source any file with a *.zsh extension. They have additional settings.
 for zsh_file ($ZDOTDIR/*.zsh) source $zsh_file
-
-# Source zsh-autocomplete
-# https://github.com/marlonrichert/zsh-autocomplete
-if [[ -e "$HOME/.cache/zsh/external/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]]; then
-  {{- if eq .chezmoi.os "linux" }}
-  skip_global_compinit=1
-  {{ end }}
-  source "$HOME/.cache/zsh/external/zsh-autocomplete/zsh-autocomplete.plugin.zsh" || true
-fi
-
-# 1Password CLI
-# https://developer.1password.com/docs/cli
-if [[ -x $(which op) ]]; then
-  eval "$(op completion zsh)"; compdef _op op
-fi
-
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
-
-if [[ -x $(which zoxide) ]]; then
-  eval "$(zoxide init zsh --cmd cd)"
-fi
-
-# Keep this at the end
-if [[ -e "$HOME/.cache/iterm2/iterm2_shell_integration.zsh" ]]; then
-  source "$HOME/.cache/iterm2/iterm2_shell_integration.zsh" || true
-fi
-
-{{ if .pff }}
-# Source asdf.
-# https://asdf-vm.com/
-if [ -f $(brew --prefix asdf)/libexec/asdf.sh ]; then
-  source $(brew --prefix asdf)/libexec/asdf.sh
-fi
-{{ else }}
-# PyEnv
-if [[ -x $(which pyenv) ]]; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
-{{ end }}
-
-# Source zsh-syntax-highlighting extension.
-# https://github.com/zsh-users/zsh-syntax-highlighting
-if [[ -e "$HOME/.cache/zsh/external/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
-  source "$HOME/.cache/zsh/external/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" || true
-fi
-
-# Source zsh-autosuggestions extension.
-# https://github.com/zsh-users/zsh-autosuggestions
-if [[ -e "$HOME/.cache/zsh/external/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
-  source "$HOME/.cache/zsh/external/zsh-autosuggestions/zsh-autosuggestions.zsh" || true
-fi
+for zsh_file ($ZDOTDIR/config/*.zsh) source $zsh_file
+{{- if eq .chezmoi.os "darwin" }}
+for zsh_file ($ZDOTDIR/config/macos/*.zsh) source $zsh_file
+{{ end -}}

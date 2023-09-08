@@ -1,0 +1,14 @@
+if ! is_cmd brew; then
+  return 1
+fi
+
+# New in 3.0.0. Use the Bootsnap gem if available to build and update.
+# https://github.com/Homebrew/brew/pull/10374
+export HOMEBREW_BOOTSNAP=1
+export HOMEBREW_EDITOR=$EDITOR
+export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/homebrew/Brewfile"
+
+# Ensure we explicitly set all homebrew related environment variables.
+eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
+
+[[ -e $commands[brew] ]] && export ARCHFLAGS="-arch {{ .chezmoi.arch }}"

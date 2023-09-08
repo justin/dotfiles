@@ -14,12 +14,6 @@ alias bubo='brew update && brew outdated'
 alias bubc='brew upgrade && brew cleanup'
 alias bubu='bubo && bubc'
 
-{{- if eq .chezmoi.os "darwin" }}
-# App shortcuts
-alias typora="open -a typora"
-alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
-{{- end }}
-
 # Git Stuff
 
 # Before fetching, remove any remote-tracking references that no longer exist on the remote
@@ -47,58 +41,6 @@ alias venv_create="$(which python3) -m venv .venv"
 # Unlike macOS, Linux's ls command doesn't set directory colors by default.
 # This will fix that.
 alias ls='ls --color=auto'
-{{- end }}
-
-#
-# macOS Specific
-#
-{{- if eq .chezmoi.os "darwin" }}
-# Alias to fix issue with PyEnv throwing a warning with `brew doctor`
-# https://github.com/pyenv/pyenv#homebrew-in-macos
-alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
-
-# Take the pasteboard and open it in BBEdit.
-alias bbpb='pbpaste | bbedit --clean --view-top'
-
-# Faster access to bbdif.
-alias bbd=bbdiff
-
-# If the bb command is called without an argument, launch BBEdit
-# If bb is passed a directory, cd to it and open it in BBEdit
-# If bb is passed a file, open it in BBEdit
-bb() {
-  if [[ -z "$1" ]]; then
-    bbedit --launch
-  else
-    bbedit "$1"
-    if [[ -d "$1" ]]; then
-      cd "$1"
-    fi
-  fi
-}
-
-# Easier access to the lsregister command for fiddling with Launch Services.
-alias lsregister='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister'
-
-# Flush the macOS DNS cache.
-alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
-
-# Xcode
-alias ded="rm -rf $HOME/Library/Developer/Xcode/DerivedData"
-alias symbolicate="$DEVELOPER_DIR/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash"
-alias xcode="open -a Xcode"
-
-alias gt="gittower"
-
-# if VS Code - Insiders is installed, alias the `code` CLI to it.
-if [[ -x "$(command -v code-insiders)" ]]; then
-  alias ci="code-insiders"
-  alias code="code-insiders"
-  alias c="code-insiders"
-else
-  alias ci="code"
-  alias c="code"
-fi
 {{- end }}
 
 # If pigz is available, alias gzip/gunzip to prefer it.

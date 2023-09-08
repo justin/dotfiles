@@ -2,10 +2,3 @@
 # It is basically the same as .zlogin except that it's sourced before .zshrc whereas .zlogin
 # is sourced after .zshrc
 #
-{{- if eq .chezmoi.os "darwin" }}
-# Compiling stuff on macOS
-[[ -e $commands[brew] ]] && export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
-
-# Added by OrbStack: command-line tools and integration
-source ~/.orbstack/shell/init.zsh 2>/dev/null || :
-{{- end }}
