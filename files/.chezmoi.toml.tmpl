@@ -1,0 +1,51 @@
+{{- /* Checks if running interactively, which is not the case for GitHub Codespaces */ -}}
+{{- $interactive:= stdinIsATTY -}}
+{{- /* detect GitHub codespaces, VSCode remote containers or Docker containers */ -}}
+{{- $codespaces:= env "CODESPACES" | not | not -}}
+{{- $synology:= false -}}
+
+{{- $email := promptStringOnce . "email" "What is your email address" "justin@users.noreply.github.com" -}}
+
+{{- $pff := false }}
+{{- if eq .chezmoi.os "darwin" -}}
+{{- $pff = promptBoolOnce . "pff" "Do you want to configure this machine with PFF related stuff" false -}}
+{{- end -}}
+
+{{- if stdinIsATTY -}}
+{{- writeToStdout "💡 Tip: you can reconfigure with `chezmoi init --data=false`.\n" -}}
+{{- end -}}
+
+[data]
+  name = "Justin Williams"
+  email = {{ $email | quote }}
+  username = "justin"
+  github_username = "justin"
+  onepasswordAccount = "M4GXOUJAFFCVRACF3EDH5RWLAU"
+  url = "https://justinw.me"
+  pff = {{ $pff }}
+  codespaces = {{ $codespaces }}
+  synology = {{ $synology }}
+
+[data.homebrew]
+{{- if eq .chezmoi.os "darwin" }}
+    prefix = "/opt/homebrew"
+{{- else }}
+    prefix = "/home/linuxbrew/.linuxbrew"
+{{ end -}}
+{{- if eq .chezmoi.os "darwin" }}
+
+[data.macos]
+    # The preferred dock icon size for a Mac.
+    dock_tile_size = {{ if eq .chezmoi.hostname "mbp" }}48{{ else }}80{{ end }}
+    # The number of minutes until a Mac should go to sleep.
+    sleep_minutes = {{ if eq .chezmoi.hostname "mbp" }}30{{ else }}0{{ end }}
+    # The preferred terminal width for iTerm 2
+    iterm2_width = {{ if eq .chezmoi.hostname "Studio" }}250{{ else }}150{{ end }}
+    # The preferred terminal height for iTerm 2
+    iterm2_height = {{ if eq .chezmoi.hostname "Studio" }}65{{ else }}40{{ end }}
+{{ end -}}
+{{- if $synology -}}
+scriptTempDir = "~/tmp"
+{{- end -}}
+
+sourceDir = {{ .chezmoi.sourceDir | quote }}
