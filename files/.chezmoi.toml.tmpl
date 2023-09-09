@@ -4,10 +4,14 @@
 {{- $codespaces:= env "CODESPACES" | not | not -}}
 {{- $synology:= false -}}
 
-{{- $email := promptStringOnce . "email" "What is your email address" "justin@users.noreply.github.com" -}}
+{{- $email := "justin@users.noreply.github.com" }}
+
+{{- if and (eq .chezmoi.os "darwin") ($interactive) -}}
+{{- $email = promptStringOnce . "email" "What is your email address" $email -}}
+{{- end -}}
 
 {{- $pff := false }}
-{{- if eq .chezmoi.os "darwin" -}}
+{{- if and (eq .chezmoi.os "darwin") ($interactive) -}}
 {{- $pff = promptBoolOnce . "pff" "Do you want to configure this machine with PFF related stuff" false -}}
 {{- end -}}
 
