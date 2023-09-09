@@ -1,3 +1,4 @@
+{{- if and (not .synology) (not .codespaces) -}}
 #!/usr/bin/env zsh
 #
 # Add Poetry plugins and install latest versions of each tool.
@@ -41,3 +42,4 @@ info "Installing asdf tools. . ."
 asdf install
 
 success "asdf configured!"
+{{- end -}}
