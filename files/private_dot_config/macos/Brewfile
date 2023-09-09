@@ -11,30 +11,21 @@ tap "robotsandpencils/made", "https://github.com/RobotsAndPencils/homebrew-made.
 cask_args appdir: "/Applications"
 
 cask "1password/tap/1password-cli"
-brew "aria2"
 brew "cloc"
 brew "dockutil"
 brew "duti"
 brew "ffmpeg"
-brew "gh"
-brew "git"
 cask "git-credential-manager-core"
 brew "git-lfs"
 cask "ipatool"
 brew "mas"
-brew "micro"
-brew "pbzip2"
 cask "periphery"
-brew "pigz"
 brew "pipx"
 brew "pyenv"
 brew "pyenv-virtualenv"
-brew "sqlite"
 brew "artginzburg/tap/sudo-touchid"
 brew "swiftlint"
 brew "TomAnthony/brews/itermocil"
-brew "tree"
-brew "wget"
 brew "xcbeautify"
 brew "XCTestHtmlReport/xchtmlreport/xchtmlreport"
 brew "xcodes"
@@ -121,13 +112,11 @@ mas "Peek - A Quick Look Extension", id: 1554235898
 mas "Pixeur - Screen Color Picker", id: 1507890049
 mas "PLIST Editor", id: 1157491961
 mas "PDF Expert", id: 1055273043
-mas "PocketTube for Safari", id: 1533703891
 mas "Renamer 6", id: 1460229011
 mas "RocketSim for Xcode Simulator", id: 1504940162
 mas "Save to Upnext", id: 1583423832
 mas "Screens", id: 1224268771
 mas "Slack", id: 803453959
-mas "Sourcery Pro", id: 1561780836
 mas "Soulver 3", id: 1508732804
 mas "Tailscale", id: 1475387142
 mas "Transloader", id: 572281534
