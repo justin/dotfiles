@@ -2,10 +2,14 @@
 {{- $interactive:= stdinIsATTY -}}
 {{- /* detect GitHub codespaces, VSCode remote containers or Docker containers */ -}}
 {{- $codespaces:= env "CODESPACES" | not | not -}}
-{{- $synology:= false -}}
+
+{{- /* detect my Synology NAS */ -}}
+{{- $synology:= false }}
+{{- if eq .chezmoi.hostname "nas" -}}
+{{- $synology = true -}}
+{{- end -}}
 
 {{- $email := "justin@users.noreply.github.com" }}
-
 {{- if and (eq .chezmoi.os "darwin") ($interactive) -}}
 {{- $email = promptStringOnce . "email" "What is your email address" $email -}}
 {{- end -}}
@@ -51,5 +55,4 @@
 {{- if $synology -}}
 scriptTempDir = "~/tmp"
 {{- end -}}
-
 sourceDir = {{ .chezmoi.sourceDir | quote }}
