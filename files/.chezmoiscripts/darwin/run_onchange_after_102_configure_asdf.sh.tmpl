@@ -1,4 +1,4 @@
-{{- if and (not .synology) (not .codespaces) -}}
+{{- if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env zsh
 #
 # Add Poetry plugins and install latest versions of each tool.
