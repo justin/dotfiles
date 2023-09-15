@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>pffnw</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>ClassImplementation</string>
+		<string>TopLevel</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>/// &lt;#Description#&gt;
+struct &lt;#Request Name#&gt;: NetworkRequest {
+    typealias Output = &lt;#Response Type#&gt; 
+
+    let apiVersion: APIVersion = .v1
+    let league: League = .nfl
+    let method: HTTPMethod = .get
+    let path: String
+    let queryItems: [URLQueryItem] = &lt;#Query Items#&gt;
+    let headers: [HTTPRequestHeaderKey: String] = &lt;#Headers#&gt;
+
+    init(&lt;#Parameters#&gt;) {
+        let pathComponents: [PathComponent] = [
+            &lt;#Path Components#&gt;
+        ]
+        self.path = Path(pathComponents).pathValue
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>5B2FE8ED-534D-447F-829D-3D7D8152F25C</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Create a new NetworkRequest template</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>PFF: NetworkRequest</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>
