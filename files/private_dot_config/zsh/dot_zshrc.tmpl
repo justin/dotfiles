@@ -1,4 +1,5 @@
 # .zshrc is for interactive shells.
+
 # You set options for the interactive shell there with the setopt and unsetopt commands.
 #
 # Shut up and don't beep on error
@@ -8,6 +9,7 @@ setopt correct
 # Offer to fix spelling fuckups for arguments
 setopt correct_all
 # Super GLOB
+# https://zsh.sourceforge.io/Doc/Release/Expansion.html#Filename-Generation
 setopt extended_glob
 # zmv support
 autoload -U zmv
@@ -56,7 +58,6 @@ path=(
 )
 
 # Source any file with a *.zsh extension. They have additional settings.
-for zsh_file ($ZDOTDIR/*.zsh) source $zsh_file
 for zsh_file ($ZDOTDIR/config/*.zsh) source $zsh_file
 {{- if eq .chezmoi.os "darwin" }}
 for zsh_file ($ZDOTDIR/config/macos/*.zsh) source $zsh_file

@@ -23,3 +23,14 @@ is_macos() {
 is_cmd() {
   command -v $1 &>/dev/null
 }
+
+# Style the Terminal window
+set_title() {
+  case $TERM in
+  xterm*)
+    print -Pn "\e]2;${PWD:t}\a"
+    ;;
+  esac
+
+  return 0
+}

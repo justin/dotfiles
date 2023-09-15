@@ -12,6 +12,10 @@ local path_format="${PR_BOLD_GREEN}%~${RESET}"
 # os
 local os="$(uname)"
 
+# append the function to our array of precmd functions
+typeset -a precmd_functions
+precmd_functions+=(set_title)
+
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
@@ -33,10 +37,10 @@ ${host_name} '
 
 # ===== Right Prompt =====
 if [ $os != "Linux" ]; then
-# [Battery %, if available]
-RPROMPT=$(battery)
+  # [Battery %, if available]
+  RPROMPT=$(battery)
 else
-RPROMPT=
+  RPROMPT=
 fi
 
 # ===== For my own sanity =====

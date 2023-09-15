@@ -1,9 +1,17 @@
 # ===== ZSH History =====
-export HISTFILE=$XDG_DATA_HOME/zsh/history
+export HISTFILE=${XDG_DATA_HOME:=~/.local/share}/zsh/history
+
+# Just in case: If the parent directory doesn't exist, create it.
+[[ -d $HISTFILE:h ]] ||
+  mkdir -p $HISTFILE:h
+
 # Read $HISTSIZE lines from $HISTFILE at the start of a Terminal session.
-export HISTSIZE=1000
+export HISTSIZE=$((1.2 * SAVEHIST))
 # Save the last $SAVEHIST lines you executed at the end of a Terminal session to $HISTFILE.
-export SAVEHIST=1000
+export SAVEHIST=$((100 * 1000))
+
+# Use modern file-locking mechanisms, for better safety & performance.
+setopt hist_fcntl_lock
 # Write the history file in the ':start:elapsed;command' format.
 setopt extended_history
 # imports new commands and appends typed commands to history
@@ -35,9 +43,8 @@ setopt hist_verify
 # whereas the ASCII key code works on macOS. Fun!
 autoload -U up-line-or-beginning-search
 zle -N up-line-or-beginning-search
-[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
+[[ -n "$key[Up]" ]] && bindkey -- "$key[Up]" up-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search
-
 
 # start typing + [Down-Arrow] - fuzzy find history backward
 autoload -U down-line-or-beginning-search
