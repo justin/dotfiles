@@ -35,6 +35,9 @@ info "Dark Mode Configured"
 # Always restore windows when reopening an application that was previously quit.
 defaults write .GlobalPreferences NSQuitAlwaysKeepsWindows -int 1
 
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+defaults write com.apple.WindowManager HasDisplayedShowDesktopEducation -bool true
+
 # Sidebar icon size
 # Small  : 1
 # Medium : 2 (default)
