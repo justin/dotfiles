@@ -46,14 +46,14 @@ function printHelp() {
 #   0 if the simulator was created, non-zero on error.
 ##############################################################
 function create_device {
-    local os=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-16-" | tail -1 | awk '{print $2}'`
-    local device_type="iPhone 14"
+    local os=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-17-" | tail -1 | awk '{print $2}'`
+    local device_type="iPhone 15"
     local device_os="iOS ${os}"
     local device_name="${device_type} (${device_os})"
-    local runtime=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-16-" | tail -1 | awk '{print $7}'`
+    local runtime=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-17-" | tail -1 | awk '{print $7}'`
 
     if [[ $1 == "ipad" ]]; then
-        device_type="iPad Air (5th generation)"
+        device_type="iPad (10th generation)"
         device_os="iPadOS ${os}"
         device_name="${device_type} (${device_os})"
     fi
@@ -77,8 +77,8 @@ function create_device {
 #   A list of UUIDs of the currently booted simulators.
 ##############################################################
 function booted {
-    xcrun simctl list devices | grep "Booted" | egrep -o -i "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-    exit 0
+    local devices=($(xcrun simctl list devices | grep "Booted" | egrep -o -i "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"))
+    echo "${(j: :)devices}"
 }
 
 ##############################################################
@@ -110,7 +110,10 @@ function removeAllSimulators {
 #   None
 ###########################################################################
 function openContainer {
-    open -R $(xcrun simctl get_app_container $(sim booted) $@)
+  local devices=("${(@s: :)$(booted)}")
+  for device in $devices; do
+    open -R $(xcrun simctl get_app_container $device $@)
+  done
 }
 
 ###########################################################################
@@ -123,7 +126,10 @@ function openContainer {
 #   None
 ###########################################################################
 function getEnvironmentVariable {
-    xcrun simctl getenv $(sim booted) $@
+    local devices=("${(@s: :)$(booted)}")
+    for device in $devices; do
+      xcrun simctl getenv $device $@
+    done
 }
 
 ###########################################################################
@@ -136,7 +142,10 @@ function getEnvironmentVariable {
 #   None
 ###########################################################################
 function openUrl {
-    xcrun simctl openurl $(sim booted) $@
+  local devices=("${(@s: :)$(booted)}")
+  for device in $devices; do
+    xcrun simctl openurl $device $@
+  done
 }
 
 ###########################################################################
@@ -150,7 +159,11 @@ function openUrl {
 ###########################################################################
 function addMedia {
     local files=(${(f)"$(find $1 -not -path '*/[@.]*' -type f)"})
-    xcrun simctl addmedia $(sim booted) $files
+    local devices=("${(@s: :)$(booted)}")
+    for device in $devices; do
+      echo "Adding ${#files} media files to ${device}."
+      xcrun simctl addmedia $device $files
+    done
 }
 
 case "$1" in
