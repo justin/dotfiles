@@ -35,3 +35,17 @@ fix-uti: # Periodically the UTI mappings get broken. This fixes it.
 install-sdk platform='ios': # Install an Xcode SDK for a given platform: ios, macos, watchos, tvos
  @echo "Installing SDK {{platform}}"
  xcodebuild -downloadPlatform {{platform}}
+
+[macos]
+[private]
+create-sim platform='iphone' device_name='': # Create a new iOS or iPadOS simulator.
+  @echo "Creating simulator for {{platform}}"
+  sim create_device {{platform}} {{quote(device_name)}}
+
+[macos]
+create-ipad device_name='': # Create a new iOS simulator.
+  sim create_device iphone {{quote(device_name)}}
+
+[macos]
+create-iphone device_name='': # Create a new iPadOS simulator.
+  sim create_device ipad {{quote(device_name)}}
