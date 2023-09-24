@@ -20,15 +20,21 @@ fignore=(
   $fignore
 )
 
+# JWW: 09/24/23
+# Because of how macOS uses path_helper for setting the PATH it's best to set
+# the path values entirely up front instead of in each config file. This will
+# allow things to be properly ordered.
+#
+# It shouldn't have any negative effect on Linux.
+# https://0xmachos.com/2021-05-13-zsh-path-macos/
+
 # ==== Customize $FPATH =====
 # Prevent duplicates within search paths
 typeset -U fpath
 # Make user functions available
 fpath=(
   $ZDOTDIR/functions
-  {{- if eq .chezmoi.os "darwin" }}
-  {{ .homebrew.prefix }}/share/zsh/site-functions
-  {{ end -}}
+  {{ .homebrew.prefix }}/share/zsh/site-functions(N)
   $fpath
 )
 
@@ -37,25 +43,35 @@ fpath=(
 # (N) == only if exists
 typeset -U path   # Prevent duplicates within search paths
 path=(
-  $CONFIG_HOME/pypoetry/bin(N)
+
   $HOME/.local/bin
+
   {{- if eq .chezmoi.os "darwin" }}
-  {{ .homebrew.prefix }}/bin(N)
   $HOME/.local/bin/darwin
   {{ else }}
   $HOME/.local/bin/linux(N)
-  {{ .homebrew.prefix }}/bin(N)
-  {{ .homebrew.prefix }}/sbin(N)
   {{ end -}}
-
   {{- if .pff }}
   $HOME/.local/bin/pff
   {{ end -}}
+  $CONFIG_HOME/pypoetry/bin(N)
   $PYENV_ROOT/bin(N)
   $POETRY_HOME/bin(N)
-  /usr/local/sbin
   $path
 )
+
+{{ if and (not .codespaces) (not .synology) }}
+# New in 3.0.0. Use the Bootsnap gem if available to build and update.
+# https://github.com/Homebrew/brew/pull/10374
+export HOMEBREW_BOOTSNAP=1
+export HOMEBREW_EDITOR=$EDITOR
+export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/homebrew/Brewfile"
+export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
+
+# Ensure we explicitly set all homebrew related environment variables.
+eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
+
+{{ end }}
 
 # Source any file with a *.zsh extension. They have additional settings.
 for zsh_file ($ZDOTDIR/config/*.zsh) source $zsh_file

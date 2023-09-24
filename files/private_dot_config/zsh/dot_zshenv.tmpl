@@ -21,8 +21,12 @@ source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 # ===== ZSH Customization =====
 # Where our zsh configuration is located.
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+
+# Save the location of the current completion dump file.
+if [ -z "$ZSH_COMPDUMP" ]; then
 # Where to store the autocomplete speedup file(s)
-export ZSH_COMPDUMP=$XDG_CACHE_HOME/zsh/zcompdump-${ZSH_VERSION}
+export ZSH_COMPDUMP=$XDG_CACHE_HOME/zsh/.zcompdump-${SHORT_HOSTNAME:-$(hostname)}
+fi
 # Prevent zsh from suggesting a large buffer.
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *"
