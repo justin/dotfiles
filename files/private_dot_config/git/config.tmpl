@@ -55,6 +55,9 @@
 [credential "https://dev.azure.com"]
 	useHttpPath = true
 
+[credential "https://github.com"]
+  username = justin
+
 {{- if eq .chezmoi.os "darwin" }}
 [difftool "Kaleidoscope"]
   cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
