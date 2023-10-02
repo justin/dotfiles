@@ -23,6 +23,7 @@ darwin
 {{ end}}
 
 {{- if or .codespaces .synology }}
+.config/credentials
 .aws
 .ssh
 {{- end }}
