@@ -134,3 +134,6 @@ cask "font-sf-compact"
 cask "font-sf-pro"
 cask "font-sf-arabic"
 cask "font-sf-mono"
+
+# GitHub Fonts
+cask "font-monaspace"
