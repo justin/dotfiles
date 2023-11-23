@@ -6,10 +6,8 @@ struct ___FILEBASENAMEASIDENTIFIER___: View {
     }
 }
 
-struct ___FILEBASENAMEASIDENTIFIER____Previews: PreviewProvider {
-    static var previews: some View {
-        ___FILEBASENAMEASIDENTIFIER___()
-    }
+#Preview {
+  ___FILEBASENAMEASIDENTIFIER___()
 }
 
 @available(iOS 14.0, macCatalyst 14.0, macOS 11.0, *)
