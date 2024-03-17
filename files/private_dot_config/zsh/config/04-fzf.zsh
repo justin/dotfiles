@@ -1,1 +1,2 @@
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --zsh)"
