@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Identifier</key>
+	<string>com.pro-football-focus.xcode-template.network-request</string>
+	<key>Kind</key>
+	<string>Xcode.IDEFoundation.TextSubstitutionFileTemplateKind</string>
+	<key>SupportsSwiftPackage</key>
+	<true/>
+	<key>Description</key>
+	<string>A new PFFKit network request.</string>
+	<key>Summary</key>
+	<string>PFFKit Networking</string>
+	<key>SortOrder</key>
+	<string>1</string>
+	<key>AllowedTypes</key>
+	<array>
+		<string>public.swift-source</string>
+	</array>
+	<key>DefaultCompletionName</key>
+	<string>NewNetworkRequest</string>
+	<key>MainTemplateFile</key>
+	<string>___FILEBASENAME___Request.swift</string>
+  <key>Image</key>
+  <dict>
+      <key>FileTypeIcon</key>
+      <string>swift</string>
+  </dict>
+  <key>Options</key>
+  <array>
+      <dict>
+          <key>Identifier</key>
+          <string>productName</string>
+          <key>Required</key>
+          <true/>
+          <key>Name</key>
+          <string>Name:</string>
+          <key>Description</key>
+          <string>The name of the request to create</string>
+          <key>Type</key>
+          <string>text</string>
+          <key>NotPersisted</key>
+          <true/>
+      </dict>
+  </array>
+</dict>
+</plist>
