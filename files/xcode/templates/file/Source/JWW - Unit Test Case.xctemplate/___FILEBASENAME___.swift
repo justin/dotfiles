@@ -1,5 +1,5 @@
 import XCTest
-@testable import <#MODULENAME#>
+@testable import ___PROJECTNAME:identifier___
 
 final class ___FILEBASENAMEASIDENTIFIER___: XCTestCase {
     override func setUpWithError() throws {
