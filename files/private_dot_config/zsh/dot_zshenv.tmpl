@@ -75,8 +75,3 @@ export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
 # ===== GitHub Access =====
 export GITHUB_TOKEN={{- onepasswordRead "op://Personal/GitHub API Token - dotfiles/credential" .onepasswordAccount | trim -}}
 {{ end }}
-
-{{ if .pff }}
-# ===== PFF Specific Configuration =====
-export PFF_API_KEY={{- onepasswordRead "op://PFF/PFF Consumer API/credential" .onepasswordAccount | trim -}}
-{{ end }}
