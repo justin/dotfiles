@@ -57,7 +57,3 @@ alias ls='ls --color=auto'
 for recipe in `just --justfile ~/.user.justfile --summary`; do
   alias $recipe="just --justfile ~/.user.justfile --working-directory . $recipe"
 done
-
-{{- if .pff }}
-alias jsp="code $HOME/src/pro-football-focus/js-pffkit/js-pffkit.code-workspace"
-{{- end }}
