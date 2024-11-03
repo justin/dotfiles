@@ -34,12 +34,9 @@ brew "xcodes"
 # Cask Apps
 cask "1password"
 cask "adobe-creative-suite"
-cask "arq"
 cask "bbedit"
-cask "choosy"
 cask "cleanshot"
 cask "dash"
-cask "docker"
 cask "downie"
 cask "fastscripts"
 cask "firefox"
@@ -51,9 +48,9 @@ cask "jordanbaird-ice"
 cask "kaleidoscope"
 cask "keyboard-maestro"
 cask "launchcontrol"
-cask "microsoft-edge"
 cask "mullvadvpn"
 cask "netnewswire"
+cask "orbstack"
 cask "omnigraffle"
 cask "openinterminal"
 cask "paw"
@@ -70,7 +67,6 @@ cask "tableplus"
 cask "tower"
 cask "typora"
 cask "transmit"
-cask "unite"
 cask "visual-studio-code"
 cask "xcodes"
 cask "zoom"
@@ -120,7 +116,6 @@ mas "Slack", id: 803453959
 mas "Soulver 3", id: 1508732804
 mas "Tailscale", id: 1475387142
 mas "Transloader", id: 572281534
-mas "UserScripts", id: 1463298887
 mas "xScope", id: 889428659
 
 # Not supported by Homebrew (yet)
