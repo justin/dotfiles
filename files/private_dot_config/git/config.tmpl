@@ -1,7 +1,15 @@
 [user]
   name = {{ .name }}
-  email = {{ .email }}
-  signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC947DfJQryRkXvmotipCdU4S1vh3tqk9S+Mxei6imqL7Ebx7iA7kqdERset6ez3eOcLwu3UFftLSy1gg+ZeUJmRRyLPsPUhRBy/OCzMnhUv8K5slJmKEBSiJ1DR4VoEKitIQKJYrm5SZkfocQVhQovHgoXiN0Y8xGGzbSmCRNGW9z8t/R4GRToYAzFWOGvdz1GSfm9ZjjEb3yaA7Y3Kuk1xN1EabWKnvHz39VZfzHVcJ2eCuuoifmiHc++YgKdHYguUcicCEdhcgZHe1Wj/1CFrFj88frww9gej0n8GFm7Gi+GqnVbGlPdJ8ma50Hp7rYT/WUmtf8MAkGSu+0s5UJHO3e6O8/0z146+1dvau7e+Y07xtGloO2xwsmuj7O/5JAoqjfpxjysa3i2nWLr446/IlA2ikMJbnH2vqL8NRyAMB5yMgqIGSAoYcZAk0q0mkO/DxytkiEct/Tg2zJLgWGE8bGJJP2YVKXP9NPIN/2Q6yDQOLYTlkpkFH8GKBkxkP376aoN81vgmJIlKx23bDWwv8i8waDPUkyxwf32QiQNJNPrre6wqlWfqbF3ilvlH5QABieaVt+R6D7QajezLCC1ZrQOKYAyFO2YRMU2fgGeh125jVaX8QLFpRaorE4qXsMKbIbhqHIcMK3TK1dzcz6GqeeQ9crYPwT5u4zjmUzYpQ==
+  useConfigOnly = true
+
+[include]
+  path = ~/.gitconfig.personal
+
+[includeIf "gitdir:~/src/justin/"]
+  path = ~/.gitconfig.personal
+
+[includeIf "gitdir:~/src/spatiallabs/"]
+  path = ~/.gitconfig.contentful
 
 [github]
   user = {{ .username }}

@@ -1,0 +1,6 @@
+[user]
+  email = {{- onepasswordRead "op://Spatial/Spatial SSH Signing/email" .onepasswordAccount -}}
+  signingKey = {{- onepasswordRead "op://Spatial/Spatial SSH Signing/public key" .onepasswordAccount -}}
+
+[url "git@github.com-work"]
+  insteadOf = git@github.com

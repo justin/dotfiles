@@ -1,13 +1,16 @@
-{{- if eq .chezmoi.os "darwin" }}
-Include ~/.orbstack/ssh/config
-{{ end }}
+### -- PERSONAL/MAIN ACCOUNT --
 
-Host *
-  IdentityFile {{ .chezmoi.homeDir }}/.ssh/id_rsa
-  AddKeysToAgent yes
-  ServerAliveInterval 120
-  ServerAliveCountMax 30
-  ForwardAgent yes
+Host github.com
+  Hostname github.com
+  User {{ .github_username }}
+  IdentityFile ~/.ssh/id_rsa
+
+### -- WORK PERSONA/ACCOUNT --
+
+Host github.com-work
+  Hostname github.com
+  User {{ .github_username }}
+  IdentityFile ~/.ssh/spatial_signing
 
 Host homelab
   User justin
@@ -28,3 +31,14 @@ Host studio
 Host udm
   User root
   HostName unifi
+
+Host *
+  AddKeysToAgent yes
+  ServerAliveInterval 120
+  ServerAliveCountMax 30
+  ForwardAgent yes
+
+{{- if eq .chezmoi.os "darwin" }}
+Include ~/.orbstack/ssh/config
+{{ end }}
+
