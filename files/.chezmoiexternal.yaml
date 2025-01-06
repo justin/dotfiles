@@ -23,7 +23,7 @@
 
 .config/zsh/functions/_asdf:
   type: file
-  url: https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
+  url: https://raw.githubusercontent.com/asdf-vm/asdf/refs/heads/master/internal/completions/asdf.zsh
   refreshPeriod: {{ $refreshPeriodWeek }}
 
 .cache/zsh/external/zsh-syntax-highlighting:
