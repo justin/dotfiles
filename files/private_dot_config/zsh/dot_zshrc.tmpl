@@ -68,6 +68,11 @@ export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
 # Ensure we explicitly set all homebrew related environment variables.
 eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
 
+# Setup aliases for gh cli.
+# After executing the following commands to create the aliases, you can run
+# `ghcs` and `ghce` instead of `gh copilot suggest` and `gh copilot explain`.
+eval "$(gh copilot alias -- zsh)"
+
 {{ end }}
 
 # Source any file with a *.zsh extension. They have additional settings.
