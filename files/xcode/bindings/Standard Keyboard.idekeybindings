@@ -8,116 +8,6 @@
 		<array>
 			<dict>
 				<key>Action</key>
-				<string>performAlertEvent:</string>
-				<key>Alternate</key>
-				<string>NO</string>
-				<key>CommandID</key>
-				<string>0DF9138D-18F7-4270-959F-96567845DDCC-56304-000152975D5DBB4F</string>
-				<key>Group</key>
-				<string>Xcode Menu</string>
-				<key>GroupID</key>
-				<string>Xcode.IDEKit.MenuDefinition.Xcode</string>
-				<key>GroupedAlternate</key>
-				<string>NO</string>
-				<key>Keyboard Shortcut</key>
-				<string>^~@i</string>
-				<key>Navigation</key>
-				<string>NO</string>
-				<key>Parent Title</key>
-				<string>Behaviors</string>
-				<key>Title</key>
-				<string>Open Terminal Here</string>
-			</dict>
-			<dict>
-				<key>Action</key>
-				<string>performAlertEvent:</string>
-				<key>Alternate</key>
-				<string>NO</string>
-				<key>CommandID</key>
-				<string>1C1B0665-E34C-464F-B89D-6D71EEA47E41-14846-000038AC3CE0599A</string>
-				<key>Group</key>
-				<string>Xcode Menu</string>
-				<key>GroupID</key>
-				<string>Xcode.IDEKit.MenuDefinition.Xcode</string>
-				<key>GroupedAlternate</key>
-				<string>NO</string>
-				<key>Keyboard Shortcut</key>
-				<string>^~@c</string>
-				<key>Navigation</key>
-				<string>NO</string>
-				<key>Parent Title</key>
-				<string>Behaviors</string>
-				<key>Title</key>
-				<string>Editing Code</string>
-			</dict>
-			<dict>
-				<key>Action</key>
-				<string>performAlertEvent:</string>
-				<key>Alternate</key>
-				<string>NO</string>
-				<key>CommandID</key>
-				<string>01CBEF52-42DB-4B4A-91A0-66773ED6E63A-14846-000038AAD315DDCE</string>
-				<key>Group</key>
-				<string>Xcode Menu</string>
-				<key>GroupID</key>
-				<string>Xcode.IDEKit.MenuDefinition.Xcode</string>
-				<key>GroupedAlternate</key>
-				<string>NO</string>
-				<key>Keyboard Shortcut</key>
-				<string>^~@s</string>
-				<key>Navigation</key>
-				<string>NO</string>
-				<key>Parent Title</key>
-				<string>Behaviors</string>
-				<key>Title</key>
-				<string>Storyboards</string>
-			</dict>
-			<dict>
-				<key>Action</key>
-				<string>performAlertEvent:</string>
-				<key>Alternate</key>
-				<string>NO</string>
-				<key>CommandID</key>
-				<string>C86AC989-5910-4B37-B947-3FA0DBE242EC-56304-0001525F1A80733A</string>
-				<key>Group</key>
-				<string>Xcode Menu</string>
-				<key>GroupID</key>
-				<string>Xcode.IDEKit.MenuDefinition.Xcode</string>
-				<key>GroupedAlternate</key>
-				<string>NO</string>
-				<key>Keyboard Shortcut</key>
-				<string>^~@p</string>
-				<key>Navigation</key>
-				<string>NO</string>
-				<key>Parent Title</key>
-				<string>Behaviors</string>
-				<key>Title</key>
-				<string>Playground</string>
-			</dict>
-			<dict>
-				<key>Action</key>
-				<string>performAlertEvent:</string>
-				<key>Alternate</key>
-				<string>NO</string>
-				<key>CommandID</key>
-				<string>C33240A3-50FA-4047-96A1-0A4E8017B9FA-14846-000038A97CB3E133</string>
-				<key>Group</key>
-				<string>Xcode Menu</string>
-				<key>GroupID</key>
-				<string>Xcode.IDEKit.MenuDefinition.Xcode</string>
-				<key>GroupedAlternate</key>
-				<string>NO</string>
-				<key>Keyboard Shortcut</key>
-				<string>^~@d</string>
-				<key>Navigation</key>
-				<string>NO</string>
-				<key>Parent Title</key>
-				<string>Behaviors</string>
-				<key>Title</key>
-				<string>Debugging</string>
-			</dict>
-			<dict>
-				<key>Action</key>
 				<string>_invokeSourceEditorExtensionCommand:</string>
 				<key>Alternate</key>
 				<string>NO</string>
@@ -175,6 +65,26 @@
 				<string>GitHub Copilot</string>
 				<key>Title</key>
 				<string>Next Suggestion</string>
+			</dict>
+			<dict>
+				<key>Action</key>
+				<string>_invokeSourceEditorExtensionCommand:</string>
+				<key>Alternate</key>
+				<string>NO</string>
+				<key>CommandID</key>
+				<string>IDESourceEditorExtension:com.github.CopilotForXcode.EditorExtension,IDESourceEditorExtensionCommand:com.github.CopilotForXcode.EditorExtensionCopilot.OpenChatCommand</string>
+				<key>Group</key>
+				<string>Editor Menu for Source Code</string>
+				<key>GroupID</key>
+				<string>Xcode.IDEPegasusSourceEditor.MenuDefinition.Editor</string>
+				<key>GroupedAlternate</key>
+				<string>NO</string>
+				<key>Navigation</key>
+				<string>NO</string>
+				<key>Parent Title</key>
+				<string>GitHub Copilot</string>
+				<key>Title</key>
+				<string>Open Chat</string>
 			</dict>
 			<dict>
 				<key>Action</key>
