@@ -21,21 +21,19 @@ fi
 
 info "Configuring asdf. . ."
 
+mkdir -p "$ASDF_DIR"
+
 if [[ $(asdf plugin list | grep python) > /dev/null ]]; then
-  asdf plugin-update --all >/dev/null
+  asdf plugin update --all >/dev/null
   success "Updated asdf plugins. . ."
 else
   info "Installing asdf plugins. . ."
-  asdf plugin-add python
+  asdf plugin add python
   success "Installed Python plugin. . ."
-  asdf plugin-add ruby
+  asdf plugin add ruby
   success "Installed Ruby plugin. . ."
-  asdf plugin-add yarn
-  success "Installed yarn plugin. . ."
-  asdf plugin-add nodejs
+  asdf plugin add nodejs
   success "Installed NodeJS plugin. . ."
-  asdf plugin-add poetry https://github.com/asdf-community/asdf-poetry.git
-  success "Installed Poetry plugin. . ."
 fi
 
 info "Installing asdf tools. . ."

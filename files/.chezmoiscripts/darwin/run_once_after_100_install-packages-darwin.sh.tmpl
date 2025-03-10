@@ -16,10 +16,3 @@ if [[ -z $(brew services list | grep "sudo-touchid") ]]; then
 fi
 {{ end -}}
 {{ end -}}
-
-{{- if .pff -}}
-info "Homebrew: Installing PFF related packages."
-{{ .homebrew.prefix }}/bin/brew bundle --no-lock --file=$XDG_CONFIG_HOME/macos/Brewfile-PFF
-
-mkdir -p "$ASDF_DIR"
-{{- end -}}
