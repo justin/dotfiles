@@ -6,16 +6,21 @@ source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
 if type_exists 'swift'; then
-  swift package completion-tool generate-zsh-script > "$ZDOTDIR/functions/_swift"
+  swift package completion-tool generate-zsh-script >"$ZDOTDIR/functions/_swift"
   success "Successfully generated Swift Package autocompletions."
 fi
 
 if type_exists 'poetry'; then
-  poetry completions zsh > "$ZDOTDIR/functions/_poetry"
+  poetry completions zsh >"$ZDOTDIR/functions/_poetry"
   success "Successfully generated Poetry autocompletions."
 fi
 
 if type_exists 'chezmoi'; then
   chezmoi completion zsh --output="$ZDOTDIR/functions/_chezmoi"
   success "Successfully generated Chezmoi autocompletions."
+fi
+
+if type_exists 'asdf'; then
+  asdf completions zsh >"$ZDOTDIR/functions/_asdf"
+  success "Successfully generated asdf autocompletions."
 fi
