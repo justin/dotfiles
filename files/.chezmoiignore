@@ -16,11 +16,6 @@ darwin
 .ssh
 {{- end }}
 
-{{- if not .pff }}
-.asdf
-.config/asdf
-.local/bin/pff
-{{ end}}
 
 {{- if or .codespaces .synology }}
 .config/credentials

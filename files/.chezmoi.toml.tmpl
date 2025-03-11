@@ -14,11 +14,6 @@
 {{- $email = promptStringOnce . "email" "What is your email address" $email -}}
 {{- end -}}
 
-{{- $pff := false }}
-{{- if and (eq .chezmoi.os "darwin") ($interactive) -}}
-{{- $pff = promptBoolOnce . "pff" "Do you want to configure this machine with PFF related stuff" false -}}
-{{- end -}}
-
 {{- if stdinIsATTY -}}
 {{- writeToStdout "💡 Tip: you can reconfigure with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
@@ -30,7 +25,6 @@
   github_username = "justin"
   onepasswordAccount = "M4GXOUJAFFCVRACF3EDH5RWLAU"
   url = "https://justinw.me"
-  pff = {{ $pff }}
   codespaces = {{ $codespaces }}
   synology = {{ $synology }}
 

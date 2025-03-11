@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>pffnw</string>
+	<string>jwwnw</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>TopLevel</string>
@@ -12,7 +12,7 @@
 	<key>IDECodeSnippetContents</key>
 	<string>/// &lt;#Description#&gt;
 struct &lt;#Request Name#&gt;: NetworkRequest {
-    typealias Output = &lt;#Response Type#&gt; 
+    typealias Output = &lt;#Response Type#&gt;
 
     let apiVersion: APIVersion = .v1
     let league: League = .nfl
@@ -35,7 +35,7 @@ struct &lt;#Request Name#&gt;: NetworkRequest {
 	<key>IDECodeSnippetSummary</key>
 	<string>Create a new NetworkRequest template</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>PFF: NetworkRequest</string>
+	<string>JWWNetworking: NetworkRequest</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

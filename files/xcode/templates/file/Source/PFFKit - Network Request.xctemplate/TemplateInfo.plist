@@ -9,9 +9,9 @@
 	<key>SupportsSwiftPackage</key>
 	<true/>
 	<key>Description</key>
-	<string>A new PFFKit network request.</string>
+	<string>A new JWWNetworking network request.</string>
 	<key>Summary</key>
-	<string>PFFKit Networking</string>
+	<string>JWWNetworking Request Template</string>
 	<key>SortOrder</key>
 	<string>1</string>
 	<key>AllowedTypes</key>
