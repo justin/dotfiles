@@ -21,4 +21,5 @@ darwin
 .config/credentials
 .aws
 .ssh
+.config/git/gitconfig*
 {{- end }}
