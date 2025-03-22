@@ -94,7 +94,7 @@
 [rebase]
   autosquash = true
 
-{{- if eq .chezmoi.os "darwin" }}
+{{- if and (not .codespaces) (not .synology) }}
 [gpg]
   format = ssh
 [gpg "ssh"]
