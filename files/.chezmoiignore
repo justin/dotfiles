@@ -13,7 +13,6 @@ darwin
 .chezmoiscripts/darwin
 .config/iterm2
 .config/macos
-.ssh
 {{- end }}
 
 

@@ -4,3 +4,4 @@ bin
 .config/chezmoi/chezmoi.yaml
 .config/zsh/*.zsh
 .config/zsh/.zprofile
+.ssh/authorized_signers
