@@ -3,13 +3,13 @@
   useConfigOnly = true
 
 [include]
-  path = ~/.gitconfig.personal
+  path =  ~/.config/git/gitconfig.personal
 
 [includeIf "gitdir:~/src/justin/"]
-  path = ~/.gitconfig.personal
+  path =  ~/.config/git/gitconfig.personal
 
 [includeIf "gitdir:~/src/spatiallabs/"]
-  path = ~/.gitconfig.contentful
+  path =  ~/.config/git/gitconfig.spatial
 
 [github]
   user = {{ .username }}
@@ -99,7 +99,7 @@
   format = ssh
 [gpg "ssh"]
   defaultKeyCommand = ssh-add -L
-  allowedSignersFile = {{ .chezmoi.homeDir }}/.config/git/.ssh/allowed_signers
+  allowedSignersFile = {{ .chezmoi.homeDir }}/.ssh/allowed_signers
 [tag]
   gpgsign = true
 [commit]
