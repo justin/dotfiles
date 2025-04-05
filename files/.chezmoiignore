@@ -9,6 +9,7 @@ darwin
 
 {{- if ne .chezmoi.os "darwin" }}
 .lldbinit
+.config/claude
 .local/bin/darwin
 .chezmoiscripts/darwin
 .config/iterm2
