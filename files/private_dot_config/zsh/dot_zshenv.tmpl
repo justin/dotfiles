@@ -70,3 +70,8 @@ export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 
 # ===== NPM =====
 export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
+
+# ===== LLM =====
+export ANTHROPIC_API_KEY={{ onepasswordRead "op://CompoundBNB/Anthropic API Key - dotfiles/credential" .onepasswordAccount | trim }}
+export GEMINI_API_KEY={{ onepasswordRead "op://CompoundBNB/Gemini API Key - dotfiles/credential" .onepasswordAccount | trim }}
+export OPENAI_API_KEY={{ onepasswordRead "op://CompoundBNB/OpenAI API Key - dotfiles/credential" .onepasswordAccount | trim }}
