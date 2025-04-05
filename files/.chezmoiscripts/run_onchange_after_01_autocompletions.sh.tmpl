@@ -20,7 +20,7 @@ if type_exists 'chezmoi'; then
   success "Successfully generated Chezmoi autocompletions."
 fi
 
-if type_exists 'asdf'; then
-  asdf completions zsh >"$ZDOTDIR/functions/_asdf"
-  success "Successfully generated asdf autocompletions."
+if type_exists 'mise'; then
+  mise completion zsh >"$ZDOTDIR/functions/_mise"
+  success "Successfully generated Mise autocompletions."
 fi

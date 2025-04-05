@@ -1,7 +1,10 @@
 bin
 .config/brewfile
 .gnupg
+.config/asdf
 .config/chezmoi/chezmoi.yaml
 .config/zsh/*.zsh
 .config/zsh/.zprofile
 .ssh/authorized_signers
+.tool-versions
+.config/zsh/functions/_asdf

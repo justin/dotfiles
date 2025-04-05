@@ -1,8 +1,0 @@
-# See the docs for explanations: https://asdf-vm.com/manage/configuration.html
-
-# Use legacy version files from other managers like .nvmrc/.node-version for node
-# or .rbenv for Ruby.
-legacy_version_file = no
-
-# Use /usr/libexec/java_home to set java home.
-java_macos_integration_enable = yes

@@ -4,4 +4,4 @@ tap "homebrew/bundle"
 # Settings
 cask_args appdir: "/Applications"
 
-brew "asdf"
+brew "mise"
