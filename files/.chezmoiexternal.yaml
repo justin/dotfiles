@@ -21,11 +21,6 @@
   url: https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
   refreshPeriod: {{ $refreshPeriodWeek }}
 
-.config/zsh/functions/_mise:
-  type: file
-  url: https://raw.githubusercontent.com/jdx/mise/refs/heads/main/completions/_mise
-  refreshPeriod: {{ $refreshPeriodWeek }}
-
 .cache/zsh/external/zsh-syntax-highlighting:
   type: archive
   url: https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz

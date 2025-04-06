@@ -19,8 +19,3 @@ if type_exists 'chezmoi'; then
   chezmoi completion zsh --output="$ZDOTDIR/functions/_chezmoi"
   success "Successfully generated Chezmoi autocompletions."
 fi
-
-if type_exists 'mise'; then
-  mise completion zsh >"$ZDOTDIR/functions/_mise"
-  success "Successfully generated Mise autocompletions."
-fi

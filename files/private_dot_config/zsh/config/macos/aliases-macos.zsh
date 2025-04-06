@@ -1,9 +1,6 @@
 # App shortcuts
 alias typora="open -a typora"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
-# Alias to fix issue with PyEnv throwing a warning with `brew doctor`
-# https://github.com/pyenv/pyenv#homebrew-in-macos
-alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
 
 # ====== BBEdit ======
 

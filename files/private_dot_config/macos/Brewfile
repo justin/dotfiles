@@ -21,15 +21,17 @@ cask "ipatool"
 brew "kin"
 brew "mas"
 cask "periphery"
-brew "pipx"
-brew "pyenv"
-brew "pyenv-virtualenv"
 brew "artginzburg/tap/sudo-touchid"
 brew "swiftlint"
 brew "TomAnthony/brews/itermocil"
 brew "xcbeautify"
 brew "XCTestHtmlReport/xchtmlreport/xchtmlreport"
 brew "xcodes"
+
+# Dev Tools
+brew "python"
+brew "node"
+brew "ruby"
 
 # Cask Apps
 cask "1password"

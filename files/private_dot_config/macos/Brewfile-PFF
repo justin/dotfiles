@@ -1,7 +1,0 @@
-# Taps
-tap "homebrew/bundle"
-
-# Settings
-cask_args appdir: "/Applications"
-
-brew "mise"
