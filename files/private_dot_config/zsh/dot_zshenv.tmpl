@@ -24,8 +24,8 @@ export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
 # Save the location of the current completion dump file.
 if [ -z "$ZSH_COMPDUMP" ]; then
-# Where to store the autocomplete speedup file(s)
-export ZSH_COMPDUMP=$XDG_CACHE_HOME/zsh/.zcompdump-${SHORT_HOSTNAME:-$(hostname)}
+  # Where to store the autocomplete speedup file(s)
+  export ZSH_COMPDUMP=$XDG_CACHE_HOME/zsh/.zcompdump-${SHORT_HOSTNAME:-$(hostname)}
 fi
 # Prevent zsh from suggesting a large buffer.
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
@@ -42,7 +42,7 @@ export EDITOR="vim"
 export VISUAL=$EDITOR
 
 # The OS that we are running in.
-export OS="$( uname )"
+export OS="$(uname)"
 
 # Silence warning that shows up in macOS 11.0 when launching a new Terminal window:
 # `shell_session_history_check:2: scalar parameter SHELL_SESSION_DID_HISTORY_CHECK created globally in function shell_session_history_check`
@@ -50,7 +50,7 @@ local SHELL_SESSION_DID_HISTORY_CHECK
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository, but you'll have access to them in your scripts.
-if [[ -a $HOME/.localrc ]]; then
+if [[ -e $HOME/.localrc ]]; then
   source $HOME/.localrc
 fi
 
@@ -70,7 +70,9 @@ export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 # ===== NPM =====
 export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
 
+{{- if eq .chezmoi.os "darwin" }}
 # ===== LLM =====
 export ANTHROPIC_API_KEY={{ onepasswordRead "op://CompoundBNB/Anthropic API Key - dotfiles/credential" .onepasswordAccount | trim }}
 export GEMINI_API_KEY={{ onepasswordRead "op://CompoundBNB/Gemini API Key - dotfiles/credential" .onepasswordAccount | trim }}
 export OPENAI_API_KEY={{ onepasswordRead "op://CompoundBNB/OpenAI API Key - dotfiles/credential" .onepasswordAccount | trim }}
+{{ end }}
