@@ -14,6 +14,7 @@ darwin
 .chezmoiscripts/darwin
 .config/iterm2
 .config/macos
+.config/zsh/config/macos
 {{- end }}
 
 
