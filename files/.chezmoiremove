@@ -8,3 +8,4 @@ bin
 .ssh/authorized_signers
 .tool-versions
 .config/zsh/functions/_asdf
+.config/mise
