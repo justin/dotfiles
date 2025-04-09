@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Identifier</key>
-	<string>com.pro-football-focus.xcode-template.network-request</string>
+	<string>com.justinwme.xcode-template.jww-network-request</string>
 	<key>Kind</key>
 	<string>Xcode.IDEFoundation.TextSubstitutionFileTemplateKind</string>
 	<key>SupportsSwiftPackage</key>
@@ -21,7 +21,7 @@
 	<key>DefaultCompletionName</key>
 	<string>NewNetworkRequest</string>
 	<key>MainTemplateFile</key>
-	<string>___FILEBASENAME___Request.swift</string>
+	<string>___FILEBASENAME___.swift</string>
   <key>Image</key>
   <dict>
       <key>FileTypeIcon</key>
