@@ -46,11 +46,11 @@ function printHelp() {
 #   0 if the simulator was created, non-zero on error.
 ##############################################################
 function create_device {
-    local os=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-17-" | tail -1 | awk '{print $2}'`
+    local os=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-18-" | tail -1 | awk '{print $2}'`
     local device_type="iPhone 15"
     local device_os="iOS ${os}"
     local device_name="${device_type} (${device_os})"
-    local runtime=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-17-" | tail -1 | awk '{print $7}'`
+    local runtime=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-18-" | tail -1 | awk '{print $7}'`
 
     if [[ $1 == "ipad" ]]; then
         device_type="iPad (10th generation)"
