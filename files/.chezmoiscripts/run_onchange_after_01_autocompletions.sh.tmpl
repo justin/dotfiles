@@ -10,12 +10,12 @@ if type_exists 'swift'; then
   success "Successfully generated Swift Package autocompletions."
 fi
 
-if type_exists 'poetry'; then
-  poetry completions zsh >"$ZDOTDIR/functions/_poetry"
-  success "Successfully generated Poetry autocompletions."
-fi
-
 if type_exists 'chezmoi'; then
   chezmoi completion zsh --output="$ZDOTDIR/functions/_chezmoi"
   success "Successfully generated Chezmoi autocompletions."
+fi
+
+if type_exists 'just'; then
+  just --justfile $XDG_CONFIG_HOME/just/justfile --completions zsh >"$ZDOTDIR/functions/_justfile"
+  success "Successfully generated justfile autocompletions."
 fi
