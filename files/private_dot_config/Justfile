@@ -49,3 +49,13 @@ create-ipad device_name='': # Create a new iOS simulator.
 [macos]
 create-iphone device_name='': # Create a new iPadOS simulator.
   sim create_device ipad {{quote(device_name)}}
+
+npm-upgrade: # Update all globally installed npm packages
+  #!/usr/bin/env zsh
+  set -euo pipefail
+  for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
+  do
+      npm -g install "$package"
+  done
+
+  xargs -n 1 npm install -g < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
