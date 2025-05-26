@@ -1,29 +1,6 @@
 settings set prompt [lldb]$
 settings set target.language swift
 
-# Easily get info about a view controller or view in UIKit.
-# Example: po $vc(0x128027ad400)
-breakpoint set -n UIApplicationMain --one-shot true --auto-continue true
-breakpoint command add
-e import UIKit
-e import Foundation
-e func $vc<T>(_ input: T) -> UIViewController { unsafeBitCast(input, to: UIViewController.self) }
-e func $view<T>(_ input: T) -> UIView { unsafeBitCast(input, to: UIView.self) }
-DONE
-
-# Quickly import UIKit or Foundation.
-# http://furbo.org/2015/05/11/an-import-ant-change-in-xcode/
-command alias uikit expr @import UIKit
-command alias foundation expr @import Foundation
-
-# settings set target.language swift
-
-command alias uikits expr import UIKit
-command alias foundations expr import Foundation
-command alias swiftuis expr import Foundation
-
 # Kaleidoscope / LLDB Integration
 # https://blog.kaleidoscope.app/2021/02/22/xcode-debugger-integration/
 command script import ~/Library/Application\ Support/Kaleidoscope/lldb_ksdiff.py
-
-command script import "~/.local/share/xcode/lldb-scripts/lldb_commands/dslldb.py"
