@@ -1,9 +1,11 @@
+#!/usr/bin/env just --justfile
+
 set shell := ["zsh", "-cu"]
 
 vscode_bundle := "com.microsoft.VSCode"
 
 default:
-  @just --list --justfile {{justfile()}}
+  just --list
 
 [macos]
 fix-touchid: # After a system update the Touch ID support for sudo is broken. This fixes it.
@@ -59,3 +61,6 @@ npm-upgrade: # Update all globally installed npm packages
   done
 
   xargs -n 1 npm install -g < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
+
+update-uv:
+  uv pip install -r $XDG_CONFIG_HOME/pip/global_pip_packages.txt

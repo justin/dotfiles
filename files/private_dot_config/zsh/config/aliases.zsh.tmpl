@@ -5,7 +5,7 @@ alias reload="source $HOME/.zshenv | echo '=> ZSH profile reloaded.'"
 alias dot='chezmoi'
 alias m='micro'
 
-alias j="$(which just) --justfile $HOME/.user.justfile" --working-directory .
+alias j="$(which just) --justfile $XDG_CONFIG_HOME/just/justfile" --working-directory .
 alias jst='j'
 
 # Homebrew
@@ -54,6 +54,6 @@ alias ls='ls --color=auto'
 (( ${+commands[pbunzip2]} )) && alias bunzip2='pbunzip2'
 
 # For any recipe in my Justfile, create an alias for it.
-for recipe in `just --justfile ~/.user.justfile --summary`; do
-  alias $recipe="just --justfile ~/.user.justfile --working-directory . $recipe"
+for recipe in `just --justfile $XDG_CONFIG_HOME/just/justfile --summary`; do
+  alias $recipe="just --justfile $XDG_CONFIG_HOME/just/justfile --working-directory . $recipe"
 done

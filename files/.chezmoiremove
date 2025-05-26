@@ -5,6 +5,7 @@ bin
 .config/chezmoi/chezmoi.yaml
 .config/zsh/*.zsh
 .config/zsh/.zprofile
+.config/Justfile
 .ssh/authorized_signers
 .tool-versions
 .config/zsh/functions/_asdf
