@@ -52,6 +52,20 @@ create-ipad device_name='': # Create a new iOS simulator.
 create-iphone device_name='': # Create a new iPadOS simulator.
   sim create_device ipad {{quote(device_name)}}
 
+update-all: # Update all installed apps
+  @echo "🚀 Updating Homebrew."
+  just update-homebrew
+  @echo "🚀 Updating Mac App Store apps."
+  mas upgrade
+  @echo "🚀 Updating npm packages"
+  just npm-upgrade
+
+update-homebrew: # Update Homebrew installed packages.
+  brew update
+  brew outdated
+  brew upgrade
+  brew cleanup -s
+
 npm-upgrade: # Update all globally installed npm packages
   #!/usr/bin/env zsh
   set -euo pipefail
