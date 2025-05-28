@@ -1,1 +1,1 @@
-.config/Justfile
+.config/just/justfile

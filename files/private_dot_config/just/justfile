@@ -52,6 +52,7 @@ create-ipad device_name='': # Create a new iOS simulator.
 create-iphone device_name='': # Create a new iPadOS simulator.
   sim create_device ipad {{quote(device_name)}}
 
+alias up := update-all
 update-all: # Update all installed apps
   @echo "🚀 Updating Homebrew."
   just update-homebrew
@@ -75,6 +76,3 @@ npm-upgrade: # Update all globally installed npm packages
   done
 
   xargs -n 1 npm install -g < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
-
-update-uv:
-  uv pip install -r $XDG_CONFIG_HOME/pip/global_pip_packages.txt
