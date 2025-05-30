@@ -2,7 +2,6 @@
 tap "iina/homebrew-mpv-iina"
 tap "majd/repo", "https://github.com/majd/homebrew-repo.git"                            # ipatool
 tap "peripheryapp/periphery", "https://github.com/peripheryapp/homebrew-periphery.git"  # periphery
-tap "robotsandpencils/made", "https://github.com/RobotsAndPencils/homebrew-made.git"    # xcodes
 tap "buo/cask-upgrade"
 
 # Settings
@@ -19,9 +18,11 @@ brew "mas"
 cask "periphery"
 brew "artginzburg/tap/sudo-touchid"
 brew "swiftlint"
+brew "swift-format"
 brew "TomAnthony/brews/itermocil"
 brew "xcbeautify"
 brew "XCTestHtmlReport/xchtmlreport/xchtmlreport"
+brew "xcode-build-server"
 brew "xcodes"
 
 # Dev Tools
@@ -33,15 +34,19 @@ brew "ruby"
 cask "1password"
 cask "adobe-creative-suite"
 cask "bbedit"
+cask "chatgpt"
+cask "claude"
 cask "cleanshot"
 cask "dash"
 cask "downie"
 cask "fastscripts"
 cask "firefox"
+cask "github-copilot-for-xcode"
 cask "hazel"
 cask "istat-menus"
 brew "iina"
 cask "iterm2"
+cask "itermai"
 cask "jordanbaird-ice"
 cask "kaleidoscope"
 cask "keyboard-maestro"
