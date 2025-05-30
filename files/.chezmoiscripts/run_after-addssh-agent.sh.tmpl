@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
 {{ if eq .chezmoi.os "darwin" -}}
-ssh-add --apple-use-keychain {{ .chezmoi.homeDir }}/.ssh/id_rsa
+ssh-add --apple-use-keychain {{ .chezmoi.homeDir }}/.ssh/id_rsa 2>/dev/null
+ssh-add --apple-use-keychain {{ .chezmoi.homeDir }}/.ssh/spatial_signing 2>/dev/null
 {{ else if and (eq .chezmoi.os "linux") (not .codespaces) (not .synology) -}}
 ssh-add {{ .chezmoi.homeDir }}/.ssh/id_rsa
 {{ end -}}
