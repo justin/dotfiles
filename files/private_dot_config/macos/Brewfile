@@ -1,22 +1,18 @@
 # Taps
-tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
 tap "iina/homebrew-mpv-iina"
-tap "microsoft/git"
 tap "majd/repo", "https://github.com/majd/homebrew-repo.git"                            # ipatool
 tap "peripheryapp/periphery", "https://github.com/peripheryapp/homebrew-periphery.git"  # periphery
 tap "robotsandpencils/made", "https://github.com/RobotsAndPencils/homebrew-made.git"    # xcodes
+tap "buo/cask-upgrade"
 
 # Settings
 cask_args appdir: "/Applications"
 
-cask "1password/tap/1password-cli"
 brew "cloc"
 brew "dockutil"
 brew "duti"
 brew "ffmpeg"
 cask "git-credential-manager-core"
-brew "git-lfs"
 cask "ipatool"
 brew "kin"
 brew "mas"

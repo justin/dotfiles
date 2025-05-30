@@ -1,15 +1,26 @@
+# Taps
+tap "homebrew/bundle"
+
 brew "aria2"
 brew "fzf"
 brew "gh"
 brew "git"
+cask "git-credential-manager-core"
+brew "git-lfs"
 brew "jq"
 brew "just"
 brew "less"
 brew "pbzip2"
 brew "pigz"
+brew "proctools"
 brew "sqlite"
 brew "tree"
+brew "tmux"
 brew "wget"
 brew "zoxide"
 brew "zsh"
 brew "vim"
+brew "1password-cli"
+
+# Install plugins for GH
+gh extension install github/gh-copilot
