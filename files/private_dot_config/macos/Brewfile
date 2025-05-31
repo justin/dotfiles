@@ -7,29 +7,6 @@ tap "buo/cask-upgrade"
 # Settings
 cask_args appdir: "/Applications"
 
-brew "cloc"
-brew "dockutil"
-brew "duti"
-brew "ffmpeg"
-cask "git-credential-manager-core"
-cask "ipatool"
-brew "kin"
-brew "mas"
-cask "periphery"
-brew "artginzburg/tap/sudo-touchid"
-brew "swiftlint"
-brew "swift-format"
-brew "TomAnthony/brews/itermocil"
-brew "xcbeautify"
-brew "XCTestHtmlReport/xchtmlreport/xchtmlreport"
-brew "xcode-build-server"
-brew "xcodes"
-
-# Dev Tools
-brew "python"
-brew "node"
-brew "ruby"
-
 # Cask Apps
 cask "1password"
 cask "adobe-creative-suite"
@@ -56,7 +33,7 @@ cask "netnewswire"
 cask "orbstack"
 cask "omnigraffle"
 cask "openinterminal"
-cask "paw"
+cask "rapidapi"
 cask "proxyman"
 cask "permute"
 cask "plistedit-pro"
@@ -64,8 +41,8 @@ cask "raycast"
 cask "screens-connect"
 cask "script-debugger"
 cask "signal"
-cask "spotify"
 cask "subler"
+cask "syntax-highlight"
 cask "tableplus"
 cask "tower"
 cask "typora"
@@ -74,64 +51,8 @@ cask "visual-studio-code"
 cask "xcodes"
 cask "zoom"
 
-# Mac App Store
-mas "1Blocker", id: 1365531024
-mas "A Companion for SwiftUI", id: 1485436674
-mas "Apple Configurator 2", id: 1037126344
-mas "CARROT Weather", id: 993487541
-mas "Channels Pro - IPTV Player", id: 1552284117
-mas "Codeshot", id: 1541665460
-mas "Control Panel for Twitter": id: 1668516167
-mas "Core Data Lab", id: 1460684638
-mas "Craft", id: 1487937127
-mas "Darkroom: Photo & Video Editor", id: 953286746
-mas "Day One", id: 1055511498
-mas "DevCleaner", id: 1388020431
-mas "Developer", id: 640199958
-mas "Easy CSV Editor", id: 1171346381
-mas "Expressions", id: 913158085
-mas "Focus - Time Management", id: 777233759
-mas "Home Assistant", id: 1099568401
-mas "Homecoming for Mastodon", id: 1666139593
-mas "HomePass for HomeKit", id: 1330266650
-mas "Hush Nag Blocker", id: 1544743900
-mas "Infuse 7", id: 1136220934
-mas "Keynote", id: 409183694
-mas "Mate", id: 1005088137
-mas "Microsoft Excel", id: 462058435
-mas "Microsoft PowerPoint", id: 462062816
-mas "Microsoft Word", id: 462054704
-mas "Numbers", id: 409203825
-mas "OmniOutliner", id: 1142578772
-mas "Pages", id: 409201541
-mas "Paprika Recipe Manager 3", id: 1303222628
-mas "Parcel - Delivery Tracking", id: 639968404
-mas "PCalc", id: 403504866
-mas "Peek - A Quick Look Extension", id: 1554235898
-mas "Pixeur - Screen Color Picker", id: 1507890049
-mas "PLIST Editor", id: 1157491961
-mas "PDF Expert", id: 1055273043
-mas "Renamer 6", id: 1460229011
-mas "RocketSim for Xcode Simulator", id: 1504940162
-mas "Save to Upnext", id: 1583423832
-mas "Screens", id: 1224268771
-mas "Slack", id: 803453959
-mas "Soulver 3", id: 1508732804
-mas "Tailscale", id: 1475387142
-mas "Transloader", id: 572281534
-mas "xScope", id: 889428659
-
 # Not supported by Homebrew (yet)
 # SD Notary - https://latenightsw.com/sd-notary-notarizing-made-easy/
 # Opal - https://opalcamera.com
 
-# Fonts
-# Apple / iOS https://developer.apple.com/fonts/
-cask "font-new-york"
-cask "font-sf-compact"
-cask "font-sf-pro"
-cask "font-sf-arabic"
-cask "font-sf-mono"
 
-# GitHub Fonts
-cask "font-monaspace"

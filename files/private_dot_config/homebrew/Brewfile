@@ -21,6 +21,3 @@ brew "zoxide"
 brew "zsh"
 brew "vim"
 brew "1password-cli"
-
-# Install plugins for GH
-gh extension install github/gh-copilot

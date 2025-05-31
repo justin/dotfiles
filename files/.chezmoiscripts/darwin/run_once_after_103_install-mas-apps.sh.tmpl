@@ -1,0 +1,11 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env zsh
+#
+# Install Homebrew dependencies
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+info "Installing Mac App Store apps."
+{{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-MacAppStore
+{{ end -}}

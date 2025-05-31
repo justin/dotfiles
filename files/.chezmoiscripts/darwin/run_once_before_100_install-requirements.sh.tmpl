@@ -7,13 +7,13 @@ source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
 info "Installing xcodes cli."
-brew install robotsandpencils/made/xcodes
+brew install --formula xcodes
 
 info "Installing latest release of Xcode."
-xcodes install --latest-prerelease
+xcodes install --latest
 
 {{- if eq .chezmoi.arch "arm64" }}
-info "M1 Mac detected. Installing Rosetta."
+info "Apple Silicon detected. Installing Rosetta."
 sudo softwareupdate --install-rosetta
 {{ end -}}
 {{ end -}}

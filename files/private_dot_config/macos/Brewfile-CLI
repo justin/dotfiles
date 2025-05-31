@@ -1,0 +1,32 @@
+
+# Settings
+cask_args appdir: "/Applications"
+
+# Development Tools
+brew "cloc"
+brew "dockutil"
+brew "duti"
+brew "ffmpeg"
+cask "ipatool"
+brew "kin"
+brew "mas"
+cask "periphery"
+brew "artginzburg/tap/sudo-touchid"
+brew "swiftlint"
+brew "swift-format"
+brew "TomAnthony/brews/itermocil"
+brew "xcbeautify"
+brew "XCTestHtmlReport/xchtmlreport/xchtmlreport"
+brew "xcode-build-server"
+brew "xcodes"
+
+# Python
+brew "python"
+brew "ruff"
+brew "uv"
+brew "llm"
+
+brew "node"
+brew "ruby"
+brew "magic-wormhole"
+brew "awscli"

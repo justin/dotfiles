@@ -1,0 +1,22 @@
+{{ if and (eq .chezmoi.os "darwin" "linux") (not .codespaces) (not .synology) -}}
+#!/usr/bin/env zsh
+#
+# Install universal Homebrew dependencies
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+info "Homebrew: Installing core packages."
+{{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/homebrew/Brewfile
+
+if type_exists 'gh'; then
+  info "Homebrew: Installing GitHub Copilot CLI."
+  # Install the GitHub Copilot CLI extension for gh
+  gh extension install github/gh-copilot
+fi
+
+{{ if eq .chezmoi.os "darwin" }}
+info "Homebrew: Installing macOS core packages."
+{{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-CLI
+{{ end -}}
+{{ end -}}

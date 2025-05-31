@@ -1,0 +1,4 @@
+cask "blender"
+cask "figma"
+cask "notion"
+mas "Slack", id: 803453959
