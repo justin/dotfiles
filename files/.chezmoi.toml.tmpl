@@ -2,6 +2,7 @@
 {{- $interactive:= stdinIsATTY -}}
 {{- /* detect GitHub codespaces, VSCode remote containers or Docker containers */ -}}
 {{- $codespaces:= env "CODESPACES" | not | not -}}
+{{- $ci := env "CI" | not | not -}}
 
 {{- /* detect my Synology NAS */ -}}
 {{- $synology:= false }}
@@ -27,6 +28,7 @@
   url = "https://justinw.me"
   codespaces = {{ $codespaces }}
   synology = {{ $synology }}
+  ci = {{ $ci }}
 
 [data.homebrew]
 {{- if eq .chezmoi.os "darwin" }}
@@ -51,5 +53,7 @@ scriptTempDir = "~/tmp"
 {{- end -}}
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
+{{- if and (not $synology) (not $codespaces) (not $ci)  }}
 [hooks.read-source-state.pre]
   command = ".local/share/chezmoi/.install-password-manager.sh"
+{{ end -}}
