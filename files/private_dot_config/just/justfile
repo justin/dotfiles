@@ -58,17 +58,23 @@ alias up := update-all
 update-all: # Update all installed apps
   @echo "🚀 Updating Homebrew."
   just update-homebrew
+  gh extension upgrade --all
   @echo "🚀 Updating Mac App Store apps."
   mas upgrade
   @echo "🚀 Updating npm packages"
   just npm-upgrade
+  @echo "🚀 Updating python packages"
+  just py-upgrade
 
 [linux]
 update-all: # Update all installed apps
   @echo "🚀 Updating Homebrew."
   just update-homebrew
+  gh extension upgrade --all
   @echo "🚀 Updating npm packages"
   just npm-upgrade
+  @echo "🚀 Updating python packages"
+  just py-upgrade
 
 update-homebrew: # Update Homebrew installed packages.
   brew update
@@ -85,3 +91,8 @@ npm-upgrade: # Update all globally installed npm packages
   done
 
   xargs -n 1 npm install -g < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
+
+py-upgrade: # Update all globally installed python packages
+  #!/usr/bin/env zsh
+  set -euo pipefail
+  xargs -n 1 pipx install --include-deps < $XDG_CONFIG_HOME/pip/global_pip_packages.txt 1>/dev/null
