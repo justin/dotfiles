@@ -50,3 +50,6 @@
 scriptTempDir = "~/tmp"
 {{- end -}}
 sourceDir = {{ .chezmoi.sourceDir | quote }}
+
+[hooks.read-source-state.pre]
+  command = ".local/share/chezmoi/.install-password-manager.sh"
