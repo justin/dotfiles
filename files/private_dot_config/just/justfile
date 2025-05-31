@@ -53,28 +53,21 @@ create-iphone device_name='': # Create a new iPadOS simulator.
   sim create_device ipad {{quote(device_name)}}
 
 alias up := update-all
+update-all: # Update all installed apps
+  @echo "🚀 Updating Homebrew."
+  just update-homebrew
+  gh extension upgrade --all
+  {{ if os() == "macos" { "just update-mas" } else { "" } }}
+  @echo "🚀 Updating npm packages"
+  just npm-upgrade
+  @echo "🚀 Updating python packages"
+  just py-upgrade
 
 [macos]
-update-all: # Update all installed apps
-  @echo "🚀 Updating Homebrew."
-  just update-homebrew
-  gh extension upgrade --all
+[private]
+update-mas: # Update Mac App Store apps
   @echo "🚀 Updating Mac App Store apps."
   mas upgrade
-  @echo "🚀 Updating npm packages"
-  just npm-upgrade
-  @echo "🚀 Updating python packages"
-  just py-upgrade
-
-[linux]
-update-all: # Update all installed apps
-  @echo "🚀 Updating Homebrew."
-  just update-homebrew
-  gh extension upgrade --all
-  @echo "🚀 Updating npm packages"
-  just npm-upgrade
-  @echo "🚀 Updating python packages"
-  just py-upgrade
 
 update-homebrew: # Update Homebrew installed packages.
   brew update
