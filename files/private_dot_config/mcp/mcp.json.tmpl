@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/specification/refs/heads/main/schema/2025-03-26/schema.json",
     "mcpServers": {
-        "filesystem": {
+      "filesystem": {
         "command": "docker",
         "args": [
           "run",
@@ -12,7 +12,8 @@
           "--mount", "type=bind,src={{ .chezmoi.homeDir }}/src,dst=/projects/src",
           "mcp/filesystem",
           "/projects"
-        ]},
+        ]
+        },
         "github": {
             "command": "docker",
             "args": [
@@ -26,6 +27,23 @@
             "env": {
                 "GITHUB_PERSONAL_ACCESS_TOKEN": "{{ onepasswordRead "op://CompoundBNB/GitHub API - MCP/credential" .onepasswordAccount | trim }}"
             }
-        }
+        },
+        "kagisearch": {
+          "command": "docker",
+          "args": [
+            "run",
+            "-i",
+            "--rm",
+            "-e",
+            "KAGI_SUMMARIZER_ENGINE",
+            "-e",
+            "KAGI_API_KEY",
+            "mcp/kagisearch"
+          ],
+          "env": {
+            "KAGI_SUMMARIZER_ENGINE": "cecil",
+            "KAGI_API_KEY": "{{ onepasswordRead "op://Private/Kagi API Key/credential" .onepasswordAccount | trim }}"
+          }
+      }
     }
 }
