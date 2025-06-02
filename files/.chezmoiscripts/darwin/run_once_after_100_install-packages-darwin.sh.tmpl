@@ -9,7 +9,6 @@ source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 info "Homebrew: Installing personal packages."
 {{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile
 {{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-Fonts
-{{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-Spatial
 
 {{- if eq .chezmoi.arch "arm64" }}
 if [[ -z $(brew services list | grep "sudo-touchid") ]]; then

@@ -10,3 +10,5 @@ bin
 .tool-versions
 .config/zsh/functions/_asdf
 .config/mise
+.ssh/spatial_signing*
+.config/git/gitconfig.spatial*
