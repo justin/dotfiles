@@ -62,6 +62,7 @@ update-all: # Update all installed apps
   just npm-upgrade
   @echo "🚀 Updating python packages"
   just py-upgrade
+  just update-mcp
 
 [macos]
 [private]
@@ -89,3 +90,13 @@ py-upgrade: # Update all globally installed python packages
   #!/usr/bin/env zsh
   set -euo pipefail
   xargs -n 1 pipx install --include-deps < $XDG_CONFIG_HOME/pip/global_pip_packages.txt 1>/dev/null
+
+update-mcp: # Extract MCP server configurations and create a new servers configuration file
+  #!/usr/bin/env zsh
+  set -euo pipefail
+  if [[ ! -f "$XDG_CONFIG_HOME/mcp/mcp.json" ]]; then
+    echo "Error: $XDG_CONFIG_HOME/mcp/mcp.json not found"
+    exit 1
+  fi
+
+  jq '{servers: .mcpServers}' "$XDG_CONFIG_HOME/mcp/mcp.json" > "$XDG_CONFIG_HOME/github-copilot/xcode/mcp.json"
