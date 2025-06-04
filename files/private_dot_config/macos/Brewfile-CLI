@@ -1,7 +1,3 @@
-
-# Settings
-cask_args appdir: "/Applications"
-
 # Development Tools
 brew "cloc"
 brew "dockutil"

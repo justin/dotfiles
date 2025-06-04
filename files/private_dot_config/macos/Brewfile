@@ -1,5 +1,4 @@
 # Taps
-tap "iina/homebrew-mpv-iina"
 tap "majd/repo", "https://github.com/majd/homebrew-repo.git"                            # ipatool
 tap "peripheryapp/periphery", "https://github.com/peripheryapp/homebrew-periphery.git"  # periphery
 tap "buo/cask-upgrade"
@@ -21,7 +20,7 @@ cask "firefox"
 cask "github-copilot-for-xcode"
 cask "hazel"
 cask "istat-menus"
-brew "iina"
+cask "iina"
 cask "iterm2"
 cask "itermai"
 cask "jordanbaird-ice"
@@ -54,5 +53,3 @@ cask "zoom"
 # Not supported by Homebrew (yet)
 # SD Notary - https://latenightsw.com/sd-notary-notarizing-made-easy/
 # Opal - https://opalcamera.com
-
-
