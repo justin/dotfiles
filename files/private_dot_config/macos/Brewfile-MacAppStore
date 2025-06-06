@@ -43,7 +43,6 @@ mas "Renamer 6", id: 1460229011
 mas "RocketSim for Xcode Simulator", id: 1504940162
 mas "Screens 5: VNC Remote Desktop", id: 1663047912
 mas "Sketch Digital Design Toolkit", id: 1667260533
-mas "Slack", id: 803453959
 mas "Sleeve for Spotify Music", id: 1606145041
 mas "Soulver 3", id: 1508732804
 mas "StopTheMadness Pro", id: 6471380298
@@ -56,6 +55,3 @@ mas "xScope", id: 889428659
 mas "Copilot Track Budget Money", id: 1447330651
 mas "PDF Expert", id: 1055273043
 mas "Pixeur - Screen Color Picker", id: 1507890049
-
-# Work
-mas "Slack", id: 803453959

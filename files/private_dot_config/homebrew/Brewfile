@@ -1,11 +1,8 @@
-# Taps
-tap "homebrew/bundle"
-
 brew "aria2"
 brew "fzf"
 brew "gh"
 brew "git"
-cask "git-credential-manager-core"
+cask "git-credential-manager"
 brew "git-lfs"
 brew "jq"
 brew "just"
@@ -22,4 +19,4 @@ brew "wget"
 brew "zoxide"
 brew "zsh"
 brew "vim"
-brew "1password-cli"
+cask "1password-cli"

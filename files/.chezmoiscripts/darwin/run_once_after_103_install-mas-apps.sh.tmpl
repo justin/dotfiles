@@ -2,10 +2,18 @@
 #!/usr/bin/env zsh
 #
 # Install Homebrew dependencies
+# {{ (glob "private_dot_config/macos/*") | join "\n" | sha256sum }}
 
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
+info "Homebrew: Installing macOS packages."
+{{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile
+{{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-CLI
+{{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-Fonts
+
 info "Installing Mac App Store apps."
 {{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-MacAppStore
+
+success "Homebrew: installed latest macOS Brewfile updates."
 {{ end -}}
