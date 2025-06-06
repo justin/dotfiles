@@ -58,8 +58,10 @@
   quotepath = false
   trustctime = false
 
+{{ if eq .chezmoi.os "darwin" }}
 [credential]
 	helper = /usr/local/bin/git-credential-manager
+{{- end }}
 
 [credential "https://dev.azure.com"]
 	useHttpPath = true
