@@ -1,34 +1,34 @@
-set directory=$XDG_CACHE_HOME/vim/swap,~/,/tmp
-set backupdir=$XDG_CACHE_HOME/vim/backup,~/,/tmp
-set undodir=$XDG_CACHE_HOME/vim/undo,~/,/tmp
-set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
-set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME
+set directory=$XDG_CACHE_HOME/vim/swap,~/,/tmp          " Set directory for swap files to XDG cache location
+set backupdir=$XDG_CACHE_HOME/vim/backup,~/,/tmp        " Set directory for backup files to XDG cache location
+set undodir=$XDG_CACHE_HOME/vim/undo,~/,/tmp            " Set directory for undo files to XDG cache location
+set viminfo+=n$XDG_CACHE_HOME/vim/viminfo               " Set viminfo file location to XDG cache directory
+set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME  " Add XDG config paths to runtime path
 
 {{ if not .synology }}
-let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
-syntax on
+let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"               " Set MYVIMRC environment variable for XDG compliance
+syntax on                                               " Enable syntax highlighting
 {{ end }}
 
-set number
-set hlsearch
-set ignorecase
-set incsearch
+set number                                               " Show line numbers
+set hlsearch                                             " Highlight search results
+set ignorecase                                           " Ignore case in search patterns
+set incsearch                                            " Show search matches as you type
 
-inoremap jk <Esc>
-let mapleader = "'"
+inoremap jk <Esc>                                        " Map 'jk' in insert mode to escape to normal mode
+let mapleader = "'"                                      " Set leader key to single quote
 
-hi Comment ctermfg=40
-hi Constant ctermfg=39
-hi Cursor ctermbg=231
-hi CursorLine ctermbg=16
-hi Function ctermfg=48
-hi Identifier ctermfg=48
-hi NonText ctermfg=16
-hi Normal ctermbg=16 ctermfg=231
-hi Number ctermfg=99
-hi PreCondit ctermfg=172
-hi PreProc ctermfg=172
-hi Statement ctermfg=162
-hi String ctermfg=196
-hi Type ctermfg=39
-hi Visual ctermbg=16
+hi Comment ctermfg=40                                    " Set comment text color to bright green
+hi Constant ctermfg=39                                   " Set constant text color to bright cyan
+hi Cursor ctermbg=231                                    " Set cursor background color to white
+hi CursorLine ctermbg=16                                 " Set current line background color to black
+hi Function ctermfg=48                                   " Set function name color to bright green
+hi Identifier ctermfg=48                                 " Set identifier color to bright green
+hi NonText ctermfg=16                                    " Set non-text characters color to black (hidden)
+hi Normal ctermbg=16 ctermfg=231                         " Set normal text: black background, white foreground
+hi Number ctermfg=99                                     " Set number color to light magenta
+hi PreCondit ctermfg=172                                 " Set preprocessor conditional color to orange
+hi PreProc ctermfg=172                                   " Set preprocessor color to orange
+hi Statement ctermfg=162                                 " Set statement keywords color to magenta
+hi String ctermfg=196                                    " Set string literal color to bright red
+hi Type ctermfg=39                                       " Set type keywords color to bright cyan
+hi Visual ctermbg=16                                     " Set visual selection background color to black
