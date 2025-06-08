@@ -8,7 +8,7 @@ cask_args appdir: "/Applications"
 
 # Cask Apps
 cask "1password"
-cask "adobe-creative-suite"
+cask "adobe-creative-cloud"
 cask "bbedit"
 cask "chatgpt"
 cask "claude"
