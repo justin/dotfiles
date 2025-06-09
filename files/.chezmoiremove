@@ -12,3 +12,4 @@ bin
 .config/mise
 .ssh/spatial_signing*
 .config/git/gitconfig.spatial*
+.config/macos/Brewfile-Spatial

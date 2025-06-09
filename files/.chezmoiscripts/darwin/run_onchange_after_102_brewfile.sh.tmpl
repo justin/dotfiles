@@ -2,14 +2,17 @@
 #!/bin/zsh
 #
 # # This script is run after the Homebrew Brewfile is applied if the file has changed.
-# {{ include "private_dot_config/homebrew/Brewfile" | sha256sum }}
+# {{ (glob "private_dot_config/macos/*") | join "\n" | sha256sum }}
 
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
-info "Installing Mac App Store apps."
-{{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-MacAppStore
+info "Installing macOS Homebrew updates."
+for app in $XDG_CONFIG_HOME/macos/Brewfile*; do
+  if [[ -n "$app" ]]; then
+    {{ .homebrew.prefix }}/bin/brew bundle --file=$app
+  fi
+done
 
-{{ .homebrew.prefix }}/bin/brew bundle --quiet --file=$XDG_CONFIG_HOME/homebrew/Brewfile
-success "Homebrew: installed latest core Brewfile updates."
+success "Homebrew: installed latest macOS Homebrew updates."
 {{ end -}}
