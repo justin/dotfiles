@@ -76,3 +76,7 @@ export ANTHROPIC_API_KEY={{ onepasswordRead "op://CompoundBNB/Anthropic API Key 
 export GEMINI_API_KEY={{ onepasswordRead "op://CompoundBNB/Gemini API Key - dotfiles/credential" .onepasswordAccount | trim }}
 export OPENAI_API_KEY={{ onepasswordRead "op://CompoundBNB/OpenAI API Key - dotfiles/credential" .onepasswordAccount | trim }}
 {{ end }}
+
+{{- if eq .chezmoi.hostname "m1server" }}
+export COLIMA_HOME=$CONFIG_HOME/colima
+{{ end }}

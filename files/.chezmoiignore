@@ -18,6 +18,9 @@ darwin
 .config/zsh/config/macos
 {{- end }}
 
+{{- if ne .chezmoi.hostname "m1server" }}
+.config/colima
+{{- end }}
 
 {{- if or .codespaces .synology }}
 .config/credentials
