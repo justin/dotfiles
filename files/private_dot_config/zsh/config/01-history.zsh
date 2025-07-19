@@ -5,10 +5,10 @@ export HISTFILE=${XDG_DATA_HOME:=~/.local/share}/zsh/history
 [[ -d $HISTFILE:h ]] ||
   mkdir -p $HISTFILE:h
 
-# Read $HISTSIZE lines from $HISTFILE at the start of a Terminal session.
-export HISTSIZE=$((1.2 * SAVEHIST))
 # Save the last $SAVEHIST lines you executed at the end of a Terminal session to $HISTFILE.
 export SAVEHIST=$((100 * 1000))
+# Read $HISTSIZE lines from $HISTFILE at the start of a Terminal session.
+export HISTSIZE=$((1.2 * $SAVEHIST))
 
 # Use modern file-locking mechanisms, for better safety & performance.
 setopt hist_fcntl_lock
