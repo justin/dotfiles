@@ -52,6 +52,16 @@ create-ipad device_name='': # Create a new iOS simulator.
 create-iphone device_name='': # Create a new iPadOS simulator.
   sim create_device ipad {{quote(device_name)}}
 
+[macos]
+reboot: # Reboot the system.
+  @echo "Rebooting the system."
+  sudo shutdown -r now
+
+[linux]
+reboot: # Reboot the system.
+  @echo "Rebooting the system."
+  sudo systemctl reboot
+
 alias up := update-all
 update-all: # Update all installed apps
   @echo "🚀 Updating Homebrew."
