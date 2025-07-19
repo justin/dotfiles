@@ -29,6 +29,7 @@
   codespaces = {{ $codespaces }}
   synology = {{ $synology }}
   ci = {{ $ci }}
+  homelab = {{ if or (eq .chezmoi.os "linux") (eq .chezmoi.hostname "m1server") }}true{{ else }}false{{ end }}
 
 [data.homebrew]
 {{- if eq .chezmoi.os "darwin" }}
