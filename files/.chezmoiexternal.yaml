@@ -49,9 +49,10 @@
   url: https://github.com/DerekSelander/LLDB.git
   refreshPeriod: {{ $refreshPeriodWeek }}
   include: ["lldb_commands"]
+{{ end }}
 
 .cache/iterm2/iterm2_shell_integration.zsh:
   type: file
   url: https://gitlab.com/gnachman/iterm2/-/raw/master/Resources/shell_integration/iterm2_shell_integration.zsh
   refreshPeriod: {{ $refreshPeriodWeek }}
-{{ end }}
+
