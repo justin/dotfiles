@@ -9,7 +9,7 @@
   path =  ~/.config/git/gitconfig.personal
 
 [github]
-  user = {{ .username }}
+  user = {{ .github_username }}
 
 {{ if not .codespaces }}
 # Always use SSH authentication, even if the remote URL specifies https:// or git://
@@ -67,7 +67,7 @@
 	useHttpPath = true
 
 [credential "https://github.com"]
-  username = justin
+  username = {{ .github_username}}
 
 {{- if eq .chezmoi.os "darwin" }}
 [difftool "Kaleidoscope"]

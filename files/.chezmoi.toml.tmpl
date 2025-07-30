@@ -22,7 +22,7 @@
 [data]
   name = "Justin Williams"
   email = {{ $email | quote }}
-  username = "justin"
+  username = {{ if eq .chezmoi.os "darwin" }} "justinwilliams" {{ else }} "justin" {{ end }}
   github_username = "justin"
   onepasswordAccount = "M4GXOUJAFFCVRACF3EDH5RWLAU"
   url = "https://justinw.me"
