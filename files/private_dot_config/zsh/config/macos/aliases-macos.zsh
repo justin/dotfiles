@@ -36,6 +36,7 @@ alias symbolicate="$DEVELOPER_DIR/Contents/SharedFrameworks/DVTFoundation.framew
 alias xcode="open -a Xcode"
 
 alias gt="gittower"
+alias ts='tailscale'
 
 # ====== VS Code ======
 

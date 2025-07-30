@@ -3,9 +3,9 @@
 Host github.com
   Hostname github.com
   User {{ .github_username }}
-  IdentityFile ~/.ssh/id_rsa
+  IdentityFile ~/.ssh/id_ed25519
 
-### -- WORK PERSONA/ACCOUNT --
+### -- WORK PERSONAL/ACCOUNT --
 
 Host homelab
   User justin
@@ -29,7 +29,7 @@ Host m1server
 
 Host udm
   User root
-  HostName unifi
+  HostName 10.0.1.1
 
 Host *
   AddKeysToAgent yes
