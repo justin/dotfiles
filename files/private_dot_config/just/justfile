@@ -109,4 +109,6 @@ update-mcp: # Extract MCP server configurations and create a new servers configu
     exit 1
   fi
 
-  jq '{servers: .mcpServers}' "$XDG_CONFIG_HOME/mcp/mcp.json" > "$XDG_CONFIG_HOME/github-copilot/xcode/mcp.json"
+  if [ $(uname) = "Darwin" ]; then
+      jq '{servers: .mcpServers}' "$XDG_CONFIG_HOME/mcp/mcp.json" > "$XDG_CONFIG_HOME/github-copilot/xcode/mcp.json"
+  fi
