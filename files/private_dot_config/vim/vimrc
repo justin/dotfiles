@@ -4,10 +4,11 @@ set undodir=$XDG_CACHE_HOME/vim/undo,~/,/tmp            " Set directory for undo
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo               " Set viminfo file location to XDG cache directory
 set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME  " Add XDG config paths to runtime path
 
-{{ if not .synology }}
-let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"               " Set MYVIMRC environment variable for XDG compliance
-syntax on                                               " Enable syntax highlighting
-{{ end }}
+let hostname = substitute(system('hostname'), '\n', '', '')
+if hostname != "nas"
+  let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"               " Set MYVIMRC environment variable for XDG compliance
+  syntax on                                                 " Enable syntax highlighting
+endif
 
 set number                                               " Show line numbers
 set hlsearch                                             " Highlight search results
