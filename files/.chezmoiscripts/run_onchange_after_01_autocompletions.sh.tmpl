@@ -19,6 +19,13 @@ if type_exists 'just'; then
   just --justfile $XDG_CONFIG_HOME/just/justfile --completions zsh >"$ZDOTDIR/functions/_justfile"
   success "Successfully generated justfile autocompletions."
 fi
+
+if type_exists 'rustup'; then
+  rustup completion zsh >"$ZDOTDIR/functions/_rustup"
+  rustup completions zsh cargo >"$ZDOTDIR/functions/_cargo"
+  success "Successfully generated rustup autocompletions."
+fi
+
 if type_exists 'gh'; then
   gh completion -s zsh >"$ZDOTDIR/functions/_gh"
   success "Successfully generated GitHub CLI autocompletions."
