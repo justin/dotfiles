@@ -1,0 +1,22 @@
+{
+  "name": "jww-theme",
+  "displayName": "JWW Theme",
+  "description": "Dark theme matching JWW Xcode color scheme",
+  "version": "1.0.0",
+  "publisher": "justin-williams",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "JWW",
+        "uiTheme": "vs-dark",
+        "path": "./themes/jww-theme.json"
+      }
+    ]
+  }
+}
