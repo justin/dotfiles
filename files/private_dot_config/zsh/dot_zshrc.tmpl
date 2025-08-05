@@ -69,6 +69,10 @@ eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
 # `ghcs` and `ghce` instead of `gh copilot suggest` and `gh copilot explain`.
 eval "$(gh copilot alias -- zsh)"
 
+if [[ $(uname) == "Linux" ]]; then
+  eval $(ssh-agent -s) &>/dev/null
+  ssh-add {{ .chezmoi.homeDir }}/.ssh/id_ed25519d 2>/dev/null
+fi
 {{ end }}
 
 # Source any file with a *.zsh extension. They have additional settings.
