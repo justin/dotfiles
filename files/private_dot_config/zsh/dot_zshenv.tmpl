@@ -1,6 +1,9 @@
 #
 # .zshenv is always sourced, whether its an interactive or login shell.
-#
+
+# Use emacs key bindings
+bindkey -e
+
 # ===== Config Directory =====
 #
 # This is based on XDG spec, as best as macOS can.
@@ -73,6 +76,7 @@ export RUSTUP_HOME=$XDG_DATA_HOME/rustup
 
 # ===== NPM =====
 export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
+
 {{ if and (not .codespaces) (not .synology) }}
 # ===== LLM =====
 export ANTHROPIC_API_KEY={{ onepasswordRead "op://CompoundBNB/Anthropic API Key - dotfiles/credential" .onepasswordAccount | trim }}

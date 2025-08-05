@@ -23,5 +23,3 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 zstyle '*:compinit' arguments -D -i -u -C -w
 
 zmodload -i zsh/complist
-
-# More Fun Options? https://github.com/solnic/dotfiles/blob/master/home/zsh/completion.zsh
