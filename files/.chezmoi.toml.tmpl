@@ -30,14 +30,12 @@
   ci = {{ $ci }}
   homelab = {{ if or (eq .chezmoi.os "linux") (eq .chezmoi.hostname "m1server") }}true{{ else }}false{{ end }}
 
+{{- if and (not $synology) (not $codespaces) (not $ci)  }}
 [data.homebrew]
-{{- if eq .chezmoi.os "darwin" }}
-    prefix = "/opt/homebrew"
-{{- else }}
-    prefix = "/home/linuxbrew/.linuxbrew"
+  prefix = {{ if eq .chezmoi.os "darwin" }}"/opt/homebrew"{{ else }}"/home/linuxbrew/.linuxbrew"{{ end }}
 {{ end -}}
-{{- if eq .chezmoi.os "darwin" }}
 
+{{- if eq .chezmoi.os "darwin" }}
 [data.macos]
     # The preferred dock icon size for a Mac.
     dock_tile_size = {{ if eq .chezmoi.hostname "mbp" }}48{{ else }}80{{ end }}
