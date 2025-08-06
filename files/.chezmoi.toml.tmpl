@@ -58,7 +58,7 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
   command = ".local/share/chezmoi/.install-password-manager.sh"
 {{ end -}}
 
-{{- if eq .chezmoi.hostname "homelab" -}}
+{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.hostname "m1server") }}
 [onepassword]
   mode = "service"
 
