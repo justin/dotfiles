@@ -24,7 +24,6 @@
   email = {{ $email | quote }}
   username = {{ if eq .chezmoi.os "darwin" }} "justinwilliams" {{ else }} "justin" {{ end }}
   github_username = "justin"
-  onepasswordAccount = "M4GXOUJAFFCVRACF3EDH5RWLAU"
   url = "https://justinw.me"
   codespaces = {{ $codespaces }}
   synology = {{ $synology }}
@@ -57,4 +56,12 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 {{- if and (not $synology) (not $codespaces) (not $ci)  }}
 [hooks.read-source-state.pre]
   command = ".local/share/chezmoi/.install-password-manager.sh"
+{{ end -}}
+
+{{- if eq .chezmoi.hostname "homelab" -}}
+[onepassword]
+  mode = "service"
+
+[scriptEnv]
+  OP_SERVICE_ACCOUNT_TOKEN = "{{ env "OP_SERVICE_ACCOUNT_TOKEN" | default "" }}"
 {{ end -}}

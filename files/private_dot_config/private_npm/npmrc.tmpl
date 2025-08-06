@@ -3,9 +3,9 @@
 
 
 {{- if and (not .codespaces) (not .synology) }}
-//registry.npmjs.org/:_authToken={{ onepasswordRead "op://Personal/NPM Registry Token/credential" .onepasswordAccount | quote | trim }}
-//npm.pkg.github.com/:_authToken={{ onepasswordRead "op://Personal/GitHub Package Registry Token/credential" .onepasswordAccount | quote | trim }}
-//npm.748sj.co/:_authToken={{ onepasswordRead "op://Personal/npm.748sj.co Token/credential" .onepasswordAccount | trim }}
+//registry.npmjs.org/:_authToken={{ onepasswordRead "op://Personal/NPM Registry Token/credential" | quote | trim }}
+//npm.pkg.github.com/:_authToken={{ onepasswordRead "op://Personal/GitHub Package Registry Token/credential" | quote | trim }}
+//npm.748sj.co/:_authToken={{ onepasswordRead "op://Personal/npm.748sj.co Token/credential" | trim }}
 {{- end }}
 
 @justin:registry=https://npm.pkg.github.com/

@@ -1,4 +1,4 @@
-export CR_PAT={{ onepasswordRead "op://Personal/GitHub Package Registry Token/credential" .onepasswordAccount | quote | trim }}
+export CR_PAT={{ onepasswordRead "op://Personal/GitHub Package Registry Token/credential" | quote | trim }}
 
 if [[ -d ~/.orbstack/shell ]]; then
   source ~/.orbstack/shell/init.zsh 2>/dev/null || :
