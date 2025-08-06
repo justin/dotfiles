@@ -16,6 +16,7 @@ darwin
 .config/iterm2
 .config/macos
 .config/zsh/config/macos
+.config/credentials
 {{- end }}
 
 {{- if ne .chezmoi.hostname "m1server" }}
