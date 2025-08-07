@@ -49,7 +49,9 @@ alias venv_create="$(which python3) -m venv .venv"
 (( ${+commands[pbzip2]} )) && alias bzip2='pbzip2'
 (( ${+commands[pbunzip2]} )) && alias bunzip2='pbunzip2'
 
+if is_cmd just; then
 # For any recipe in my Justfile, create an alias for it.
 for recipe in `just --justfile $XDG_CONFIG_HOME/just/justfile --summary`; do
   alias $recipe="just --justfile $XDG_CONFIG_HOME/just/justfile --working-directory . $recipe"
 done
+fi

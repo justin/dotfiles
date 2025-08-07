@@ -28,4 +28,8 @@ darwin
 .aws
 .ssh
 .config/git/gitconfig*
+.config/eza
+.chezmoiscripts/*op*
+.chezmoiscripts/*brewfile*
+.chezmoiscripts/*ssh*
 {{- end }}

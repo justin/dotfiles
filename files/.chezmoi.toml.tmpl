@@ -46,7 +46,8 @@
 {{ end }}
 
 {{ if $synology }}
-scriptTempDir = "~/tmp"
+tempDir = "/var/services/tmp"
+scriptTempDir = "/var/services/tmp"
 {{ end }}
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
@@ -55,7 +56,7 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
   command = ".local/share/chezmoi/.install-password-manager.sh"
 {{ end -}}
 
-{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.hostname "m1server") }}
+{{ if or (eq .chezmoi.hostname "m1server") (eq .chezmoi.hostname "m1server") }}
 [onepassword]
   mode = "service"
 
