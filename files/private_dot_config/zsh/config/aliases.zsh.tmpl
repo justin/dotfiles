@@ -36,19 +36,8 @@ alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup 
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 
 # Python
-
 alias venv=". .venv/bin/activate"
 alias venv_create="$(which python3) -m venv .venv"
-
-{{- if eq .chezmoi.os "linux" }}
-#
-# Linux Specific
-#
-
-# Unlike macOS, Linux's ls command doesn't set directory colors by default.
-# This will fix that.
-alias ls='ls --color=auto'
-{{- end }}
 
 # If pigz is available, alias gzip/gunzip to prefer it.
 # https://zlib.net/pigz/

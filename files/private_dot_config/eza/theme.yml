@@ -1,0 +1,215 @@
+# # Eza theme based on terminal colors from color.zsh
+# # This theme mimics the LSCOLORS="cxfxcxdxbxegedabagacad" setting
+
+filekinds:
+  normal: # Example: README.md
+    foreground: White
+  directory: # Example: src/
+    foreground: Green
+    is_bold: false
+  symlink: # Example: ln -s README.md link-to-readme
+    foreground: Magenta
+    is_bold: false
+  executable: # Example: chmod +x script.sh
+    foreground: Red
+    is_bold: true
+  pipe:
+    foreground: Yellow
+    background: Black
+  block_device: # Example: /dev/disk0
+    foreground: Blue
+    is_bold: false
+  char_device: # Example: /dev/ttys000
+    foreground: White
+    is_bold: false
+  socket: # Example: /var/run/docker.sock
+    foreground: Green
+    is_bold: false
+  special: # Example: special device file (see man 4 special)
+    foreground: Blue
+    background: Green
+  mount_point: # Example: /Volumes/ExternalDrive
+    foreground: Cyan
+    is_bold: true
+
+perms:
+  user_read: # Example: README.md (owned by you, readable)
+    foreground: White
+    is_bold: false
+  user_write: # Example: touch writable.txt (owned by you, writable)
+    foreground: White
+    is_bold: false
+  user_executable_file: # Example: chmod +x runme.sh (owned by you, executable)
+    foreground: White
+    is_bold: false
+  user_execute_other: # Example: chmod o+x runme.sh (executable by others)
+    foreground: White
+    is_bold: false
+  group_read: # Example: chmod g+r groupfile
+    foreground: White
+  group_write: # Example: chmod g+w groupfile
+    foreground: White
+  group_execute: # Example: chmod g+x groupfile
+    foreground: White
+  other_read: # Example: chmod o+r publicfile
+    foreground: White
+  other_write: # Example: chmod o+w publicfile
+    foreground: White
+  other_execute: # Example: chmod o+x publicfile
+    foreground: White
+  special_user_file: # Example: chmod u+s file (setuid bit set)
+    foreground: Red
+    is_bold: true
+  special_other: # Example: chmod o+t dir (sticky bit set)
+    foreground: Red
+    is_bold: true
+  attribute: # Example: xattr -w com.example.test yes README.md
+    foreground: Cyan
+
+size:
+  major: # Example: /dev/disk0 (major)
+    foreground: White
+    is_bold: false
+  minor: # Example: /dev/disk0 (minor)
+    foreground: White
+  number_byte: # Example: touch small.txt (very small file)
+    foreground: White
+  number_kilo: # Example: head -c 1024 </dev/urandom >1kfile
+    foreground: White
+  number_mega: # Example: file size in megabytes (e.g., 1M)
+    foreground: Red
+  number_giga: # Example: file size in gigabytes (e.g., 1G)
+    foreground: Magenta
+  number_huge: # Example: file size in terabytes or larger (e.g., 1T)
+    foreground: Red
+    is_bold: true
+  unit_byte: # Example: file size in bytes
+    foreground: White
+    is_dimmed: false
+  unit_kilo: # Example: file size in kilobytes (e.g., 1K)
+    foreground: Yellow
+    is_dimmed: true
+  unit_mega: # Example: file size in megabytes (e.g., 1M)
+    foreground: Red
+    is_dimmed: true
+  unit_giga: # Example: file size in gigabytes (e.g., 1G)
+    foreground: Magenta
+    is_dimmed: true
+  unit_huge: # Example: file size in terabytes or larger (e.g., 1T)
+    foreground: Red
+    is_dimmed: true
+
+users:
+  user_you: # Example: touch myfile (owned by you)
+    foreground: White
+    is_bold: false
+  user_root: # Example: sudo touch /var/rootfile (owned by root)
+    foreground: White
+    is_bold: false
+  user_other: # Example: file owned by another user
+    foreground: White
+  group_yours: # Example: chgrp staff myfile (your group)
+    foreground: White
+  group_root: # Example: sudo chgrp wheel myfile (group root)
+    foreground: White
+  group_other: # Example: file with another group
+    foreground: White
+
+links:
+  normal: # Example: ln -s README.md link-to-readme (symlink)
+    foreground: Cyan
+  multi_link_file: # Example: hard link with multiple references (see 'ln' and 'stat')
+    foreground: Magenta
+    is_bold: true
+
+git:
+  new: # Example: git add newfile.txt (new in git status)
+    foreground: Green
+    is_bold: true
+  modified: # Example: git add -u modifiedfile.txt (modified in git status)
+    foreground: Yellow
+  deleted: # Example: git rm removedfile.txt (deleted in git status)
+    foreground: Red
+  renamed: # Example: git mv oldname.txt newname.txt (renamed in git status)
+    foreground: Blue
+  ignored: # Example: .gitignore'd file
+    foreground: White
+    is_dimmed: true
+  conflicted: # Example: merge conflict file
+    foreground: Red
+    is_bold: true
+
+git_repo:
+  branch_main: # Example: main branch in git repo
+    foreground: Blue
+    is_bold: true
+  branch_other: # Example: feature branch in git repo
+    foreground: Cyan
+  git_clean: # Example: clean working tree
+    foreground: Green
+  git_dirty: # Example: uncommitted changes
+    foreground: Yellow
+
+file_type:
+  image: # Example: file.png, file.jpg
+    foreground: Magenta
+  video: # Example: file.mp4, file.mov
+    foreground: Magenta
+    is_bold: true
+  music: # Example: file.mp3, file.wav
+    foreground: Blue
+  crypto: # Example: file.gpg, file.asc
+    foreground: Green
+    is_bold: true
+  document: # Example: file.pdf, file.docx
+    foreground: Green
+  compressed: # Example: file.zip, file.tar.gz
+    foreground: Red
+  temp: # Example: file~ or .swp
+    foreground: White
+    is_dimmed: true
+  compiled: # Example: file.o, file.class
+    foreground: Yellow
+  build: # Example: build.log, build/
+    foreground: Yellow
+    is_underline: true
+  source: # Example: file.c, file.py, file.rs
+    foreground: Yellow
+    is_bold: true
+
+punctuation: # Example: the : in drwxr-xr-x
+  foreground: White
+  is_dimmed: true
+
+date: # Example: date column in eza output
+  foreground: White
+inode: # Example: inode number column (eza --inode)
+  foreground: Cyan
+  is_dimmed: true
+
+blocks: # Example: block count column (eza --blocks)
+  foreground: Cyan
+  is_dimmed: true
+
+header: # Example: header row in eza -H
+  foreground: White
+  is_bold: true
+
+octal: # Example: octal permissions column (eza --octal-permissions)
+  foreground: Magenta
+
+flags: # Example: file flags column (eza --flags)
+  foreground: Cyan
+  is_bold: true
+
+control_char: # Example: file with control characters in name
+  foreground: Red
+  background: Yellow
+
+broken_symlink: # Example: symlink pointing to missing file
+  foreground: Red
+  background: Yellow
+
+broken_path_overlay: # Example: overlay for broken path in eza output
+  foreground: White
+  background: Red
