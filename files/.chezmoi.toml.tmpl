@@ -30,10 +30,8 @@
   ci = {{ $ci }}
   homelab = {{ if or (eq .chezmoi.os "linux") (eq .chezmoi.hostname "m1server") }}true{{ else }}false{{ end }}
 
-{{ if and (not $synology) (not $codespaces) (not $ci) }}
 [data.homebrew]
-  prefix = {{ if eq .chezmoi.os "darwin" }}"/opt/homebrew"{{ else }}"/home/linuxbrew/.linuxbrew"{{ end }}
-{{ end }}
+  prefix = {{ if eq .chezmoi.os "darwin" -}}"/opt/homebrew"{{ else }}"/home/linuxbrew/.linuxbrew"{{- end }}
 
 {{ if eq .chezmoi.os "darwin" }}
 [data.macos]
