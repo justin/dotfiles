@@ -1,20 +1,9 @@
  {{- $refreshPeriodDay := "24h" -}}
  {{- $refreshPeriodWeek := "168h" -}}
 
-.vim/pack/jww/start/editorconfig-vim:
-  type: git-repo
-  url: https://github.com/editorconfig/editorconfig-vim.git
-  refreshPeriod: {{ $refreshPeriodWeek }}
-
-.vim/pack/jww/start/vim-just:
-  type: git-repo
-  url: https://github.com/NoahTheDuke/vim-just.git
-  refreshPeriod: {{ $refreshPeriodWeek }}
-
-.vim/pack/jww/start/vim-tmux-navigator:
-  type: git-repo
-  url: https://github.com/christoomey/vim-tmux-navigator.git
-  refreshPeriod: {{ $refreshPeriodWeek }}
+# ==================================================
+# ZSH Plugins and autocompletions
+# ==================================================
 
 .config/zsh/functions/_docker-compose:
   type: file
@@ -54,6 +43,10 @@
 {{ end }}
 
 {{ if eq .chezmoi.os "darwin" }}
+# ==================================================
+# macOS Specific Submodules
+# ==================================================
+
 .local/share/xcode/lldb-scripts:
   type: git-repo
   url: https://github.com/DerekSelander/LLDB.git
@@ -61,8 +54,30 @@
   include: ["lldb_commands"]
 {{ end }}
 
+# ==================================================
+# iTerm 2 Shell Integration
+# ==================================================
+
 .cache/iterm2/iterm2_shell_integration.zsh:
   type: file
   url: https://gitlab.com/gnachman/iterm2/-/raw/master/Resources/shell_integration/iterm2_shell_integration.zsh
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+# ==================================================
+# VIM Plugins
+# ==================================================
+
+.vim/pack/jww/start/editorconfig-vim:
+  type: git-repo
+  url: https://github.com/editorconfig/editorconfig-vim.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
+.vim/pack/jww/start/vim-just:
+  type: git-repo
+  url: https://github.com/NoahTheDuke/vim-just.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
+.vim/pack/jww/start/vim-tmux-navigator:
+  type: git-repo
+  url: https://github.com/christoomey/vim-tmux-navigator.git
+  refreshPeriod: {{ $refreshPeriodWeek }}

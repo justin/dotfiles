@@ -1,46 +1,8 @@
-" enables syntax highlighting
-syntax on
+" Add ~/.vim and ~/.vim/after to the runtime path for Neovim compatibility
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
 
-" Better colors
-set termguicolors
+" Set the packpath to match the runtimepath (for plugin compatibility)
+let &packpath = &runtimepath
 
-" number of spaces in a <Tab>
-set tabstop=4
-set softtabstop=4
-set expandtab
-
-" enable autoindents
-set smartindent
-
-" number of spaces used for autoindents
-set shiftwidth=4
-
-" adds line numbers
-set number
-
-" columns used for the line number
-set numberwidth=4
-
-" highlights the matched text pattern when searching
-set incsearch
-set nohlsearch
-
-" open splits intuitively
-set splitbelow
-set splitright
-
-" navigate buffers without losing unsaved work
-set hidden
-
-" start scrolling when 8 lines from top or bottom
-set scrolloff=8
-
-" Save undo history
-set undofile
-
-" Enable mouse support
-set mouse=a
-
-" case insensitive search unless capital letters are used
-set ignorecase
-set smartcase
+" Source the main vimrc file for unified configuration
+source "$XDG_CONFIG_HOME/vim/vimrc"
