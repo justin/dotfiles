@@ -67,17 +67,12 @@
 # VIM Plugins
 # ==================================================
 
-.vim/pack/jww/start/editorconfig-vim:
+.config/vim/pack/jww/start/nvim-treesitter:
   type: git-repo
-  url: https://github.com/editorconfig/editorconfig-vim.git
+  url: https://github.com/nvim-treesitter/nvim-treesitter.git
   refreshPeriod: {{ $refreshPeriodWeek }}
 
-.vim/pack/jww/start/vim-just:
+.config/vim/pack/jww/start/zoxide.vim:
   type: git-repo
-  url: https://github.com/NoahTheDuke/vim-just.git
-  refreshPeriod: {{ $refreshPeriodWeek }}
-
-.vim/pack/jww/start/vim-tmux-navigator:
-  type: git-repo
-  url: https://github.com/christoomey/vim-tmux-navigator.git
+  url: https://github.com/nanotee/zoxide.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}

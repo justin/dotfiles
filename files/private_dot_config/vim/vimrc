@@ -3,6 +3,7 @@ set backupdir=$XDG_CACHE_HOME/vim/backup,~/,/tmp        " Set directory for back
 set undodir=$XDG_CACHE_HOME/vim/undo,~/,/tmp            " Set directory for undo files to XDG cache location
 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo               " Set viminfo file location to XDG cache directory
 set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME  " Add XDG config paths to runtime path
+set packpath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME  " Add XDG config paths to packpath
 
 let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"                " Set MYVIMRC environment variable for XDG compliance
 
