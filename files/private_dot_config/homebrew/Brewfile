@@ -1,4 +1,6 @@
 brew "aria2"
+brew "bat"
+brew "eza"
 brew "fzf"
 brew "gh"
 brew "git"
