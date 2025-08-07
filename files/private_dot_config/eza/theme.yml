@@ -28,9 +28,10 @@ filekinds:
   special: # Example: special device file (see man 4 special)
     foreground: Blue
     background: Green
-  mount_point: # Example: /Volumes/ExternalDrive
-    foreground: Cyan
-    is_bold: true
+  mount_point: # Example: ~/Orbstack
+    foreground: Green
+    is_bold: false
+    is_underline: false
 
 perms:
   user_read: # Example: README.md (owned by you, readable)
@@ -64,7 +65,7 @@ perms:
     foreground: Red
     is_bold: true
   attribute: # Example: xattr -w com.example.test yes README.md
-    foreground: Cyan
+    foreground: White
 
 size:
   major: # Example: /dev/disk0 (major)
@@ -208,8 +209,13 @@ control_char: # Example: file with control characters in name
 
 broken_symlink: # Example: symlink pointing to missing file
   foreground: Red
-  background: Yellow
 
 broken_path_overlay: # Example: overlay for broken path in eza output
   foreground: White
   background: Red
+
+filenames:
+  .DS_Store: # Example: macOS metadata file
+    filename:
+      foreground: White
+      is_dimmed: true

@@ -5,7 +5,6 @@ if type eza > /dev/null 2>&1; then
   alias l='ls -l'
   alias la='ls -la'
   alias ll='ls -l'
-
 else
   # Otherwise, use the default ls command.
   alias ls='ls --color=auto'
