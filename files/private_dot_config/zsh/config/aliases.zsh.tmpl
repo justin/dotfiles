@@ -55,3 +55,11 @@ for recipe in `just --justfile $XDG_CONFIG_HOME/just/justfile --summary`; do
   alias $recipe="just --justfile $XDG_CONFIG_HOME/just/justfile --working-directory . $recipe"
 done
 fi
+
+if is_cmd bat; then
+  # If bat is available, alias cat to prefer it.
+  alias cat='bat'
+else
+  # If bat is not available, use cat.
+  alias bat='cat'
+fi
