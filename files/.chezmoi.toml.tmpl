@@ -48,6 +48,16 @@
 {{ if $synology }}
 tempDir = "/var/services/tmp"
 scriptTempDir = "/var/services/tmp"
+
+[edit]
+  hardlink = false
+  command = "/usr/local/bin/vim9"
+[diff]
+  command = "/usr/local/bin/vimdiff"
+  args = ["-d", "{{ .Destination }}", "{{ .Target }}"]
+[merge]
+  command = "/usr/local/bin/vim9"
+  args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
 {{ end }}
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
