@@ -33,18 +33,6 @@
 [data.homebrew]
   prefix = {{ if eq .chezmoi.os "darwin" -}}"/opt/homebrew"{{ else }}"/home/linuxbrew/.linuxbrew"{{- end }}
 
-{{ if eq .chezmoi.os "darwin" }}
-[data.macos]
-    # The preferred dock icon size for a Mac.
-    dock_tile_size = {{ if eq .chezmoi.hostname "mbp" }}48{{ else }}80{{ end }}
-    # The number of minutes until a Mac should go to sleep.
-    sleep_minutes = {{ if eq .chezmoi.hostname "mbp" }}30{{ else }}0{{ end }}
-    # The preferred terminal width for iTerm 2
-    iterm2_width = {{ if eq .chezmoi.hostname "Studio" }}250{{ else }}150{{ end }}
-    # The preferred terminal height for iTerm 2
-    iterm2_height = {{ if eq .chezmoi.hostname "Studio" }}65{{ else }}40{{ end }}
-{{ end }}
-
 {{ if $synology }}
 tempDir = "/var/services/tmp"
 scriptTempDir = "/var/services/tmp"

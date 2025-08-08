@@ -14,8 +14,8 @@
       "Silence Bell": false,
       "Use Bright Bold": true,
       "Unlimited Scrollback": true,
-      "Rows" : {{ .macos.iterm2_height }},
-      "Columns" : {{ .macos.iterm2_width }},
+      "Rows" : {{ index . ((.chezmoi.hostname | lower)) "iterm2_height" }},
+      "Columns" : {{ index . ((.chezmoi.hostname | lower)) "iterm2_width" }},
       "Keyboard Map": {
         "0x20-0x20000-0x31": {
           "Version": 1,

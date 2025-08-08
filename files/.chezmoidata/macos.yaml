@@ -1,0 +1,15 @@
+mbp:
+  dock_tile_size: 48
+  sleep_minutes: 30
+  iterm2_width: 150
+  iterm2_height: 40
+studio:
+  dock_tile_size: 80
+  sleep_minutes: 0
+  iterm2_width: 250
+  iterm2_height: 65
+m1server:
+  dock_tile_size: 48
+  sleep_minutes: 0
+  iterm2_width: 150
+  iterm2_height: 40

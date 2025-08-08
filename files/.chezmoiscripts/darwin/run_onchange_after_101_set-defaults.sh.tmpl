@@ -68,7 +68,7 @@ defaults write .GlobalPreferences com.apple.sound.uiaudio.enabled -bool false
 info "Setting Dock preferences."
 
 # Set the icon size of Dock items to 48 pixels on mbp and 80 on iMac.
-defaults write com.apple.dock tilesize -int {{ .macos.dock_tile_size }}
+defaults write com.apple.dock tilesize -int {{ index . ((.chezmoi.hostname | lower)) "dock_tile_size" }}
 
 # Disable that recent app stuff in the Dock
 defaults write com.apple.dock show-recents -bool false
@@ -136,7 +136,7 @@ sudo pmset -b halfdim 1
 
 info "Adjusting adapter / plugged-in power settings."
 # Computer sleep: 30 min
-sudo pmset -c sleep {{ .macos.sleep_minutes }}
+sudo pmset -c sleep {{ index . ((.chezmoi.hostname | lower)) "sleep_minutes" }}
 
 # Display sleep: 10 min
 sudo pmset -c displaysleep 10
