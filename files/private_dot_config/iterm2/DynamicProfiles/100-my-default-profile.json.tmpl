@@ -1,29 +1,22 @@
 {
   "Profiles" : [
     {
-      "Name": "JWW",
-      "Guid": "56608A71-D58F-4C8F-8719-0BA84A677457",
-      "Description": "My preferred iTerm2 profile.",
-      "Normal Font": "OperatorMonoSSm-Book 16",
-      "Non Ascii Font": "OperatorMonoSSm-Book 16",
+      "Rewritable" : true,
+      "Guid" : "56608A71-D58F-4C8F-8719-0BA84A677457",
+      "Description" : "My preferred iTerm2 profile.",
+      "Normal Font" : "OperatorMonoSSm-Book 16",
       "Only The Default BG Color Uses Transparency" : false,
+      "Name" : "JWW",
+      "Use Bright Bold" : true,
+      "Silence Bell" : false,
+      "Non Ascii Font" : "OperatorMonoSSm-Book 16",
       "Blur Radius" : 16.080635233128323,
-      "Blur" : true,
-      "Show Status Bar": true,
       "Custom Window Title" : "\\(currentTab.currentSession.path)",
-      "Silence Bell": false,
-      "Use Bright Bold": true,
-      "Unlimited Scrollback": true,
-      "Rows" : {{ index . ((.chezmoi.hostname | lower)) "iterm2_height" }},
+      "Unlimited Scrollback" : true,
       "Columns" : {{ index . ((.chezmoi.hostname | lower)) "iterm2_width" }},
-      "Keyboard Map": {
-        "0x20-0x20000-0x31": {
-          "Version": 1,
-          "Action": 10,
-          "Text": "[5~",
-          "Label": "PageUp for Shift-Space"
-        }
-    }
+      "Show Status Bar" : true,
+      "Blur" : true,
+      "Rows" : {{ index . ((.chezmoi.hostname | lower)) "iterm2_height" }},
     }
   ]
 }
