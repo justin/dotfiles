@@ -14,3 +14,7 @@ bin
 .ssh/id_rsa*
 .config/git/gitconfig.spatial*
 .config/macos/Brewfile-Spatial
+
+{{- if ne .chezmoi.os "darwin" }}
+Library
+{{ end }}

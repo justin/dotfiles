@@ -17,6 +17,7 @@ darwin
 .config/macos
 .config/zsh/config/macos
 .config/credentials
+Library
 {{- end }}
 
 {{- if ne .chezmoi.hostname "m1server" }}
