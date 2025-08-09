@@ -40,13 +40,25 @@ scriptTempDir = "/var/services/tmp"
 [edit]
   hardlink = false
   command = "/usr/local/bin/vim9"
+
 [diff]
   command = "/usr/local/bin/vimdiff"
-  args = ["-d", "{{ .Destination }}", "{{ .Target }}"]
+  args = [
+    "-d",
+    {{ printf "%q" "{{ .Destination }}" }},
+    {{ printf "%q" "{{ .Target }}" }}
+  ]
+
 [merge]
   command = "/usr/local/bin/vim9"
-  args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
+  args = [
+    "-d",
+    {{ printf "%q" "{{ .Destination }}" }},
+    {{ printf "%q" "{{ .Source }}" }},
+    {{ printf "%q" "{{ .Target }}" }},
+  ]
 {{ end }}
+
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 {{ if and (not $synology) (not $codespaces) (not $ci)  }}
