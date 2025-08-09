@@ -76,3 +76,10 @@
   type: git-repo
   url: https://github.com/nanotee/zoxide.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
+
+
+.config/vim/pack/jww/opt/chezmoi.vim:
+  type: git-repo
+  url: https://github.com/alker0/chezmoi.vim.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+

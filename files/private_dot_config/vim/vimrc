@@ -27,6 +27,8 @@ set splitright                                           " Open vertical splits 
 set undofile                                             " Enable persistent undo
 set mouse=a                                              " Enable mouse support in all modes
 
+
+packadd chezmoi.vim
 filetype on                                              " Enable type file detection. Vim will be able to try to detect the type of file is use.
 filetype plugin on                                       " Enable plugins and load plugin for the detected file type.
 filetype indent on                                       " Load an indent file for the detected file type.
