@@ -2,7 +2,7 @@
   "Profiles" : [
     {
       "Rewritable" : true,
-      "Guid" : "56608A71-D58F-4C8F-8719-0BA84A677457",
+      "Guid" : "jww-dynamic-profile",
       "Description" : "My preferred iTerm2 profile.",
       "Normal Font" : "OperatorMonoSSm-Book 16",
       "Only The Default BG Color Uses Transparency" : false,
@@ -17,6 +17,7 @@
       "Show Status Bar" : true,
       "Blur" : true,
       "Rows" : {{ index . ((.chezmoi.hostname | lower)) "iterm2_height" }},
+      "Close Sessions On End": 1
     }
   ]
 }
