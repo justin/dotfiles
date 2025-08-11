@@ -77,7 +77,7 @@ export RUSTUP_HOME=$XDG_DATA_HOME/rustup
 # ===== NPM =====
 export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
 
-{{ if and (not .codespaces) (not .synology) }}
+{{ if and (not .ephemeral) (not .synology) }}
 # ===== LLM =====
 export ANTHROPIC_API_KEY={{ onepasswordRead "op://CompoundBNB/Anthropic API Key - dotfiles/credential" | trim }}
 export GEMINI_API_KEY={{ onepasswordRead "op://CompoundBNB/Gemini API Key - dotfiles/credential" | trim }}

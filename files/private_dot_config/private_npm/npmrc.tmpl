@@ -2,7 +2,7 @@
 # https://docs.npmjs.com/cli/v7/configuring-npm/npmrc
 
 
-{{- if and (not .codespaces) (not .synology) }}
+{{- if and (not .ephemeral) (not .synology) }}
 //registry.npmjs.org/:_authToken={{ onepasswordRead "op://CompoundBNB/NPM Registry Token/credential" | quote | trim }}
 //npm.pkg.github.com/:_authToken={{ onepasswordRead "op://CompoundBNB/GitHub Package Registry Token/credential" | quote | trim }}
 //npm.748sj.co/:_authToken={{ onepasswordRead "op://CompoundBNB/npm.748sj.co Token/credential" | trim }}

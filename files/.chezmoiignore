@@ -24,7 +24,7 @@ Library
 .config/colima
 {{- end }}
 
-{{- if or .codespaces .synology }}
+{{- if or .ephemeral .synology }}
 .config/credentials
 .aws
 .ssh

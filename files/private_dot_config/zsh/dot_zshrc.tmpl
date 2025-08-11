@@ -53,7 +53,7 @@ path=(
   $path
 )
 
-{{ if and (not .codespaces) (not .synology) }}
+{{ if and (not .ephemeral) (not .synology) }}
 # New in 3.0.0. Use the Bootsnap gem if available to build and update.
 # https://github.com/Homebrew/brew/pull/10374
 export HOMEBREW_BOOTSNAP=1

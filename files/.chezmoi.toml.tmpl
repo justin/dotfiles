@@ -1,17 +1,25 @@
-{{- /* Checks if running interactively, which is not the case for GitHub Codespaces */ -}}
-{{- $interactive:= stdinIsATTY -}}
-{{- /* detect GitHub codespaces, VSCode remote containers or Docker containers */ -}}
-{{- $codespaces:= env "CODESPACES" | not | not -}}
-{{- $ci := env "CI" | not | not -}}
+{{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
 
-{{- /* detect my Synology NAS */ -}}
-{{- $synology:= false }}
-{{- if eq .chezmoi.hostname "nas" -}}
-{{- $synology = true -}}
+{{/* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "root" "ubuntu" "vagrant" "vscode") -}}
+{{-   $ephemeral = true -}}
+{{-   $headless = true -}}
+{{- end -}}
+
+{{- $hostname := .chezmoi.hostname -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $hostname := output "scutil" "--get" "LocalHostName" | trim -}}
+{{- end -}}
+
+{{- $synology := false -}}
+{{- if eq $hostname "nas" -}}
+{{-   $synology = true -}}
+{{-   $headless = true -}}
 {{- end -}}
 
 {{- $email := "justin@users.noreply.github.com" }}
-{{- if and (eq .chezmoi.os "darwin") ($interactive) -}}
+{{- if stdinIsATTY }}
 {{- $email = promptStringOnce . "email" "What is your email address" $email -}}
 {{- end -}}
 
@@ -25,9 +33,10 @@
   username = {{ if eq .chezmoi.os "darwin" }} "justinwilliams" {{ else }} "justin" {{ end }}
   github_username = "justin"
   url = "https://justinw.me"
-  codespaces = {{ $codespaces }}
+  ephemeral = {{ $ephemeral }}
+  headless = {{ $headless }}
+  hostname = {{ $hostname | quote }}
   synology = {{ $synology }}
-  ci = {{ $ci }}
   homelab = {{ if or (eq .chezmoi.os "linux") (eq .chezmoi.hostname "m1server") }}true{{ else }}false{{ end }}
 
 [data.homebrew]
@@ -61,12 +70,12 @@ scriptTempDir = "/var/services/tmp"
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
-{{ if and (not $synology) (not $codespaces) (not $ci)  }}
+{{ if and (not $synology) (not $ephemeral)  }}
 [hooks.read-source-state.pre]
   command = ".local/share/chezmoi/.install-password-manager.sh"
 {{ end -}}
 
-{{ if or (eq .chezmoi.hostname "homelab" "m1server") }}
+{{ if or (eq $hostname "homelab" "m1server") }}
 [onepassword]
   mode = "service"
 

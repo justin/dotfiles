@@ -1,4 +1,4 @@
-{{ if and (eq .chezmoi.os "darwin" "linux") (not .codespaces) (not .synology) -}}
+{{ if and (eq .chezmoi.os "darwin" "linux") (not .ephemeral) (not .synology) -}}
 #!/usr/bin/env zsh
 #
 # Install universal Homebrew dependencies

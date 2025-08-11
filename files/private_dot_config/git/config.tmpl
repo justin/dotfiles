@@ -11,7 +11,7 @@
 [github]
   user = {{ .github_username }}
 
-{{ if not .codespaces }}
+{{ if not .ephemeral }}
 # Always use SSH authentication, even if the remote URL specifies https:// or git://
 # via: http://engineering.pivotal.io/post/git-push-instead-of/
 [url "git@github.com:"]
@@ -93,7 +93,7 @@
 [rebase]
   autosquash = true
 
-{{- if and (not .codespaces) (not .synology) }}
+{{- if and (not .ephemeral) (not .synology) }}
 [gpg]
   format = ssh
 [gpg "ssh"]
