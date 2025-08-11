@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zs
 
 # Project Name:  $XcodeProject
 # Project Dir:   $XcodeProjectPath

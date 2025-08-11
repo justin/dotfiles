@@ -1,5 +1,5 @@
 {{- if eq .chezmoi.os "darwin" -}}
-#!/bin/zsh
+#!/usr/bin/env zsh
 #
 # # This script is run after the Homebrew Brewfile is applied if the file has changed.
 # {{ (glob "private_dot_config/macos/*") | join "\n" | sha256sum }}
