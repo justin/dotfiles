@@ -5,13 +5,6 @@ alias reload="source $HOME/.zshenv | echo '=> ZSH profile reloaded.'"
 alias dot='chezmoi'
 alias m='micro'
 
-if type nvim > /dev/null 2>&1; then
-  alias vim='nvim'
-  alias vim='nvim'
-  alias vi='nvim'
-  alias vimdiff='nvim -d'
-fi
-
 alias j="$(which just) --justfile $XDG_CONFIG_HOME/just/justfile" --working-directory .
 alias jst='j'
 

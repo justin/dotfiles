@@ -14,6 +14,10 @@ bin
 .ssh/id_rsa*
 .config/git/gitconfig.spatial*
 .config/macos/Brewfile-Spatial
+.vim
+.viminfo
+.config/vim/pack
+.config/nvim
 
 {{- if ne .chezmoi.os "darwin" }}
 Library

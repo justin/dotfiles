@@ -1,5 +1,5 @@
- {{- $refreshPeriodDay := "24h" -}}
- {{- $refreshPeriodWeek := "168h" -}}
+{{- $refreshPeriodDay := "24h" -}}
+{{- $refreshPeriodWeek := "168h" -}}
 
 # ==================================================
 # ZSH Plugins and autocompletions
@@ -67,19 +67,19 @@
 # VIM Plugins
 # ==================================================
 
-.config/vim/pack/jww/start/nvim-treesitter:
-  type: git-repo
-  url: https://github.com/nvim-treesitter/nvim-treesitter.git
-  refreshPeriod: {{ $refreshPeriodWeek }}
-
-.config/vim/pack/jww/start/zoxide.vim:
+.local/share/pack/jww/start/zoxide.vim:
   type: git-repo
   url: https://github.com/nanotee/zoxide.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
 
-
-.config/vim/pack/jww/opt/chezmoi.vim:
+.local/share/vim/pack/jww/opt/chezmoi.vim:
   type: git-repo
   url: https://github.com/alker0/chezmoi.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+.local/share/vim/pack/github/start/copilot.vim:
+  type: git-repo
+  url: https://github.com/github/copilot.vim.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+  pull:
+    args: ["--depth=1"]

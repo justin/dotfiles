@@ -1,11 +1,34 @@
-set directory=$XDG_CACHE_HOME/vim/swap,~/,/tmp          " Set directory for swap files to XDG cache location
-set backupdir=$XDG_CACHE_HOME/vim/backup,~/,/tmp        " Set directory for backup files to XDG cache location
-set undodir=$XDG_CACHE_HOME/vim/undo,~/,/tmp            " Set directory for undo files to XDG cache location
-set viminfo+=n$XDG_CACHE_HOME/vim/viminfo               " Set viminfo file location to XDG cache directory
-set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME  " Add XDG config paths to runtime path
-set packpath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME  " Add XDG config paths to packpath
+" Vim configuration file
+" ==================================================
+" = set the option to a specific value (duh)
+" ^= prepends a value to the option.
+" += appends a value to the option.
+" -= remove a value from the option.
 
-let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"                " Set MYVIMRC environment variable for XDG compliance
+" XDG Base Directory support
+" Finally in vim as of 9.1.37 - https://vimhelp.org/starting.txt.html#xdg-base-dir
+if empty($MYVIMRC) | let $MYVIMRC = expand('<sfile>:p') | endif
+if empty($XDG_CACHE_HOME)  | let $XDG_CACHE_HOME  = $HOME."/.cache"       | endif
+if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME."/.config"      | endif
+if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endif
+if empty($XDG_STATE_HOME)  | let $XDG_STATE_HOME  = $HOME."/.local/state" | endif
+
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_DATA_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+
+set directory=$XDG_CACHE_HOME/vim/swap   | call mkdir(&directory, 'p', 0700) " Set directory for swap files to XDG cache location
+set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p', 0700) " Set directory for backup files to XDG cache location
+set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p', 0700) " Set directory for view files to XDG state location
+set undodir=$XDG_STATE_HOME/vim/undo     | call mkdir(&undodir,   'p', 0700) " Set directory for undo files to XDG cache location
+set viminfofile=$XDG_STATE_HOME/vim/viminfofile                              " Set viminfo file location to XDG state directory
+
+let g:netrw_home = $XDG_DATA_HOME."/vim"
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
+call mkdir($XDG_STATE_HOME."/vim", 'p', 0700)
 
 set fileformats=unix,dos,mac                             " Use Unix as the standard file type
 set numberwidth=4                                        " Set width of line numbers to 4 characters.
@@ -26,7 +49,6 @@ set splitbelow                                           " Open horizontal split
 set splitright                                           " Open vertical splits to the right of the current window
 set undofile                                             " Enable persistent undo
 set mouse=a                                              " Enable mouse support in all modes
-
 
 packadd chezmoi.vim
 filetype on                                              " Enable type file detection. Vim will be able to try to detect the type of file is use.
