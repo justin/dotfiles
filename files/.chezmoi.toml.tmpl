@@ -27,6 +27,9 @@
 {{- writeToStdout "💡 Tip: you can reconfigure with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
 
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+scriptTempDir = "~/tmp"
+
 [data]
   name = "Justin Williams"
   email = {{ $email | quote }}
@@ -43,32 +46,11 @@
   prefix = {{ if eq .chezmoi.os "darwin" -}}"/opt/homebrew"{{ else }}"/home/linuxbrew/.linuxbrew"{{- end }}
 
 {{ if $synology }}
-tempDir = "/var/services/tmp"
-scriptTempDir = "/var/services/tmp"
 
 [edit]
+  command = "/usr/local/bin/vim9"
   hardlink = false
-  command = "/usr/local/bin/vim9"
-
-[diff]
-  command = "/usr/local/bin/vimdiff"
-  args = [
-    "-d",
-    {{ printf "%q" "{{ .Destination }}" }},
-    {{ printf "%q" "{{ .Target }}" }}
-  ]
-
-[merge]
-  command = "/usr/local/bin/vim9"
-  args = [
-    "-d",
-    {{ printf "%q" "{{ .Destination }}" }},
-    {{ printf "%q" "{{ .Source }}" }},
-    {{ printf "%q" "{{ .Target }}" }},
-  ]
 {{ end }}
-
-sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 {{ if and (not $synology) (not $ephemeral)  }}
 [hooks.read-source-state.pre]
