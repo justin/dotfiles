@@ -36,12 +36,7 @@ export ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *"
 export _ZO_DATA_DIR=$XDG_DATA_HOME/zoxide
 
 # ===== Editor of Choice =====
-{{- if eq .chezmoi.os "darwin" }}
-export EDITOR="code -nw"
-{{- else }}
 export EDITOR="vim"
-{{- end }}
-
 export VISUAL=$EDITOR
 
 # The OS that we are running in.
