@@ -1,0 +1,39 @@
+########################################
+# Shell Integration
+########################################
+# Enable shell integration for zsh
+shell-integration = zsh
+
+########################################
+# Appearance
+########################################
+# Set color theme to "iTerm2 Default"
+theme = iTerm2 Default
+# Initial window width (columns)
+window-width = {{ index . ((.chezmoi.hostname | lower)) "iterm2_width" }}
+# Initial window height (rows)
+window-height = {{ index . ((.chezmoi.hostname | lower)) "iterm2_height" }}
+# Set font family
+font-family = "Operator Sans Mono Lig"
+# Set font size (points)
+font-size = 16
+# Thicken font rendering
+font-thicken = true
+# Window background opacity (0.0 - 1.0)
+background-opacity = 0.9
+# Enable background blur on macOS
+background-blur = true
+# macOS: blur radius for background
+background-blur-radius = 16
+# Save/restore window state always
+window-save-state = always
+# macOS: use tabbed titlebar style
+macos-titlebar-style = "tabs"
+
+########################################
+# Behavior
+########################################
+# Hide mouse cursor while typing
+mouse-hide-while-typing = true
+# Maximum scrollback lines
+scrollback-limit = 1000000
