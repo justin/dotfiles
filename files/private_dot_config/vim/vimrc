@@ -67,9 +67,5 @@ let mapleader = "'"                                      " Set leader key to sin
 
 colorscheme jww                                          " Use 'jww' colorscheme (must be installed)
 
-" Split windows horizontally and vertically
-" uses vim-tmux-navigator plugin
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-H> <C-W>h
-nnoremap <C-L> <C-W>l
+nnoremap <leader>v :vsplit<cr>
+nnoremap <leader>h :split<cr>
