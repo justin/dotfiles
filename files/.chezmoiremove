@@ -19,6 +19,11 @@ bin
 .config/vim/pack
 .config/nvim
 .config/zsh/config/100-iterm-integration.zsh
+.config/zsh/config/aliases.zsh
+.config/zsh/config/color.zsh
+.config/zsh/config/prompt.zsh
+.config/zsh/config/zoxide.zsh
+.config/zsh/config/one-password.zsh
 
 {{- if ne .chezmoi.os "darwin" }}
 Library
