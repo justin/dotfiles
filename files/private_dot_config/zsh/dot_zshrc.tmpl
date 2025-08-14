@@ -14,6 +14,9 @@ setopt extended_glob
 # zmv support
 autoload -U zmv
 
+# Ensure we explicitly set all homebrew related environment variables.
+eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
+
 # ===== Customize $fignore =====
 fignore=(
   .DS_Store
@@ -61,8 +64,6 @@ export HOMEBREW_EDITOR=$EDITOR
 export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/homebrew/Brewfile"
 export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
 
-# Ensure we explicitly set all homebrew related environment variables.
-eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
 
 # Setup aliases for gh cli.
 # After executing the following commands to create the aliases, you can run
