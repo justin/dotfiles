@@ -18,6 +18,7 @@ bin
 .viminfo
 .config/vim/pack
 .config/nvim
+.config/zsh/config/100-iterm-integration.zsh
 
 {{- if ne .chezmoi.os "darwin" }}
 Library
