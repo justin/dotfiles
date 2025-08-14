@@ -23,3 +23,10 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 zstyle '*:compinit' arguments -D -i -u -C -w
 
 zmodload -i zsh/complist
+
+_tmac_complete() {
+    local word=${COMP_WORDS[COMP_CWORD]}
+    local sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
+    COMPREPLY=( $(compgen -W "$sessions" -- "$word") )
+}
+complete -F _tmac_complete tmac
