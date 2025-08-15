@@ -25,6 +25,10 @@ bin
 .config/zsh/config/zoxide.zsh
 .config/zsh/config/one-password.zsh
 
-{{- if ne .chezmoi.os "darwin" }}
+{{- if ne .osid "darwin" }}
 Library
+.local/bin/darwin
+.config/homebrew
+.config/macos
+.config/1password
 {{ end }}

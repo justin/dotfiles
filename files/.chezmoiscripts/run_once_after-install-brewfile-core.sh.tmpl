@@ -1,4 +1,4 @@
-{{ if and (eq .chezmoi.os "darwin" "linux") (not .ephemeral) (not .synology) -}}
+{{ if eq .osid "darwin" -}}
 #!/usr/bin/env zsh
 #
 # Install universal Homebrew dependencies
@@ -15,8 +15,6 @@ if type_exists 'gh'; then
   gh extension install github/gh-copilot
 fi
 
-{{ if eq .chezmoi.os "darwin" }}
 info "Homebrew: Installing macOS core packages."
 {{ .homebrew.prefix }}/bin/brew bundle --file=$XDG_CONFIG_HOME/macos/Brewfile-CLI
-{{ end -}}
 {{ end -}}

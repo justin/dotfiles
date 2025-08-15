@@ -1,3 +1,4 @@
+{{ if eq .osid "darwin" -}}
 #!/usr/bin/env zsh
 #
 # # This script is run after the Homebrew Brewfile is applied if the file has changed.
@@ -8,3 +9,4 @@ source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
 {{ .homebrew.prefix }}/bin/brew bundle --quiet --file=$XDG_CONFIG_HOME/homebrew/Brewfile
 success "Homebrew: installed latest core Brewfile updates."
+{{ end -}}

@@ -1,0 +1,40 @@
+packages:
+  apt:
+    remove: []
+    global:
+      - "1password-cli"
+      - "aria2"
+      - "awscli"
+      - "bat"
+      #- "docker" - https://docs.docker.com/engine/install/ubuntu/
+      - "docker-compose-v2"
+      - "eza"
+      - "fzf"
+      - "gh"
+      - "git"
+      - "git-lfs"
+      - "golang-go"
+      - "jq"
+      - "just"
+      - "less"
+      - "llm"
+      - "nodejs"
+      - "npm"
+      - "pbzip2"
+      - "pigz"
+      - "pipx"
+      - "python3"
+      - "ripgrep"
+      - "rsync"
+      - "ruby"
+      - "rustup"
+      - "sqlite3"
+      - "tmux"
+      - "tree"
+      - "vim"
+      - "wget"
+      - "zoxide"
+      - "zsh"
+    homelab: []
+    personal: []
+    work: []

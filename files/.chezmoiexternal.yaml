@@ -42,7 +42,7 @@
   refreshPeriod: {{ $refreshPeriodWeek }}
 {{ end }}
 
-{{ if eq .chezmoi.os "darwin" }}
+{{ if eq .osid "darwin" }}
 # ==================================================
 # macOS Specific Submodules
 # ==================================================

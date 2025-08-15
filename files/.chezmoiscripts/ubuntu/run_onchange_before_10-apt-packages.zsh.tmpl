@@ -1,0 +1,49 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env zsh
+# @file run_onchange_before_10-apt-packages.sh
+# Install apt packages as defined in .chezmoidata/ubuntu.yaml
+#
+# Usage:
+#     @run_onchange_before_10-apt-packages.sh
+#
+
+set -euo pipefail
+
+source "$XDG_DATA_HOME/chezmoi/files/functions/_logging"
+source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
+
+# Build package list from chezmoidata
+packages=(
+    {{- range $package := .packages.apt.global }}
+    "{{ $package }}"
+    {{- end }}
+    {{- range $package := .packages.apt.homelab }}
+    "{{ $package }}"
+    {{- end }}
+    {{- range $package := .packages.apt.personal }}
+    "{{ $package }}"
+    {{- end }}
+    {{- range $package := .packages.apt.work }}
+    "{{ $package }}"
+    {{- end }}
+)
+
+info "Updating apt package index"
+sudo apt update
+
+for package in "${packages[@]}"; do
+    if dpkg-query -W -f='${Status}' "${package}" 2>/dev/null | grep -q "install ok installed"; then
+        info "Package ${package} is already installed"
+        continue
+    fi
+    if apt-cache show "${package}" &>/dev/null; then
+        sudo apt install -y --no-upgrade "${package}"
+    else
+        warning "Package ${package} is not available in apt"
+    fi
+done
+
+success "Apt packages installed"
+exit 0
+
+{{- end }}

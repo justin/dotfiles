@@ -1,0 +1,41 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env zsh
+# @file run_onchange_after_10_remove_packages.sh
+# Uninstall apt packages as defined in .chezmoidata/ubuntu.yaml
+#
+# Usage:
+#     @run_onchange_after_10_remove_packages.sh
+#
+
+set -euo pipefail
+
+source "$XDG_DATA_HOME/chezmoi/files/functions/_logging"
+source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
+
+# Build package list from chezmoidata
+remove_packages=(
+    {{- range $package := .packages.apt.remove }}
+    "{{ $package }}"
+    {{- end }}
+)
+
+if [[ ${#remove_packages[@]} -eq 0 ]]; then
+  info "No apt packages to remove"
+  exit 0
+fi
+
+info "Removing packages with apt"
+
+for package in "${remove_packages[@]}"; do
+    if dpkg-query -W -f='${Status}' "${package}" 2>/dev/null | grep -q "install ok installed"; then
+        sudo apt remove -y "${package}"
+        success "Removed package ${package}"
+    else
+        info "Package ${package} is not installed"
+    fi
+done
+
+success "Apt package removal complete"
+exit 0
+
+{{- end }}

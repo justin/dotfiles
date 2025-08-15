@@ -14,8 +14,10 @@ setopt extended_glob
 # zmv support
 autoload -U zmv
 
+{{ if eq .osid "darwin" }}
 # Ensure we explicitly set all homebrew related environment variables.
 eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
+{{ end }}
 
 # ===== Customize $fignore =====
 fignore=(
@@ -47,24 +49,25 @@ fpath=(
 typeset -U path   # Prevent duplicates within search paths
 path=(
   $HOME/.local/bin
-  {{- if eq .chezmoi.os "darwin" }}
+  {{- if eq .osid "darwin" }}
   $HOME/.local/bin/darwin
-  {{ else }}
-  $HOME/.local/bin/linux(N)
-  {{ end -}}
+  {{ else if eq .osid "linux-ubuntu" }}
+  $HOME/.local/bin/ubuntu(N)
+  {{ end }}
   $XDG_DATA_HOME/cargo/bin(N)
   $path
 )
 
-{{ if and (not .ephemeral) (not .synology) }}
+{{ if eq .osid "darwin" }}
 # New in 3.0.0. Use the Bootsnap gem if available to build and update.
 # https://github.com/Homebrew/brew/pull/10374
 export HOMEBREW_BOOTSNAP=1
 export HOMEBREW_EDITOR=$EDITOR
 export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/homebrew/Brewfile"
+{{- end }}
+
+{{ if and (not .ephemeral) (not .synology) }}
 export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
-
-
 # Setup aliases for gh cli.
 # After executing the following commands to create the aliases, you can run
 # `ghcs` and `ghce` instead of `gh copilot suggest` and `gh copilot explain`.
@@ -78,6 +81,8 @@ fi
 
 # Source any file with a *.zsh extension. They have additional settings.
 for zsh_file ($ZDOTDIR/config/*.zsh) source $zsh_file
-{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .osid "darwin" }}
 for zsh_file ($ZDOTDIR/config/macos/*.zsh) source $zsh_file
+{{ else if eq .osid "linux-ubuntu" }}
+for zsh_file ($ZDOTDIR/config/ubuntu/*.zsh(N)) source $zsh
 {{ end -}}

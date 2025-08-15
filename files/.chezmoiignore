@@ -7,8 +7,9 @@ functions
 darwin
 *.idekeybindings
 
-{{- if ne .chezmoi.os "darwin" }}
+{{- if ne .osid "darwin" }}
 .lldbinit
+.config/1password
 .config/claude
 .config/mcp
 .local/bin/darwin
@@ -18,6 +19,7 @@ darwin
 .config/macos
 .config/zsh/config/macos
 .config/credentials
+.config/homebrew
 Library
 {{- end }}
 
@@ -35,3 +37,7 @@ Library
 .chezmoiscripts/*brewfile*
 .chezmoiscripts/*ssh*
 {{- end }}
+
+{{ if ne .osid "linux-ubuntu" }}
+.chezmoiscripts/ubuntu
+{{ end }}

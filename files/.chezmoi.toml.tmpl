@@ -12,6 +12,11 @@
 {{-   $hostname := output "scutil" "--get" "LocalHostName" | trim -}}
 {{- end -}}
 
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
 {{- $synology := false -}}
 {{- if eq $hostname "nas" -}}
 {{-   $synology = true -}}
@@ -36,6 +41,7 @@ scriptTempDir = "~/tmp"
   username = {{ if eq .chezmoi.os "darwin" }} "justinwilliams" {{ else }} "justin" {{ end }}
   github_username = "justin"
   url = "https://justinw.me"
+  osid = {{ $osid | quote }}
   ephemeral = {{ $ephemeral }}
   headless = {{ $headless }}
   hostname = {{ $hostname | quote }}
