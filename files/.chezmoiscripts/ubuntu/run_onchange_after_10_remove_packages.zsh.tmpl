@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "linux" -}}
+{{- if and (eq .osid "linux-ubuntu") (not .headless) -}}
 #!/usr/bin/env zsh
 # @file run_onchange_after_10_remove_packages.sh
 # Uninstall apt packages as defined in .chezmoidata/ubuntu.yaml

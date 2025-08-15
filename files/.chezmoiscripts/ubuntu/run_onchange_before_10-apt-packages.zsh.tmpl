@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "linux" -}}
+{{- if and (eq .osid "linux-ubuntu") (not .headless) -}}
 #!/usr/bin/env zsh
 # @file run_onchange_before_10-apt-packages.sh
 # Install apt packages as defined in .chezmoidata/ubuntu.yaml
