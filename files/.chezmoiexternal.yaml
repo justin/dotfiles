@@ -67,7 +67,7 @@
 # VIM Plugins
 # ==================================================
 
-.local/share/pack/jww/start/zoxide.vim:
+.local/share/vim/pack/jww/start/zoxide.vim:
   type: git-repo
   url: https://github.com/nanotee/zoxide.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
