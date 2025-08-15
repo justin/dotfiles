@@ -1,37 +1,4 @@
-### -- PERSONAL/MAIN ACCOUNT --
-
-Host github.com
-  Hostname github.com
-  User {{ .github_username }}
-  IdentityFile ~/.ssh/id_ed25519
-
-### -- WORK PERSONAL/ACCOUNT --
-
-Host homelab
-  User justin
-  HostName homelab.local
-
-Host nas
-  User justinwme
-  HostName nas.local
-  SetEnv TERM=xterm-256color
-
-Host mbp
-  User justinwilliams
-  HostName mbp.local
-
-Host studio
-  User justinwilliams
-  HostName studio.local
-
-Host m1server
-  User justinwilliams
-  HostName m1server.local
-
-Host udm
-  User root
-  HostName 10.0.1.1
-  SetEnv TERM=xterm-256color
+### -- GLOBAL SSH CONFIG --
 
 Host *
   AddKeysToAgent yes
@@ -39,7 +6,48 @@ Host *
   ServerAliveCountMax 30
   ForwardAgent yes
 
+Host github.com gist.github.com
+  User {{ .github_username }}
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/id_ed25519
+  Port 22
+
+### -- PERSONAL/MAIN ACCOUNT --
+
+Host homelab
+  HostName 100.89.16.71
+  User justin
+
+Host nas
+  HostName 100.77.69.85
+  User justinwme
+  SetEnv TERM=xterm-256color
+
+Host mbp
+  HostName 100.103.99.109
+  User justinwilliams
+  IdentityFile ~/.ssh/id_ed25519
+  Port 22
+
+Host studio
+  HostName 100.88.193.73
+  User justinwilliams
+  IdentityFile ~/.ssh/id_ed25519
+  Port 22
+
+Host m1server
+  HostName 100.100.224.127
+  User justinwilliams
+  IdentityFile ~/.ssh/id_ed25519
+  Port 22
+
+Host udm
+  HostName 100.107.130.20
+  User root
+  SetEnv TERM=xterm-256color
+
 {{- if eq .chezmoi.os "darwin" }}
 Include ~/.orbstack/ssh/config
 {{ end }}
 
+### -- WORK PERSONAL/ACCOUNT --
