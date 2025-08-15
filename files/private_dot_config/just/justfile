@@ -63,11 +63,23 @@ reboot: # Reboot the system.
   sudo systemctl reboot
 
 alias up := update-all
+
+[macos]
 update-all: # Update all installed apps
   @echo "🚀 Updating Homebrew."
   just update-homebrew
   gh extension upgrade --all
-  {{ if os() == "macos" { "just update-mas" } else { "" } }}
+  just update-mas
+  @echo "🚀 Updating npm packages"
+  just npm-upgrade
+  @echo "🚀 Updating python packages"
+  just py-upgrade
+  just update-mcp
+
+[linux]
+update-all: # Update all installed apps
+  just update-apt
+  just update-snap
   @echo "🚀 Updating npm packages"
   just npm-upgrade
   @echo "🚀 Updating python packages"
@@ -80,21 +92,44 @@ update-mas: # Update Mac App Store apps
   @echo "🚀 Updating Mac App Store apps."
   mas upgrade
 
+[macos]
 update-homebrew: # Update Homebrew installed packages.
   brew update
   brew outdated
   brew upgrade
   brew cleanup -s
 
-npm-upgrade: # Update all globally installed npm packages
+[linux]
+update-apt: # Update APT packages.
+  @echo "🚀 Updating APT packages."
+  sudo apt update
+  sudo apt upgrade -y
+  sudo apt autoremove -y
+
+[linux]
+update-snap: # Update Snap packages.
+  @echo "🚀 Updating Snap packages."
+  sudo snap refresh
+
+[macos]
+npm-upgrade: # Update all globally installed npm packages (no sudo on macOS)
   #!/usr/bin/env zsh
   set -euo pipefail
   for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
   do
-      npm -g install "$package"
+    npm -g install "$package"
   done
+  xargs -n 1 npm -g install < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
 
-  xargs -n 1 npm install -g < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
+[linux]
+npm-upgrade: # Update all globally installed npm packages (use sudo on Linux)
+  #!/usr/bin/env zsh
+  set -euo pipefail
+  for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
+  do
+    sudo npm -g install "$package"
+  done
+  xargs -n 1 sudo npm -g install < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
 
 py-upgrade: # Update all globally installed python packages
   #!/usr/bin/env zsh
