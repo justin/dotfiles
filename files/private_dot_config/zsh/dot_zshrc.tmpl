@@ -53,6 +53,7 @@ path=(
   $HOME/.local/bin/darwin
   {{ else if eq .osid "linux-ubuntu" }}
   $HOME/.local/bin/ubuntu(N)
+  /snap/bin(N)
   {{ end }}
   $XDG_DATA_HOME/cargo/bin(N)
   $path
