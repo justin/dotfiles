@@ -16,6 +16,9 @@ export XDG_DATA_DIRS=/usr/local/share:/usr/share
 export CONFIG_HOME=$XDG_CONFIG_HOME
 {{- if eq .osid "darwin" }}
 export LIBRARY_HOME=$HOME/Library
+{{- else if eq .osid "linux-ubuntu" }}
+export SNAP_USER_COMMON="${XDG_CONFIG_HOME}/snaps"
+export SNAP_USER_DATA="${XDG_CONFIG_HOME}/snaps"
 {{- end }}
 
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
