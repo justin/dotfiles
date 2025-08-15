@@ -63,7 +63,7 @@ if has('wildmenu')
 endif
 
 inoremap jk <Esc>                                        " Map 'jk' in insert mode to escape to normal mode
-let mapleader = "'"                                      " Set leader key to single quote
+let mapleader = "\<Space>"                               " Set leader key to spacebar.
 
 colorscheme jww                                          " Use 'jww' colorscheme (must be installed)
 
