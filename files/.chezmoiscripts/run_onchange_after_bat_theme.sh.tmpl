@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+#
+# # This script is run if the bat theme file has changed.
+# {{ include "private_dot_config/bat/themes/jww.tmTheme" | sha256sum }}
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+if type_exists 'bat'; then
+  bat cache --build
+  success "bat: theme cache rebuilt successfully."
+  exit 0
+fi
+
+
+
