@@ -9,6 +9,7 @@ packages:
       #- "docker" - https://docs.docker.com/engine/install/ubuntu/
       - "docker-compose-v2"
       - "eza"
+      - "fd-find"
       - "fzf"
       - "gh"
       - "git"
