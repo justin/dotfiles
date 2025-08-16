@@ -56,6 +56,10 @@ source "$XDG_DATA_HOME/chezmoi/files/functions/_logging"
 source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
 ```
 
+### Formatting
+
+Please use the editorconfig file `.editorconfig` in the root of this repository to ensure consistent formatting across all files. This file is used by many code editors and IDEs to apply consistent formatting rules.
+
 ### Variable Naming
 
 ```zsh
