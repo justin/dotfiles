@@ -1,0 +1,18 @@
+{{/*
+
+~/.config/iterm2/com.googlecode.iterm2.plist
+{==============================================================================
+
+To keep any modifications done inside iTerm2 in sync with this repo, this file
+is parsed and turned into a symbolic link pointing to
+`com.googlecode.iterm2.plist` when running `chezmoi apply`.
+
+The linked file com.googlecode.iterm2.plist is loaded by iTerm2 when the `Load
+preferences from a custom folder or URL` setting is enabled in
+`iTerm2 -> Settings -> General -> Settings`.
+
+See http://stratus3d.com/blog/2015/02/28/sync-iterm2-profile-with-dotfiles-repository/
+
+*/ -}}
+
+{{ .chezmoi.sourceDir }}/.linked_assets/iterm2/com.googlecode.iterm2.plist

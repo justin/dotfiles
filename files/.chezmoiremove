@@ -28,6 +28,7 @@ bin
 Library
 .local/bin/darwin
 .config/homebrew
+.config/iterm2
 .config/macos
 .config/1password
 {{ end }}
