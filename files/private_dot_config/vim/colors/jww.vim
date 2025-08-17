@@ -13,7 +13,7 @@ let g:colors_name = "jww"
 " Xcode uses RGBA values (0-1), Vim uses hex colors
 
 " UI Colors
-hi Normal           guifg=#ffffff guibg=#000000 ctermfg=231 ctermbg=16
+hi Normal           guifg=#ffffff ctermfg=231
 hi Cursor           guifg=#000000 guibg=#ffffff ctermfg=16 ctermbg=231
 hi CursorLine       guibg=#1a1919 ctermbg=234
 hi Visual           guibg=#4a473f ctermfg=NONE ctermbg=238
