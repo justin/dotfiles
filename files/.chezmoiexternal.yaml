@@ -83,3 +83,23 @@
   refreshPeriod: {{ $refreshPeriodWeek }}
   pull:
     args: ["--depth=1"]
+
+# ==================================================
+# TMUX Plugins
+# ==================================================
+
+.local/bin/fzf-tmux:
+  type: file
+  url: 'https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux'
+  executable: true
+  refreshPeriod: .{{ $refreshPeriodWeek }}
+
+# ==================================================
+# TMUX Plugins
+# ==================================================
+
+.local/bin/fzf-preview.sh:
+  type: file
+  url: 'https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-preview.sh'
+  executable: true
+  refreshPeriod: .{{ $refreshPeriodWeek }}
