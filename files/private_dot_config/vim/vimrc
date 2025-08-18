@@ -69,3 +69,4 @@ colorscheme jww                                          " Use 'jww' colorscheme
 
 nnoremap <leader>v :vsplit<cr>
 nnoremap <leader>h :split<cr>
+nnoremap <leader>n :set hlsearch!<CR>                    " Toggle search highlighting
