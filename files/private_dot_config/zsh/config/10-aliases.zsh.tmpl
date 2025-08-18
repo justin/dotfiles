@@ -5,19 +5,15 @@ alias dot='chezmoi'
 alias m='micro'
 alias path='echo $PATH | tr ":" "\n"'
 
-alias j="$(which just) --justfile $XDG_CONFIG_HOME/just/justfile" --working-directory .
-alias jst='j'
-
-if is_cmd brew; then
-  # Homebrew
-  alias brews='brew list -1'
-  alias bubo='brew update && brew outdated'
-  alias bubc='brew upgrade && brew cleanup'
-  alias bubu='bubo && bubc'
-fi
+{{ if lookPath "brew" -}}
+# Homebrew
+alias brews='brew list -1'
+alias bubo='brew update && brew outdated'
+alias bubc='brew upgrade && brew cleanup'
+alias bubu='bubo && bubc'
+{{ end -}}
 
 # Git Stuff
-
 # Before fetching, remove any remote-tracking references that no longer exist on the remote
 alias gl='git pull --prune'
 # Push to the current branch on GitHub.
@@ -44,13 +40,15 @@ alias venv_create="$(which python3) -m venv .venv"
 (( ${+commands[pbzip2]} )) && alias bzip2='pbzip2'
 (( ${+commands[pbunzip2]} )) && alias bunzip2='pbunzip2'
 
-if is_cmd just; then
+{{ if lookPath "just" -}}
+# Just / Justfile
+alias j="$(which just) --justfile $XDG_CONFIG_HOME/just/justfile" --working-directory .
+alias jst='j'
 # For any recipe in my Justfile, create an alias for it.
 for recipe in `just --justfile $XDG_CONFIG_HOME/just/justfile --summary`; do
   alias $recipe="just --justfile $XDG_CONFIG_HOME/just/justfile --working-directory . $recipe"
 done
-fi
-
+{{ end }}
 {{ if lookPath "bat" -}}
 # If bat is available, alias cat to prefer it.
 alias cat='bat'
