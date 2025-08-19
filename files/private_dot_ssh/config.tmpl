@@ -1,10 +1,10 @@
 ### -- GLOBAL SSH CONFIG --
 
 Host *
-  AddKeysToAgent yes
-  ServerAliveInterval 120
-  ServerAliveCountMax 30
-  ForwardAgent yes
+  AddKeysToAgent yes           # Automatically add keys to the SSH agent
+  ServerAliveInterval 120      # Send keepalive every 120 seconds
+  ServerAliveCountMax 30       # Allow 30 missed keepalives before disconnect
+  ForwardAgent yes             # Enable SSH agent forwarding
 
 Host github.com gist.github.com
   User {{ .github_username }}
@@ -22,6 +22,7 @@ Host nas
   HostName 100.77.69.85
   User justinwme
   SetEnv TERM=xterm-256color
+  Port 42847
 
 Host mbp
   HostName 100.103.99.109
