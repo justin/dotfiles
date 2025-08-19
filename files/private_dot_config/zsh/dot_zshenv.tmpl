@@ -85,3 +85,13 @@ export OPENAI_API_KEY={{ onepasswordRead "op://CompoundBNB/OpenAI API Key - dotf
 {{- if eq .chezmoi.hostname "m1server" }}
 export COLIMA_HOME=$CONFIG_HOME/colima
 {{ end }}
+
+{{ if eq .osid "linux-ubuntu" }}
+fd() {
+    command fdfind "$@"
+}
+
+bat() {
+    command batcat "$@"
+}
+{{ end }} 

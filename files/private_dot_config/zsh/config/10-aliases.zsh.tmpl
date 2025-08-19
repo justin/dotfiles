@@ -50,20 +50,14 @@ for recipe in `just --justfile $XDG_CONFIG_HOME/just/justfile --summary`; do
 done
 {{ end }}
 {{ if lookPath "bat" -}}
-# If bat is available, alias cat to prefer it.
-alias cat='bat'
+## If bat is available, alias cat to prefer it.
+#alias cat='bat'
 {{ else if lookPath "batcat" }}
-# If batcat is available, alias cat to prefer it.
-alias cat='batcat'
-alias bat='batcat'
+## If batcat is available, alias cat to prefer it.
+#alias cat='batcat'
+#alias bat='batcat'
 {{ else }}
-# If bat is not available, use cat.
-alias bat='cat'
+## If bat is not available, use cat.
+#alias bat='cat'
 {{ end -}}
-{{ if lookPath "fdfind" -}}
-# If fdfind is available, alias find to prefer it.
-alias fd='fdfind'
-{{ else if not (lookPath "fd") -}}
-# If fd is not available, use find.
-alias fd='find'
-{{ end -}}
+
