@@ -51,6 +51,7 @@ path=(
   $HOME/.local/bin
   {{- if eq .osid "darwin" }}
   $HOME/.local/bin/darwin
+  {{ .homebrew.prefix }}/opt/findutils/libexec/gnubin(N)
   {{ else if eq .osid "linux-ubuntu" }}
   $HOME/.local/bin/ubuntu(N)
   /snap/bin(N)

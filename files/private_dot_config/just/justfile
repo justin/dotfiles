@@ -119,7 +119,7 @@ npm-upgrade: # Update all globally installed npm packages (no sudo on macOS)
   do
     npm -g install "$package"
   done
-  xargs -n 1 npm -g install < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
+  xargs -a $XDG_CONFIG_HOME/npm/global_npm_packages.txt -n1 npm install -g;
 
 [linux]
 npm-upgrade: # Update all globally installed npm packages (use sudo on Linux)
@@ -129,7 +129,7 @@ npm-upgrade: # Update all globally installed npm packages (use sudo on Linux)
   do
     sudo npm -g install "$package"
   done
-  xargs -n 1 sudo npm -g install < $XDG_CONFIG_HOME/npm/global_npm_packages.txt
+  xargs -a $XDG_CONFIG_HOME/npm/global_npm_packages.txt -n1 sudo npm install -g;
 
 py-upgrade: # Update all globally installed python packages
   #!/usr/bin/env zsh

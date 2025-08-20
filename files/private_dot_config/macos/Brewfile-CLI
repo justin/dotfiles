@@ -2,6 +2,7 @@
 brew "cloc"
 brew "dockutil"
 brew "duti"
+brwe "findutils"
 brew "ffmpeg"
 cask "git-credential-manager"
 cask "ipatool"
