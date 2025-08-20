@@ -4,7 +4,9 @@ Host *
   AddKeysToAgent yes           # Automatically add keys to the SSH agent
   ServerAliveInterval 120      # Send keepalive every 120 seconds
   ServerAliveCountMax 30       # Allow 30 missed keepalives before disconnect
-  ForwardAgent yes             # Enable SSH agent forwarding
+{{ if eq .osid "darwin" }}
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{ end }}
 
 Host github.com gist.github.com
   User {{ .github_username }}
@@ -17,34 +19,46 @@ Host github.com gist.github.com
 Host homelab
   HostName 100.89.16.71
   User justin
+  ForwardAgent yes
 
 Host nas
   HostName 100.77.69.85
   User justinwme
+  IdentityFile ~/.ssh/id_ed25519
   SetEnv TERM=xterm-256color
   Port 42847
 
 Host mbp
   HostName 100.103.99.109
   User justinwilliams
-  IdentityFile ~/.ssh/id_ed25519
+  ForwardAgent yes
   Port 22
+{{ if eq .osid "linux-ubuntu" }}
+  IdentityFile ~/.ssh/id_ed25519
+{{ end }}
 
 Host studio
   HostName 100.88.193.73
   User justinwilliams
-  IdentityFile ~/.ssh/id_ed25519
+  ForwardAgent yes
   Port 22
+{{ if eq .osid "linux-ubuntu" }}
+  IdentityFile ~/.ssh/id_ed25519
+{{ end }}
 
 Host m1server
   HostName 100.100.224.127
   User justinwilliams
-  IdentityFile ~/.ssh/id_ed25519
+  ForwardAgent yes
   Port 22
+{{ if eq .osid "linux-ubuntu" }}
+  IdentityFile ~/.ssh/id_ed25519
+{{ end }}
 
 Host udm
   HostName 100.107.130.20
   User root
+  IdentityFile ~/.ssh/id_ed25519
   SetEnv TERM=xterm-256color
 
 {{- if eq .chezmoi.os "darwin" }}
