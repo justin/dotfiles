@@ -1,5 +1,19 @@
 # #!/usr/bin/env zsh
 
+# cat
+# Wrapper function for cat that uses bat/batcat if available.
+# This works in both interactive shells and shell scripts, unlike aliases.
+# Usage: cat <file>
+function cat () {
+  if command -v bat &> /dev/null; then
+    bat "$@"
+  elif command -v batcat &> /dev/null; then
+    batcat "$@"
+  else
+    command cat "$@"
+  fi
+}
+
 # tmac
 # tmux attach to a session, or create it if it doesn't exist.
 # Usage: tmac <session_name>
