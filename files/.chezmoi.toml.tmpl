@@ -24,8 +24,11 @@
 {{- end -}}
 
 {{- $email := "justin@users.noreply.github.com" }}
+{{- $personal := false }}
+{{- $work := false }}
 {{- if stdinIsATTY }}
 {{- $email = promptStringOnce . "email" "What is your email address" $email -}}
+{{- $personal = promptBoolOnce . "personal" "Is this a personal machine" false -}}
 {{- end -}}
 
 {{- if stdinIsATTY -}}
@@ -42,6 +45,8 @@ scriptTempDir = "~/tmp"
   github_username = "justin"
   url = "https://justinw.me"
   osid = {{ $osid | quote }}
+  personal = {{ $personal }}
+  work = {{ $work | default false }}
   ephemeral = {{ $ephemeral }}
   headless = {{ $headless }}
   hostname = {{ $hostname | quote }}
