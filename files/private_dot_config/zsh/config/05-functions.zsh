@@ -53,7 +53,7 @@ function __check_can_reload_or_exit () {
 # If there are no background jobs, it reloads the ZSH shell.
 # Usage: reload
 function reload () {
-  zsh::utils::check_can_reload_or_exit "reload" || return 1
+  __check_can_reload_or_exit "reload" || return 1
   info "Reloading 'zsh'"
   exec zsh
 }
