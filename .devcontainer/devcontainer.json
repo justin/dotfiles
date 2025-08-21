@@ -1,0 +1,37 @@
+{
+  "name": "dotfiles",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceFolder": "/home/vscode/.local/share/chezmoi",
+  "postAttachCommand": "sudo sh -c \"$(curl -fsLS get.chezmoi.io)\" -- -b $HOME/.local/bin init --apply justin && /home/vscode/.local/bin/chezmoi apply",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "dotfiles.repository": ""
+      },
+      "extensions": [
+        "EditorConfig.EditorConfig"
+      ]
+    }
+  },
+  "features": {
+    "git": "os-provided",
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "upgradePackages": true,
+      "username": "automatic",
+      "userUid": "automatic",
+      "userGid": "automatic"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "installDirectlyFromGitHubRelease": true,
+      "version": "latest"
+    },
+    "ghcr.io/devcontainer-community/devcontainer-features/chezmoi.io:1": {
+      "version": "latest"
+    }
+  }
+}
