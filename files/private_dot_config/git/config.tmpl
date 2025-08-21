@@ -5,23 +5,20 @@
 [include]
   path =  ~/.config/git/gitconfig.personal
 
-[includeIf "gitdir:~/src/justin/"]
-  path =  ~/.config/git/gitconfig.personal
-
 [github]
   user = {{ .github_username }}
 
-{{ if not .ephemeral }}
+{{ if not .ephemeral -}}
 # Always use SSH authentication, even if the remote URL specifies https:// or git://
 # via: http://engineering.pivotal.io/post/git-push-instead-of/
 [url "git@github.com:"]
   pushInsteadOf = https://github.com/
   pushInsteadOf = git://github.com/
-{{ end }}
-########################################################################
+{{- end }}
 
 [init]
   defaultBranch = main
+
 [log]
   date = human
 
@@ -39,15 +36,18 @@
   branch = auto
   diff = auto
   status = auto
+
 [color "branch"]
   current = yellow reverse
   local = yellow
   remote = green
+
 [color "diff"]
   meta = yellow bold
   frag = magenta bold
   old = red bold
   new = green bold
+
 [color "status"]
   added = yellow
   changed = green
@@ -58,33 +58,36 @@
   quotepath = false
   trustctime = false
 
-{{ if eq .chezmoi.os "darwin" }}
+{{ if eq .osid "darwin" }}
 [credential]
 	helper = /usr/local/bin/git-credential-manager
-{{- end }}
-
-[credential "https://dev.azure.com"]
-	useHttpPath = true
+{{ end }}
 
 [credential "https://github.com"]
   username = {{ .github_username}}
 
-{{- if eq .chezmoi.os "darwin" }}
+{{ if eq .osid "darwin" -}}
 [difftool "Kaleidoscope"]
   cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
 [diff "localizablestrings"]
   textconv = iconv -t utf-8
   binary = false
+
 [diff]
   tool = Kaleidoscope
   colorMoved = zebra
+
 [difftool]
   prompt = false
+
 [mergetool "Kaleidoscope"]
   cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
   trustExitCode = true
+
 [mergetool]
   prompt = false
+
 [merge]
   tool = Kaleidoscope
   ff = only
@@ -96,13 +99,21 @@
 {{- if and (not .ephemeral) (not .synology) }}
 [gpg]
   format = ssh
+
 [gpg "ssh"]
+{{- if eq .chezmoi.os "darwin" }}
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+{{- else if eq .chezmoi.os "linux" }}
   defaultKeyCommand = ssh-add -L
+{{- end }}
   allowedSignersFile = {{ .chezmoi.homeDir }}/.ssh/allowed_signers
+
 [tag]
   gpgsign = true
+
 [commit]
   gpgsign = true
+
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
@@ -121,9 +132,6 @@
   pf = push --force-with-lease
 
 {{- if eq .chezmoi.os "darwin" }}
-  #
-  # Neurotrack
-  #
   builds = "!git log --format='%H' --grep='Build increment:' -2 | awk 'NR > 1 { printf(\"...\") } { printf(\"%s%s\", $1, $2) }'"
   # Show commit messages since last build increment.
   releasenotes = "!git log --format='- %s' $(git builds) --reverse --no-merges"
