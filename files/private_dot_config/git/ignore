@@ -18,6 +18,9 @@ playground.xcworkspace
 ## macOS
 .DS_Store
 
+## Claude Code
+.claude/settings.local.json
+
 ## Sources:
 ## https://github.com/github/gitignore/blob/master/Global/Xcode.gitignore
 ## https://github.com/github/gitignore/blob/master/Swift.gitignore
