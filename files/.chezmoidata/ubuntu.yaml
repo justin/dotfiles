@@ -6,6 +6,7 @@ packages:
       - "aria2"
       - "awscli"
       - "bat"
+      - "btop"
       - "chafa"
       #- "docker" - https://docs.docker.com/engine/install/ubuntu/
       - "docker-compose-v2"
