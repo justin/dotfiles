@@ -30,3 +30,8 @@ if type_exists 'gh'; then
   gh completion -s zsh >"$ZDOTDIR/functions/_gh"
   success "Successfully generated GitHub CLI autocompletions."
 fi
+
+if type_exists 'ipatool'; then
+  ipatool completion zsh >"$ZDOTDIR/functions/_ipatool"
+  success "Successfully generated ipatool autocompletions."
+fi
