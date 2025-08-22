@@ -1,0 +1,31 @@
+{{ if lookPath "op" -}}
+#!/usr/bin/env zsh
+#
+# Install and configure 1Password CLI plugins.
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+if [ ! -f "$XDG_CONFIG_HOME/op/plugins/gh.json" ]; then
+    info "1Password CLI: Installing GitHub plugin."
+    pushd $HOME
+    op plugin init gh
+    popd
+fi
+
+{{ if .personal }}
+if [ ! -f "$XDG_CONFIG_HOME/op/plugins/aws.json" ]; then
+    info "1Password CLI: Installing AWS plugin."
+    pushd $HOME
+    op plugin init aws
+    popd
+fi
+{{ end }}
+
+if [ ! -f "$XDG_CONFIG_HOME/op/plugins/openai.json" ]; then
+    info "1Password CLI: Installing OpenAI plugin."
+    pushd $HOME
+    op plugin init openai
+    popd
+fi
+{{ end -}}

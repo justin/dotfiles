@@ -25,7 +25,7 @@
                 "ghcr.io/github/github-mcp-server"
             ],
             "env": {
-                "GITHUB_PERSONAL_ACCESS_TOKEN": "{{ onepasswordRead "op://CompoundBNB/GitHub API - MCP/credential" | trim }}"
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "{{ onepasswordRead "op://dotfiles/GitHub API - MCP/credential" | trim }}"
             }
         },
         "kagisearch": {
@@ -42,7 +42,7 @@
           ],
           "env": {
             "KAGI_SUMMARIZER_ENGINE": "cecil",
-            "KAGI_API_KEY": "{{ onepasswordRead "op://CompoundBNB/Kagi API Key/credential" | trim }}"
+            "KAGI_API_KEY": "{{ onepasswordRead "op://dotfiles/Kagi API Key/credential" | trim }}"
           }
       }
     }

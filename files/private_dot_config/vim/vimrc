@@ -70,3 +70,5 @@ colorscheme jww                                          " Use 'jww' colorscheme
 nnoremap <leader>v :vsplit<cr>
 nnoremap <leader>h :split<cr>
 nnoremap <leader>n :set hlsearch!<CR>                    " Toggle search highlighting
+nnoremap <leader>l :bnext<CR>                            " Go to next buffer
+nnoremap <leader>h :bprevious<CR>                        " Go to previous buffer

@@ -1,4 +1,5 @@
 bin
+.aws/credentials
 .config/brewfile
 .gnupg
 .config/asdf

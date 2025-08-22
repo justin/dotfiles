@@ -3,4 +3,6 @@
 if is_cmd op; then
   eval "$(op completion zsh)"
   compdef _op op
+
+  source "$XDG_CONFIG_HOME/op/plugins.sh"
 fi

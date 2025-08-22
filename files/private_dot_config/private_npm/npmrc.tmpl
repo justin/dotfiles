@@ -3,9 +3,8 @@
 
 
 {{- if and (not .ephemeral) (not .synology) }}
-//registry.npmjs.org/:_authToken={{ onepasswordRead "op://CompoundBNB/NPM Registry Token/credential" | quote | trim }}
-//npm.pkg.github.com/:_authToken={{ onepasswordRead "op://CompoundBNB/GitHub Package Registry Token/credential" | quote | trim }}
-//npm.748sj.co/:_authToken={{ onepasswordRead "op://CompoundBNB/npm.748sj.co Token/credential" | trim }}
+//registry.npmjs.org/:_authToken={{ onepasswordRead "op://dotfiles/NPM Registry Token/credential" | quote | trim }}
+//npm.pkg.github.com/:_authToken={{ onepasswordRead "op://dotfiles/GitHub Package Registry Token/credential" | quote | trim }}
 {{- end }}
 
 @justin:registry=https://npm.pkg.github.com/
