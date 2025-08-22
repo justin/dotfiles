@@ -14,20 +14,6 @@
           "/projects"
         ]
         },
-        "github": {
-            "command": "docker",
-            "args": [
-                "run",
-                "-i",
-                "--rm",
-                "-e",
-                "GITHUB_PERSONAL_ACCESS_TOKEN",
-                "ghcr.io/github/github-mcp-server"
-            ],
-            "env": {
-                "GITHUB_PERSONAL_ACCESS_TOKEN": "{{ onepasswordRead "op://dotfiles/GitHub API - MCP/credential" | trim }}"
-            }
-        },
         "kagisearch": {
           "command": "docker",
           "args": [
