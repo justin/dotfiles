@@ -1,11 +1,3 @@
-Host github.com gist.github.com
-  Port 22
-  User {{ .github_username }}
-  PreferredAuthentications publickey
-{{- if eq .osid "darwin" }}
-  IdentityAgent "~/.config/1password/t/agent.sock"
-{{ end -}}
-
 {{ if .personal -}}
 Host mbp
   HostName 100.103.99.109

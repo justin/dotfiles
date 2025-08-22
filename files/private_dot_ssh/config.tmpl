@@ -11,6 +11,16 @@ Host *
   SetEnv TERM=xterm-256color   # Set terminal type for remote sessions
   SendEnv LANG LC_*            # Forward locale settings to remote hosts
 
+### GitHub
+
+Host github.com gist.github.com
+  Port 22
+  User {{ .github_username }}
+  PreferredAuthentications publickey
+{{- if eq .osid "darwin" }}
+  IdentityAgent "~/.config/1password/t/agent.sock"
+{{ end }}
+
 ### -- HOMELAB --
 
 Host homelab
@@ -18,8 +28,6 @@ Host homelab
   User justin
 {{ if and (eq .osid "darwin") (.personal) -}}
   ForwardAgent yes
-{{ else }}
-  IdentityFile ~/.ssh/id_devices.pub
 {{ end }}
 
 Host nas
@@ -28,8 +36,6 @@ Host nas
   Port 42847
 {{ if and (eq .osid "darwin") (.personal) -}}
   ForwardAgent yes
-{{ else }}
-  IdentityFile ~/.ssh/id_devices.pub
 {{ end }}
 
 Host m1server
@@ -38,8 +44,6 @@ Host m1server
   Port 22
 {{ if and (eq .osid "darwin") (.personal) -}}
   ForwardAgent yes
-{{ else }}
-  IdentityFile ~/.ssh/id_devices.pub
 {{ end }}
 
 Host udm
