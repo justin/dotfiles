@@ -13,6 +13,7 @@ bin
 .config/mise
 .ssh/spatial_signing*
 .ssh/id_rsa*
+.ssh/personal.config
 .config/git/gitconfig.spatial*
 .config/macos/Brewfile-Spatial
 .vim

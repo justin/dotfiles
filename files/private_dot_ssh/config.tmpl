@@ -16,9 +16,6 @@ Host github.com gist.github.com
   Port 22
   User {{ .github_username }}
   PreferredAuthentications publickey
-{{- if eq .osid "darwin" }}
-  IdentityAgent "~/.config/1password/t/agent.sock"
-{{ end }}
 
 ### -- HOMELAB --
 
@@ -48,3 +45,22 @@ Host m1server
 Host udm
   HostName 100.107.130.20
   User root
+
+{{ if .personal }}
+### Personal Machines
+
+Host mbp
+  HostName 100.103.99.109
+  Port 22
+  User justinwilliams
+  ForwardAgent yes
+
+Host studio
+  HostName 100.88.193.73
+  Port 22
+  User justinwilliams
+  ForwardAgent yes
+
+Match host * exec "test -z $SSH_TTY"
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{ end -}}
