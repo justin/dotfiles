@@ -26,7 +26,7 @@ Host github.com gist.github.com
 Host homelab
   HostName 100.89.16.71
   User justin
-{{ if and (eq .osid "darwin") (.personal) -}}
+{{- if and (eq .osid "darwin") (.personal) }}
   ForwardAgent yes
 {{ end }}
 
@@ -34,7 +34,7 @@ Host nas
   HostName 100.77.69.85
   User justinwme
   Port 42847
-{{ if and (eq .osid "darwin") (.personal) -}}
+{{- if and (eq .osid "darwin") (.personal) }}
   ForwardAgent yes
 {{ end }}
 
@@ -42,7 +42,7 @@ Host m1server
   HostName 100.100.224.127
   User justinwilliams
   Port 22
-{{ if and (eq .osid "darwin") (.personal) -}}
+{{- if and (eq .osid "darwin") (.personal) }}
   ForwardAgent yes
 {{ end }}
 
