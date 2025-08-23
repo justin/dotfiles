@@ -6,8 +6,10 @@
 # bind -n <key> <command>  # Bind a key without prefix
 # bind -T <table> <key> <command>  # Bind a key in a specific key table
 
+{{ if not .synology }}
 set -g default-command $SHELL
 set -g default-shell $SHELL
+{{ end }}
 
 # Remove all keybindings
 unbind -T root -aq
