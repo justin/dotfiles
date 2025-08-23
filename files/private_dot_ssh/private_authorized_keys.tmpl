@@ -1,3 +1,4 @@
 {{ range gitHubKeys .github_username -}}
 {{ .Key }}
-{{ end -}}
+{{ end }}
+{{- onepasswordRead "op://dotfiles/Homelab Machine SSH Key/public key" }}
