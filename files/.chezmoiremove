@@ -29,6 +29,7 @@ bin
 .config/zsh/config/05-autocomplete.zsh
 .config/zsh/config/07-keymaps.zsh
 .config/zsh/config/07-python-brew.zsh
+.config/zsh/config/15-ssh-agent.zsh
 
 {{- if ne .osid "darwin" }}
 Library

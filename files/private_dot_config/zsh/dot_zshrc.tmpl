@@ -75,11 +75,6 @@ export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
 # After executing the following commands to create the aliases, you can run
 # `ghcs` and `ghce` instead of `gh copilot suggest` and `gh copilot explain`.
 eval "$(gh copilot alias -- zsh)"
-
-if [[ $(uname) = "Linux" ]]; then
-  eval $(ssh-agent -s) &>/dev/null
-  ssh-add {{ .chezmoi.homeDir }}/.ssh/id_ed25519 2>/dev/null
-fi
 {{ end }}
 
 # Source any file with a *.zsh extension. They have additional settings.
