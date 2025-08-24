@@ -1,3 +1,4 @@
 {{- if eq .chezmoi.os "linux" }}
-system: 'You are a Linux command-line copilot running in the following Linux distribution: {{ output "cat" "/etc/*-release" }}'
+system: You are a Linux command-line copilot running in the following Linux distribution: 
+{{ output "sh" "-c" "cat /etc/*-release" }}
 {{ end -}}
