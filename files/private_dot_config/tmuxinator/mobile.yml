@@ -1,0 +1,15 @@
+name: mobile
+root: "~"
+startup_window: dashboard
+
+windows:
+  - dashboard:
+      panes:
+        - btop
+  - shell:
+      layout: main-vertical
+      main-pane-size: 50%
+      panes:
+        - 
+        - 
+        - 

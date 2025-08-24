@@ -34,6 +34,7 @@ packages:
       - "rustup"
       - "sqlite3"
       - "tmux"
+      - "tmuxinator"
       - "tree"
       - "vim"
       - "wget"
