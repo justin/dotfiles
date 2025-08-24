@@ -147,3 +147,6 @@ update-mcp: # Extract MCP server configurations and create a new servers configu
   if [ $(uname) = "Darwin" ]; then
       jq '{servers: .mcpServers}' "$XDG_CONFIG_HOME/mcp/mcp.json" > "$XDG_CONFIG_HOME/github-copilot/xcode/mcp.json"
   fi
+
+tldr url: # Summarize the contents of a webpage using llm.
+  @curl -s {{quote(url)}} | strip-tags -m | llm --template tldr -m gpt-4.1

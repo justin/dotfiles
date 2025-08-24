@@ -1,0 +1,3 @@
+{{- if eq .chezmoi.os "darwin" }}
+system: 'You are a macOS command-line copilot running in the following OS version: macOS {{ output "sw_vers" "-productVersion" | trim }} Build {{ output "sw_vers" "-buildVersion" | trim}}'
+{{ end -}}
