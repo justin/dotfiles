@@ -59,10 +59,12 @@ function __term_title_get_command() {
 	RETURN_COMMAND=$job_text
 }
 
-# SSH indicator
-function __titlebar_ssh_indicator() {
-	if [[ -n $SSH_CONNECTION || -n $SSH_CLIENT ]]; then
+# Session indicator (local or SSH)
+function __titlebar_session_indicator() {
+	if __is_remote_session; then
 		echo "🔒"
+	else
+		echo "💻"
 	fi
 }
 
@@ -73,12 +75,12 @@ function __term_title_precmd() {
 	# local host="${HOST:-$(hostname -s)}"  # not needed for local
 	local user="${USER:-$(whoami)}"
 	local title=""
-	local ssh_status="$(__titlebar_ssh_indicator)"
+	local indicator="$(__titlebar_session_indicator)"
 	if __is_remote_session; then
 		local host="${HOST:-$(hostname -s)}"
-		title="${ssh_status} ${user}@${host} / ${shell_name}"
+		title="${indicator} ${user}@${host} / ${shell_name}"
 	else
-		title="${ssh_status} 💻 ${shell_name}"
+		title="${indicator} ${shell_name}"
 	fi
 	__term_set_title "${title}"
 }
@@ -91,12 +93,12 @@ function __term_title_preexec() {
 	# local host="${HOST:-$(hostname -s)}"  # not needed for local
 	local user="${USER:-$(whoami)}"
 	local title=""
-	local ssh_status="$(__titlebar_ssh_indicator)"
+	local indicator="$(__titlebar_session_indicator)"
 	if __is_remote_session; then
 		local host="${HOST:-$(hostname -s)}"
-		title="${ssh_status} ${user}@${host} / ${cmd}"
+		title="${indicator} ${user}@${host} / ${cmd}"
 	else
-		title="${ssh_status} 💻 ${SHELL:t} / ${cmd}"
+		title="${indicator} ${SHELL:t} / ${cmd}"
 	fi
 	__term_set_title "${title}"
 }
