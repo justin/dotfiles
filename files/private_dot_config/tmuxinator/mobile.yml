@@ -7,9 +7,8 @@ windows:
       panes:
         - btop
   - shell:
-      layout: main-vertical
-      main-pane-size: 50%
+      layout: 0b67,122x39,0,0{61x39,0,0,0,60x39,62,0[60x19,62,0,1,60x19,62,20,2]}
       panes:
-        - 
-        - 
-        - 
+        - clear
+        - clear
+        - clear
