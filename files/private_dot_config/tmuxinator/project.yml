@@ -1,0 +1,22 @@
+name: project
+root: ~/
+windows:
+    - default:
+        layout: 20a0,274x83,0,0{137x83,0,0,3,136x83,138,0[136x41,138,0,5,136x41,138,42,6]}
+        panes:
+          - vim
+          - clear
+          - clear
+          - clear
+    - docker:
+        layout: 5be4,159x48,0,0[159x24,0,0{79x24,0,0,3,79x24,80,0,6},159x23,0,25{79x23,0,25,4,79x23,80,25,5}]
+        panes:
+          - clear
+          - clear
+          - clear
+          - clear
+    - code:
+        layout: b985,159x47,0,0[159x37,0,0,1,159x10,0,38,0]
+        panes:
+          - vim
+          - clear

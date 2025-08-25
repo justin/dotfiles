@@ -1,0 +1,11 @@
+name: main
+root: ~/
+
+windows:
+  - default:
+      layout: 20a0,274x83,0,0{137x83,0,0,3,136x83,138,0[136x41,138,0,5,136x41,138,42,6]}  
+      panes:
+        - vim
+        - clear 
+        - clear
+        - clear
