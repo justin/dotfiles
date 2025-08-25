@@ -16,14 +16,24 @@ function cat () {
 
 # tmac
 # tmux attach to a session, or create it if it doesn't exist.
-# Usage: tmac <session_name>
+# If tmuxinator is installed, it will first try to start a tmuxinator project.
+# Usage: tmac <session_name_or_project_name>
 # Example: tmac mysession
-funcion tmac () {
-    tmux has-session -t "$1" 2>/dev/null
-    if [ $? != 0 ]; then
-        tmux new-session -s "$1" -d
+function tmac () {
+  # If tmuxinator is installed, try to start a project with the given name.
+  if command -v tmuxinator &> /dev/null; then
+    # Attempt to start the project. Redirect stderr to suppress "project not found" errors.
+    # If successful, tmuxinator will attach to the session, and we can exit.
+    if tmuxinator start "$1" 2>/dev/null; then
+      return 0
     fi
-    tmux attach -t "$1"
+  fi
+
+  # Fallback to original behavior if tmuxinator is not installed or project doesn't exist.
+  if ! tmux has-session -t "$1" 2>/dev/null; then
+    tmux new-session -s "$1" -d
+  fi
+  tmux attach -t "$1"
 }
 
 # __check_can_reload_or_exit
