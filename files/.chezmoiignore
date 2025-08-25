@@ -10,7 +10,6 @@ darwin
 {{- if ne .osid "darwin" }}
 .lldbinit
 .config/1password
-.config/claude
 .config/mcp
 .local/bin/darwin
 .chezmoiscripts/darwin
