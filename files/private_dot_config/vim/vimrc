@@ -67,8 +67,9 @@ let mapleader = "\<Space>"                               " Set leader key to spa
 
 colorscheme jww                                          " Use 'jww' colorscheme (must be installed)
 
-nnoremap <leader>v :vsplit<cr>
-nnoremap <leader>h :split<cr>
-nnoremap <leader>n :set hlsearch!<CR>                    " Toggle search highlighting
-nnoremap <leader>l :bnext<CR>                            " Go to next buffer
-nnoremap <leader>h :bprevious<CR>                        " Go to previous buffer
+nnoremap <leader>\| :vsplit<cr>                          " Normal Mode: Vertical split(expr)
+nnoremap <leader>- :split<cr>                            " Normal Mode: Horizontal split(expr)
+nnoremap <leader>n :set hlsearch!<CR>                    " Normal Mode: Toggle search highlighting
+
+nnoremap <leader>l :bnext<CR>                            " Normal Mode: Go to next buffer
+nnoremap <leader>h :bprevious<CR>                        " Normal Mode: Go to previous buffer
