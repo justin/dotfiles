@@ -101,6 +101,11 @@
   pull:
     args: ["--depth=1"]
 
+.local/share/vim/pack/jww/start/vim-hardtime:
+  type: git-repo
+  url: https://github.com/takac/vim-hardtime.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
 # ==================================================
 # TMUX Plugins
 # ==================================================
