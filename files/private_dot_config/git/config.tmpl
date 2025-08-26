@@ -3,7 +3,7 @@
   useConfigOnly = true
 
 [include]
-  path =  ~/.config/git/gitconfig.personal
+  path = {{ .chezmoi.homeDir }}/.config/git/gitconfig.personal
 
 [github]
   user = {{ .github_username }}
@@ -54,12 +54,13 @@
   untracked = cyan
 
 [include]
-  path =  ~/.config/git/delta-theme.config
+  path = {{ .chezmoi.homeDir }}/.config/git/delta-theme.config
 
 [core]
   editor = vim
   quotepath = false
   trustctime = false
+  excludesfile = {{ .chezmoi.homeDir }}/.config/git/ignore
 {{- if lookPath "delta" }}
   pager = delta
 
