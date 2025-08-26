@@ -57,6 +57,19 @@
   editor = vim
   quotepath = false
   trustctime = false
+{{- if lookPath "delta" }}
+  pager = delta
+
+[delta]
+  navigate = true  # use n and N to move between diff sections
+  dark = true      # or light = true, or omit for auto-detection
+
+[interactive]
+  diffFilter = delta --color-only
+
+[merge]
+  conflictStyle = zdiff3
+{{- end }}
 
 {{ if eq .osid "darwin" }}
 [credential]
