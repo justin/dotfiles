@@ -19,7 +19,8 @@
 ## Shell Instructions
 
 - When creating files meant to be executed, read, or sourced by `zsh`, use the `.zsh` filename extension.
-- When creating general purpose shell scripts, prefer basic Bourne shell (also known as `sh`) without a filename extension. Make the script executable (for example: `chmod 755 example-script-name`). Use the file header `#!/usr/bin/env sh` to ensure finding the correct `sh` executable.
+- When creating general purpose shell scripts, prefer basic Bourne shell (also known as `sh`) without a filename extension. Make the script executable (for example: `chmod 755 example-script-name`) by starting its name with 'executable_' as per the Chezmoi guidelines. Use the file header `#!/usr/bin/env sh` to ensure finding the correct `sh` executable.
+- For scripts that are under .chezmoiscripts directory, use `#!/usr/bin/env zsh` as the file header and the `.zsh` filename extension. Any scripts in it are executed as normal scripts without creating a corresponding directory in the target state. The `run_` attribute is still required. For more information, see the [Chezmoi documentation on scripts](https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/).
 
 ## File Structure Context
 
@@ -31,7 +32,7 @@
 ## Tool Instructions
 
 - [`1Password`](https://1password.com) is used to store secrets that should not be stored in version control. The [`op`](https://developer.1password.com/docs/cli/) should be installed on each machine that is not ephemeral. Chezmoi has built-in support for retrieving secrets from 1Password.
-- `apt` is preferred to `apt-get` when installing software on Debian/Ubuntu hosts.
+- `apt` is preferred to `apt-get` when installing software on Debian/Ubuntu hosts. Packages to be installed on Debian/Ubuntu hosts are listed in `ubuntu.yaml`.
 - [Homebrew](https://brew.sh) is use for installing command line tools and graphical user interface applications (using the `--cask` option) on macOS.
 - [`uv`](https://docs.astral.sh/uv/) is used for Python version management, Python virtual environment management, and Python dependency management.
 
