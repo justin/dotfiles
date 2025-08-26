@@ -1,0 +1,12 @@
+{{- if and (eq .osid "linux-ubuntu") (not .headless) -}}
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+source "$XDG_DATA_HOME/chezmoi/files/functions/_logging"
+source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
+
+pushd "$XDG_DATA_HOME/bat/bat-extras" || exit 1
+./build.sh --install --prefix "$HOME/.local"
+popd
+{{ end }}

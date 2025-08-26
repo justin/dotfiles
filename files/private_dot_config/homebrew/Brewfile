@@ -1,5 +1,6 @@
 brew "aria2"
 brew "bat"
+brew "bat-extras"
 brew "chafa"
 brew "eza"
 brew "fd"

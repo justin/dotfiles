@@ -22,7 +22,7 @@
 
 .config/zsh/functions/_tmuxinator:
   type: file
-  url: https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh 
+  url: https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh
   refreshPeriod: {{ $refreshPeriodWeek }}
 
 .cache/zsh/external/zsh-syntax-highlighting:
@@ -58,6 +58,18 @@
   refreshPeriod: {{ $refreshPeriodWeek }}
   include: ["lldb_commands"]
 {{ end }}
+
+{{ if eq .osid "linux-ubuntu" }}
+# ==================================================
+# Linux Specific Submodules
+# ==================================================
+
+.local/share/bat/bat-extras:
+  type: git-repo
+  url: https://github.com/eth-p/bat-extras.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+{{ end }}
+
 
 # ==================================================
 # iTerm 2 Shell Integration

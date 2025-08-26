@@ -1,4 +1,4 @@
-{{ if lookPath "op" -}}
+{{- if and (eq .osid "darwin") (not .headless) (lookPath "op") -}}
 #!/usr/bin/env zsh
 #
 # Install and configure 1Password CLI plugins.
