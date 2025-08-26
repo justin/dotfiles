@@ -73,13 +73,14 @@ header:${CYAN}"
 export FZF_DEFAULT_OPTS="--height 60% \
 --border rounded \
 --layout reverse \
+--margin=5%,2%,2%,5% \
 --color '$FZF_COLORS' \
 --prompt '∷ ' \
 --pointer ▶ \
 --marker '✔ ' \
 --bind='ctrl-o:execute(code {})+abort' \
 --bind 'ctrl-/:change-preview-window(hidden|)' \
---preview-window='border-rounded' \
+--preview-window='down:50%:border-rounded' \
 --info right"
 
 # Set up fzf key bindings and fuzzy completion
