@@ -35,3 +35,9 @@ if type_exists 'ipatool'; then
   ipatool completion zsh >"$ZDOTDIR/functions/_ipatool"
   success "Successfully generated ipatool autocompletions."
 fi
+
+if type_exists 'uv'; then
+  uv generate-shell-completion zsh >"$ZDOTDIR/functions/_uv"
+  uvx generate-shell-completion zsh >"$ZDOTDIR/functions/_uvx"
+  success "Successfully generated uv autocompletions."
+fi

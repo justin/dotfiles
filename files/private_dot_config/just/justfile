@@ -131,10 +131,30 @@ npm-upgrade: # Update all globally installed npm packages (use sudo on Linux)
   done
   xargs -a $XDG_CONFIG_HOME/npm/global_npm_packages.txt -n1 sudo npm install -g;
 
-py-upgrade: # Update all globally installed python packages
+[private]
+pipx-uninstall: # Uninstall all pipx packages listed in global_pip_packages.txt
   #!/usr/bin/env zsh
   set -euo pipefail
-  xargs -n 1 pipx install --include-deps < $XDG_CONFIG_HOME/pip/global_pip_packages.txt 1>/dev/null
+  if command -v pipx >/dev/null 2>&1; then
+    while read -r package; do
+      if pipx list | grep -q "^package $package "; then
+        pipx uninstall "$package"
+        rm -rf "$HOME/.local/bin/$package"
+      fi
+    done < "$XDG_CONFIG_HOME/pip/global_pip_packages.txt"
+  fi
+
+[private]
+uv-install: # Install python tools.
+  #!/usr/bin/env zsh
+  set -euo pipefail
+  while read -r package; do
+    uv tool install --upgrade "$package"
+  done < "$XDG_CONFIG_HOME/pip/global_pip_packages.txt"
+
+py-upgrade: # Install python tools.
+  just pipx-uninstall
+  just uv-install
 
 update-mcp: # Extract MCP server configurations and create a new servers configuration file
   #!/usr/bin/env zsh
