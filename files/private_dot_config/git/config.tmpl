@@ -53,6 +53,9 @@
   changed = green
   untracked = cyan
 
+[include]
+  path =  ~/.config/git/delta-theme.config
+
 [core]
   editor = vim
   quotepath = false
@@ -63,6 +66,7 @@
 [delta]
   navigate = true  # use n and N to move between diff sections
   dark = true      # or light = true, or omit for auto-detection
+  features = jww
 
 [interactive]
   diffFilter = delta --color-only
