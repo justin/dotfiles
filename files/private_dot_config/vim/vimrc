@@ -62,6 +62,7 @@ if has('wildmenu')
   set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx  " Wildmenu will ignore files with these extensions.
 endif
 
+inoremap jj <Esc>                                        " Map 'jj' in insert mode to escape to normal mode
 inoremap jk <Esc>                                        " Map 'jk' in insert mode to escape to normal mode
 let mapleader = "\<Space>"                               " Set leader key to spacebar.
 
@@ -74,6 +75,9 @@ nnoremap <leader>n :set hlsearch!<CR>                    " Normal Mode: Toggle s
 nnoremap <leader>l :bnext<CR>                            " Normal Mode: Go to next buffer
 nnoremap <leader>h :bprevious<CR>                        " Normal Mode: Go to previous buffer
 
-" Hardtime plugin
-let g:hardtime_default_on = 1
-let g:hardtime_showmsg = 1
+" Disable arrow keys in normal, insert and visual modes
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
