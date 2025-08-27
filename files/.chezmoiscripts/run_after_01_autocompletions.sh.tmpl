@@ -12,18 +12,18 @@ fi
 
 if type_exists 'chezmoi'; then
   chezmoi completion zsh --output="$ZDOTDIR/functions/_chezmoi"
-  success "Successfully generated Chezmoi autocompletions."
+  success "Successfully generated chezmoi autocompletions."
 fi
 
 if type_exists 'just'; then
   just --justfile $XDG_CONFIG_HOME/just/justfile --completions zsh >"$ZDOTDIR/functions/_justfile"
-  success "Successfully generated justfile autocompletions."
+  success "Successfully generated Justfile autocompletions."
 fi
 
 if type_exists 'rustup'; then
   rustup completion zsh >"$ZDOTDIR/functions/_rustup"
   rustup completions zsh cargo >"$ZDOTDIR/functions/_cargo"
-  success "Successfully generated rustup autocompletions."
+  success "Successfully generated Rust autocompletions."
 fi
 
 if type_exists 'gh'; then
