@@ -5,3 +5,15 @@ bindkey '^[[4~' end-of-line        # End: Move to end of line
 bindkey '^[[H' beginning-of-line   # Home (alternate): Move to beginning of line
 bindkey '^[[F' end-of-line         # End (alternate): Move to end of line
 bindkey '^[[3~' delete-char        # Delete: Delete character under cursor
+
+# zsh-autosuggestions keybindings
+# https://github.com/zsh-users/zsh-autosuggestions?tab=readme-ov-file#configuration
+
+# Use Ctrl + Y to accept the autosuggestion
+bindkey '^Y' autosuggest-accept
+# Use Ctrl + J to accept the autosuggestion
+bindkey '^J'  autosuggest-execute
+# Use Ctrl + H to clear the autosuggestion
+bindkey '^H' autosuggest-clear
+# Use Ctrl + K to fetch the next suggestion
+bindkey '^K' autosuggest-fetch
