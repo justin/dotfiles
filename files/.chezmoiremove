@@ -19,7 +19,6 @@ bin
 .vim
 .viminfo
 .config/vim/pack
-.config/nvim
 .config/zsh/config/aliases.zsh
 .config/zsh/config/color.zsh
 .config/zsh/config/prompt.zsh

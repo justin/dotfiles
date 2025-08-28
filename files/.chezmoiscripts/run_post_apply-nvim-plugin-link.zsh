@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+## @file run_post_apply-nvim-plugin-link.zsh
+## Symlink Vim plugins from ~/.local/share/vim/pack to Neovim's ~/.local/share/nvim/site/pack after chezmoi apply
+##
+## Usage:
+##     (runs automatically after chezmoi apply)
+##
+
+set -euo pipefail
+setopt nullglob
+
+# Directories
+VIM_PACK="$HOME/.local/share/vim/pack"
+NVIM_PACK="$HOME/.local/share/nvim/site/pack"
+
+for pack_type_dir in "$VIM_PACK"/*/*; do
+  [ -d "$pack_type_dir" ] || continue
+  # Only process if it contains at least one subdirectory (plugin)
+  found_plugin=0
+  for plugin in "$pack_type_dir"/*; do
+    [ -d "$plugin" ] && found_plugin=1 && break
+  done
+  [ $found_plugin -eq 1 ] || continue
+
+  rel_path="${pack_type_dir#$VIM_PACK/}"
+  dst_dir="$NVIM_PACK/$rel_path"
+  mkdir -p "$dst_dir"
+  for plugin in "$pack_type_dir"/*; do
+    [ -d "$plugin" ] || continue
+    ln -snf "$plugin" "$dst_dir/$(basename "$plugin")"
+  done
+done

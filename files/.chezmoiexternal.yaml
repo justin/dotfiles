@@ -70,7 +70,6 @@
   refreshPeriod: {{ $refreshPeriodWeek }}
 {{ end }}
 
-
 # ==================================================
 # iTerm 2 Shell Integration
 # ==================================================
@@ -89,7 +88,7 @@
   url: https://github.com/nanotee/zoxide.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
 
-.local/share/vim/pack/jww/opt/chezmoi.vim:
+.local/share/vim/pack/jww/start/chezmoi.vim:
   type: git-repo
   url: https://github.com/alker0/chezmoi.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
