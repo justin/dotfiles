@@ -81,3 +81,5 @@ noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
 
+" Source statusline from separate file on runtimepath
+runtime! statusline.vim

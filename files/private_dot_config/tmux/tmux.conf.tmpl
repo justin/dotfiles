@@ -250,19 +250,19 @@ bind -T copy-mode-vi TripleClick1Pane  { select-pane; send -X select-line }
 ###################################################
 
 # Status bar background and foreground
-set -g status-style "bg=colour13,fg=colour0"
+set -g status-style "bg=#ff00ff,fg=#000000"
 
-# Left side: session name in green, on pink background
+# Left side: session name on black, then transition to pink
 set -g status-left-length 40
-set -g status-left "#[fg=colour15,bg=colour0,bold] #S #[fg=colour0,bg=colour13,nobold,nounderscore,noitalics]"
+set -g status-left "#[fg=#ffffff,bg=#000000,bold] #S #[fg=#000000,bg=#ff00ff,nobold,nounderscore,noitalics]"
 
-# Right side: date, time, host in yellow, on pink background
+# Right side: host on black (to match left’s mode block, if used similarly)
 set -g status-right-length 80
-set -g status-right "#[fg=colour15,bg=colour0] #H "
+set -g status-right "#[fg=#ffffff,bg=#000000] #H "
 
-# Window status: inactive windows in grey, active in cyan, both on pink background
-set-window-option -g window-status-format "#[fg=colour0,bg=colour13] #I:#W "
-set-window-option -g window-status-current-format "#[fg=colour13,bg=colour0,bold] #I:#W#{?#{window_zoomed_flag}, #[fg=colour9]🔍,}#{?#{window_bell_flag}, #[fg=colour11]🔔,} #[fg=colour0,bg=colour13,nobold]\uE0B0"
+# Window status: inactive on pink, active on black with pink fg, arrow back to pink
+set-window-option -g window-status-format "#[fg=#000000,bg=#ff00ff] #I:#W "
+set-window-option -g window-status-current-format "#[fg=#ff00ff,bg=#000000,bold] #I:#W#{?#{window_zoomed_flag}, #[fg=colour9]🔍,}#{?#{window_bell_flag}, #[fg=colour11]🔔,} #[fg=#000000,bg=#ff00ff,nobold]\uE0B0"
 #
 # Window separator
 set -g window-status-separator ""
