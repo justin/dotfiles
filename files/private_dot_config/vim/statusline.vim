@@ -1,9 +1,5 @@
 " Status Line Configuration
 " ==========================
-" General UI cleanup when using a custom statusline
-set noshowmode
-set noruler
-set noshowcmd
 
 " Use truecolor in terminal UIs so GUI hex colors are respected
 if has('termguicolors')

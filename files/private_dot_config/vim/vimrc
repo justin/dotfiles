@@ -50,6 +50,13 @@ set splitright                                           " Open vertical splits 
 set undofile                                             " Enable persistent undo
 set mouse=a                                              " Enable mouse support in all modes
 
+" General UI cleanup when using a custom statusline
+set noruler                                              " Disable the default ruler in the status line
+set noshowcmd                                            " Disable showing (partial) command in the last line of the screen
+set noshowmode                                           " Disable showing the current mode in the last line of the screen
+set conceallevel=1                                       " Set conceal level to 1 (allows hiding of some text based on syntax)
+set shortmess+=F                                         " Don't give the file info when editing a file, like "new file" or "file x of y"
+
 packadd chezmoi.vim
 filetype on                                              " Enable type file detection. Vim will be able to try to detect the type of file is use.
 filetype plugin on                                       " Enable plugins and load plugin for the detected file type.
