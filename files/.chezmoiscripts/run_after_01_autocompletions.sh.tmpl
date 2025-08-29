@@ -40,3 +40,8 @@ if type_exists 'uv'; then
   uv generate-shell-completion zsh >"$ZDOTDIR/functions/_uv"
   success "Successfully generated uv autocompletions."
 fi
+
+if type_exists 'rg'; then
+  rg --generate complete-zsh >"$ZDOTDIR/functions/_rg"
+  success "Successfully generated ripgrep autocompletions."
+fi
