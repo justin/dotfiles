@@ -32,6 +32,7 @@ packages:
       - "rsync"
       - "ruby"
       - "rustup"
+      - "silversearcher-ag"
       - "sqlite3"
       - "tmux"
       - "tmuxinator"

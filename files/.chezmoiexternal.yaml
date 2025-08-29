@@ -100,6 +100,11 @@
   pull:
     args: ["--depth=1"]
 
+.local/share/vim/pack/jww/start/fzf.vim:
+  type: git-repo
+  url: https://github.com/junegunn/fzf.vim.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
 # ==================================================
 # TMUX Plugins
 # ==================================================

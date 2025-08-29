@@ -16,7 +16,11 @@ if empty($XDG_STATE_HOME)  | let $XDG_STATE_HOME  = $HOME."/.local/state" | endi
 set runtimepath^=$XDG_CONFIG_HOME/vim
 set runtimepath+=$XDG_DATA_HOME/vim
 set runtimepath+=$XDG_CONFIG_HOME/vim/after
-
+if isdirectory('/opt/homebrew/opt/fzf')
+    set runtimepath+=/opt/homebrew/opt/fzf
+elseif isdirectory('/usr/bin/fzf')
+  set runtimepath+=/usr/bin/fzf
+endif
 set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
 set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
 
@@ -87,6 +91,16 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
+
+" FZF keybindings
+nnoremap <silent> <Leader><Leader> :Files<CR>
+nnoremap <silent> <leader>t        :<C-u>Files<CR>
+nnoremap <silent> <Leader>e        :Buffers<CR>
+nnoremap <silent> <Leader>g        :Lines<CR>
+nnoremap <silent> <leader>f        :BLines<CR>
+nnoremap <silent> <Leader>h        :History:<CR>
+nnoremap <silent> <Leader>/        :History/<CR>
+nnoremap <silent> <Leader>a        :Rg!<CR>
 
 " Source statusline from separate file on runtimepath
 runtime! statusline.vim
