@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$XDG_CONFIG_HOME/claude/hooks/append_agentsmd_context.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
