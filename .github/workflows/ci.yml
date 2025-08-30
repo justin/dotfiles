@@ -20,7 +20,9 @@ jobs:
       env:
         CODESPACES: true
     steps:
-      - uses: actions/checkout@v3
-      - run: ./install.sh
+      - uses: actions/checkout@v4
+      - run: |
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ./install.sh
       - name: chezmoi data
         run: '"$HOME/.local/bin/chezmoi" data'
