@@ -36,8 +36,8 @@ ${host_format} in ${path_format} ${vcs_info_msg_0_}
 ${host_name} '
 
 # ===== Right Prompt =====
-if [ $os != "Linux" ]; then
-  # [Battery %, if available]
+if [ $os != "Linux" ] && [ -z "$TMUX" ]; then
+  # [Battery %, if available] - but not in tmux
   RPROMPT=$(battery)
 else
   RPROMPT=
