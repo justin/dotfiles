@@ -1,0 +1,417 @@
+#compdef llm
+
+# Zsh completion for llm (Large Language Model CLI tool)
+
+_llm() {
+    local context state state_descr line
+    typeset -A opt_args
+
+    # Handle the main llm command
+    if (( CURRENT == 2 )); then
+        # Show top-level commands
+        _llm_commands
+        return
+    fi
+
+    # Handle subcommands
+    case $words[2] in
+        prompt)
+            shift words
+            ((CURRENT--))
+            _llm_prompt
+            ;;
+        aliases)
+            shift words
+            ((CURRENT--))
+            _llm_aliases
+            ;;
+        chat)
+            shift words
+            ((CURRENT--))
+            _llm_chat
+            ;;
+        collections)
+            shift words
+            ((CURRENT--))
+            _llm_collections
+            ;;
+        embed)
+            shift words
+            ((CURRENT--))
+            _llm_embed
+            ;;
+        embed-models)
+            shift words
+            ((CURRENT--))
+            _llm_embed_models
+            ;;
+        embed-multi)
+            shift words
+            ((CURRENT--))
+            _llm_embed_multi
+            ;;
+        fragments)
+            shift words
+            ((CURRENT--))
+            _llm_fragments
+            ;;
+        install)
+            shift words
+            ((CURRENT--))
+            _llm_install
+            ;;
+        keys)
+            shift words
+            ((CURRENT--))
+            _llm_keys
+            ;;
+        logs)
+            shift words
+            ((CURRENT--))
+            _llm_logs
+            ;;
+        models)
+            shift words
+            ((CURRENT--))
+            _llm_models
+            ;;
+        openai)
+            shift words
+            ((CURRENT--))
+            _llm_openai
+            ;;
+        plugins)
+            shift words
+            ((CURRENT--))
+            _llm_plugins
+            ;;
+        schemas)
+            shift words
+            ((CURRENT--))
+            _llm_schemas
+            ;;
+        similar)
+            shift words
+            ((CURRENT--))
+            _llm_similar
+            ;;
+        templates)
+            shift words
+            ((CURRENT--))
+            _llm_templates
+            ;;
+        tools)
+            shift words
+            ((CURRENT--))
+            _llm_tools
+            ;;
+        uninstall)
+            shift words
+            ((CURRENT--))
+            _llm_uninstall
+            ;;
+        *)
+            # Default case - could be a prompt without explicit "prompt" command
+            _llm_prompt
+            ;;
+    esac
+}
+
+_llm_commands() {
+    local commands; commands=(
+        'prompt:Execute a prompt (default command)'
+        'aliases:Manage model aliases'
+        'chat:Hold an ongoing chat with a model'
+        'collections:View and manage collections of embeddings'
+        'embed:Embed text and store or return the result'
+        'embed-models:Manage available embedding models'
+        'embed-multi:Store embeddings for multiple strings at once'
+        'fragments:Manage fragments that are stored in the database'
+        'install:Install packages from PyPI into the same environment as LLM'
+        'keys:Manage stored API keys for different models'
+        'logs:Tools for exploring logged prompts and responses'
+        'models:Manage available models'
+        'openai:Commands for working directly with the OpenAI API'
+        'plugins:List installed plugins'
+        'schemas:Manage stored schemas'
+        'similar:Return top N similar IDs from a collection using cosine similarity'
+        'templates:Manage stored prompt templates'
+        'tools:Manage tools that can be made available to LLMs'
+        'uninstall:Uninstall Python packages from the LLM environment'
+    )
+    _describe 'commands' commands
+}
+
+_llm_prompt() {
+    _arguments \
+        '(-s --system)'{-s,--system}'[System prompt to use]:system prompt:' \
+        '(-m --model)'{-m,--model}'[Model to use]:model:_llm_available_models' \
+        '(-d --database)'{-d,--database}'[Path to log database]:database file:_files' \
+        '(-q --query)'{-q,--query}'[Use first model matching these strings]:query:' \
+        '(-a --attachment)'{-a,--attachment}'[Attachment path or URL or -]:attachment:_files' \
+        '--at[Attachment with explicit mimetype]:attachment and type:' \
+        '--attachment-type[Attachment with explicit mimetype]:attachment and type:' \
+        '(-T --tool)'{-T,--tool}'[Name of a tool to make available to the model]:tool name:' \
+        '--functions[Python code block or file path defining functions to register as tools]:functions:_files' \
+        '--td[Show full details of tool executions]' \
+        '--tools-debug[Show full details of tool executions]' \
+        '--ta[Manually approve every tool execution]' \
+        '--tools-approve[Manually approve every tool execution]' \
+        '--cl[How many chained tool responses to allow]:chain limit:' \
+        '--chain-limit[How many chained tool responses to allow]:chain limit:' \
+        '(-o --option)'{-o,--option}'[key/value options for the model]:option key and value:' \
+        '--schema[JSON schema, filepath or ID]:schema:_files' \
+        '--schema-multi[JSON schema to use for multiple results]:schema:_files' \
+        '(-f --fragment)'{-f,--fragment}'[Fragment to add to the prompt]:fragment:' \
+        '--sf[Fragment to add to system prompt]:system fragment:' \
+        '--system-fragment[Fragment to add to system prompt]:system fragment:' \
+        '(-t --template)'{-t,--template}'[Template to use]:template:_llm_available_templates' \
+        '(-p --param)'{-p,--param}'[Parameters for template]:param key and value:' \
+        '--no-stream[Do not stream output]' \
+        '(-n --no-log)'{-n,--no-log}'[Don'\''t log to database]' \
+        '--log[Log prompt and response to the database]' \
+        '(-c --continue)'{-c,--continue}'[Continue the most recent conversation]' \
+        '--cid[Continue the conversation with the given ID]:conversation id:' \
+        '--conversation[Continue the conversation with the given ID]:conversation id:' \
+        '--key[API key to use]:api key:' \
+        '--save[Save prompt with this template name]:template name:' \
+        '--async[Run prompt asynchronously]' \
+        '(-u --usage)'{-u,--usage}'[Show token usage]' \
+        '(-x --extract)'{-x,--extract}'[Extract first fenced code block]' \
+        '--xl[Extract last fenced code block]' \
+        '--extract-last[Extract last fenced code block]' \
+        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+        '*:prompt text:'
+}
+
+_llm_models() {
+    _arguments -C \
+        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+        '1: :_llm_models_commands' \
+        '*::arg:->args'
+
+    case $state in
+        args)
+            case $words[1] in
+                list)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]'
+                    ;;
+                default)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+                        '1:model:_llm_available_models'
+                    ;;
+                options)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+                        '1:model:_llm_available_models'
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+_llm_models_commands() {
+    local commands; commands=(
+        'list:List available models (default)'
+        'default:Show or set the default model'
+        'options:Manage default options for models'
+    )
+    _describe 'models commands' commands
+}
+
+_llm_keys() {
+    _arguments -C \
+        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+        '1: :_llm_keys_commands' \
+        '*::arg:->args'
+
+    case $state in
+        args)
+            case $words[1] in
+                list)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]'
+                    ;;
+                get)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+                        '1:key name:_llm_available_keys'
+                    ;;
+                path)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]'
+                    ;;
+                set)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+                        '1:key name:'
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+_llm_keys_commands() {
+    local commands; commands=(
+        'list:List names of all stored keys (default)'
+        'get:Return the value of a stored key'
+        'path:Output the path to the keys.json file'
+        'set:Save a key in the keys.json file'
+    )
+    _describe 'keys commands' commands
+}
+
+_llm_logs() {
+    _arguments -C \
+        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+        '1: :_llm_logs_commands' \
+        '*::arg:->args'
+
+    case $state in
+        args)
+            case $words[1] in
+                list)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]'
+                    ;;
+                backup)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+                        '1:backup file:_files'
+                    ;;
+                off)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]'
+                    ;;
+                on)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]'
+                    ;;
+                path)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]'
+                    ;;
+                status)
+                    _arguments \
+                        '(-h --help)'{-h,--help}'[Show this message and exit]'
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+_llm_logs_commands() {
+    local commands; commands=(
+        'list:Show logged prompts and their responses (default)'
+        'backup:Backup your logs database to this file'
+        'off:Turn off logging for all prompts'
+        'on:Turn on logging for all prompts'
+        'path:Output the path to the logs.db file'
+        'status:Show current status of database logging'
+    )
+    _describe 'logs commands' commands
+}
+
+_llm_plugins() {
+    _arguments \
+        '--all[Include built-in default plugins]' \
+        '--hook[Filter for plugins that implement this hook]:hook name:' \
+        '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+# Placeholder functions for other commands that need minimal completion
+_llm_aliases() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_chat() {
+    _arguments \
+        '(-m --model)'{-m,--model}'[Model to use]:model:_llm_available_models' \
+        '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_collections() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_embed() {
+    _arguments \
+        '(-m --model)'{-m,--model}'[Embedding model to use]:model:_llm_available_embed_models' \
+        '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_embed_models() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_embed_multi() {
+    _arguments \
+        '(-m --model)'{-m,--model}'[Embedding model to use]:model:_llm_available_embed_models' \
+        '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_fragments() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_install() {
+    _arguments \
+        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+        '*:package name:'
+}
+
+_llm_openai() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_schemas() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_similar() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_templates() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_tools() {
+    _arguments '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_uninstall() {
+    _arguments \
+        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+        '*:package name:'
+}
+
+# Helper functions to get dynamic completion data
+_llm_available_models() {
+    local models
+    models=(${(f)"$(llm models list 2>/dev/null | grep -v '^Models:' | grep -v '^$' | sed 's/^[[:space:]]*//' | cut -d' ' -f1)"})
+    _describe 'models' models
+}
+
+_llm_available_embed_models() {
+    local models
+    models=(${(f)"$(llm embed-models 2>/dev/null | grep -v '^Embedding models:' | grep -v '^$' | sed 's/^[[:space:]]*//' | cut -d' ' -f1)"})
+    _describe 'embedding models' models
+}
+
+_llm_available_templates() {
+    local templates
+    templates=(${(f)"$(llm templates list 2>/dev/null | grep -v '^Templates:' | grep -v '^$' | sed 's/^[[:space:]]*//')"})
+    _describe 'templates' templates
+}
+
+_llm_available_keys() {
+    local keys
+    keys=(${(f)"$(llm keys list 2>/dev/null | grep -v '^Keys:' | grep -v '^$' | sed 's/^[[:space:]]*//')"})
+    _describe 'keys' keys
+}
+
+# Register the completion function
+compdef _llm llm
