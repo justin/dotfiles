@@ -15,6 +15,8 @@ jobs:
   # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
   copilot-setup-steps:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/vscode/devcontainers/base:ubuntu
     env:
       CODESPACES: true
     permissions:
@@ -28,7 +30,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y jq
-
+          mkdir -p $HOME/.local/bin
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - name: Install chezmoi
         run: |
           ./install.sh

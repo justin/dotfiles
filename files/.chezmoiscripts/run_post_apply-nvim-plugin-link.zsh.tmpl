@@ -1,3 +1,4 @@
+{{ if and (not .ephemeral) (not .synology) -}}
 #!/usr/bin/env zsh
 ## @file run_post_apply-nvim-plugin-link.zsh
 ## Symlink Vim plugins from ~/.local/share/vim/pack to Neovim's ~/.local/share/nvim/site/pack after chezmoi apply
@@ -30,3 +31,4 @@ for pack_type_dir in "$VIM_PACK"/*/*; do
     ln -snf "$plugin" "$dst_dir/$(basename "$plugin")"
   done
 done
+{{ end }}
