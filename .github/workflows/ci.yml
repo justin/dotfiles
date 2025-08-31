@@ -4,13 +4,15 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/workflows/copilot-setup-steps.yml'
+    paths:
+      - 'files/private_dot_config/zsh/**'
+      - 'files/.chezmoi.*'
+      - 'files/.chezmoi/**'
+      - 'install.sh'
+      - '.install-password-manager.sh'
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - '.github/workflows/copilot-setup-steps.yml'
 
 jobs:
   clone-and-install:
