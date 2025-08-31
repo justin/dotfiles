@@ -8,6 +8,13 @@ vim.env.XDG_CONFIG_HOME = vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config"
 vim.env.XDG_DATA_HOME   = vim.env.XDG_DATA_HOME   or (vim.env.HOME .. "/.local/share")
 vim.env.XDG_STATE_HOME  = vim.env.XDG_STATE_HOME  or (vim.env.HOME .. "/.local/state")
 
+-- Set runtime path for FZF
+if vim.fn.isdirectory('/opt/homebrew/opt/fzf') == 1 then
+  vim.opt.runtimepath:append('/opt/homebrew/opt/fzf')
+elseif vim.fn.isdirectory('/usr/bin/fzf') == 1 then
+  vim.opt.runtimepath:append('/usr/bin/fzf')
+end
+
 -- Set directories for swap, backup, view, undo, and viminfo
 vim.opt.directory = vim.env.XDG_CACHE_HOME .. "/nvim/swap//"
 vim.opt.backupdir = vim.env.XDG_STATE_HOME .. "/nvim/backup//"
@@ -55,6 +62,16 @@ for _, mode in ipairs({"n", "i", "v"}) do
     vim.keymap.set(mode, key, "<Nop>")
   end
 end
+
+-- FZF keybindings
+vim.keymap.set("n", "<leader><leader>", ":Files<CR>", { silent = true })
+vim.keymap.set("n", "<leader>t", ":<C-u>Files<CR>", { silent = true })
+vim.keymap.set("n", "<leader>e", ":Buffers<CR>", { silent = true })
+vim.keymap.set("n", "<leader>g", ":Lines<CR>", { silent = true })
+vim.keymap.set("n", "<leader>f", ":BLines<CR>", { silent = true })
+vim.keymap.set("n", "<leader>h", ":History:<CR>", { silent = true })
+vim.keymap.set("n", "<leader>/", ":History/<CR>", { silent = true })
+vim.keymap.set("n", "<leader>a", ":Rg!<CR>", { silent = true })
 
 -- Colorscheme
 vim.cmd([[colorscheme jww]])
