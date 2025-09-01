@@ -39,9 +39,14 @@ fzf-history-widget-accept() {
   zle accept-line
 }
 
-# Bind executing the selected command to Ctrl+X Ctrl+R
-zle     -N     fzf-history-widget-accept
-bindkey '^X^R' fzf-history-widget-accept
+function _fzf_bindings() {
+  # Bind executing the selected command to Ctrl+X Ctrl+R
+  zle     -N     fzf-history-widget-accept
+  bindkey '^X^R' fzf-history-widget-accept
+
+  echo "Loaded fzf bindings"
+}
+zvm_after_init_commands+=(_fzf_bindings)
 
 ########################################
 # Theme
@@ -83,12 +88,16 @@ export FZF_DEFAULT_OPTS="--height 60% \
 --preview-window='down:50%:border-rounded' \
 --info right"
 
-# Set up fzf key bindings and fuzzy completion
-eval "$(fzf --zsh)"
+function _fzf_load() {
+  # Set up fzf key bindings and fuzzy completion
+  eval "$(fzf --zsh)"
+  echo "Loaded fzf"
 
-if [[ -e "$HOME/.cache/zsh/external/fzf-git.sh" ]]; then
-  source "$HOME/.cache/zsh/external/fzf-git.sh" || true
-fi
+  if [[ -e "$HOME/.cache/zsh/external/fzf-git.sh" ]]; then
+    source "$HOME/.cache/zsh/external/fzf-git.sh" || true
+  fi
+}
+zvm_after_init_commands+=(_fzf_load)
 {{ end }}
 
 

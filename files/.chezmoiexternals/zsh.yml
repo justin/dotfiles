@@ -31,9 +31,12 @@
 
 .cache/zsh/external/zsh-autocomplete:
   type: git-repo
-  url: https://github.com/marlonrichert/zsh-autocomplete
-  exact: true
-  stripComponents: 1
+  url: https://github.com/marlonrichert/zsh-autocomplete.git
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.cache/zsh/external/zsh-vi-mode:
+  type: git-repo
+  url: https://github.com/jeffreytse/zsh-vi-mode.git
   refreshPeriod: {{ .refresh_periods.week }}
 
 .cache/zsh/external/fzf-git.sh:
