@@ -78,31 +78,6 @@ export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
 eval "$(gh copilot alias -- zsh)"
 {{ end }}
 
-# ============================
-# zsh-vi-mode configuration
-# ============================
-
-bindkey -v
-bindkey jj vi-cmd-mode
-
-function zvm_config() {
-    # Change the cursor shape based on mode
-    ZVM_CURSOR_BLOCK=$'\e[1q'   # Block cursor for normal mode
-    ZVM_CURSOR_BEAM=$'\e[5q'    # Beam cursor for insert mode
-    ZVM_CURSOR_UNDERLINE=$'\e[3q' # Underline cursor for visual mode
-
-    # Always start in insert mode
-    ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-
-    # Add 'jk' as an additional keybinding to exit insert mode. ESC and
-    ZVM_VI_INSERT_ESCAPE_BINDKEY='jk'
-    ZVM_INIT_MODE=sourcing
-}
-
-if [[ -f $XDG_CACHE_HOME/zsh/external/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]]; then
-    source $XDG_CACHE_HOME/zsh/external/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-fi
-
 # Source any file with a *.zsh extension. They have additional settings.
 for zsh_file ($ZDOTDIR/config/*.zsh) source $zsh_file
 {{- if eq .osid "darwin" }}
