@@ -1,0 +1,4 @@
+{{ if eq .osid "linux-ubuntu" }}
+# Added by ssh-agent-setup
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+{{ end }}

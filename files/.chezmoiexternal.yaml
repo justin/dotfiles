@@ -44,6 +44,11 @@
   url: https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+.cache/zsh/external/zsh-vi-mode:
+  type: git-repo
+  url: https://github.com/jeffreytse/zsh-vi-mode.git
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
 {{ if not .synology }}
 .cache/zsh/external/zsh-autosuggestions:
   type: git-repo
