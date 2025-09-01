@@ -1,6 +1,7 @@
 name: mobile
 root: "~"
 startup_window: dashboard
+pre_window: source $ZDOTDIR/.zprofile
 
 windows:
   - dashboard:
