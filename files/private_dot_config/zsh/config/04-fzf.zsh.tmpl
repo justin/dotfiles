@@ -86,6 +86,9 @@ export FZF_DEFAULT_OPTS="--height 60% \
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
 
+if [[ -e "$HOME/.cache/zsh/external/fzf-git.sh" ]]; then
+  source "$HOME/.cache/zsh/external/fzf-git.sh" || true
+fi
 {{ end }}
 
 

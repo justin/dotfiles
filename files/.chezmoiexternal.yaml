@@ -39,6 +39,11 @@
   stripComponents: 1
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+.cache/zsh/external/fzf-git.sh:
+  type: file
+  url: https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh
+  refreshPeriod: {{ $refreshPeriodWeek }}
+
 {{ if not .synology }}
 .cache/zsh/external/zsh-autosuggestions:
   type: git-repo
