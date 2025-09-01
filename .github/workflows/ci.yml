@@ -8,7 +8,7 @@ on:
       - '.github/workflows/ci.yml'
       - 'files/private_dot_config/zsh/**'
       - 'files/.chezmoi.*'
-      - 'files/.chezmoi/**'
+      - 'files/.chezmoi*/**'
       - 'install.sh'
       - '.install-password-manager.sh'
   pull_request:
