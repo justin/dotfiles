@@ -2,13 +2,21 @@
 # Custom ZSH Prompt
 #
 
+function vi_mode_prompt_info() {
+  case "$KEYMAP" in
+    vicmd) printf '%s' '[NORMAL]' ;;
+    viins|main) printf '%s' '[INSERT]' ;;
+    *) printf '%s' '[INSERT]' ;;
+  esac
+}
+
 local host_name="λ"
 # [username] at [hostname]
-local host_format="${PR_MAGENTA}%n${RESET} at ${PR_YELLOW}%m${RESET}"
+local host_format="${PR_MAGENTA}%n${PR_RESET} at ${PR_YELLOW}%m${PR_RESET}"
 # on [current branch](!?)
-local git_format="on ${PR_MAGENTA}%b${RESET}${PR_MAGENTA}%u%c${RESET}"
+local git_format="on ${PR_MAGENTA}%b${PR_RESET}${PR_MAGENTA}%u%c${PR_RESET}"
 # path, releative to ~ (/Users/justin becomes ~)
-local path_format="${PR_BOLD_GREEN}%~${RESET}"
+local path_format="${PR_BOLD_GREEN}%~${PR_RESET}"
 # os
 local os="$(uname)"
 
@@ -33,7 +41,7 @@ precmd() {
 setopt prompt_subst
 PROMPT='
 ${host_format} in ${path_format} ${vcs_info_msg_0_}
-${host_name} '
+${PR_BOLD_YELLOW}$(vi_mode_prompt_info)${PR_RESET} ${host_name} '
 
 # ===== Right Prompt =====
 if [ $os != "Linux" ] && [ -z "$TMUX" ]; then
@@ -42,6 +50,14 @@ if [ $os != "Linux" ] && [ -z "$TMUX" ]; then
 else
   RPROMPT=
 fi
+
+# Updates editor information when the keymap changes.
+function zle-keymap-select() {
+  zle reset-prompt
+  zle -R
+}
+
+zle -N zle-keymap-select
 
 # ===== For my own sanity =====
 # git:
@@ -54,3 +70,5 @@ fi
 #   %~ => current path
 #   %n => username
 #   %m => shortname host
+#
+# Full List: https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Prompt-Expansion

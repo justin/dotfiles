@@ -1,9 +1,6 @@
 #
 # .zshenv is always sourced, whether its an interactive or login shell.
 
-# Use vi key bindings
-bindkey -v
-
 # ===== Config Directory =====
 #
 # This is based on XDG spec, as best as macOS can.
@@ -40,6 +37,11 @@ export ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *|ls*|exit|clear|history|pwd|la*|ll*|l
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
 export _ZO_DATA_DIR=$XDG_DATA_HOME/zoxide
+
+# Use vi key bindings
+bindkey -v
+export KEYTIMEOUT=5 # 0.5 seconds to wait for a key sequence to complete
+export KEYMAP=viins  # Start in insert mode
 
 # ===== Editor of Choice =====
 export EDITOR="vim"
