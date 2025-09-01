@@ -11,6 +11,8 @@ local git_format="on ${PR_MAGENTA}%b${RESET}${PR_MAGENTA}%u%c${RESET}"
 local path_format="${PR_BOLD_GREEN}%~${RESET}"
 # os
 local os="$(uname)"
+# vi mode
+local vi_mode="vi_mode"
 
 # append the function to our array of precmd functions
 typeset -a precmd_functions
@@ -33,7 +35,7 @@ precmd() {
 setopt prompt_subst
 PROMPT='
 ${host_format} in ${path_format} ${vcs_info_msg_0_}
-${host_name} '
+${vi_mode} ${host_name} '
 
 # ===== Right Prompt =====
 if [ $os != "Linux" ] && [ -z "$TMUX" ]; then

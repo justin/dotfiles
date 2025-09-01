@@ -18,6 +18,3 @@ bindkey '^H' autosuggest-clear
 # Use Ctrl + K to fetch the next suggestion
 bindkey '^K' autosuggest-fetch
 
-if [[ -f $XDG_CACHE_HOME/zsh/external/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]]; then
-    source $XDG_CACHE_HOME/zsh/external/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-fi
