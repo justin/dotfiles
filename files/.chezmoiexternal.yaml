@@ -95,7 +95,7 @@
 
 .local/share/vim/pack/jww/start/chezmoi.vim:
   type: git-repo
-  url: https://github.com/alker0/chezmoi.vim.git
+  url: https://github.com/justin/chezmoi.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
 
 .local/share/vim/pack/github/start/copilot.vim:
