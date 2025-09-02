@@ -3,5 +3,6 @@
   "llm-commit",
   "llm-gemini",
   "llm-grok",
-  "llm-anthropic"
+  "llm-anthropic",
+  "llm-mlx"
 ]
