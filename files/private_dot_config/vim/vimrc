@@ -35,6 +35,7 @@ call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
 call mkdir($XDG_STATE_HOME."/vim", 'p', 0700)
 
 set fileformats=unix,dos,mac                             " Use Unix as the standard file type
+set colorcolumn=100                                      " Highlight column 100
 set numberwidth=4                                        " Set width of line numbers to 4 characters.
 set shiftwidth=4                                         " Set indentation width to 4 spaces.
 set tabstop=4                                            " Set tab width to 4 spaces.
