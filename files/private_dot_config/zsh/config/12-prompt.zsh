@@ -2,6 +2,33 @@
 # Custom ZSH Prompt
 #
 
+# Cursor configuration
+function zle-keymap-select() {
+  case $KEYMAP in
+    vicmd)
+      # Normal mode - thick blinking cursor
+      echo -ne '\e[1 q'
+      ;;
+    viins|main)
+      # Insert mode - thin blinking cursor
+      echo -ne '\e[5 q'
+      ;;
+  esac
+  zle reset-prompt
+  zle -R
+}
+
+function zle-line-init() {
+  # Start with insert mode cursor
+  echo -ne '\e[5 q'
+}
+
+function zle-line-finish() {
+  # Reset to default cursor when leaving zle
+  echo -ne '\e[0 q'
+}
+
+# set initial cursor
 function vi_mode_prompt_info() {
   case "$KEYMAP" in
     vicmd) printf '%s' '[NORMAL]' ;;
@@ -51,14 +78,19 @@ else
   RPROMPT=
 fi
 
-# Updates editor information when the keymap changes.
-function zle-keymap-select() {
-  zle reset-prompt
-  zle -R
-}
-
+## Updates editor information when the keymap changes.
+#function zle-keymap-select() {
+#  zle reset-prompt
+#  zle -R
+#}
+#
+#zle -N zle-keymap-select
+#
 zle -N zle-keymap-select
+zle -N zle-line-init
+zle -N zle-line-finish
 
+echo -ne '\e[5 q'
 # ===== For my own sanity =====
 # git:
 #   %b => current branch
