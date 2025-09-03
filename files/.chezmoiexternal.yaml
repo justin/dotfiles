@@ -94,8 +94,10 @@
   refreshPeriod: {{ $refreshPeriodWeek }}
 
 .local/share/vim/pack/jww/start/chezmoi.vim:
-  type: git-repo
-  url: https://github.com/justin/chezmoi.vim.git
+  type: archive
+  url: https://github.com/justin/chezmoi.vim/archive/refs/heads/main.zip
+  exact: true
+  stripComponents: 1
   refreshPeriod: {{ $refreshPeriodWeek }}
 
 .local/share/vim/pack/github/start/copilot.vim:
