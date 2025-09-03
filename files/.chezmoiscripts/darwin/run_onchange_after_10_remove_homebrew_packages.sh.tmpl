@@ -1,0 +1,77 @@
+{{- if and (eq .osid "darwin") (not .headless) -}}
+#!/usr/bin/env zsh
+# @file run_onchange_after_10_remove_homebrew_packages.sh
+# Remove Homebrew packages, casks, taps, and MAS apps as defined in .chezmoidata/macos.yml
+#
+set -euo pipefail
+
+source "$XDG_DATA_HOME/chezmoi/files/functions/_logging"
+source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
+
+# --- REMOVE BREWS ---
+remove_brews=(
+  {{- range $brew := .packages.homebrew.remove.brews }}
+  "{{ $brew }}"
+  {{- end }}
+)
+for brew_pkg in "${remove_brews[@]}"; do
+  if brew list --formula | grep -q "^${brew_pkg}$"; then
+    info "Removing brew $brew_pkg"
+    brew uninstall "$brew_pkg"
+    success "Removed $brew_pkg"
+  else
+    info "Brew $brew_pkg is not installed"
+  fi
+done
+
+# --- REMOVE CASKS ---
+remove_casks=(
+  {{- range $cask := .packages.homebrew.remove.casks }}
+  "{{ $cask }}"
+  {{- end }}
+)
+for cask_pkg in "${remove_casks[@]}"; do
+  if brew list --cask | grep -q "^${cask_pkg}$"; then
+    info "Removing cask $cask_pkg"
+    brew uninstall --cask "$cask_pkg"
+    success "Removed cask $cask_pkg"
+  else
+    info "Cask $cask_pkg is not installed"
+  fi
+done
+
+# --- REMOVE TAPS ---
+remove_taps=(
+  {{- range $tap := .packages.homebrew.remove.taps }}
+  "{{ $tap }}"
+  {{- end }}
+)
+for tap in "${remove_taps[@]}"; do
+  if brew tap | grep -q "^${tap}$"; then
+    info "Untapping $tap"
+    brew untap "$tap"
+    success "Untapped $tap"
+  else
+    info "Tap $tap is not present"
+  fi
+done
+
+# --- REMOVE MAS APPS ---
+remove_mas_ids=(
+  {{- range $app := .packages.homebrew.remove.mas }}
+  {{ $app.id }}
+  {{- end }}
+)
+for mas_id in "${remove_mas_ids[@]}"; do
+  if mas list | awk '{print $1}' | grep -q "^${mas_id}$"; then
+    info "Uninstalling MAS app $mas_id"
+    sudo mas uninstall "$mas_id"
+    success "Uninstalled MAS app $mas_id"
+  else
+    info "MAS app $mas_id is not installed"
+  fi
+done
+
+success "Homebrew and MAS package removal complete"
+exit 0
+{{- end }}

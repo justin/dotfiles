@@ -10,9 +10,9 @@ shell-integration = zsh
 # Set color theme to "iTerm2 Default"
 theme = iTerm2 Default
 # Initial window width (columns)
-window-width = {{ index . ((.chezmoi.hostname | lower)) "iterm2_width" }}
+window-width = {{ index .machines ((.chezmoi.hostname | lower)) "iterm2_width" }}
 # Initial window height (rows)
-window-height = {{ index . ((.chezmoi.hostname | lower)) "iterm2_height" }}
+window-height = {{ index .machines ((.chezmoi.hostname | lower)) "iterm2_height" }}
 # Set font family
 font-family = "Operator Sans Mono Lig"
 # Set font size (points)

@@ -13,10 +13,10 @@
       "Blur Radius" : 16.080635233128323,
       "Custom Window Title" : "\\(currentTab.currentSession.path)",
       "Unlimited Scrollback" : true,
-      "Columns" : {{ index . ((.chezmoi.hostname | lower)) "iterm2_width" }},
+      "Columns" : {{ index .machines ((.chezmoi.hostname | lower)) "iterm2_width" }},
       "Show Status Bar" : true,
       "Blur" : true,
-      "Rows" : {{ index . ((.chezmoi.hostname | lower)) "iterm2_height" }},
+      "Rows" : {{ index .machines ((.chezmoi.hostname | lower)) "iterm2_height" }},
       "Close Sessions On End": 1
     }
   ]

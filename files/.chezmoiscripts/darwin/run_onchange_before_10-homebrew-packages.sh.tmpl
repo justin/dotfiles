@@ -1,0 +1,101 @@
+{{- if and (eq .osid "darwin") (not .headless) -}}
+#!/usr/bin/env zsh
+# @file run_onchange_before_10-homebrew-packages.sh
+# Install Homebrew packages, casks, taps, and MAS apps as defined in .chezmoidata/macos.yml
+#
+set -euo pipefail
+
+source "$XDG_DATA_HOME/chezmoi/files/functions/_logging"
+source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
+
+# --- TAPS ---
+taps=(
+  {{- range $tap := .packages.homebrew.global.taps }}
+  "{{ $tap }}"
+  {{- end }}
+  {{- range $tap := .packages.homebrew.personal.taps }}
+  "{{ $tap }}"
+  {{- end }}
+  {{- range $tap := .packages.homebrew.work.taps }}
+  "{{ $tap }}"
+  {{- end }}
+)
+for tap in "${taps[@]}"; do
+  if ! brew tap | grep -q "^${tap}$"; then
+    info "Tapping $tap"
+    brew tap "$tap"
+    success "Tapped $tap"
+  else
+    info "Tap $tap already present"
+  fi
+done
+
+# --- BREWS ---
+brews=(
+  {{- range $brew := .packages.homebrew.global.brews }}
+  "{{ $brew }}"
+  {{- end }}
+  {{- range $brew := .packages.homebrew.personal.brews }}
+  "{{ $brew }}"
+  {{- end }}
+  {{- range $brew := .packages.homebrew.work.brews }}
+  "{{ $brew }}"
+  {{- end }}
+)
+for brew_pkg in "${brews[@]}"; do
+  if ! brew list --formula | grep -q "^${brew_pkg}$"; then
+    info "Installing brew $brew_pkg"
+    brew install "$brew_pkg"
+    success "Installed $brew_pkg"
+  else
+    info "Brew $brew_pkg already installed"
+  fi
+done
+
+# --- CASKS ---
+casks=(
+  {{- range $cask := .packages.homebrew.global.casks }}
+  "{{ $cask }}"
+  {{- end }}
+  {{- range $cask := .packages.homebrew.personal.casks }}
+  "{{ $cask }}"
+  {{- end }}
+  {{- range $cask := .packages.homebrew.work.casks }}
+  "{{ $cask }}"
+  {{- end }}
+)
+for cask_pkg in "${casks[@]}"; do
+  if ! brew list --cask | grep -q "^${cask_pkg}$"; then
+    info "Installing cask $cask_pkg"
+    brew install --cask "$cask_pkg"
+    success "Installed cask $cask_pkg"
+  else
+    info "Cask $cask_pkg already installed"
+  fi
+done
+
+# --- MAS APPS ---
+mas_ids=(
+  {{- range $app := .packages.homebrew.global.mas }}
+  {{ $app.id }}
+  {{- end }}
+  {{- range $app := .packages.homebrew.personal.mas }}
+  {{ $app.id }}
+  {{- end }}
+  {{- range $app := .packages.homebrew.work.mas }}
+  {{ $app.id }}
+  {{- end }}
+)
+for mas_id in "${mas_ids[@]}"; do
+  if ! mas list | awk '{print $1}' | grep -q "^${mas_id}$"; then
+    info "Installing MAS app $mas_id"
+    mas install "$mas_id"
+    success "Installed MAS app $mas_id"
+  else
+    info "MAS app $mas_id already installed"
+  fi
+done
+
+success "Homebrew and MAS package installation complete"
+exit 0
+{{- end }}

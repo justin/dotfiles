@@ -15,6 +15,8 @@ bin
 .ssh/personal.config
 .config/git/gitconfig.spatial*
 .config/macos/Brewfile-Spatial
+.config/homebrew
+.config/macos/Brewfile*
 .vim
 .viminfo
 .config/vim/pack
@@ -33,7 +35,6 @@ bin
 {{- if ne .osid "darwin" }}
 Library
 .local/bin/darwin
-.config/homebrew
 .config/iterm2
 .config/macos
 .config/1password
