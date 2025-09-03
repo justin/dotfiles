@@ -110,6 +110,13 @@
   url: https://github.com/junegunn/fzf.vim.git
   refreshPeriod: {{ $refreshPeriodWeek }}
 
+.local/share/vim/pack/jww/start/vim-polyglot:
+  type: git-repo
+  url: https://github.com/sheerun/vim-polyglot
+  refreshPeriod: {{ $refreshPeriodWeek }}
+  pull:
+    args: ["--depth=1"]
+
 # ==================================================
 # TMUX Plugins
 # ==================================================
