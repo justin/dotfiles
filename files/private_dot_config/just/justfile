@@ -151,6 +151,7 @@ uv-install: # Install python tools.
   while read -r package; do
     uv tool install --upgrade "$package"
   done < "$XDG_CONFIG_HOME/pip/global_pip_packages.txt"
+  cat $XDG_CONFIG_HOME/llm/uv-tool-packages.json | jq '.[]' | xargs -I {} llm install {}
 
 py-upgrade: # Install python tools.
   just pipx-uninstall
