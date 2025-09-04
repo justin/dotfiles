@@ -36,6 +36,8 @@ setopt append_history
 setopt inc_append_history
 # Don't execute immediately upon history expansion.
 setopt hist_verify
+# Don't store history commands
+setopt hist_no_store
 
 # ===== History Key Bindings =====
 
@@ -51,3 +53,21 @@ autoload -U down-line-or-beginning-search
 zle -N down-line-or-beginning-search
 [[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
+
+# Search entire history for passed in argument 
+# Usage: h <search-term>
+# Example: h git
+#
+# This will print a list of commands with numbers. 
+# You can immediately re-execute any of the commands 
+# with !n where n is the command number.
+function h() {
+  # check if we passed any parameters
+  if [ -z "$*" ]; then
+      # if no parameters were passed print entire history
+      history 1
+  else
+      # if words were passed use it as a search
+      history 1 | egrep --color=auto "$@"
+  fi
+}
