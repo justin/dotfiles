@@ -10,6 +10,9 @@
 set -g default-command $SHELL
 set -g default-shell $SHELL
 {{ end }}
+set -ga update-environment TERM
+set -ga update-environment TERM_PROGRAM
+set -ga update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
 
 # Remove all keybindings
 unbind -T root -aq
@@ -188,6 +191,7 @@ bind -T copy-mode-vi Space  send -X begin-selection
 # Bind y and Enter to copy the selection in copy-mode-vi.
 bind -T copy-mode-vi y      send -X copy-selection-and-cancel
 bind -T copy-mode-vi Enter  send -X copy-selection-and-cancel
+bind -T copy-mode-vi y      send -X copy-pipe-and-cancel "pbcopy"
 
 # Bind p to paste the copied text.
 bind -n M-p paste-buffer -p
