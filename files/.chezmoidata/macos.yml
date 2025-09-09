@@ -20,8 +20,12 @@ packages:
     remove:
       taps: []
       brews: ["llm"]
-      casks: ["screens-connect"]
-      mas: [{ name: "Transloader", id: 572281534 }]
+      casks: []
+      mas:
+        [
+          { name: "Transloader", id: 572281534 },
+          { name: "Spokenly", id: 6740315592 },
+        ]
     global:
       taps:
         - "majd/repo"
@@ -183,7 +187,6 @@ packages:
         - { name: "Sketch Digital Design Toolkit", id: 1667260533 }
         - { name: "Sleeve for Spotify Music", id: 1606145041 }
         - { name: "Soulver 3", id: 1508732804 }
-        - { name: "Spokenly", id: 6740315592 }
         - { name: "TableFlip", id: 1462643128 }
         - { name: "Taska for GitHub Issues", id: 6741809383 }
         - { name: "Testpiler", id: 6737156289 }
