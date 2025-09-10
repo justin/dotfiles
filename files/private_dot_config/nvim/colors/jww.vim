@@ -96,3 +96,51 @@ hi gitcommitOverflow guifg=#f74a4a ctermfg=203
 hi gitcommitSummary guifg=#ffffff ctermfg=231
 hi gitcommitComment guifg=#41cc45 ctermfg=83
 hi gitcommitBranch  guifg=#00a0ff ctermfg=39
+
+" Folding
+hi Folded           guifg=#808080 guibg=#1a1a1a ctermfg=244 ctermbg=234
+hi FoldColumn       guifg=#808080 guibg=#000000 ctermfg=244 ctermbg=16
+
+" Matching parentheses
+hi MatchParen       guibg=#4a473f ctermfg=NONE ctermbg=238
+
+" Spell checking
+hi SpellBad         guisp=#f74a4a gui=undercurl ctermfg=203 cterm=underline
+hi SpellCap         guisp=#4164ff gui=undercurl ctermfg=69 cterm=underline
+hi SpellLocal       guisp=#efb759 gui=undercurl ctermfg=215 cterm=underline
+hi SpellRare        guisp=#786dff gui=undercurl ctermfg=105 cterm=underline
+
+" Tabline
+hi TabLine          guifg=#808080 guibg=#323232 ctermfg=244 ctermbg=236
+hi TabLineFill      guifg=#323232 guibg=#323232 ctermfg=236 ctermbg=236
+hi TabLineSel       guifg=#ffffff guibg=#000000 ctermfg=231 ctermbg=16
+
+" Wildmenu
+hi WildMenu         guifg=#000000 guibg=#ffffff ctermfg=16 ctermbg=231
+
+" Additional syntax groups for better compatibility
+hi htmlTag          guifg=#e57c48 ctermfg=173
+hi htmlEndTag       guifg=#e57c48 ctermfg=173
+hi htmlTagName      guifg=#23ff83 ctermfg=48
+hi htmlArg          guifg=#5cd8ff ctermfg=81
+hi htmlString       guifg=#ff2b38 ctermfg=203
+
+hi cssClassName     guifg=#23ff83 ctermfg=48
+hi cssIdentifier    guifg=#23ff83 ctermfg=48
+hi cssProperty      guifg=#5cd8ff ctermfg=81
+hi cssValue         guifg=#ff2b38 ctermfg=203
+
+hi javascriptFunction guifg=#d31895 ctermfg=162
+hi javascriptIdentifier guifg=#00a0ff ctermfg=39
+hi javascriptNumber guifg=#786dff ctermfg=105
+
+" Python specific
+hi pythonFunction   guifg=#23ff83 ctermfg=48
+hi pythonBuiltin    guifg=#00a0ff ctermfg=39
+hi pythonDecorator  guifg=#e57c48 ctermfg=173
+
+" Git diff in vim
+hi gitcommitOverflow guifg=#f74a4a ctermfg=203
+hi gitcommitSummary guifg=#ffffff ctermfg=231
+hi gitcommitComment guifg=#41cc45 ctermfg=83
+hi gitcommitBranch  guifg=#00a0ff ctermfg=39

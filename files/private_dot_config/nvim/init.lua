@@ -25,6 +25,7 @@ vim.opt.viminfofile = vim.env.XDG_STATE_HOME .. "/nvim/viminfofile"
 
 -- General settings
 vim.opt.fileformats = {"unix", "dos", "mac"}
+vim.opt.colorcolumn = 100
 vim.opt.numberwidth = 4
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
@@ -41,6 +42,13 @@ vim.opt.scrolloff = 10
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.mouse = "a"
+
+-- General UI cleanup when using a custom statusline
+vim.opt.noruler = true
+vim.opt.noshowcmd = true
+vim.opt.noshowmode = true
+vim.opt.conceallevel = 1
+vim.opt.shortmess:append("F")
 
 -- Wildmenu and completion
 vim.opt.wildmenu = true
@@ -75,6 +83,15 @@ vim.keymap.set("n", "<leader>a", ":Rg!<CR>", { silent = true })
 
 -- Colorscheme
 vim.cmd([[colorscheme jww]])
+
+-- Enable filetype detection and plugins
+vim.cmd([[filetype on]])
+vim.cmd([[filetype plugin on]])
+vim.cmd([[filetype indent on]])
+vim.cmd([[syntax on]])
+
+-- Add chezmoi.vim plugin
+vim.cmd([[packadd chezmoi.vim]])
 
 -- Source statusline (lua version)
 require("statusline")
