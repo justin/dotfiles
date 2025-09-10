@@ -1,0 +1,11 @@
+{{ if eq .osid "darwin" }}
+# ==================================================
+# macOS Specific Submodules
+# ==================================================
+
+.local/share/xcode/lldb-scripts:
+  type: git-repo
+  url: https://github.com/DerekSelander/LLDB.git
+  refreshPeriod: {{ .refresh_periods.week }}
+  include: ["lldb_commands"]
+{{ end }}

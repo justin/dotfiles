@@ -1,0 +1,35 @@
+{{- define "vim_plugins" -}}
+{{- $base_path := .base_path -}}
+{{- $refresh_week := .refresh_periods.week -}}
+
+{{ $base_path }}/pack/jww/start/zoxide.vim:
+  type: git-repo
+  url: https://github.com/nanotee/zoxide.vim.git
+  refreshPeriod: {{ $refresh_week }}
+
+{{ $base_path }}/pack/jww/start/chezmoi.vim:
+  type: archive
+  url: https://github.com/justin/chezmoi.vim/archive/refs/heads/main.zip
+  exact: true
+  stripComponents: 1
+  refreshPeriod: {{ $refresh_week }}
+
+{{ $base_path }}/pack/github/start/copilot.vim:
+  type: git-repo
+  url: https://github.com/github/copilot.vim.git
+  refreshPeriod: {{ $refresh_week }}
+  pull:
+    args: ["--depth=1"]
+
+{{ $base_path }}/pack/jww/start/fzf.vim:
+  type: git-repo
+  url: https://github.com/junegunn/fzf.vim.git
+  refreshPeriod: {{ $refresh_week }}
+
+{{ $base_path }}/pack/jww/start/vim-polyglot:
+  type: git-repo
+  url: https://github.com/sheerun/vim-polyglot
+  refreshPeriod: {{ $refresh_week }}
+  pull:
+    args: ["--depth=1"]
+{{- end -}}

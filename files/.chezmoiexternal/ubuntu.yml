@@ -1,0 +1,10 @@
+{{ if eq .osid "linux-ubuntu" }}
+# ==================================================
+# Linux Specific Submodules
+# ==================================================
+
+.local/share/bat/bat-extras:
+  type: git-repo
+  url: https://github.com/eth-p/bat-extras.git
+  refreshPeriod: {{ .refresh_periods.week }}
+{{ end }}

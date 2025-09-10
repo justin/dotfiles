@@ -1,0 +1,20 @@
+# ==================================================
+# TMUX Plugins
+# ==================================================
+
+.local/share/tmux/plugins/tpm:
+  type: git-repo
+  url: https://github.com/tmux-plugins/tpm.git
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.local/bin/fzf-tmux:
+  type: file
+  url: 'https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux'
+  executable: true
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.local/bin/fzf-preview.sh:
+  type: file
+  url: 'https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-preview.sh'
+  executable: true
+  refreshPeriod: {{ .refresh_periods.week }}

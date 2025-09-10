@@ -1,0 +1,50 @@
+# ==================================================
+# ZSH Plugins and autocompletions
+# ==================================================
+
+.config/zsh/functions/_docker-compose:
+  type: file
+  url: https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.config/zsh/functions/_docker:
+  type: file
+  url: https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.config/zsh/functions/_eza:
+  type: git-repo
+  url: https://github.com/eza-community/eza.git
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.config/zsh/functions/_tmuxinator:
+  type: file
+  url: https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.cache/zsh/external/zsh-syntax-highlighting:
+  type: archive
+  url: https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz
+  exact: true
+  stripComponents: 1
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.cache/zsh/external/zsh-autocomplete:
+  type: git-repo
+  url: https://github.com/marlonrichert/zsh-autocomplete
+  exact: true
+  stripComponents: 1
+  refreshPeriod: {{ .refresh_periods.week }}
+
+.cache/zsh/external/fzf-git.sh:
+  type: file
+  url: https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh
+  refreshPeriod: {{ .refresh_periods.week }}
+
+{{ if not .synology }}
+.cache/zsh/external/zsh-autosuggestions:
+  type: git-repo
+  url: https://github.com/zsh-users/zsh-autosuggestions
+  exact: true
+  refreshPeriod: {{ .refresh_periods.week }}
+{{ end }}

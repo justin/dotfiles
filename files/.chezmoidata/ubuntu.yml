@@ -20,6 +20,7 @@ packages:
       - "htop"
       - "jq"
       - "just"
+      - "keychain"
       - "less"
       - "llm"
       - "nodejs"
