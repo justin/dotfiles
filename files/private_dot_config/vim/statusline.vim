@@ -66,14 +66,14 @@ function! GitBranchForBuffer() abort
         return b:git_branch
     endif
 
-    let l:branch = trim(system(printf('git -C %s rev-parse --abbrev-ref HEAD 2>/dev/null', shellescape(l:dir))))
+    let l:branch = trim(system('git -C '.shellescape(l:dir).' rev-parse --abbrev-ref HEAD 2>/dev/null'))
     if v:shell_error || empty(l:branch)
         " Not a repo or error
         let b:git_branch = ''
     else
         if l:branch ==# 'HEAD'
             " detached HEAD → show short sha
-            let l:sha = trim(system(printf('git -C %s rev-parse --short HEAD 2>/dev/null', shellescape(l:dir))))
+            let l:sha = trim(system('git -C '.shellescape(l:dir).' rev-parse --short HEAD 2>/dev/null'))
             let b:git_branch = empty(l:sha) ? '' : l:sha
         else
             let b:git_branch = l:branch
