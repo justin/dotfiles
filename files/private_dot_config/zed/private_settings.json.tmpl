@@ -1,0 +1,43 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "context_servers": {
+    "kagisearch": {
+      "source": "custom",
+      "enabled": true,
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "KAGI_SUMMARIZER_ENGINE",
+        "-e",
+        "KAGI_API_KEY",
+        "mcp/kagisearch"
+      ],
+      "env": {
+        "KAGI_SUMMARIZER_ENGINE": "cecil",
+        "KAGI_API_KEY": "{{ onepasswordRead "op://dotfiles/Kagi API Key/credential" | trim }}"
+      }
+    }
+  },
+  "base_keymap": "VSCode",
+  "icon_theme": "Zed (Default)",
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "theme": "JWW Dark",
+  "vim_mode": true,
+  "buffer_font_size": 16,
+  "buffer_font_family": "Operator Mono SSm Lig",
+  "buffer_font_fallbacks": ["SF Mono", "MonoLisa", ".SystemUIFont"],
+  "ui_font_size": 16,
+  "remove_trailing_whitespace_on_save": true
+}
