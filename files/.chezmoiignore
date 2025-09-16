@@ -32,6 +32,8 @@ Library
 .ssh
 .config/git/gitconfig*
 .config/eza
+.config/mcp
+.config/zed
 .chezmoiscripts/*op*
 .chezmoiscripts/*brewfile*
 .chezmoiscripts/*ssh*
