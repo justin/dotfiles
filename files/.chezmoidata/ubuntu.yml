@@ -2,46 +2,47 @@ packages:
   apt:
     remove: []
     global:
-      - "1password-cli"
-      - "aria2"
-      - "awscli"
-      - "bat"
-      - "btop"
-      - "chafa"
+      - '1password-cli'
+      - 'aria2'
+      - 'awscli'
+      - 'bat'
+      - 'btop'
+      - 'chafa'
       #- "docker" - https://docs.docker.com/engine/install/ubuntu/
-      - "docker-compose-v2"
-      - "eza"
-      - "fd-find"
-      - "fzf"
-      - "gh"
-      - "git"
-      - "git-lfs"
-      - "golang-go"
-      - "htop"
-      - "jq"
-      - "just"
-      - "keychain"
-      - "less"
-      - "llm"
-      - "nodejs"
-      - "npm"
-      - "pbzip2"
-      - "pigz"
-      - "pipx"
-      - "python3"
-      - "ripgrep"
-      - "rsync"
-      - "ruby"
-      - "rustup"
-      - "silversearcher-ag"
-      - "sqlite3"
-      - "tmux"
-      - "tmuxinator"
-      - "tree"
-      - "vim"
-      - "wget"
-      - "zoxide"
-      - "zsh"
+      - 'docker-compose-v2'
+      - 'eza'
+      - 'fd-find'
+      - 'fzf'
+      - 'gh'
+      - 'git'
+      - 'git-lfs'
+      - 'golang-go'
+      - 'htop'
+      - 'jq'
+      - 'just'
+      - 'keychain'
+      - 'less'
+      - 'llm'
+      - 'nodejs'
+      - 'npm'
+      - 'pbzip2'
+      - 'pigz'
+      - 'pipx'
+      - 'python3'
+      - 'ripgrep'
+      - 'rsync'
+      - 'ruby'
+      - 'rustup'
+      - 'shfmt'
+      - 'silversearcher-ag'
+      - 'sqlite3'
+      - 'tmux'
+      - 'tmuxinator'
+      - 'tree'
+      - 'vim'
+      - 'wget'
+      - 'zoxide'
+      - 'zsh'
     homelab: []
     personal: []
     work: []

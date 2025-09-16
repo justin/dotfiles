@@ -19,179 +19,180 @@ packages:
   homebrew:
     remove:
       taps: []
-      brews: ["llm"]
+      brews: ['llm']
       casks: []
       mas:
         [
-          { name: "Transloader", id: 572281534 },
-          { name: "Spokenly", id: 6740315592 },
+          { name: 'Transloader', id: 572281534 },
+          { name: 'Spokenly', id: 6740315592 },
         ]
     global:
       taps:
-        - "majd/repo"
-        - "peripheryapp/periphery"
-        - "buo/cask-upgrade"
-        - "artginzburg/tap"
-        - "TomAnthony/brews"
-        - "XCTestHtmlReport/xchtmlreport"
+        - 'majd/repo'
+        - 'peripheryapp/periphery'
+        - 'buo/cask-upgrade'
+        - 'artginzburg/tap'
+        - 'TomAnthony/brews'
+        - 'XCTestHtmlReport/xchtmlreport'
       brews:
-        - "aria2"
-        - "bat"
-        - "eza"
-        - "fzf"
-        - "gh"
-        - "git"
-        - "git-lfs"
-        - "jq"
-        - "just"
-        - "less"
-        - "pbzip2"
-        - "pigz"
-        - "ripgrep"
-        - "sqlite"
-        - "tree"
-        - "tmux"
-        - "wget"
-        - "zoxide"
-        - "zsh"
-        - "vim"
-        - "cloc"
-        - "dockutil"
-        - "duti"
-        - "ffmpeg"
-        - "kin"
-        - "mas"
-        - "proctools"
-        - "artginzburg/tap/sudo-touchid"
-        - "swiftlint"
-        - "swift-format"
-        - "TomAnthony/brews/itermocil"
-        - "unxip"
-        - "xcbeautify"
-        - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
-        - "xcode-build-server"
-        - "xcodes"
-        - "python"
-        - "ruff"
-        - "uv"
-        - "node"
-        - "ruby"
-        - "magic-wormhole"
-        - "awscli"
+        - 'aria2'
+        - 'bat'
+        - 'eza'
+        - 'fzf'
+        - 'gh'
+        - 'git'
+        - 'git-lfs'
+        - 'jq'
+        - 'just'
+        - 'less'
+        - 'pbzip2'
+        - 'pigz'
+        - 'ripgrep'
+        - 'sqlite'
+        - 'tree'
+        - 'tmux'
+        - 'wget'
+        - 'zoxide'
+        - 'zsh'
+        - 'vim'
+        - 'cloc'
+        - 'dockutil'
+        - 'duti'
+        - 'ffmpeg'
+        - 'kin'
+        - 'mas'
+        - 'proctools'
+        - 'artginzburg/tap/sudo-touchid'
+        - 'swiftlint'
+        - 'swift-format'
+        - 'TomAnthony/brews/itermocil'
+        - 'unxip'
+        - 'xcbeautify'
+        - 'XCTestHtmlReport/xchtmlreport/xchtmlreport'
+        - 'xcode-build-server'
+        - 'xcodes'
+        - 'python'
+        - 'ruff'
+        - 'shfmt'
+        - 'uv'
+        - 'node'
+        - 'ruby'
+        - 'magic-wormhole'
+        - 'awscli'
       casks:
-        - "1password"
-        - "1password-cli"
-        - "visual-studio-code"
-        - "bbedit"
-        - "chatgpt"
-        - "claude"
-        - "cleanshot"
-        - "fastscripts"
-        - "hazel"
-        - "istat-menus"
-        - "iina"
-        - "iterm2"
-        - "itermai"
-        - "jordanbaird-ice"
-        - "kaleidoscope"
-        - "keyboard-maestro"
-        - "launchcontrol"
-        - "mullvad-vpn"
-        - "orbstack"
-        - "plistedit-pro"
-        - "raycast"
-        - "syntax-highlight"
-        - "git-credential-manager"
-        - "ipatool"
-        - "periphery"
-        - "font-new-york"
-        - "font-sf-compact"
-        - "font-sf-pro"
-        - "font-sf-arabic"
-        - "font-sf-mono"
-        - "font-monaspace"
+        - '1password'
+        - '1password-cli'
+        - 'visual-studio-code'
+        - 'bbedit'
+        - 'chatgpt'
+        - 'claude'
+        - 'cleanshot'
+        - 'fastscripts'
+        - 'hazel'
+        - 'istat-menus'
+        - 'iina'
+        - 'iterm2'
+        - 'itermai'
+        - 'jordanbaird-ice'
+        - 'kaleidoscope'
+        - 'keyboard-maestro'
+        - 'launchcontrol'
+        - 'mullvad-vpn'
+        - 'orbstack'
+        - 'plistedit-pro'
+        - 'raycast'
+        - 'syntax-highlight'
+        - 'git-credential-manager'
+        - 'ipatool'
+        - 'periphery'
+        - 'font-new-york'
+        - 'font-sf-compact'
+        - 'font-sf-pro'
+        - 'font-sf-arabic'
+        - 'font-sf-mono'
+        - 'font-monaspace'
       mas:
-        - { name: "1Blocker", id: 1365531024 }
-        - { name: "Apple Configurator 2", id: 1037126344 }
-        - { name: "Control Panel for Twitter", id: 1668516167 }
-        - { name: "Control Panel for YouTube", id: 6478456678 }
-        - { name: "Homecoming for Mastodon", id: 1666139593 }
-        - { name: "Ice Cubes for Mastodon", id: 6444915884 }
-        - { name: "Kagi for Safari", id: 1622835804 }
-        - { name: "Keka", id: 470158793 }
-        - { name: "PCalc", id: 403504866 }
-        - { name: "StopTheMadness Pro", id: 6471380298 }
-        - { name: "PDF Expert", id: 1055273043 }
-        - { name: "Pixeur - Screen Color Picker", id: 1507890049 }
-        - { name: "Tailscale", id: 1475387142 }
+        - { name: '1Blocker', id: 1365531024 }
+        - { name: 'Apple Configurator 2', id: 1037126344 }
+        - { name: 'Control Panel for Twitter', id: 1668516167 }
+        - { name: 'Control Panel for YouTube', id: 6478456678 }
+        - { name: 'Homecoming for Mastodon', id: 1666139593 }
+        - { name: 'Ice Cubes for Mastodon', id: 6444915884 }
+        - { name: 'Kagi for Safari', id: 1622835804 }
+        - { name: 'Keka', id: 470158793 }
+        - { name: 'PCalc', id: 403504866 }
+        - { name: 'StopTheMadness Pro', id: 6471380298 }
+        - { name: 'PDF Expert', id: 1055273043 }
+        - { name: 'Pixeur - Screen Color Picker', id: 1507890049 }
+        - { name: 'Tailscale', id: 1475387142 }
     personal:
       remove: []
       taps: []
       brews: []
       casks:
-        - "adobe-creative-cloud"
-        - "dash"
-        - "downie"
-        - "firefox"
-        - "github-copilot-for-xcode"
-        - "netnewswire"
-        - "omnigraffle"
-        - "openinterminal"
-        - "rapidapi"
-        - "proxyman"
-        - "permute"
-        - "script-debugger"
-        - "signal"
-        - "subler"
-        - "tableplus"
-        - "tower"
-        - "typora"
-        - "transmit"
-        - "virtualbuddy"
-        - "zoom"
+        - 'adobe-creative-cloud'
+        - 'dash'
+        - 'downie'
+        - 'firefox'
+        - 'github-copilot-for-xcode'
+        - 'netnewswire'
+        - 'omnigraffle'
+        - 'openinterminal'
+        - 'rapidapi'
+        - 'proxyman'
+        - 'permute'
+        - 'script-debugger'
+        - 'signal'
+        - 'subler'
+        - 'tableplus'
+        - 'tower'
+        - 'typora'
+        - 'transmit'
+        - 'virtualbuddy'
+        - 'zoom'
       mas:
-        - { name: "10ten Japanese Reader", id: 1573540634 }
-        - { name: "A Companion for SwiftUI", id: 1485436674 }
-        - { name: "CARROT Weather", id: 993487541 }
-        - { name: "Channels Pro - IPTV Player", id: 1552284117 }
-        - { name: "CodeRunner 4", id: 955297617 }
-        - { name: "Core Data Lab", id: 1460684638 }
-        - { name: "Craft", id: 1487937127 }
-        - { name: "Darkroom: Photo & Video Editor", id: 953286746 }
-        - { name: "Day One", id: 1055511498 }
-        - { name: "DevCleaner", id: 1388020431 }
-        - { name: "Developer", id: 640199958 }
-        - { name: "Dropover Easier Drag Drop", id: 1355679052 }
-        - { name: "Easy CSV Editor", id: 1171346381 }
-        - { name: "Expressions", id: 913158085 }
-        - { name: "Home Assistant", id: 1099568401 }
-        - { name: "HomePass for HomeKit", id: 1330266650 }
-        - { name: "Infuse 7", id: 1136220934 }
-        - { name: "Keynote", id: 409183694 }
-        - { name: "Microsoft Excel", id: 462058435 }
-        - { name: "Microsoft PowerPoint", id: 462062816 }
-        - { name: "Microsoft Word", id: 462054704 }
-        - { name: "Numbers", id: 409203825 }
-        - { name: "OmniOutliner", id: 1142578772 }
-        - { name: "Otter Log Console", id: 6479258228 }
-        - { name: "Pages", id: 409201541 }
-        - { name: "Paprika Recipe Manager 3", id: 1303222628 }
-        - { name: "Parcel - Delivery Tracking", id: 639968404 }
-        - { name: "Photomator Photo Editor", id: 1444636541 }
-        - { name: "Pixelmator Pro", id: 1289583905 }
-        - { name: "Privacy for Safari", id: 6449850851 }
-        - { name: "Prompt 3", id: 1594420480 }
-        - { name: "Renamer 6", id: 1460229011 }
-        - { name: "RocketSim for Xcode Simulator", id: 1504940162 }
-        - { name: "Screens 5: VNC Remote Desktop", id: 1663047912 }
-        - { name: "Sketch Digital Design Toolkit", id: 1667260533 }
-        - { name: "Sleeve for Spotify Music", id: 1606145041 }
-        - { name: "Soulver 3", id: 1508732804 }
-        - { name: "TableFlip", id: 1462643128 }
-        - { name: "Taska for GitHub Issues", id: 6741809383 }
-        - { name: "Testpiler", id: 6737156289 }
-        - { name: "xScope", id: 889428659 }
-        - { name: "Copilot Track Budget Money", id: 1447330651 }
+        - { name: '10ten Japanese Reader', id: 1573540634 }
+        - { name: 'A Companion for SwiftUI', id: 1485436674 }
+        - { name: 'CARROT Weather', id: 993487541 }
+        - { name: 'Channels Pro - IPTV Player', id: 1552284117 }
+        - { name: 'CodeRunner 4', id: 955297617 }
+        - { name: 'Core Data Lab', id: 1460684638 }
+        - { name: 'Craft', id: 1487937127 }
+        - { name: 'Darkroom: Photo & Video Editor', id: 953286746 }
+        - { name: 'Day One', id: 1055511498 }
+        - { name: 'DevCleaner', id: 1388020431 }
+        - { name: 'Developer', id: 640199958 }
+        - { name: 'Dropover Easier Drag Drop', id: 1355679052 }
+        - { name: 'Easy CSV Editor', id: 1171346381 }
+        - { name: 'Expressions', id: 913158085 }
+        - { name: 'Home Assistant', id: 1099568401 }
+        - { name: 'HomePass for HomeKit', id: 1330266650 }
+        - { name: 'Infuse 7', id: 1136220934 }
+        - { name: 'Keynote', id: 409183694 }
+        - { name: 'Microsoft Excel', id: 462058435 }
+        - { name: 'Microsoft PowerPoint', id: 462062816 }
+        - { name: 'Microsoft Word', id: 462054704 }
+        - { name: 'Numbers', id: 409203825 }
+        - { name: 'OmniOutliner', id: 1142578772 }
+        - { name: 'Otter Log Console', id: 6479258228 }
+        - { name: 'Pages', id: 409201541 }
+        - { name: 'Paprika Recipe Manager 3', id: 1303222628 }
+        - { name: 'Parcel - Delivery Tracking', id: 639968404 }
+        - { name: 'Photomator Photo Editor', id: 1444636541 }
+        - { name: 'Pixelmator Pro', id: 1289583905 }
+        - { name: 'Privacy for Safari', id: 6449850851 }
+        - { name: 'Prompt 3', id: 1594420480 }
+        - { name: 'Renamer 6', id: 1460229011 }
+        - { name: 'RocketSim for Xcode Simulator', id: 1504940162 }
+        - { name: 'Screens 5: VNC Remote Desktop', id: 1663047912 }
+        - { name: 'Sketch Digital Design Toolkit', id: 1667260533 }
+        - { name: 'Sleeve for Spotify Music', id: 1606145041 }
+        - { name: 'Soulver 3', id: 1508732804 }
+        - { name: 'TableFlip', id: 1462643128 }
+        - { name: 'Taska for GitHub Issues', id: 6741809383 }
+        - { name: 'Testpiler', id: 6737156289 }
+        - { name: 'xScope', id: 889428659 }
+        - { name: 'Copilot Track Budget Money', id: 1447330651 }
     homelab:
       taps: []
       brews: []
