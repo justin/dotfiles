@@ -7,6 +7,21 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "theme": "JWW Dark",
+  "icon_theme": "Zed (Default)",
+  "base_keymap": "VSCode",
+  "vim_mode": true,
+  "auto_install_extensions": {
+    "dockerfile": true,
+    "git-firefly": true,
+    "html": true,
+    "jq": true,
+    "just": true,
+    "lua": true,
+    "ssh-config": true,
+    "swift": true,
+    "tmux": false
+  },
   "context_servers": {
     "kagisearch": {
       "source": "custom",
@@ -28,17 +43,20 @@
       }
     }
   },
-  "base_keymap": "VSCode",
-  "icon_theme": "Zed (Default)",
   "features": {
     "edit_prediction_provider": "copilot"
   },
-  "theme": "JWW Dark",
-  "vim_mode": true,
   "buffer_font_size": 16,
   "buffer_font_family": "Operator Mono SSm Lig",
-  "buffer_font_fallbacks": ["SF Mono", "MonoLisa", ".SystemUIFont"],
+  "buffer_font_weight": 400,
+  "buffer_font_fallbacks": ["Operator Mono SSm", "SF Mono", "MonoLisa", ".SystemUIFont"],
   "ui_font_size": 16,
+  "minimap": {
+    "show": "always",
+    "thumb": "always",
+    "thumb_border": "left_open",
+    "current_line_highlight": null
+  },
   "remove_trailing_whitespace_on_save": true,
   "format_on_save": "on",
   "formatter": "prettier",
@@ -49,5 +67,76 @@
     "semi": false,
     "jsxSingleQuote": true,
     "singleQuote": true
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "notification_panel": {
+    "button": false
+  },
+  "chat_panel": {
+    "button": "never"
+  },
+  "show_call_status_icon": false,
+  "preferred_line_length": 80,
+  "wrap_guides": [150],
+  "vim": {
+    "use_system_clipboard": "always",
+    "use_multiline_find": false,
+    "use_smartcase_find": false,
+    "toggle_relative_line_numbers": true,
+    "highlight_on_yank_duration": 50,
+    // Options: "block", "bar", "underline", "hollow"
+    "cursor_shape": {
+      "normal": "block",
+      "insert": "bar",
+      "visual": "block",
+      "replace": "block"
+    }
+  },
+  "edit_predictions": {
+    // A list of globs representing files that inline completions should be disabled for.
+    "mode": "eager", // "subtle",
+    "disabled_globs": [
+      "**/.env*",
+      "**/*.pem",
+      "**/*.key",
+      "**/*.cert",
+      "**/*.crt",
+      "**/.dev.vars",
+      "**/secrets.yml"
+    ]
+  },
+  "show_edit_predictions": true,
+  "edit_predictions_disabled_in": ["comment"],
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings"
+  ],
+  "file_types": {
+    "Git Attributes": [".gitattributes"],
+    "Git Config": [".gitconfig", "**/git/config*", "**/git/**/config*"],
+    "Git Ignore": [
+      ".gitignore",
+      "**/git/.gitignore_global",
+      "**/git/**/.gitignore_global"
+    ],
+    "JSON": ["flake.lock"],
+    "JSONC": [
+      "**/.zed/**/*.json",
+      "**/zed/**/*.json",
+      "**/Zed/**/*.json",
+      "**/.vscode/**/*.json",
+    ],
+    "Plain Text": ["txt"],
+    "Ruby": ["rb", "brewfile**"],
+    "Shell Script": [".env.*", "dot_bash**", "dot_zsh**"],
+    "TOML": ["uv.lock", "pyproject.toml", ".editorconfig"]
   }
 }
