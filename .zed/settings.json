@@ -1,0 +1,25 @@
+{
+  "auto_install_extensions": {
+    "toml": true
+  },
+  "file_types": {
+    "Shell Script": [
+      "**/files/private_dot_config/zsh/**",
+      "*.sh.tmpl",
+      "*.zsh.tmpl"
+    ],
+    "JSONC": ["*.json.tmpl"],
+    "Properties": [
+      "**/files/private_dot_config/git/config.tmpl",
+      "**/files/private_dot_config/git/attributes"
+    ],
+    "YAML": ["*.yaml.tmpl", "*.yml.tmpl", ".chezmoi*"],
+    "Ignore": ["**/files/private_dot_config/git/ignore"],
+    "Ruby": ["Brewfile*"],
+    "Just": ["Justfile"],
+    "Plain Text": ["LICENSE"],
+    "Markdown": ["**/files/.chezmoitemplates/**"],
+    "SSH Config": ["**/private_dot_ssh/config.tmpl"],
+    "TOML": ["*.toml.tmpl"]
+  }
+}

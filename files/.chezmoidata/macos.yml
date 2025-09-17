@@ -126,7 +126,7 @@ packages:
         - { name: 'Pixeur - Screen Color Picker', id: 1507890049 }
         - { name: 'Tailscale', id: 1475387142 }
     personal:
-      remove: []
+      remove: ['rapidapi']
       taps: []
       brews: []
       casks:

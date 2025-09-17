@@ -8,11 +8,14 @@
 // from the command palette or from `Zed` application menu.
 {
   "theme": "JWW Dark",
-  "icon_theme": "Zed (Default)",
+  "icon_theme": "Modern Icons (Dark)",
   "base_keymap": "VSCode",
   "vim_mode": true,
+  "tab_size": 2,
+  "use_spaces": true,
   "auto_install_extensions": {
     "dockerfile": true,
+    "docker-compose": true,
     "git-firefly": true,
     "html": true,
     "jq": true,
@@ -20,7 +23,8 @@
     "lua": true,
     "ssh-config": true,
     "swift": true,
-    "tmux": false
+    "tmux": true,
+    "modern-icons": true
   },
   "context_servers": {
     "kagisearch": {
@@ -46,6 +50,7 @@
   "features": {
     "edit_prediction_provider": "copilot"
   },
+  "disabled_in": ["comment", "string"],
   "buffer_font_size": 16,
   "buffer_font_family": "Operator Mono SSm Lig",
   "buffer_font_weight": 400,
@@ -78,7 +83,7 @@
     "button": "never"
   },
   "show_call_status_icon": false,
-  "preferred_line_length": 80,
+  "preferred_line_length": 150,
   "wrap_guides": [150],
   "vim": {
     "use_system_clipboard": "always",
@@ -138,5 +143,13 @@
     "Ruby": ["rb", "brewfile**"],
     "Shell Script": [".env.*", "dot_bash**", "dot_zsh**"],
     "TOML": ["uv.lock", "pyproject.toml", ".editorconfig"]
+  },
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": false
+  },
+  "tabs": {
+    "file_icons": true,
+    "git_status": true
   }
 }
