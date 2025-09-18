@@ -1,30 +1,35 @@
-"{{ .base_path }}/pack/jww/start/zoxide.vim":
+{{ .base_path }}/jww/start/zoxide.vim:
   type: git-repo
-  url: https://github.com/nanotee/zoxide.vim.git
+  url: https://github.com/nanotee/zoxide.vim
   refreshPeriod: {{ .refresh_period }}
 
-"{{ .base_path }}/pack/jww/start/chezmoi.vim":
+{{ .base_path -}}/jww/start/chezmoi.vim:
   type: archive
   url: https://github.com/justin/chezmoi.vim/archive/refs/heads/main.zip
   exact: true
   stripComponents: 1
   refreshPeriod: {{ .refresh_period }}
 
-"{{ .base_path }}/pack/github/start/copilot.vim":
+{{ .base_path -}}/github/start/copilot.vim:
   type: git-repo
-  url: https://github.com/github/copilot.vim.git
+  url: https://github.com/github/copilot.vim
   refreshPeriod: {{ .refresh_period }}
   pull:
     args: ["--depth=1"]
 
-"{{ .base_path }}/pack/jww/start/fzf.vim":
-  type: git-repo
-  url: https://github.com/junegunn/fzf.vim.git
-  refreshPeriod: {{ .refresh_period }}
-
-"{{ .base_path }}/pack/jww/start/vim-polyglot":
+{{ .base_path }}/jww/start/vim-polyglot:
   type: git-repo
   url: https://github.com/sheerun/vim-polyglot
   refreshPeriod: {{ .refresh_period }}
   pull:
     args: ["--depth=1"]
+
+{{ .base_path }}/jww/start/fzf:
+  type: file
+  url: "https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/plugin/fzf.vim"
+  refreshPeriod: {{ .refresh_period }}
+
+{{ .base_path }}/jww/start/fzf.vim:
+  type: git-repo
+  url: https://github.com/junegunn/fzf.vim
+  refreshPeriod: {{ .refresh_period }}

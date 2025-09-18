@@ -2,4 +2,7 @@
 # Neovim Plugins
 # ==================================================
 
-{{- template "vim_plugins" dict "base_path" "$XDG_DATA_HOME/nvim/site" "refresh_period" .refresh_periods.week -}}
+{{ $base_path := ".local/share/nvim/site/pack" }}
+{{ $refresh_period := .refresh_periods.week }}
+{{ $data := dict "base_path" $base_path "refresh_period" $refresh_period }}
+{{ template "vim_plugins" $data -}}

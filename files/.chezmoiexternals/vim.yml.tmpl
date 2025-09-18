@@ -2,4 +2,7 @@
 # VIM Plugins
 # ==================================================
 
-{{- template "vim_plugins" dict "base_path" "$XDG_DATA_HOME/vim" "refresh_period" .refresh_periods.week -}}
+{{ $base_path := ".local/share/vim/pack" }}
+{{ $refresh_period := .refresh_periods.week }}
+{{ $data := dict "base_path" $base_path "refresh_period" $refresh_period }}
+{{ template "vim_plugins" $data -}}
