@@ -5,4 +5,4 @@
 .cache/iterm2/iterm2_shell_integration.zsh:
   type: file
   url: https://gitlab.com/gnachman/iterm2/-/raw/master/Resources/shell_integration/iterm2_shell_integration.zsh
-  refreshPeriod: {{ .refresh_periods.week }}
+  refreshPeriod: {{.refresh_periods.week}}

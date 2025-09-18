@@ -10,6 +10,6 @@
     ".chezmoi*": "yaml",
     "janitor": "just"
   },
-  "cSpell.words": ["chezmoi"],
-  "yaml.validate": false
+  "yaml.validate": false,
+  "yaml.format.bracketSpacing": false
 }
