@@ -35,6 +35,8 @@
     "sideBarSectionHeader.foreground": "#ffffff",
     "statusBar.background": "#323232",
     "statusBar.foreground": "#ffffff",
+    "statusBar.noFolderBackground": "#323232",
+    "statusBar.noFolderForeground": "#ffffff",
     "statusBar.border": "#323232",
     "statusBarItem.hoverBackground": "#4a473f",
     "statusBarItem.activeBackground": "#4a473f",
