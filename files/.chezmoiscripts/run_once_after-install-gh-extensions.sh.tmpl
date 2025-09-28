@@ -7,6 +7,11 @@ source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
 info "Installing GitHub Copilot CLI extensions."
-# Install the GitHub Copilot CLI extension for gh
-gh extension install github/gh-copilot
+
+if ! gh extension list | grep -q "gh-copilot"; then
+  info "GitHub Copilot CLI extension not found. Installing..."
+  gh extension install github/gh-copilot
+fi
+
+
 {{ end -}}
