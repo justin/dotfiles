@@ -94,13 +94,21 @@ noremap <Left> <nop>
 noremap <Right> <nop>
 
 " FZF keybindings
+" Normal Mode: Open FZF file finder (fuzzy search files in current directory)
 nnoremap <silent> <Leader><Leader> :Files<CR>
+" Normal Mode: Alternative binding for FZF file finder (clears command line first)
 nnoremap <silent> <leader>t        :<C-u>Files<CR>
+" Normal Mode: Open FZF buffer list (switch between open buffers)
 nnoremap <silent> <Leader>e        :Buffers<CR>
+" Normal Mode: Search lines across all open buffers with FZF
 nnoremap <silent> <Leader>g        :Lines<CR>
+" Normal Mode: Search lines in current Buffer only with FZF
 nnoremap <silent> <leader>f        :BLines<CR>
-nnoremap <silent> <Leader>h        :History:<CR>
+" Normal Mode: Browse command history with FZF
+nnoremap <silent> <Leader>H        :History:<CR>
+" Normal Mode: Browse search history with FZF
 nnoremap <silent> <Leader>/        :History/<CR>
+" Normal Mode: Use ripgrep (rg) to search file contents with FZF (! prevents auto-opening first result)
 nnoremap <silent> <Leader>a        :Rg!<CR>
 
 " Subtle gray
