@@ -159,7 +159,14 @@
     "settings.textInputBorder": "#323232",
     "settings.numberInputBackground": "#1a1a1a",
     "settings.numberInputForeground": "#ffffff",
-    "settings.numberInputBorder": "#323232"
+    "settings.numberInputBorder": "#323232",
+    "editorError.foreground": "#ff6b6b",
+    "editorWarning.foreground": "#ffd97d",
+    "editorInfo.foreground": "#5cd8ff",
+    "editorHint.foreground": "#808080",
+    "editorError.background": "#00000000",
+    "editorWarning.background": "#00000000",
+    "editorInfo.background": "#00000000"
   },
   "tokenColors": [
     {
@@ -544,7 +551,7 @@
         "invalid.illegal"
       ],
       "settings": {
-        "foreground": "#f74a4a"
+        "foreground": "#ff6b6b"
       }
     },
     {
@@ -553,7 +560,7 @@
         "invalid.deprecated"
       ],
       "settings": {
-        "foreground": "#efb759"
+        "foreground": "#ffd97d"
       }
     }
   ]
