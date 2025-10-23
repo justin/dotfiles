@@ -86,12 +86,25 @@ hi Underlined       guifg=#4164ff ctermfg=69 gui=underline
 hi SpecialKey       guifg=#2d439b ctermfg=61
 
 " Error and Warning colors (derived from scrollbar markers)
-hi Error            guifg=#f74a4a guibg=NONE ctermfg=203 ctermbg=NONE
-hi ErrorMsg         guifg=#f74a4a guibg=NONE ctermfg=203 ctermbg=NONE
-hi WarningMsg       guifg=#efb759 guibg=NONE ctermfg=215 ctermbg=NONE
+" Using bright colors with no background for better readability
+hi Error            guifg=#ff6b6b guibg=NONE ctermfg=203 ctermbg=NONE
+hi ErrorMsg         guifg=#ff6b6b guibg=NONE ctermfg=203 ctermbg=NONE
+hi WarningMsg       guifg=#ffd97d guibg=NONE ctermfg=222 ctermbg=NONE
 
 " Todo highlighting
 hi Todo             guifg=#41cc45 guibg=NONE ctermfg=83 ctermbg=NONE gui=bold
+
+" ALE (Asynchronous Lint Engine) highlighting
+hi ALEError         guifg=#ff6b6b guibg=NONE ctermfg=203 ctermbg=NONE
+hi ALEWarning       guifg=#ffd97d guibg=NONE ctermfg=222 ctermbg=NONE
+hi ALEInfo          guifg=#5cd8ff guibg=NONE ctermfg=81 ctermbg=NONE
+
+" Rust-specific error highlighting
+hi link rustCommentLineDoc Comment
+hi link rustModPathSep Delimiter
+hi link rustMacro Macro
+hi link rustDerive PreProc
+hi link rustAttribute PreProc
 
 " Diff colors
 hi DiffAdd          guibg=#1a4a1a ctermfg=NONE ctermbg=22

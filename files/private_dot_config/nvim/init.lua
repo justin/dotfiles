@@ -21,11 +21,10 @@ vim.opt.backupdir = vim.env.XDG_STATE_HOME .. "/nvim/backup//"
 vim.opt.viewdir   = vim.env.XDG_STATE_HOME .. "/nvim/view//"
 vim.opt.undodir   = vim.env.XDG_STATE_HOME .. "/nvim/undo//"
 vim.opt.undofile  = true
-vim.opt.viminfofile = vim.env.XDG_STATE_HOME .. "/nvim/viminfofile"
 
 -- General settings
 vim.opt.fileformats = {"unix", "dos", "mac"}
-vim.opt.colorcolumn = 100
+vim.opt.colorcolumn = "100"
 vim.opt.numberwidth = 4
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
@@ -44,9 +43,9 @@ vim.opt.splitright = true
 vim.opt.mouse = "a"
 
 -- General UI cleanup when using a custom statusline
-vim.opt.noruler = true
-vim.opt.noshowcmd = true
-vim.opt.noshowmode = true
+vim.opt.ruler = false
+vim.opt.showcmd = false
+vim.opt.showmode = false
 vim.opt.conceallevel = 1
 vim.opt.shortmess:append("F")
 
