@@ -32,6 +32,7 @@ bin
 .config/zsh/config/07-python-brew.zsh
 .config/zsh/config/15-ssh-agent.zsh
 .cache/zsh/external/zsh-vi-mode
+.config/nvim/statusline.lua
 {{- if ne .osid "darwin" }}
 Library
 .local/bin/darwin

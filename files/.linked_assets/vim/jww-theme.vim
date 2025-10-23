@@ -9,9 +9,6 @@ if exists("syntax_on")
 endif
 let g:colors_name = "jww"
 
-" Helper function to convert RGBA to hex
-" Xcode uses RGBA values (0-1), Vim uses hex colors
-
 " UI Colors
 hi Normal           guifg=#ffffff ctermfg=231
 hi Cursor           guifg=#000000 guibg=#ffffff ctermfg=16 ctermbg=231
@@ -28,10 +25,7 @@ hi Search           guibg=#4a473f ctermfg=NONE ctermbg=238
 hi IncSearch        guibg=#4a473f ctermfg=NONE ctermbg=238
 
 " Syntax Highlighting - converted from Xcode RGBA values
-" xcode.syntax.comment (0.255 0.801 0.27 1) -> #41cc45
 hi Comment          guifg=#41cc45 ctermfg=83 gui=italic
-
-" xcode.syntax.keyword (0.828 0.095 0.583 1) -> #d31895
 hi Keyword          guifg=#d31895 ctermfg=162 gui=bold
 hi Statement        guifg=#d31895 ctermfg=162 gui=bold
 hi Conditional      guifg=#d31895 ctermfg=162 gui=bold
@@ -39,62 +33,55 @@ hi Repeat           guifg=#d31895 ctermfg=162 gui=bold
 hi Label            guifg=#d31895 ctermfg=162 gui=bold
 hi Operator         guifg=#d31895 ctermfg=162 gui=bold
 hi Exception        guifg=#d31895 ctermfg=162 gui=bold
-
-" xcode.syntax.string (1 0.171 0.219 1) -> #ff2b38
 hi String           guifg=#ff2b38 ctermfg=203
 hi Character        guifg=#ff2b38 ctermfg=203
-
-" xcode.syntax.number (0.469 0.426 1 1) -> #786dff
 hi Number           guifg=#786dff ctermfg=105
 hi Float            guifg=#786dff ctermfg=105
 hi Boolean          guifg=#786dff ctermfg=105
-
-" xcode.syntax.identifier.function (0.137 1 0.512 1) -> #23ff83
 hi Function         guifg=#23ff83 ctermfg=48
-
-" xcode.syntax.identifier.class (0.137 1 0.512 1) -> #23ff83
 hi Type             guifg=#23ff83 ctermfg=48
 hi StorageClass     guifg=#23ff83 ctermfg=48
 hi Structure        guifg=#23ff83 ctermfg=48
 hi Typedef          guifg=#23ff83 ctermfg=48
-
-" xcode.syntax.identifier.class.system (0 0.626 1 1) -> #00a0ff
 hi Identifier       guifg=#00a0ff ctermfg=39
-
-" xcode.syntax.identifier.constant (0.137 1 0.512 1) -> #23ff83
 hi Constant         guifg=#23ff83 ctermfg=48
-
-" xcode.syntax.preprocessor / xcode.syntax.identifier.macro (0.896 0.488 0.284 1) -> #e57c48
 hi PreProc          guifg=#e57c48 ctermfg=173
 hi Include          guifg=#e57c48 ctermfg=173
 hi Define           guifg=#e57c48 ctermfg=173
 hi Macro            guifg=#e57c48 ctermfg=173
 hi PreCondit        guifg=#e57c48 ctermfg=173
-
-" xcode.syntax.declaration.type (0.362946 0.846428 0.998966 1) -> #5cd8ff
 hi Special          guifg=#5cd8ff ctermfg=81
 hi SpecialChar      guifg=#5cd8ff ctermfg=81
 hi Tag              guifg=#5cd8ff ctermfg=81
 hi Delimiter        guifg=#5cd8ff ctermfg=81
 hi SpecialComment   guifg=#5cd8ff ctermfg=81
 hi Debug            guifg=#5cd8ff ctermfg=81
-
-" xcode.syntax.url (0.255 0.392 1 1) -> #4164ff
 hi Underlined       guifg=#4164ff ctermfg=69 gui=underline
-
-" xcode.syntax.attribute (0.177359 0.265488 0.608972 1) -> #2d439b
 hi SpecialKey       guifg=#2d439b ctermfg=61
 
-" Error and Warning colors (derived from scrollbar markers)
-" Using bright colors with no background for better readability
+" Error and Warning colors - using bright, readable colors with no background
 hi Error            guifg=#ff6b6b guibg=NONE ctermfg=203 ctermbg=NONE
 hi ErrorMsg         guifg=#ff6b6b guibg=NONE ctermfg=203 ctermbg=NONE
 hi WarningMsg       guifg=#ffd97d guibg=NONE ctermfg=222 ctermbg=NONE
-
-" Todo highlighting
 hi Todo             guifg=#41cc45 guibg=NONE ctermfg=83 ctermbg=NONE gui=bold
 
-" ALE (Asynchronous Lint Engine) highlighting
+" LSP and Diagnostic highlighting - clear, readable error colors
+hi DiagnosticError          guifg=#ff6b6b guibg=NONE ctermfg=203 ctermbg=NONE
+hi DiagnosticWarn           guifg=#ffd97d guibg=NONE ctermfg=222 ctermbg=NONE
+hi DiagnosticInfo           guifg=#5cd8ff guibg=NONE ctermfg=81 ctermbg=NONE
+hi DiagnosticHint           guifg=#808080 guibg=NONE ctermfg=244 ctermbg=NONE
+hi DiagnosticUnderlineError guisp=#ff6b6b gui=undercurl ctermfg=203 cterm=underline
+hi DiagnosticUnderlineWarn  guisp=#ffd97d gui=undercurl ctermfg=222 cterm=underline
+hi DiagnosticUnderlineInfo  guisp=#5cd8ff gui=undercurl ctermfg=81 cterm=underline
+hi DiagnosticUnderlineHint  guisp=#808080 gui=undercurl ctermfg=244 cterm=underline
+
+" Virtual text for diagnostics
+hi DiagnosticVirtualTextError guifg=#ff6b6b guibg=NONE ctermfg=203 ctermbg=NONE
+hi DiagnosticVirtualTextWarn  guifg=#ffd97d guibg=NONE ctermfg=222 ctermbg=NONE
+hi DiagnosticVirtualTextInfo  guifg=#5cd8ff guibg=NONE ctermfg=81 ctermbg=NONE
+hi DiagnosticVirtualTextHint  guifg=#808080 guibg=NONE ctermfg=244 ctermbg=NONE
+
+" ALE (Asynchronous Lint Engine) highlighting - match diagnostic colors
 hi ALEError         guifg=#ff6b6b guibg=NONE ctermfg=203 ctermbg=NONE
 hi ALEWarning       guifg=#ffd97d guibg=NONE ctermfg=222 ctermbg=NONE
 hi ALEInfo          guifg=#5cd8ff guibg=NONE ctermfg=81 ctermbg=NONE
