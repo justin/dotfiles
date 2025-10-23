@@ -1,0 +1,21 @@
+{{- if eq .chezmoi.hostname "Studio" -}}
+#!/usr/bin/env zsh
+#
+# Configure VSCode and derivatives to disable press-and-hold for keys
+# to allow for key repeat, which is useful for Vim users.
+# See vscode-vim plugin for more information:
+# https://github.com/VSCodeVim/Vim
+
+set -e
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+info "Configure VSCode and derivatives to disable press-and-hold for keys"
+defaults write com.microsoft.VSCodeInsiders ApplePressAndHoldEnabled -bool false
+defaults write com.vscodium ApplePressAndHoldEnabled -bool false
+defaults write com.microsoft.VSCodeExploration ApplePressAndHoldEnabled -bool false
+defaults write com.exafunction.windsurf ApplePressAndHoldEnabled -bool false
+defaults delete -g ApplePressAndHoldEnabled
+
+{{ end }}
