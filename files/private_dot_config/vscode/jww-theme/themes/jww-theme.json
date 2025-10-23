@@ -562,6 +562,36 @@
       "settings": {
         "foreground": "#ffd97d"
       }
+    },
+    {
+      "name": "Rust Macro",
+      "scope": [
+        "entity.name.function.macro.rust",
+        "support.function.macro.rust"
+      ],
+      "settings": {
+        "foreground": "#e57c48"
+      }
+    },
+    {
+      "name": "Rust Lifetime",
+      "scope": [
+        "storage.modifier.lifetime.rust",
+        "entity.name.type.lifetime.rust"
+      ],
+      "settings": {
+        "foreground": "#00a0ff"
+      }
+    },
+    {
+      "name": "Rust Attributes",
+      "scope": [
+        "meta.attribute.rust",
+        "punctuation.definition.attribute.rust"
+      ],
+      "settings": {
+        "foreground": "#e57c48"
+      }
     }
   ]
 }
