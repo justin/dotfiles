@@ -1,19 +1,6 @@
 {
     "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/specification/refs/heads/main/schema/2025-03-26/schema.json",
     "mcpServers": {
-      "filesystem": {
-        "command": "docker",
-        "args": [
-          "run",
-          "-i",
-          "--rm",
-          "--mount", "type=bind,src={{ .chezmoi.homeDir }}/Desktop,dst=/projects/Desktop",
-          "--mount", "type=bind,src={{ .chezmoi.homeDir }}/Downloads,dst=/projects/Downloads",
-          "--mount", "type=bind,src={{ .chezmoi.homeDir }}/src,dst=/projects/src",
-          "mcp/filesystem",
-          "/projects"
-        ]
-        },
         "kagisearch": {
           "command": "docker",
           "args": [
