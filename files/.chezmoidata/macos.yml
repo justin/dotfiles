@@ -19,7 +19,7 @@ packages:
   homebrew:
     remove:
       taps: []
-      brews: ["llm", "xcodes"]
+      brews: ["llm"]
       casks: []
       mas:
         [
@@ -79,6 +79,7 @@ packages:
         - "ruby"
         - "magic-wormhole"
         - "awscli"
+        - "xcodes"
       casks:
         - "1password"
         - "1password-cli"
@@ -93,6 +94,7 @@ packages:
         - "iina"
         - "iterm2"
         - "itermai"
+        - "itermbrowserplugin"
         - "jordanbaird-ice"
         - "kaleidoscope"
         - "keyboard-maestro"
