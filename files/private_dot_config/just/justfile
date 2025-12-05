@@ -89,7 +89,8 @@ update-all: # Update all installed apps
 [macos]
 [private]
 update-mas: # Update Mac App Store apps
-  @echo "⚠️ Mac App Store updating is broken. Please update apps manually."
+  @echo "🚀 Updating Mac App Store apps."
+  mas upgrade
 
 [macos]
 update-homebrew: # Update Homebrew installed packages.
