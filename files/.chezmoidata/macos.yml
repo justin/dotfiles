@@ -21,11 +21,7 @@ packages:
       taps: []
       brews: ["llm"]
       casks: []
-      mas:
-        [
-          {name: "Transloader", id: 572281534},
-          {name: "Spokenly", id: 6740315592},
-        ]
+      mas: [{name: "Transloader", id: 572281534}]
     global:
       taps:
         - "majd/repo"
@@ -124,6 +120,7 @@ packages:
         - {name: "Kagi for Safari", id: 1622835804}
         - {name: "Keka", id: 470158793}
         - {name: "PCalc", id: 403504866}
+        - {name: "Spokenly", id: 6740315592}
         - {name: "StopTheMadness Pro", id: 6471380298}
         - {name: "PDF Expert", id: 1055273043}
         - {name: "Pixeur - Screen Color Picker", id: 1507890049}
