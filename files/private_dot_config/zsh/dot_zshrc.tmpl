@@ -72,10 +72,6 @@ export HOMEBREW_BUNDLE_FILE="$XDG_CONFIG_HOME/homebrew/Brewfile"
 
 {{ if and (not .ephemeral) (not .synology) }}
 export ARCHFLAGS="-arch {{ .chezmoi.arch }}"
-# Setup aliases for gh cli.
-# After executing the following commands to create the aliases, you can run
-# `ghcs` and `ghce` instead of `gh copilot suggest` and `gh copilot explain`.
-eval "$(gh copilot alias -- zsh)"
 {{ end }}
 
 # Source any file with a *.zsh extension. They have additional settings.
