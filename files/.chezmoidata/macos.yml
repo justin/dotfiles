@@ -4,16 +4,19 @@ machines:
     sleep_minutes: 30
     iterm2_width: 150
     iterm2_height: 40
+    iterm2_font_size: 16
   studio:
     dock_tile_size: 80
     sleep_minutes: 0
     iterm2_width: 250
     iterm2_height: 65
+    iterm2_font_size: 16
   m1server:
     dock_tile_size: 48
     sleep_minutes: 0
     iterm2_width: 150
     iterm2_height: 40
+    iterm2_font_size: 22
 
 packages:
   homebrew:
