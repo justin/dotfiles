@@ -24,7 +24,11 @@ packages:
       taps: []
       brews: ["llm"]
       casks: []
-      mas: [{name: "Transloader", id: 572281534}]
+      mas:
+        [
+          {name: "Transloader", id: 572281534},
+          {name: "Parcel - Delivery Tracking", id: 639968404},
+        ]
     global:
       taps:
         - "majd/repo"
@@ -83,6 +87,7 @@ packages:
         - "1password"
         - "1password-cli"
         - "visual-studio-code"
+        - "bartender"
         - "bbedit"
         - "chatgpt"
         - "claude"
@@ -94,7 +99,6 @@ packages:
         - "iterm2"
         - "itermai"
         - "itermbrowserplugin"
-        - "jordanbaird-ice"
         - "kaleidoscope"
         - "keyboard-maestro"
         - "launchcontrol"
@@ -183,7 +187,7 @@ packages:
         - {name: "Otter Log Console", id: 6479258228}
         - {name: "Pages", id: 409201541}
         - {name: "Paprika Recipe Manager 3", id: 1303222628}
-        - {name: "Parcel - Delivery Tracking", id: 639968404}
+        - {name: "Parcel - Delivery Tracking", id: 375589283}
         - {name: "Photomator Photo Editor", id: 1444636541}
         - {name: "Pixelmator Pro", id: 1289583905}
         - {name: "Privacy for Safari", id: 6449850851}
@@ -193,6 +197,7 @@ packages:
         - {name: "Screens 5: VNC Remote Desktop", id: 1663047912}
         - {name: "Sketch Digital Design Toolkit", id: 1667260533}
         - {name: "Sleeve for Spotify Music", id: 1606145041}
+        - {name: "Spokenly", id: 6740315592}
         - {name: "Soulver 3", id: 1508732804}
         - {name: "TableFlip", id: 1462643128}
         - {name: "Taska for GitHub Issues", id: 6741809383}
