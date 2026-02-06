@@ -8,6 +8,8 @@ set -euo pipefail
 source "$XDG_DATA_HOME/chezmoi/files/functions/_logging"
 source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
 
+had_error=0
+
 # --- TAPS ---
 taps=(
   {{- range $tap := .packages.homebrew.global.taps }}
@@ -22,11 +24,12 @@ taps=(
 )
 for tap in "${taps[@]}"; do
   if ! brew tap | grep -q "^${tap}$"; then
-    info "Tapping $tap"
-    brew tap "$tap"
-    success "Tapped $tap"
-  else
-    info "Tap $tap already present"
+    if brew tap "$tap"; then
+      success "Tapped $tap"
+    else
+      warning "Failed to tap $tap"
+      had_error=1
+    fi
   fi
 done
 
@@ -42,17 +45,22 @@ brews=(
   "{{ $brew }}"
   {{- end }}
 )
+
+processing "Installing missing Homebrew packages..."
 for brew_pkg in "${brews[@]}"; do
-  if ! brew list --formula | grep -q "^${brew_pkg}$"; then
+  if ! brew list --formula "$brew_pkg" &>/dev/null; then
     info "Installing brew $brew_pkg"
-    brew install "$brew_pkg"
-    success "Installed $brew_pkg"
-  else
-    info "Brew $brew_pkg already installed"
+    if brew install "$brew_pkg"; then
+      success "Installed $brew_pkg"
+    else
+      warning "Failed to install $brew_pkg"
+      had_error=1
+    fi
   fi
 done
 
 # --- CASKS ---
+processing "Installing missing Homebrew casks..."
 casks=(
   {{- range $cask := .packages.homebrew.global.casks }}
   "{{ $cask }}"
@@ -65,16 +73,19 @@ casks=(
   {{- end }}
 )
 for cask_pkg in "${casks[@]}"; do
-  if ! brew list --cask | grep -q "^${cask_pkg}$"; then
+  if ! brew list --cask "$cask_pkg" &>/dev/null; then
     info "Installing cask $cask_pkg"
-    brew install --cask "$cask_pkg"
-    success "Installed cask $cask_pkg"
-  else
-    info "Cask $cask_pkg already installed"
+    if brew install --cask "$cask_pkg"; then
+      success "Installed cask $cask_pkg"
+    else
+      warning "Failed to install cask $cask_pkg"
+      had_error=1
+    fi
   fi
 done
 
 # --- MAS APPS ---
+processing "Installing missing Mac App Store apps..."
 mas_ids=(
   {{- range $app := .packages.homebrew.global.mas }}
   {{ $app.id }}
@@ -89,13 +100,20 @@ mas_ids=(
 for mas_id in "${mas_ids[@]}"; do
   if ! mas list | awk '{print $1}' | grep -q "^${mas_id}$"; then
     info "Installing MAS app $mas_id"
-    mas install "$mas_id"
-    success "Installed MAS app $mas_id"
-  else
-    info "MAS app $mas_id already installed"
+    if mas install "$mas_id"; then
+      success "Installed MAS app $mas_id"
+    else
+      warning "Failed to install MAS app $mas_id"
+      had_error=1
+    fi
   fi
 done
 
-success "Homebrew and MAS package installation complete"
-exit 0
+if (( had_error )); then
+  warning "Homebrew and MAS package installation completed with errors"
+  exit 1
+else
+  success "Homebrew and MAS package installation complete"
+  exit 0
+fi
 {{- end }}

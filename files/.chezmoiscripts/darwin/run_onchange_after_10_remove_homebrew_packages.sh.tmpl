@@ -8,39 +8,48 @@ set -euo pipefail
 source "$XDG_DATA_HOME/chezmoi/files/functions/_logging"
 source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
 
+had_error=0
+
 # --- REMOVE BREWS ---
+processing "Removing uninstalled Homebrew packages..."
 remove_brews=(
   {{- range $brew := .packages.homebrew.remove.brews }}
   "{{ $brew }}"
   {{- end }}
 )
 for brew_pkg in "${remove_brews[@]}"; do
-  if brew list --formula | grep -q "^${brew_pkg}$"; then
+  if brew list --formula "$brew_pkg" &>/dev/null; then
     info "Removing brew $brew_pkg"
-    brew uninstall "$brew_pkg"
-    success "Removed $brew_pkg"
-  else
-    info "Brew $brew_pkg is not installed"
+    if brew uninstall "$brew_pkg"; then
+      success "Removed $brew_pkg"
+    else
+      warning "Failed to remove $brew_pkg"
+      had_error=1
+    fi
   fi
 done
 
 # --- REMOVE CASKS ---
+processing "Removing uninstalled Homebrew casks..."
 remove_casks=(
   {{- range $cask := .packages.homebrew.remove.casks }}
   "{{ $cask }}"
   {{- end }}
 )
 for cask_pkg in "${remove_casks[@]}"; do
-  if brew list --cask | grep -q "^${cask_pkg}$"; then
+  if brew list --cask "$cask_pkg" &>/dev/null; then
     info "Removing cask $cask_pkg"
-    brew uninstall --cask "$cask_pkg"
-    success "Removed cask $cask_pkg"
-  else
-    info "Cask $cask_pkg is not installed"
+    if brew uninstall --cask "$cask_pkg"; then
+      success "Removed cask $cask_pkg"
+    else
+      warning "Failed to remove cask $cask_pkg"
+      had_error=1
+    fi
   fi
 done
 
 # --- REMOVE TAPS ---
+processing "Removing uninstalled Homebrew taps..."
 remove_taps=(
   {{- range $tap := .packages.homebrew.remove.taps }}
   "{{ $tap }}"
@@ -49,14 +58,17 @@ remove_taps=(
 for tap in "${remove_taps[@]}"; do
   if brew tap | grep -q "^${tap}$"; then
     info "Untapping $tap"
-    brew untap "$tap"
-    success "Untapped $tap"
-  else
-    info "Tap $tap is not present"
+    if brew untap "$tap"; then
+      success "Untapped $tap"
+    else
+      warning "Failed to untap $tap"
+      had_error=1
+    fi
   fi
 done
 
 # --- REMOVE MAS APPS ---
+processing "Removing uninstalled Mac App Store apps..."
 remove_mas_ids=(
   {{- range $app := .packages.homebrew.remove.mas }}
   {{ $app.id }}
@@ -65,13 +77,20 @@ remove_mas_ids=(
 for mas_id in "${remove_mas_ids[@]}"; do
   if mas list | awk '{print $1}' | grep -q "^${mas_id}$"; then
     info "Uninstalling MAS app $mas_id"
-    sudo mas uninstall "$mas_id"
-    success "Uninstalled MAS app $mas_id"
-  else
-    info "MAS app $mas_id is not installed"
+    if sudo mas uninstall "$mas_id"; then
+      success "Uninstalled MAS app $mas_id"
+    else
+      warning "Failed to uninstall MAS app $mas_id"
+      had_error=1
+    fi
   fi
 done
 
-success "Homebrew and MAS package removal complete"
-exit 0
+if (( had_error )); then
+  warning "Homebrew and MAS package removal completed with errors"
+  exit 1
+else
+  success "Homebrew and MAS package removal complete"
+  exit 0
+fi
 {{- end }}
