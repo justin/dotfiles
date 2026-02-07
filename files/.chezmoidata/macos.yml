@@ -165,6 +165,7 @@ packages:
       mas:
         - {name: "10ten Japanese Reader", id: 1573540634}
         - {name: "A Companion for SwiftUI", id: 1485436674}
+        - {name: "Aeronaut for Bluesky", id: 6670275450}
         - {name: "CARROT Weather", id: 993487541}
         - {name: "Channels Pro - IPTV Player", id: 1552284117}
         - {name: "CodeRunner 4", id: 955297617}
