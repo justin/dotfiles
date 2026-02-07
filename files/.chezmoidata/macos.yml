@@ -23,7 +23,7 @@ packages:
     remove:
       taps: []
       brews: ["llm"]
-      casks: []
+      casks: ["jordanbaird-ice"]
       mas:
         [
           {name: "Transloader", id: 572281534},
@@ -83,6 +83,7 @@ packages:
         - "magic-wormhole"
         - "awscli"
         - "xcodes"
+        - "terror/tap/just-lsp"
       casks:
         - "1password"
         - "1password-cli"
@@ -144,6 +145,7 @@ packages:
         - "adobe-creative-cloud"
         - "dash"
         - "downie"
+        - "dropshare"
         - "firefox"
         - "github-copilot-for-xcode"
         - "helium-browser"
