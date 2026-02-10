@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>IDECodeSnippetCompletionPrefix</key>
+    <string>sidebarlist</string>
+    <key>IDECodeSnippetCompletionScopes</key>
+    <array>
+        <string>ClassImplementation</string>
+    </array>
+    <key>IDECodeSnippetContents</key>
+    <string>// MARK: - Types
+private typealias &lt;#SectionType#&gt; = Int
+private struct &lt;#ItemType#&gt;: Hashable {
+    let id: UUID = UUID()
+    let title: String
+    let systemImageName: String
+}
+
+// MARK: - Properties
+private lazy var &lt;#layoutName#&gt;: UICollectionViewLayout = {
+    let layout = UICollectionViewCompositionalLayout { _, layoutEnvironment in
+        #if targetEnvironment(macCatalyst)
+        let appearance: UICollectionLayoutListConfiguration.Appearance = .sidebar
+        #else
+        let isPhone = layoutEnvironment.traitCollection.userInterfaceIdiom == .phone
+        let appearance: UICollectionLayoutListConfiguration.Appearance = isPhone ? .insetGrouped : .sidebar
+        #endif
+        var config = UICollectionLayoutListConfiguration(appearance: appearance)
+        config.headerMode = .supplementary
+        return NSCollectionLayoutSection.list(using: config, layoutEnvironment: layoutEnvironment)
+    }
+    return layout
+}()
+
+private lazy var &lt;#collectionView#&gt;: UICollectionView = {
+    let view = UICollectionView(frame: .zero, collectionViewLayout: &lt;#layoutName#&gt;)
+    view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    return view
+}()
+
+private typealias &lt;#DataSourceType#&gt; = UICollectionViewDiffableDataSource&lt;&lt;#SectionType#&gt;, &lt;#ItemType#&gt;&gt;
+private typealias &lt;#CellRegType#&gt; = UICollectionView.CellRegistration&lt;UICollectionViewListCell, &lt;#ItemType#&gt;&gt;
+private typealias &lt;#HeaderRegType#&gt; = UICollectionView.SupplementaryRegistration&lt;UICollectionViewListCell&gt;
+
+private var &lt;#dataSource#&gt;: &lt;#DataSourceType#&gt;!
+
+// MARK: - View Lifecycle
+override func loadView() {
+    view = &lt;#collectionView#&gt;
+}
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+    navigationItem.title = "&lt;#Title#&gt;"
+    configureDataSource()
+}
+
+// MARK: - Data Source &amp; Registrations
+private func configureDataSource() {
+    // Cell registration
+    let cellRegistration = &lt;#CellRegType#&gt; { cell, _, item in
+        cell.configurationUpdateHandler = { cell, state in
+            var content = UIListContentConfiguration.cell().updated(for: state)
+            content.text = item.title
+            content.image = UIImage(systemName: item.systemImageName)
+            content.imageProperties.maximumSize = CGSize(width: 44, height: 44)
+
+            if state.isDisabled {
+                content.textProperties.color = .systemGray
+            }
+
+            guard let listCell = cell as? UICollectionViewListCell else {
+                cell.contentConfiguration = content
+                return
+            }
+
+            #if targetEnvironment(macCatalyst)
+            let accessories: [UICellAccessory] = []
+            #else
+            var accessories: [UICellAccessory] = []
+            accessories.append(.disclosureIndicator(displayed: .always))
+            #endif
+
+            listCell.accessories = accessories
+            listCell.contentConfiguration = content
+        }
+    }
+
+    // Header registration
+    let headerRegistration = &lt;#HeaderRegType#&gt;(elementKind: UICollectionView.elementKindSectionHeader) { supplementaryView, _, indexPath in
+        supplementaryView.configurationUpdateHandler = { supplementaryView, state in
+            guard let cell = supplementaryView as? UICollectionViewListCell else { return }
+            var content = UIListContentConfiguration.header().updated(for: state)
+            content.text = "Section \(indexPath.section)"
+            cell.contentConfiguration = content
+            cell.backgroundConfiguration = .clear()
+        }
+    }
+
+    // Data source
+    &lt;#dataSource#&gt; = &lt;#DataSourceType#&gt;(&lt;#collectionView#&gt;) { collectionView, indexPath, item in
+        collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+    }
+
+    // Supplementary provider
+    &lt;#dataSource#&gt;.supplementaryViewProvider = { collectionView, kind, indexPath in
+        collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+    }
+
+    // Initial snapshot
+    var snapshot = NSDiffableDataSourceSnapshot&lt;&lt;#SectionType#&gt;, &lt;#ItemType#&gt;&gt;()
+    snapshot.appendSections([0])
+    snapshot.appendItems([
+        &lt;#ItemType#&gt;(title: "All", systemImageName: "tray.full"),
+        &lt;#ItemType#&gt;(title: "Favorites", systemImageName: "star"),
+        &lt;#ItemType#&gt;(title: "Recent", systemImageName: "clock")
+    ], toSection: 0)
+    &lt;#dataSource#&gt;.apply(snapshot, animatingDifferences: false)
+}
+
+// MARK: - Delegate
+extension &lt;#ClassName#&gt;: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Handle selection
+    }
+}</string>
+    <key>IDECodeSnippetIdentifier</key>
+    <string>sidebar-list-cell-registration</string>
+    <key>IDECodeSnippetLanguage</key>
+    <string>Xcode.SourceCodeLanguage.Swift</string>
+    <key>IDECodeSnippetSummary</key>
+    <string>UIKit Sidebar (List) setup with compositional layout, list cell registration, and diffable data source. Pure iOS-bundled APIs. Works on iOS/iPadOS and Mac Catalyst.</string>
+    <key>IDECodeSnippetTitle</key>
+    <string>Sidebar List Cell Registration</string>
+    <key>IDECodeSnippetUserSnippet</key>
+    <true/>
+    <key>IDECodeSnippetVersion</key>
+    <integer>2</integer>
+</dict>
+</plist>
