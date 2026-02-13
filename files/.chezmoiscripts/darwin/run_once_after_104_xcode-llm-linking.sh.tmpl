@@ -1,0 +1,17 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env zsh
+#
+# Symlink codex and claude for xcode.
+
+set -e
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+local xcode_version=$(xcodebuild -version | grep Xcode | awk '{print $2}')
+
+echo "==> Symlinking Xcode LLM binaries."
+ln -sf $(which codex) $HOME/Library/Developer/Xcode/CodingAssistant/Agents/Versions/${xcode_version}/codex
+ln -sf $(which claude) $HOME/Library/Developer/Xcode/CodingAssistant/Agents/Versions/${xcode_version}/claude
+
+{{ end -}}
