@@ -74,7 +74,6 @@ update-all: # Update all installed apps
   just npm-upgrade
   @echo "🚀 Updating python packages"
   just py-upgrade
-  just update-mcp
 
 [linux]
 update-all: # Update all installed apps
@@ -84,7 +83,6 @@ update-all: # Update all installed apps
   just npm-upgrade
   @echo "🚀 Updating python packages"
   just py-upgrade
-  just update-mcp
 
 [macos]
 [private]
@@ -156,18 +154,6 @@ uv-install: # Install python tools.
 py-upgrade: # Install python tools.
   just pipx-uninstall
   just uv-install
-
-update-mcp: # Extract MCP server configurations and create a new servers configuration file
-  #!/usr/bin/env zsh
-  set -euo pipefail
-  if [[ ! -f "$XDG_CONFIG_HOME/mcp/mcp.json" ]]; then
-    echo "Error: $XDG_CONFIG_HOME/mcp/mcp.json not found"
-    exit 1
-  fi
-
-  if [ $(uname) = "Darwin" ]; then
-      jq '{servers: .mcpServers}' "$XDG_CONFIG_HOME/mcp/mcp.json" > "$XDG_CONFIG_HOME/github-copilot/xcode/mcp.json"
-  fi
 
 tldr url: # Summarize the contents of a webpage using llm.
   @curl -s {{quote(url)}} | strip-tags -m | llm --template tldr -m gpt-4.1
