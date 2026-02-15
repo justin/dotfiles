@@ -33,6 +33,7 @@ bin
 .config/zsh/config/15-ssh-agent.zsh
 .cache/zsh/external/zsh-vi-mode
 .config/nvim/statusline.lua
+.config/mcp
 {{- if ne .osid "darwin" }}
 Library
 .local/bin/darwin
