@@ -4,3 +4,4 @@ npm
 @google/gemini-cli
 @google/jules
 @openai/codex
+@mariozechner/pi-coding-agent
