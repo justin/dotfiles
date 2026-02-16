@@ -2,10 +2,9 @@
   "lastChangelogVersion": "0.52.12",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-6",
+  "theme": "jww-pi-theme",
   "defaultThinkingLevel": "off",
   "hideThinkingBlock": false,
-  "shellPath": "{{ .homebrew.prefix }}/bin/zsh",
-  "shellCommandPrefix": "eval \"$(grep '^alias ' ~/.zshenv)\"",
   "enabledModels": [
     "anthropic/claude-opus-4-6",
     "openai/gpt-5.2",
