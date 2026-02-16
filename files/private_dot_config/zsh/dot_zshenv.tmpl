@@ -79,6 +79,14 @@ export NPM_CONFIG_USERCONFIG=$CONFIG_HOME/npm/npmrc
 export LLM_USER_PATH=$XDG_CONFIG_HOME/llm
 {{- end }}
 
+{{ if and (not .ephemeral) (not .synology) }}
+# ===== LLM =====
+export ANTHROPIC_API_KEY={{ onepasswordRead "op://dotfiles/Anthropic API Key - dotfiles/credential" | trim }}
+export GEMINI_API_KEY={{ onepasswordRead "op://dotfiles/Gemini API Key - dotfiles/credential" | trim }}
+export OPENAI_API_KEY={{ onepasswordRead "op://dotfiles/OpenAI API Key - dotfiles/credential" | trim }}
+export XAI_API_KEY={{ onepasswordRead "op://dotfiles/xAI API Key - dotfiles/credential" | trim }}
+{{ end }}
+
 {{ if eq .osid "linux-ubuntu" }}
 fd() {
     command fdfind "$@"
