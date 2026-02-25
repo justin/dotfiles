@@ -1,7 +1,2 @@
 npm
-@anthropic-ai/claude-code
-@github/copilot
-@google/gemini-cli
-@google/jules
-@openai/codex
 @mariozechner/pi-coding-agent
