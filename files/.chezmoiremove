@@ -34,6 +34,7 @@ bin
 .cache/zsh/external/zsh-vi-mode
 .config/nvim/statusline.lua
 .config/mcp
+.config/claude/hooks/append_agentsmd_context.sh
 {{- if ne .osid "darwin" }}
 Library
 .local/bin/darwin

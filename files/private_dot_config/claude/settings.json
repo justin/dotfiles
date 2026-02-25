@@ -1,18 +1,8 @@
 {
   "cleanupPeriodDays": 99999,
   "includeCoAuthoredBy": false,
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "startup",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$XDG_CONFIG_HOME/claude/hooks/append_agentsmd_context.sh"
-          }
-        ]
-      }
-    ]
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
   },
   "permissions": {
     "allow": [
