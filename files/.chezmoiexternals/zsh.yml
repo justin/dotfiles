@@ -47,4 +47,10 @@
   url: https://github.com/zsh-users/zsh-autosuggestions
   exact: true
   refreshPeriod: {{ .refresh_periods.week }}
+
+.cache/zsh/external/claude-autocompletions:
+  type: git-repo
+  url: https://github.com/wbingli/zsh-claudecode-completion.git
+  exact: true
+  refreshPeriod: {{ .refresh_periods.day }}
 {{ end }}

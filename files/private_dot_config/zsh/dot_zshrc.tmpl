@@ -40,6 +40,7 @@ typeset -U fpath
 fpath=(
   $ZDOTDIR/functions
   {{ .homebrew.prefix }}/share/zsh/site-functions(N)
+  $XDG_CACHE_HOME/zsh/external/claude-autocompletions(N)
   $fpath
 )
 
