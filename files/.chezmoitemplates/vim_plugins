@@ -33,3 +33,8 @@
   type: git-repo
   url: https://github.com/junegunn/fzf.vim
   refreshPeriod: {{ .refresh_period }}
+
+{{ .base_path }}/jww/start/ale:
+  type: git-repo
+  url: https://github.com/dense-analysis/ale
+  refreshPeriod: {{ .refresh_period }}
