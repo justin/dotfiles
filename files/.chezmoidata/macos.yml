@@ -141,17 +141,18 @@ packages:
       remove:
         taps: []
         brews: []
-        casks: ["rapidapi"]
+        casks: ["rapidapi", "github-copilot-for-xcode"]
         mas: []
       taps: []
-      brews: []
+      brews:
+        - "codex"
+        - "gemini-cli"
       casks:
         - "adobe-creative-cloud"
         - "dash"
         - "downie"
         - "dropshare"
         - "firefox"
-        - "github-copilot-for-xcode"
         - "helium-browser"
         - "netnewswire"
         - "omnigraffle"
