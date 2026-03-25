@@ -1,0 +1,12 @@
+{{ if and (not .headless) (lookPath "uv") -}}
+#!/usr/bin/env zsh
+#
+# Install the latest version of Python and set it as default using uv.
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+info "Installing Python via uv."
+uv python install --default
+
+{{ end -}}

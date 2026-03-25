@@ -10,6 +10,7 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
+export XDG_BIN_HOME=$HOME/.local/bin # Not part of the spec, but it makes sense to have.
 export CONFIG_HOME=$XDG_CONFIG_HOME
 export DOTFILES_DATA_DIR=$XDG_DATA_HOME/chezmoi
 {{- if eq .osid "darwin" }}
@@ -63,6 +64,10 @@ fi
 # ===== Python =====
 export PIP_CONFIG_FILE=$CONFIG_HOME/pip/pip.conf
 export POETRY_HOME=$CONFIG_HOME/pypoetry
+
+export UV_TOOL_BIN_DIR=$XDG_BIN_HOME
+export UV_TOOL_DIR=$XDG_DATA_HOME/uv/tools
+export UV_PYTHON_INSTALL_DIR=$XDG_DATA_HOME/uv/python
 
 # Disable auto-add virtualenv name to CLI prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
