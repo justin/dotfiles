@@ -3,157 +3,167 @@
 set shell := ["zsh", "-cu"]
 
 vscode_bundle := "com.microsoft.VSCode"
+create_project_script := "$XDG_DATA_HOME/chezmoi/files/dot_local/bin/executable_create-project-from-template"
 
 default:
-  just --list
+    just --list
 
 [macos]
-fix-touchid: # After a system update the Touch ID support for sudo is broken. This fixes it.
-  @sudo `which sudo-touchid`
+fix-touchid:
+    @sudo `which sudo-touchid`
 
 [macos]
-fix-uti: # Periodically the UTI mappings get broken. This fixes it.
-  @echo "Fixing UTI mappings"
+fix-uti:
+    @echo "Fixing UTI mappings"
 
-  duti -s {{vscode_bundle}} md all
-  duti -s {{vscode_bundle}} json all
-  duti -s {{vscode_bundle}} txt all
-  duti -s {{vscode_bundle}} js all
-  duti -s {{vscode_bundle}} ts all
-  duti -s {{vscode_bundle}} css all
-  duti -s {{vscode_bundle}} yml all
-  duti -s {{vscode_bundle}} cfg all
-  duti -s {{vscode_bundle}} sh all
-  duti -s {{vscode_bundle}} rb all
-  duti -s {{vscode_bundle}} py all
-  duti -s com.colliderli.iina mp4 all
-  duti -s com.colliderli.iina mkv all
-  duti -s com.colliderli.iina mov all
-  duti -s com.colliderli.iina avi all
-  duti -s com.colliderli.iina m4v all
-  duti $XDG_CONFIG_HOME/macos/duti-uti-mappings.plist
+    duti -s {{ vscode_bundle }} md all
+    duti -s {{ vscode_bundle }} json all
+    duti -s {{ vscode_bundle }} txt all
+    duti -s {{ vscode_bundle }} js all
+    duti -s {{ vscode_bundle }} ts all
+    duti -s {{ vscode_bundle }} css all
+    duti -s {{ vscode_bundle }} yml all
+    duti -s {{ vscode_bundle }} cfg all
+    duti -s {{ vscode_bundle }} sh all
+    duti -s {{ vscode_bundle }} rb all
+    duti -s {{ vscode_bundle }} py all
+    duti -s com.colliderli.iina mp4 all
+    duti -s com.colliderli.iina mkv all
+    duti -s com.colliderli.iina mov all
+    duti -s com.colliderli.iina avi all
+    duti -s com.colliderli.iina m4v all
+    duti $XDG_CONFIG_HOME/macos/duti-uti-mappings.plist
 
 [macos]
-install-sdk platform='ios': # Install an Xcode SDK for a given platform: ios, macos, watchos, tvos
- @echo "Installing SDK {{platform}}"
- xcodebuild -downloadPlatform {{platform}}
+install-sdk platform='ios':
+    @echo "Installing SDK {{ platform }}"
+    xcodebuild -downloadPlatform {{ platform }}
 
 [macos]
 [private]
-create-sim platform='iphone' device_name='': # Create a new iOS or iPadOS simulator.
-  @echo "Creating simulator for {{platform}}"
-  sim create_device {{platform}} {{quote(device_name)}}
+create-sim platform='iphone' device_name='':
+    @echo "Creating simulator for {{ platform }}"
+    sim create_device {{ platform }} {{ quote(device_name) }}
 
 [macos]
-create-ipad device_name='': # Create a new iOS simulator.
-  sim create_device iphone {{quote(device_name)}}
+create-ipad device_name='':
+    sim create_device iphone {{ quote(device_name) }}
 
 [macos]
-create-iphone device_name='': # Create a new iPadOS simulator.
-  sim create_device ipad {{quote(device_name)}}
+create-iphone device_name='':
+    sim create_device ipad {{ quote(device_name) }}
 
 [macos]
-reboot: # Reboot the system.
-  @echo "Rebooting the system."
-  sudo shutdown -r now
+reboot:
+    @echo "Rebooting the system."
+    sudo shutdown -r now
 
 [linux]
-reboot: # Reboot the system.
-  @echo "Rebooting the system."
-  sudo systemctl reboot
+reboot:
+    @echo "Rebooting the system."
+    sudo systemctl reboot
 
 alias up := update-all
 
 [macos]
-update-all: # Update all installed apps
-  @echo "🚀 Updating Homebrew."
-  just update-homebrew
-  gh extension upgrade --all
-  just update-mas
-  @echo "🚀 Updating npm packages"
-  just npm-upgrade
-  @echo "🚀 Updating python packages"
-  just py-upgrade
+update-all:
+    @echo "🚀 Updating Homebrew."
+    just update-homebrew
+    gh extension upgrade --all
+    just update-mas
+    @echo "🚀 Updating npm packages"
+    just npm-upgrade
+    @echo "🚀 Updating python packages"
+    just py-upgrade
 
 [linux]
-update-all: # Update all installed apps
-  just update-apt
-  just update-snap
-  @echo "🚀 Updating npm packages"
-  just npm-upgrade
-  @echo "🚀 Updating python packages"
-  just py-upgrade
+update-all:
+    just update-apt
+    just update-snap
+    @echo "🚀 Updating npm packages"
+    just npm-upgrade
+    @echo "🚀 Updating python packages"
+    just py-upgrade
 
 [macos]
 [private]
-update-mas: # Update Mac App Store apps
-  @echo "🚀 Updating Mac App Store apps."
-  mas upgrade
+update-mas:
+    @echo "🚀 Updating Mac App Store apps."
+    mas upgrade
 
 [macos]
-update-homebrew: # Update Homebrew installed packages.
-  brew update
-  brew outdated
-  brew upgrade
-  brew cleanup -s
+update-homebrew:
+    brew update
+    brew outdated
+    brew upgrade
+    brew cleanup -s
 
 [linux]
-update-apt: # Update APT packages.
-  @echo "🚀 Updating APT packages."
-  sudo apt update
-  sudo apt upgrade -y
-  sudo apt autoremove -y
+update-apt:
+    @echo "🚀 Updating APT packages."
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt autoremove -y
 
 [linux]
-update-snap: # Update Snap packages.
-  @echo "🚀 Updating Snap packages."
-  sudo snap refresh
+update-snap:
+    @echo "🚀 Updating Snap packages."
+    sudo snap refresh
 
 [macos]
-npm-upgrade: # Update all globally installed npm packages (no sudo on macOS)
-  #!/usr/bin/env zsh
-  set -euo pipefail
-  for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
-  do
-    npm -g install "$package"
-  done
-  xargs -a $XDG_CONFIG_HOME/npm/global_npm_packages.txt -n1 npm install -g;
+npm-upgrade:
+    #!/usr/bin/env zsh
+    set -euo pipefail
+    for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
+    do
+      npm -g install "$package"
+    done
+    xargs -a $XDG_CONFIG_HOME/npm/global_npm_packages.txt -n1 npm install -g;
 
 [linux]
-npm-upgrade: # Update all globally installed npm packages (use sudo on Linux)
-  #!/usr/bin/env zsh
-  set -euo pipefail
-  for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
-  do
-    sudo npm -g install "$package"
-  done
-  xargs -a $XDG_CONFIG_HOME/npm/global_npm_packages.txt -n1 sudo npm install -g;
+npm-upgrade:
+    #!/usr/bin/env zsh
+    set -euo pipefail
+    for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
+    do
+      sudo npm -g install "$package"
+    done
+    xargs -a $XDG_CONFIG_HOME/npm/global_npm_packages.txt -n1 sudo npm install -g;
 
 [private]
-pipx-uninstall: # Uninstall all pipx packages listed in global_pip_packages.txt
-  #!/usr/bin/env zsh
-  set -euo pipefail
-  if command -v pipx >/dev/null 2>&1; then
+pipx-uninstall:
+    #!/usr/bin/env zsh
+    set -euo pipefail
+    if command -v pipx >/dev/null 2>&1; then
+      while read -r package; do
+        if pipx list | grep -q "^package $package "; then
+          pipx uninstall "$package"
+          rm -rf "$HOME/.local/bin/$package"
+        fi
+      done < "$XDG_CONFIG_HOME/pip/global_pip_packages.txt"
+    fi
+
+[private]
+uv-install:
+    #!/usr/bin/env zsh
+    set -euo pipefail
     while read -r package; do
-      if pipx list | grep -q "^package $package "; then
-        pipx uninstall "$package"
-        rm -rf "$HOME/.local/bin/$package"
-      fi
+      uv tool install --upgrade "$package"
     done < "$XDG_CONFIG_HOME/pip/global_pip_packages.txt"
-  fi
+    cat $XDG_CONFIG_HOME/llm/uv-tool-packages.json | jq '.[]' | xargs -I {} llm install {}
 
-[private]
-uv-install: # Install python tools.
-  #!/usr/bin/env zsh
-  set -euo pipefail
-  while read -r package; do
-    uv tool install --upgrade "$package"
-  done < "$XDG_CONFIG_HOME/pip/global_pip_packages.txt"
-  cat $XDG_CONFIG_HOME/llm/uv-tool-packages.json | jq '.[]' | xargs -I {} llm install {}
+py-upgrade:
+    just pipx-uninstall
+    just uv-install
 
-py-upgrade: # Install python tools.
-  just pipx-uninstall
-  just uv-install
+create-python-project project_path='':
+    zsh {{ create_project_script }} git@github.com:justin/jww-python-template.git {{ quote(project_path) }}
 
-tldr url: # Summarize the contents of a webpage using llm.
-  @curl -s {{quote(url)}} | strip-tags -m | llm --template tldr -m gpt-4.1
+create-typescript-project project_path='':
+    zsh {{ create_project_script }} git@github.com:justin/jww-typescript-template.git {{ quote(project_path) }}
+
+create-swift-project project_path='':
+    zsh {{ create_project_script }} git@github.com:justin/jww-swift-template.git {{ quote(project_path) }}
+
+tldr url:
+    @curl -s {{ quote(url) }} | strip-tags -m | llm --template tldr -m gpt-4.1

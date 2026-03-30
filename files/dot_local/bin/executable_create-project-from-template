@@ -1,0 +1,64 @@
+#!/usr/bin/env zsh
+#
+# Helper script to generate a new project using one of my jww template repos.
+#
+# Usage:
+#   create-project-from-template [project-path-and-name]
+
+set -euo pipefail
+
+template_repo="${1:-}"
+destination="${2:-}"
+
+adjectives=(
+  amber ancient autumn brisk calm clever cosmic crisp eager ember gentle hidden
+  lucky mellow nimble noble quiet rapid silver steady vivid warm wild
+)
+
+nouns=(
+  anchor brook cedar comet coral dawn ember falcon forest grove harbor
+  meadow moon nova ocean pine river shadow spark stone summit valley wave
+)
+
+pick_random_name() {
+  local adjective nouns_index adjective_index
+  adjective_index=$((RANDOM % ${#adjectives[@]} + 1))
+  nouns_index=$((RANDOM % ${#nouns[@]} + 1))
+  adjective="${adjectives[$adjective_index]}"
+  echo "${adjective}-${nouns[$nouns_index]}"
+}
+
+if [[ -z "$template_repo" ]]; then
+  echo "Template repository is required."
+  exit 1
+fi
+
+if [[ -z "$destination" ]]; then
+  for _ in {1..25}; do
+    destination="$(pick_random_name)"
+    if [[ ! -e "$destination" ]]; then
+      break
+    fi
+  done
+
+  if [[ -z "$destination" || -e "$destination" ]]; then
+    echo "Unable to generate a unique project path. Please provide one explicitly."
+    exit 1
+  fi
+
+  echo "No project path provided. Using: $destination"
+fi
+
+if [[ -e "$destination" ]]; then
+  if [[ ! -d "$destination" ]]; then
+    echo "Destination exists and is not a directory: $destination"
+    exit 1
+  fi
+
+  if find "$destination" -mindepth 1 -maxdepth 1 | read -r _; then
+    echo "Destination directory already exists and is not empty: $destination"
+    exit 1
+  fi
+fi
+
+git clone "$template_repo" "$destination"
