@@ -1,7 +1,7 @@
 # ==================================================
 # TMUX Plugins
 # ==================================================
-
+{{ if not .ephemeral }}
 .local/share/tmux/plugins/tpm:
   type: git-repo
   url: https://github.com/tmux-plugins/tpm.git
@@ -18,3 +18,5 @@
   url: "https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-preview.sh"
   executable: true
   refreshPeriod: {{.refresh_periods.week}}
+
+{{ end -}}

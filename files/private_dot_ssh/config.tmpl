@@ -17,6 +17,8 @@ Host github.com gist.github.com
   User {{ .github_username }}
   PreferredAuthentications publickey
 
+{{ if (not .ephemeral) }}
+
 ### -- HOMELAB --
 
 Host homelab
@@ -49,4 +51,6 @@ Host studio
   HostName 100.88.193.73
   Port 22
   User justinwilliams
+{{ end -}}
+
 {{ end -}}

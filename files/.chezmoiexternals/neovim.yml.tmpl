@@ -1,8 +1,11 @@
 # ==================================================
 # Neovim Plugins
 # ==================================================
+{{ if not (.ephemeral) }}
 
 {{ $base_path := ".local/share/nvim/site/pack" }}
 {{ $refresh_period := .refresh_periods.week }}
 {{ $data := dict "base_path" $base_path "refresh_period" $refresh_period }}
 {{ template "vim_plugins" $data -}}
+
+{{ end -}}
