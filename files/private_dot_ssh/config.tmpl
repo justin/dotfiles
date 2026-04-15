@@ -16,6 +16,7 @@ Host github.com gist.github.com
   Port 22
   User {{ .github_username }}
   PreferredAuthentications publickey
+  ForwardAgent yes
 
 {{ if (not .ephemeral) }}
 
@@ -24,6 +25,7 @@ Host github.com gist.github.com
 Host homelab
   HostName 100.89.16.71
   User justin
+  ForwardAgent yes
 
 Host nas
   HostName 100.77.69.85
@@ -34,6 +36,7 @@ Host m1server
   HostName 100.100.224.127
   User justinwilliams
   Port 22
+  ForwardAgent yes
 
 Host udm
   HostName 100.107.130.20
@@ -46,11 +49,13 @@ Host mbp
   HostName 100.103.99.109
   Port 22
   User justinwilliams
+  ForwardAgent yes
 
 Host studio
   HostName 100.88.193.73
   Port 22
   User justinwilliams
+  ForwardAgent yes
 {{ end -}}
 
 {{ end -}}
