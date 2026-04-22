@@ -127,6 +127,7 @@ packages:
         - {name: "Apple Configurator 2", id: 1037126344}
         - {name: "Control Panel for Twitter", id: 1668516167}
         - {name: "Control Panel for YouTube", id: 6478456678}
+        - {name: "Dropzone 5", id: 6757682547}
         - {name: "Homecoming for Mastodon", id: 1666139593}
         - {name: "Ice Cubes for Mastodon", id: 6444915884}
         - {name: "Kagi for Safari", id: 1622835804}
@@ -136,6 +137,7 @@ packages:
         - {name: "StopTheMadness Pro", id: 6471380298}
         - {name: "PDF Expert", id: 1055273043}
         - {name: "Pixeur - Screen Color Picker", id: 1507890049}
+        - {name: "TabPilot", id: 6760547850}
         - {name: "Tailscale", id: 1475387142}
     personal:
       remove:
@@ -148,7 +150,6 @@ packages:
         - "codex"
         - "gemini-cli"
       casks:
-        - "adobe-creative-cloud"
         - "dash"
         - "downie"
         - "dropshare"
@@ -212,7 +213,6 @@ packages:
         - {name: "Soulver 3", id: 1508732804}
         - {name: "Spokenly", id: 6740315592}
         - {name: "TableFlip", id: 1462643128}
-        - {name: "Taska for GitHub Issues", id: 6741809383}
         - {name: "Testpiler", id: 6737156289}
         - {name: "xScope", id: 889428659}
     homelab:
