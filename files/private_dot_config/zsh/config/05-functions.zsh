@@ -67,3 +67,11 @@ function reload () {
   info "Reloading 'zsh'"
   exec zsh
 }
+
+
+# mcd
+# Creates a directory and changes into it.
+# Usage: mcd <directory_name>
+function mcd() {
+  mkdir -p "$1" && cd "$1"
+}
