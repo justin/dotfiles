@@ -41,6 +41,7 @@ packages:
         - "artginzburg/tap"
         - "TomAnthony/brews"
         - "XCTestHtmlReport/xchtmlreport"
+        - "fluffypony/yojam"
       brews:
         - "aria2"
         - "container"
@@ -122,6 +123,7 @@ packages:
         - "font-sf-arabic"
         - "font-sf-mono"
         - "font-monaspace"
+        - "yojam"
       mas:
         - {name: "1Blocker", id: 1365531024}
         - {name: "Apple Configurator 2", id: 1037126344}
