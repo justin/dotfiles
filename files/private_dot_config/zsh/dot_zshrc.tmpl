@@ -1,5 +1,8 @@
 # .zshrc is for interactive shells.
 
+# Do nothing in Claude Desktop 😾
+[[ -n "$TERM" ]] || return
+
 # You set options for the interactive shell there with the setopt and unsetopt commands.
 #
 # Shut up and don't beep on error
