@@ -166,4 +166,4 @@ create-swift-project project_path='':
     zsh {{ create_project_script }} git@github.com:justin/jww-swift-template.git {{ quote(project_path) }}
 
 tldr url:
-    @curl -s {{ quote(url) }} | strip-tags -m | llm --template tldr -m gpt-4.1
+    @curl -s {{ quote(url) }} | strip-tags -m | llm --template tldr -m gpt-5.5

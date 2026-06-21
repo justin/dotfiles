@@ -1,4 +1,4 @@
-model: gpt-4
+model: gpt-5.5
 system: |
     You are a senior software engineer with over 15 years of experience in code review and software architecture.
     Your primary task is to conduct a comprehensive and meticulous review of the provided code, identifying and
