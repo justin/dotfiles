@@ -10,24 +10,93 @@ source "$XDG_DATA_HOME/chezmoi/files/functions/_utilities"
 
 had_error=0
 
+if ! trust_state="$(brew trust --json=v1)"; then
+  warning "Failed to read Homebrew trust state"
+  trust_state='{"taps":[],"formulae":[]}'
+  had_error=1
+fi
+
+is_trusted() {
+  local type="$1"
+  local name="${2:l}"
+
+  jq -e --arg type "$type" --arg name "$name" '.[$type] | index($name) != null' <<< "$trust_state" &>/dev/null
+}
+
 # --- TAPS ---
 taps=(
   {{- range $tap := .packages.homebrew.global.taps }}
-  "{{ $tap }}"
+  "{{ $tap.name }}"
   {{- end }}
   {{- range $tap := .packages.homebrew.personal.taps }}
-  "{{ $tap }}"
+  "{{ $tap.name }}"
   {{- end }}
   {{- range $tap := .packages.homebrew.work.taps }}
-  "{{ $tap }}"
+  "{{ $tap.name }}"
   {{- end }}
 )
-for tap in "${taps[@]}"; do
+tap_trust_values=(
+  {{- range $tap := .packages.homebrew.global.taps }}
+  "{{ $tap.trust }}"
+  {{- end }}
+  {{- range $tap := .packages.homebrew.personal.taps }}
+  "{{ $tap.trust }}"
+  {{- end }}
+  {{- range $tap := .packages.homebrew.work.taps }}
+  "{{ $tap.trust }}"
+  {{- end }}
+)
+for (( index = 1; index <= ${#taps}; index++ )); do
+  tap="${taps[$index]}"
   if ! brew tap | grep -q "^${tap}$"; then
     if brew tap "$tap"; then
       success "Tapped $tap"
     else
       warning "Failed to tap $tap"
+      had_error=1
+      continue
+    fi
+  fi
+
+  if [[ "${tap_trust_values[$index]}" == "true" ]]; then
+    if ! is_trusted taps "$tap"; then
+      if brew trust "$tap"; then
+        success "Trusted $tap"
+      else
+        warning "Failed to trust $tap"
+        had_error=1
+      fi
+    fi
+  else
+    if is_trusted taps "$tap"; then
+      if brew untrust "$tap"; then
+        success "Untrusted $tap"
+      else
+        warning "Failed to untrust $tap"
+        had_error=1
+      fi
+    fi
+  fi
+done
+
+# --- TRUSTED FORMULAE ---
+trusted_formulae=(
+  {{- range $formula := .packages.homebrew.global.trusted_formulae }}
+  "{{ $formula }}"
+  {{- end }}
+  {{- range $formula := .packages.homebrew.personal.trusted_formulae }}
+  "{{ $formula }}"
+  {{- end }}
+  {{- range $formula := .packages.homebrew.work.trusted_formulae }}
+  "{{ $formula }}"
+  {{- end }}
+)
+for formula in "${trusted_formulae[@]}"; do
+  if ! is_trusted formulae "$formula"; then
+    if brew trust --formula "$formula"; then
+      success "Trusted formula $formula"
+    else
+      warning "Failed to trust formula $formula"
       had_error=1
     fi
   fi

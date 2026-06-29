@@ -35,13 +35,17 @@ packages:
         ]
     global:
       taps:
-        - "majd/repo"
-        - "peripheryapp/periphery"
-        - "buo/cask-upgrade"
-        - "artginzburg/tap"
-        - "TomAnthony/brews"
-        - "XCTestHtmlReport/xchtmlreport"
-        - "fluffypony/yojam"
+        - {name: "majd/repo", trust: true}
+        - {name: "peripheryapp/periphery", trust: true}
+        - {name: "buo/cask-upgrade", trust: true}
+        - {name: "fluffypony/yojam", trust: true}
+      trusted_formulae:
+        - "artginzburg/tap/sudo-touchid"
+        - "jordanbaird/createicns/createicns"
+        - "terror/tap/just-lsp"
+        - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
+        - "TomAnthony/brews/itermocil"
+        - "1password/tap/1password-cli"
       brews:
         - "aria2"
         - "container"
@@ -72,6 +76,7 @@ packages:
         - "mas"
         - "proctools"
         - "artginzburg/tap/sudo-touchid"
+        - "jordanbaird/createicns/createicns"
         - "swiftlint"
         - "swift-format"
         - "TomAnthony/brews/itermocil"
@@ -91,7 +96,7 @@ packages:
         - "terror/tap/just-lsp"
       casks:
         - "1password"
-        - "1password-cli"
+        - "1password/tap/1password-cli"
         - "visual-studio-code"
         - "bartender"
         - "bbedit"
@@ -148,6 +153,7 @@ packages:
         casks: ["rapidapi", "github-copilot-for-xcode"]
         mas: []
       taps: []
+      trusted_formulae: []
       brews:
         - "codex"
         - "gemini-cli"
@@ -219,11 +225,13 @@ packages:
         - {name: "xScope", id: 889428659}
     homelab:
       taps: []
+      trusted_formulae: []
       brews: []
       casks: []
       mas: []
     work:
       taps: []
+      trusted_formulae: []
       brews: []
       casks: []
       mas: []
