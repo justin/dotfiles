@@ -45,7 +45,6 @@ packages:
         - "terror/tap/just-lsp"
         - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
         - "TomAnthony/brews/itermocil"
-        - "1password/tap/1password-cli"
       brews:
         - "aria2"
         - "bat"
@@ -89,7 +88,7 @@ packages:
         - "xcodes"
         - "terror/tap/just-lsp"
       casks:
-        - "1password/tap/1password-cli"
+        - "1password-cli"
         - "visual-studio-code"
         - "bartender"
         - "bbedit"
