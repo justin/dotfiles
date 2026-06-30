@@ -1,4 +1,6 @@
 bin
+.gemini
+.config/gemini
 .config/claude/hooks/append_agentsmd_context.sh
 {{- if ne .osid "darwin" }}
 Library

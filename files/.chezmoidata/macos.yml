@@ -137,7 +137,6 @@ packages:
       brews:
         - "awscli"
         - "codex"
-        - "gemini-cli"
         - "jordanbaird/createicns/createicns"
         - "magic-wormhole"
         - "swiftlint"
