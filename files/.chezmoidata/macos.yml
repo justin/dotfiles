@@ -22,8 +22,8 @@ packages:
   homebrew:
     remove:
       taps: []
-      brews: ["llm"]
-      casks: ["jordanbaird-ice"]
+      brews: []
+      casks: []
       mas:
         [
           {name: "Transloader", id: 572281534},
@@ -48,7 +48,6 @@ packages:
         - "1password/tap/1password-cli"
       brews:
         - "aria2"
-        - "container"
         - "bat"
         - "eza"
         - "fzf"
@@ -76,9 +75,6 @@ packages:
         - "mas"
         - "proctools"
         - "artginzburg/tap/sudo-touchid"
-        - "jordanbaird/createicns/createicns"
-        - "swiftlint"
-        - "swift-format"
         - "TomAnthony/brews/itermocil"
         - "unxip"
         - "xcbeautify"
@@ -90,19 +86,15 @@ packages:
         - "uv"
         - "node"
         - "ruby"
-        - "magic-wormhole"
-        - "awscli"
         - "xcodes"
         - "terror/tap/just-lsp"
       casks:
-        - "1password"
         - "1password/tap/1password-cli"
         - "visual-studio-code"
         - "bartender"
         - "bbedit"
         - "chatgpt"
         - "claude"
-        - "cleanshot"
         - "fastscripts"
         - "hazel"
         - "istat-menus"
@@ -113,36 +105,24 @@ packages:
         - "kaleidoscope"
         - "keyboard-maestro"
         - "launchcontrol"
-        - "mullvad-vpn"
         - "openinterminal"
         - "orbstack"
-        - "plistedit-pro"
         - "raycast"
         - "syntax-highlight"
         - "git-credential-manager"
-        - "ipatool"
-        - "periphery"
         - "font-new-york"
         - "font-sf-compact"
         - "font-sf-pro"
         - "font-sf-arabic"
         - "font-sf-mono"
         - "font-monaspace"
-        - "yojam"
       mas:
         - {name: "1Blocker", id: 1365531024}
         - {name: "Apple Configurator 2", id: 1037126344}
-        - {name: "Control Panel for Twitter", id: 1668516167}
-        - {name: "Control Panel for YouTube", id: 6478456678}
         - {name: "Dropzone 5", id: 6757682547}
-        - {name: "Homecoming for Mastodon", id: 1666139593}
-        - {name: "Ice Cubes for Mastodon", id: 6444915884}
         - {name: "Kagi for Safari", id: 1622835804}
         - {name: "Keka", id: 470158793}
         - {name: "PCalc", id: 403504866}
-        - {name: "Spokenly", id: 6740315592}
-        - {name: "StopTheMadness Pro", id: 6471380298}
-        - {name: "PDF Expert", id: 1055273043}
         - {name: "Pixeur - Screen Color Picker", id: 1507890049}
         - {name: "TabPilot", id: 6760547850}
         - {name: "Tailscale", id: 1475387142}
@@ -150,21 +130,33 @@ packages:
       remove:
         taps: []
         brews: []
-        casks: ["rapidapi", "github-copilot-for-xcode"]
+        casks: []
         mas: []
       taps: []
       trusted_formulae: []
       brews:
+        - "awscli"
         - "codex"
         - "gemini-cli"
+        - "jordanbaird/createicns/createicns"
+        - "magic-wormhole"
+        - "swiftlint"
+        - "swift-format"
       casks:
+        - "1password"
+        - "cleanshot"
         - "dash"
         - "downie"
         - "dropshare"
         - "firefox"
+        - "ipatool"
         - "helium-browser"
+        - "mullvad-vpn"
         - "netnewswire"
         - "omnigraffle"
+        - "orion"
+        - "periphery"
+        - "plistedit-pro"
         - "proxyman"
         - "permute"
         - "script-debugger"
@@ -175,6 +167,7 @@ packages:
         - "typora"
         - "transmit"
         - "virtualbuddy"
+        - "yojam"
         - "zoom"
       mas:
         - {name: "10ten Japanese Reader", id: 1573540634}
@@ -184,6 +177,8 @@ packages:
         - {name: "Channels Pro - IPTV Player", id: 1552284117}
         - {name: "CodeRunner 4", id: 955297617}
         - {name: "Compressor", id: 6746516157}
+        - {name: "Control Panel for Twitter", id: 1668516167}
+        - {name: "Control Panel for YouTube", id: 6478456678}
         - {name: "Copilot Track Budget Money", id: 1447330651}
         - {name: "Core Data Lab", id: 1460684638}
         - {name: "Craft", id: 1487937127}
@@ -197,6 +192,8 @@ packages:
         - {name: "Final Cut Pro", id: 1631624924}
         - {name: "Home Assistant", id: 1099568401}
         - {name: "HomePass for HomeKit", id: 1330266650}
+        - {name: "Homecoming for Mastodon", id: 1666139593}
+        - {name: "Ice Cubes for Mastodon", id: 6444915884}
         - {name: "Infuse 7", id: 1136220934}
         - {name: "Keynote", id: 361285480}
         - {name: "Microsoft Excel", id: 462058435}
@@ -209,6 +206,7 @@ packages:
         - {name: "Pages", id: 361309726}
         - {name: "Paprika Recipe Manager 3", id: 1303222628}
         - {name: "Parcel - Delivery Tracking", id: 375589283}
+        - {name: "PDF Expert", id: 1055273043}
         - {name: "Photomator Photo Editor", id: 1444636541}
         - {name: "Pixelmator Pro", id: 6746662575}
         - {name: "Privacy for Safari", id: 6449850851}
