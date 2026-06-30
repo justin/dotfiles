@@ -1,74 +1,48 @@
-## Git Workflow
+## Git workflow
 
-Version control isn't just a place to store your code or a backup system. It is a journal that explains *why* your code exists in a given state. This information is useful when it comes time to figure out why a bug was introduced, and more importantly, how to resolve it.
+Apply this workflow when Git operations are appropriate for completing the requested task.
 
-Our version control workflow boils down to three simple concepts:
+### Authorization
 
-1. We keep a linear history `main` so that it is easy to use [git bisect](https://git-scm.com/docs/git-bisect) to debug crashes and other bugs over time.
-2. A commit should be dedicated to a single Jira ticket. If you fix a bug unrelated to the ticket, it should be a separate commit. This allows us to easily revert bad changes without extra hassle.
-3. We follow the standard practice for writing [commit messages](https://commit.style/).
+- You may create branches, stage files, and commit completed changes without additional approval when the repository uses Git and Justin requested implementation. Do not commit exploratory edits, incomplete work, or changes made only for analysis.
+- Use Git for local version-control operations.
+- Use the GitHub CLI (`gh`) for GitHub-specific operations such as viewing checks, creating pull requests, and managing issues.
+- Get Justin's explicit approval before pushing commits or creating or modifying remote GitHub resources.
+- Do not merge branches, force-push, delete branches or tags, rewrite shared history, or modify repository settings without Justin's explicit approval.
+- Never discard uncommitted changes. Preserve changes outside the current task.
+- Do not amend existing commits unless Justin requests it.
+- Before committing, review the staged diff and run the relevant tests, formatters, and linters.
+- Before pushing, verify the branch, remote, and commits being pushed.
+- Preserve and report relevant Git and GitHub CLI output verbatim when it affects a decision, reveals an error, or Justin asks to see it. Do not replace errors with unsupported summaries.
+- Do not mention the assistant, model, or tool in source comments, commits, pull requests, or other repository history.
 
-A good commit message is just as important as the code change. Software is a collaborative endeavor. Writing a commit message that doesn't *explain* a change isn't helpful when you or your teammates have to dive into the history and understand a specific change in the code base.
+### Commit and branch conventions
 
-- The first line of a commit message serves as a summary and should be limited to 50 characters. It is also pulled into our release notes for each TestFlight build. It should be capitalized and omit any trailing punctuation.
-- Subsequent lines should explain why the change is necessary, how you addressed it, and any potential side effects it may introduce.
+- Keep the base branch's history linear so that `git bisect` remains useful.
+- Keep each commit focused on one cohesive change. Put unrelated fixes in separate commits.
+- Follow repository-specific branch, remote, and base-branch conventions. When none are documented, use `main`, `origin`, and `jww/<branch-name>`.
+- Rebase onto the remote base branch rather than merging it into the feature branch.
+- Follow [commit.style](https://commit.style/). Use a capitalized, present-tense summary of at most 50 characters with no trailing punctuation.
+- Use the commit body to explain why the change is needed, how it works, and any relevant side effects. Wrap body lines at 72 characters.
+- When the work is associated with a tracked work item, follow the repository's reference and closing conventions. For example:
 
-> "The difference between a tolerable programmer and a great programmer is not how many programming languages they know, and it's not whether they prefer Python or Java. **It's whether they can communicate their ideas…** By writing clear comments and technical specs, they let other programmers understand their code, which means other programmers can use and work with their code instead of rewriting it. Absent this, their code is worthless. By writing clear technical documentation for end users, they allow people to figure out what their code is supposed to do, which is the only way those users can see the value in their code." ﹣ [Joel Spolsky](https://www.joelonsoftware.com/2005/01/02/advice-for-computer-science-college-students/)
+```text
+[ENG-123] Present-tense summary
 
-### Pull Requests & Code Reviews
+* Explain why the change is necessary.
+* Explain the approach and relevant side effects.
 
-When you have a pull request ready for code review, we follow the [Thoughtbot](https://github.com/thoughtbot/guides/tree/main/git) guide for pull requests and code review. This is copied verbatim.
-
-Create a local feature branch based off `main`.
-
-```zsh
-git checkout main
-git pull
-git checkout -b jww/<branch-name>
+Fixes ENG-123
 ```
 
-Rebase frequently to incorporate upstream changes.
+```text
+Present-tense summary
 
-```zsh
-git fetch origin
-git rebase origin/main
+* Explain why the change is necessary.
+* Explain the approach and relevant side effects.
+
+Closes #123
 ```
 
-Resolve conflicts. When feature is complete and tests pass, stage the changes.
-
-```zsh
-git add --all
-```
-
-When you've staged the changes, commit them.
-
-```zsh
-git status
-git commit --verbose
-```
-
-Write a [good commit message](https://commit.style/). Example format:
-
-```other
-[ENG-00] Present-tense summary under 50 characters
-
-* More information about commit (under 72 characters).
-* More information about commit (under 72 characters).
-
-Fixes ENG-00
-```
-
-If you've created more than one commit, [use `git rebase` interactively](https://help.github.com/articles/about-git-rebase/) to squash them into cohesive commits with good messages:
-
-```zsh
-git rebase -i origin/main
-```
-
-Share your branch.
-
-```zsh
-git push origin <branch name>
-```
-
-Generate a new pull request. If you wrote good commit messages, you can easily copy / paste them into the description of the pull request so it's easier to write and explain your intent to the code reviewer.
-
+- You may clean up unpublished local commits. Do not rewrite commits that have been pushed or shared without Justin's explicit approval.
+- Follow the [Thoughtbot pull-request and review guidelines](https://github.com/thoughtbot/guides/tree/main/git) when preparing a pull request.
