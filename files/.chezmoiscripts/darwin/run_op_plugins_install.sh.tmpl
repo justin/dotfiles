@@ -6,13 +6,6 @@
 source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
-if [ ! -f "$XDG_CONFIG_HOME/op/plugins/gh.json" ]; then
-    info "1Password CLI: Installing GitHub plugin."
-    pushd $HOME
-    op plugin init gh
-    popd
-fi
-
 {{ if .personal }}
 if [ ! -f "$XDG_CONFIG_HOME/op/plugins/aws.json" ]; then
     info "1Password CLI: Installing AWS plugin."
