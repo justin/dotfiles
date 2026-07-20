@@ -92,6 +92,8 @@ export OPENAI_API_KEY={{ onepasswordRead "op://dotfiles/OpenAI API Key - dotfile
 export XAI_API_KEY={{ onepasswordRead "op://dotfiles/xAI API Key - dotfiles/credential" | trim }}
 {{ end }}
 
+
+export HOMEBREW_GITHUB_API_TOKEN={{ onepasswordRead "op://dotfiles/GitHub API Token - dotfiles/token" | trim }}
 {{ if eq .osid "linux-ubuntu" }}
 fd() {
     command fdfind "$@"
