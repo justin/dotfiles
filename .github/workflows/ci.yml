@@ -23,7 +23,7 @@ jobs:
       env:
         CODESPACES: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: |
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           ./install.sh
