@@ -90,10 +90,11 @@ export ANTHROPIC_API_KEY={{ onepasswordRead "op://dotfiles/Anthropic API Key - d
 export GEMINI_API_KEY={{ onepasswordRead "op://dotfiles/Gemini API Key - dotfiles/credential" | trim }}
 export OPENAI_API_KEY={{ onepasswordRead "op://dotfiles/OpenAI API Key - dotfiles/credential" | trim }}
 export XAI_API_KEY={{ onepasswordRead "op://dotfiles/xAI API Key - dotfiles/credential" | trim }}
+
+export HOMEBREW_GITHUB_API_TOKEN={{ onepasswordRead "op://dotfiles/GitHub API Token - dotfiles/token" | trim }}
 {{ end }}
 
 
-export HOMEBREW_GITHUB_API_TOKEN={{ onepasswordRead "op://dotfiles/GitHub API Token - dotfiles/token" | trim }}
 {{ if eq .osid "linux-ubuntu" }}
 fd() {
     command fdfind "$@"
