@@ -6,7 +6,6 @@ Apply this workflow when Git operations are appropriate for completing the reque
 
 - You may create branches, stage files, and commit completed changes without additional approval when the repository uses Git and Justin requested implementation. Do not commit exploratory edits, incomplete work, or changes made only for analysis.
 - Use Git for local version-control operations.
-- Use the GitHub CLI (`gh`) for GitHub-specific operations such as viewing checks, creating pull requests, and managing issues.
 - Get Justin's explicit approval before pushing commits or creating or modifying remote GitHub resources.
 - Do not merge branches, force-push, delete branches or tags, rewrite shared history, or modify repository settings without Justin's explicit approval.
 - Never discard uncommitted changes. Preserve changes outside the current task.
@@ -20,7 +19,7 @@ Apply this workflow when Git operations are appropriate for completing the reque
 
 - Keep the base branch's history linear so that `git bisect` remains useful.
 - Keep each commit focused on one cohesive change. Put unrelated fixes in separate commits.
-- Follow repository-specific branch, remote, and base-branch conventions. When none are documented, use `main`, `origin`, and `jww/<branch-name>`.
+- Follow repository-specific branch, remote, and base-branch conventions.
 - Rebase onto the remote base branch rather than merging it into the feature branch.
 - Follow [commit.style](https://commit.style/). Use a capitalized, present-tense summary of at most 50 characters with no trailing punctuation.
 - Use the commit body to explain why the change is needed, how it works, and any relevant side effects. Wrap body lines at 72 characters.
