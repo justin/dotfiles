@@ -1,0 +1,42 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* Merges the canonical MCP servers tagged for "claude" over the live
+       ~/.claude.json (passed in on .chezmoi.stdin). Every other key in this
+       file is Claude Code's own runtime state (auth, caches, sessions,
+       project history) and passes through untouched.
+
+       mcpServers gets reconciliation, not a plain merge: any existing entry
+       whose name is STILL PRESENT in llm-mcp-base.yml.tmpl is fully owned, so
+       removing "claude" from its tags deletes it here too. Entries Claude
+       Code itself might inject under a name we've never declared would pass
+       through untouched (none exist today). Caveat: deleting a server's
+       entire entry from llm-mcp-base.yml.tmpl (not just untagging it) makes
+       it indistinguishable from an app-injected key, so it will NOT be
+       auto-removed from files this has already applied to — untag first
+       (empty its "tools" list) to let this delete it, then remove the entry
+       once no live file still has it. */ -}}
+{{- $tool := "claude" -}}
+{{- $base := (include (joinPath .chezmoi.sourceDir ".chezmoitemplates/llm-mcp-base.yml.tmpl") | fromYaml).servers -}}
+{{- $knownNames := keys $base -}}
+{{- $mcpServers := dict -}}
+{{- range $name, $def := $base -}}
+  {{- if has $tool $def.tools -}}
+    {{- $mcpServers = set $mcpServers $name (omit $def "tools" "platforms") -}}
+  {{- end -}}
+{{- end -}}
+{{- $existing := dict -}}
+{{- if .chezmoi.stdin -}}
+  {{- $existing = .chezmoi.stdin | fromJson -}}
+{{- end -}}
+{{- $reconciled := dict -}}
+{{- if hasKey $existing "mcpServers" -}}
+  {{- range $name, $def := (index $existing "mcpServers") -}}
+    {{- if not (has $name $knownNames) -}}
+      {{- $reconciled = set $reconciled $name $def -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $name, $def := $mcpServers -}}
+  {{- $reconciled = set $reconciled $name $def -}}
+{{- end -}}
+{{- $existing = set $existing "mcpServers" $reconciled -}}
+{{- $existing | toPrettyJson -}}

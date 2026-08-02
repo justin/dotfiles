@@ -1,0 +1,4 @@
+skills:
+  global:
+    - {package: "casey/just", skill: "just"}
+    - {package: "vercel-labs/skills", skill: "find-skills"}

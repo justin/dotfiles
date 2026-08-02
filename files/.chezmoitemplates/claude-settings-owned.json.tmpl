@@ -1,9 +1,6 @@
 {
   "cleanupPeriodDays": 99999,
   "includeCoAuthoredBy": false,
-  "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true
-  },
   "permissions": {
     "allow": [
       "Bash(cat:*)",
@@ -27,5 +24,13 @@
       "Read(./config/credentials.json)",
       "Read(./build)"
     ]
-  }
+  },
+  "hooks": {},
+  "enableWorkflows": true,
+  "enabledPlugins": {
+    "claude-code-setup@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true
+  },
+  "editorMode": "vim",
+  "effortLevel": "medium"
 }

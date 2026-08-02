@@ -97,6 +97,45 @@ function, or filename convention is uncertain, consult the official
 - Core tools are `zsh`, `chezmoi`, `just`, `git`, and `gh`. Check availability
   before use and do not install missing tools unless authorized.
 
+## LLM Tool Customization Ownership
+
+Canonical MCP server definitions live in `files/.chezmoitemplates/llm-mcp-base.yml.tmpl`,
+tagged with `tools:` and `platforms:`. Per-tool adapters filter this data through
+`files/.chezmoitemplates/llm-mcp-for-tool.json.tmpl`.
+
+Several live config files mix declared preferences with tool-owned runtime
+state (auth, sessions, caches, trust). These are managed with chezmoi
+`modify_` scripts, not full-file templates, so `chezmoi apply` merges owned
+fields in and leaves everything else untouched. A `modify_` file must NOT use
+the `.tmpl` extension if it contains the `chezmoi:modify-template` marker
+comment — `.tmpl` triggers a first-pass template render before `.chezmoi.stdin`
+is populated, which fails. The marker comment itself is what tells chezmoi to
+treat the file as a template with stdin wired up.
+
+Files whose `mcpServers`/`mcp_servers` is listed below as owned use
+reconciliation, not a plain merge: any existing entry whose name is still
+present in `llm-mcp-base.yml.tmpl` is fully owned, so untagging a server for
+a tool (emptying its `tools` list, not deleting the whole entry) deletes it
+from that tool's already-applied files on the next apply. Deleting a
+server's entry outright, instead of untagging it, makes it indistinguishable
+from a key some other process injected (e.g. Codex's `node_repl`), so it will
+NOT be auto-removed from files this has already applied to — untag first,
+apply, then delete the now-unreferenced entry. Claude's `enabledPlugins`
+reconciliation (see below) doesn't have this limitation, since marketplace
+suffixes give it a stable ownership boundary that MCP server names lack.
+
+| Target | Managed (owned) | Preserved (live-only) |
+| --- | --- | --- |
+| `~/.config/claude/settings.json` | `permissions`, `hooks`, `enableWorkflows`, `editorMode`, `enabledPlugins` entries under `@claude-plugins-official` | Any other key (e.g. `effortLevel`), any `enabledPlugins` entry from another marketplace |
+| `~/.claude.json` | `mcpServers` (tag `claude`) | Everything else (auth, caches, sessions, `projects`, ...) |
+| `~/.codex/config.toml` | `personality`, `notify`, `service_tier`, `mcp_servers` (tag `codex`) | `model`, `model_reasoning_effort` (actively changed via the app UI), `projects`, `marketplaces`, `plugins`, `desktop`, `features`, `hooks.state`, `memories`, `apps`, `tui`, `shell_environment_policy`, and the `node_repl`/`computer-use` MCP entries the ChatGPT app injects |
+
+Codex plugin enablement (`[plugins."name@marketplace"]`) is intentionally left
+entirely preserved: every entry currently present is under a `source_type =
+"local"` marketplace that ships with and regenerates from the ChatGPT/Codex
+app itself, not something curated externally. Revisit this if a real
+third-party Codex plugin marketplace is ever added.
+
 ## Validation
 
 Use the narrowest read-only check that exercises the change.

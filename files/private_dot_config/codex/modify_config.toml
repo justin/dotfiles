@@ -1,0 +1,51 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* Merges owned Codex config.toml fields over the live file (.chezmoi.stdin):
+       - static scalars (model, personality, notify, ...) from codex-config-owned.toml.tmpl
+       - mcp_servers tagged "codex" from the canonical llm-mcp-base(+darwin) data
+       Everything else (projects, marketplaces, plugins, desktop, features,
+       hooks.state, memories, apps, tui, shell_environment_policy) is Codex's
+       own runtime/trust state and passes through untouched.
+
+       mcp_servers gets reconciliation, not a plain merge: any existing entry
+       whose name is STILL PRESENT in llm-mcp-base.yml.tmpl (across all
+       tools, not just "codex") is fully owned, so removing "codex" from its
+       tags deletes it here too. Entries the ChatGPT app injects under names
+       we've never declared (node_repl, computer-use) pass through untouched.
+       Caveat: deleting a server's entire entry from llm-mcp-base.yml.tmpl
+       (not just untagging it) makes it indistinguishable from an
+       app-injected key, so it will NOT be auto-removed from files this has
+       already applied to — untag first (empty its "tools" list) to let this
+       delete it, then remove the entry once no live file still has it. */ -}}
+{{- $tool := "codex" -}}
+{{- $scalars := include (joinPath .chezmoi.sourceDir ".chezmoitemplates/codex-config-owned.toml.tmpl") | fromToml -}}
+{{- if eq .chezmoi.os "darwin" -}}
+  {{- $notifyCommand := printf "%s/.config/codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient" .chezmoi.homeDir -}}
+  {{- $scalars = set $scalars "notify" (list $notifyCommand "turn-ended") -}}
+{{- end -}}
+{{- $serverDefs := (include (joinPath .chezmoi.sourceDir ".chezmoitemplates/llm-mcp-base.yml.tmpl") | fromYaml).servers -}}
+{{- /* Keep retired names in reconciliation until their prior managed entry is
+       removed from live configs. */ -}}
+{{- $knownNames := append (keys $serverDefs) "xcode" -}}
+{{- $mcpServers := dict -}}
+{{- range $name, $def := $serverDefs -}}
+  {{- if has $tool $def.tools -}}
+    {{- $mcpServers = set $mcpServers $name (omit $def "tools" "platforms" "type") -}}
+  {{- end -}}
+{{- end -}}
+{{- $existing := dict -}}
+{{- if .chezmoi.stdin -}}
+  {{- $existing = .chezmoi.stdin | fromToml -}}
+{{- end -}}
+{{- $reconciled := dict -}}
+{{- if hasKey $existing "mcp_servers" -}}
+  {{- range $name, $def := (index $existing "mcp_servers") -}}
+    {{- if not (has $name $knownNames) -}}
+      {{- $reconciled = set $reconciled $name $def -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $name, $def := $mcpServers -}}
+  {{- $reconciled = set $reconciled $name $def -}}
+{{- end -}}
+{{- $existing = set $existing "mcp_servers" $reconciled -}}
+{{- mergeOverwrite (dict) $existing $scalars | toToml -}}

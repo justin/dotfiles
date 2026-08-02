@@ -1,0 +1,12 @@
+{{- /* Filters llm-mcp-base.yml.tmpl down to the servers tagged for one tool.
+       Context: dict with "tool" (string) and "sourceDir" (.chezmoi.sourceDir). */ -}}
+{{- $tool := .tool -}}
+{{- $base := include (joinPath .sourceDir ".chezmoitemplates/llm-mcp-base.yml.tmpl") | fromYaml -}}
+{{- $servers := dict -}}
+{{- range $name, $def := $base.servers -}}
+  {{- if has $tool $def.tools -}}
+    {{- $clean := omit $def "tools" "platforms" -}}
+    {{- $servers = set $servers $name $clean -}}
+  {{- end -}}
+{{- end -}}
+{{- dict "mcpServers" $servers | toJson -}}

@@ -1,0 +1,56 @@
+{{ if and (not .headless) (lookPath "npx") -}}
+#!/usr/bin/env zsh
+#
+# Install global agent skills declared in .chezmoidata/skills.yml via the `skills` CLI.
+set -euo pipefail
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+state_home="${XDG_STATE_HOME:-$HOME/.local/state}"
+lockfile="$state_home/skills/.skill-lock.json"
+
+is_installed() {
+  local name="$1"
+  [[ -f "$lockfile" ]] && jq -e --arg name "$name" '.skills[$name] != null' "$lockfile" &>/dev/null
+}
+
+had_error=0
+
+packages=(
+  {{- range $skill := .skills.global }}
+  "{{ $skill.package }}@{{ $skill.skill }}"
+  {{- end }}
+)
+names=(
+  {{- range $skill := .skills.global }}
+  "{{ $skill.skill }}"
+  {{- end }}
+)
+
+processing "Installing missing global agent skills..."
+for (( index = 1; index <= ${#packages}; index++ )); do
+  package="${packages[$index]}"
+  name="${names[$index]}"
+
+  if is_installed "$name"; then
+    continue
+  fi
+
+  info "Installing skill $name from $package"
+  if npx --yes skills add "$package" -g -y; then
+    success "Installed skill $name"
+  else
+    warning "Failed to install skill $name"
+    had_error=1
+  fi
+done
+
+if (( had_error )); then
+  warning "Skill installation completed with errors"
+  exit 1
+else
+  success "Skill installation complete"
+  exit 0
+fi
+{{ end -}}
