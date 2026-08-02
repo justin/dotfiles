@@ -22,6 +22,10 @@ alias gp='git push origin HEAD'
 alias gst='git status'
 # If you are deep in the directory tree, this will return to the project root.
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+# Alias gh copilot to copilot for convenience.
+alias copilot='gh copilot'
+# Alias gh copilot to ghc for convenience.
+alias ghc='gh copilot'
 
 # Pipe my public key to my clipboard.
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
