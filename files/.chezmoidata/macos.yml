@@ -36,7 +36,6 @@ packages:
     global:
       taps:
         - {name: "majd/repo", trust: true}
-        - {name: "peripheryapp/periphery", trust: true}
         - {name: "buo/cask-upgrade", trust: true}
         - {name: "fluffypony/yojam", trust: true}
       trusted_formulae:
@@ -72,7 +71,6 @@ packages:
         - "ffmpeg"
         - "kin"
         - "mas"
-        - "proctools"
         - "artginzburg/tap/sudo-touchid"
         - "TomAnthony/brews/itermocil"
         - "unxip"
@@ -138,6 +136,7 @@ packages:
         - "codex"
         - "jordanbaird/createicns/createicns"
         - "magic-wormhole"
+        - "periphery"
         - "swiftlint"
         - "swift-format"
       casks:
@@ -153,7 +152,6 @@ packages:
         - "netnewswire"
         - "omnigraffle"
         - "orion"
-        - "periphery"
         - "plistedit-pro"
         - "proxyman"
         - "permute"
