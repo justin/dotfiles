@@ -1,5 +1,5 @@
 # Canonical MCP server definitions shared across LLM tool configs.
-# tools: chezmoi-managed clients that consume this server (claude, codex, copilot, vscode)
+# tools: chezmoi-managed clients that consume this server (claude, codex, copilot)
 # platforms: chezmoi.os values this server applies to
 servers:
   openaiDeveloperDocs:
@@ -11,5 +11,5 @@ servers:
   svelte:
     type: url
     url: https://mcp.svelte.dev/mcp
-    tools: [codex, claude]
+    tools: [codex, claude, copilot]
     platforms: [darwin, linux]

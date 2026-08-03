@@ -1,0 +1,10 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* Merges owned settings over the live ~/.copilot/settings.json
+       (passed in on .chezmoi.stdin), preserving any keys Copilot CLI writes
+       itself that we don't declare here (e.g. via the /settings command). */ -}}
+{{- $owned := include (joinPath .chezmoi.sourceDir ".chezmoitemplates/copilot-settings-owned.json.tmpl") | fromJson -}}
+{{- $existing := dict -}}
+{{- if .chezmoi.stdin -}}
+  {{- $existing = .chezmoi.stdin | fromJson -}}
+{{- end -}}
+{{- mergeOverwrite (dict) $existing $owned | toPrettyJson -}}

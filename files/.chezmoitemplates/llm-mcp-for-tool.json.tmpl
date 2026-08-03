@@ -6,6 +6,11 @@
 {{- range $name, $def := $base.servers -}}
   {{- if has $tool $def.tools -}}
     {{- $clean := omit $def "tools" "platforms" -}}
+    {{- /* Copilot expects HTTP transport servers as type="http" while
+          Claude/Codex consume the canonical type="url" value. */ -}}
+    {{- if and (eq $tool "copilot") (hasKey $clean "type") (eq (index $clean "type") "url") -}}
+      {{- $clean = set $clean "type" "http" -}}
+    {{- end -}}
     {{- $servers = set $servers $name $clean -}}
   {{- end -}}
 {{- end -}}
