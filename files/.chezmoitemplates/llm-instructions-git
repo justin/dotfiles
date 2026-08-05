@@ -1,6 +1,6 @@
 ## Git safety
 
-- You may create branches, stage files, and commit completed implementation work. Do not commit exploratory or incomplete work.
+- For requested implementation work, you may create branches, stage files, and commit completed changes
 - Get Justin's explicit approval before pushing, creating or modifying remote resources, merging, force-pushing, deleting branches or tags, rewriting shared history, or changing repository settings.
 - Never discard uncommitted work; preserve changes outside the current task. Do not amend commits without Justin's approval.
 - Before a commit, review the staged diff and run relevant validation. Before a push, verify the branch, remote, and commits being pushed.
