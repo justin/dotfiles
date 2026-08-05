@@ -35,7 +35,11 @@ agents=(
 skills=(
   {{- range $skill := .skills.global.entries }}
   "{{ $skill.source }}"
-  "{{ $skill.skill }}"
+  {{- with index $skill "skill" }}
+  "{{ . }}"
+  {{- else }}
+  ""
+  {{- end }}
   {{- end }}
 )
 
@@ -44,7 +48,13 @@ for (( index = 1; index <= ${#skills[@]}; index += 2 )); do
   source="${skills[$index]}"
   name="${skills[$(( index + 1 ))]}"
 
-  arguments=(npx --yes skills add "$source" --skill "$name" --global --yes)
+  arguments=(npx --yes skills add "$source" --global --yes)
+  if [[ -n "$name" ]]; then
+    arguments+=(--skill "$name")
+    description="skill $name"
+  else
+    description="all skills"
+  fi
   for agent in "${agents[@]}"; do
     cli_agent="$(agent_name "$agent")" || {
       warning "Unsupported global skill agent: $agent"
@@ -54,11 +64,11 @@ for (( index = 1; index <= ${#skills[@]}; index += 2 )); do
     arguments+=(--agent "$cli_agent")
   done
 
-  info "Installing skill $name from $source for ${agents[*]}"
+  info "Installing $description from $source for ${agents[*]}"
   if "${arguments[@]}"; then
-    success "Installed skill $name"
+    success "Installed $description"
   else
-    warning "Failed to install skill $name"
+    warning "Failed to install $description"
     had_error=1
   fi
 done
