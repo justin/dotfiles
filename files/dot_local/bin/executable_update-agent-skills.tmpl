@@ -1,13 +1,8 @@
-{{ if and (not .headless) (lookPath "npx") -}}
+{{- if lookPath "npx" }}
 #!/usr/bin/env zsh
 #
-# Install global agent skills declared in .chezmoidata/skills.yml via the `skills` CLI.
+# Update global agent skills declared in .chezmoidata/skills.yml.
 set -euo pipefail
-
-source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
-source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
-
-had_error=0
 
 agent_name() {
   case "$1" in
@@ -39,7 +34,11 @@ skills=(
   {{- end }}
 )
 
-processing "Reconciling global agent skills..."
+if (( ${#skills[@]} == 0 )); then
+  print -- "No global agent skills are configured."
+  exit 0
+fi
+
 for (( index = 1; index <= ${#skills[@]}; index += 2 )); do
   source="${skills[$index]}"
   name="${skills[$(( index + 1 ))]}"
@@ -47,27 +46,13 @@ for (( index = 1; index <= ${#skills[@]}; index += 2 )); do
   arguments=(npx --yes skills add "$source" --skill "$name" --global --yes)
   for agent in "${agents[@]}"; do
     cli_agent="$(agent_name "$agent")" || {
-      warning "Unsupported global skill agent: $agent"
-      had_error=1
-      continue 2
+      print -u2 -- "Unsupported global skill agent: $agent"
+      exit 1
     }
     arguments+=(--agent "$cli_agent")
   done
 
-  info "Installing skill $name from $source for ${agents[*]}"
-  if "${arguments[@]}"; then
-    success "Installed skill $name"
-  else
-    warning "Failed to install skill $name"
-    had_error=1
-  fi
+  print -- "Updating $name from $source for ${agents[*]}"
+  "${arguments[@]}"
 done
-
-if (( had_error )); then
-  warning "Skill installation completed with errors"
-  exit 1
-else
-  success "Skill installation complete"
-  exit 0
-fi
-{{ end -}}
+{{- end }}

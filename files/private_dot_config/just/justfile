@@ -65,6 +65,10 @@ reboot:
 
 alias up := update-all
 
+# Update globally managed agent skills.
+update-skills:
+    update-agent-skills
+
 [macos]
 update-all:
     @echo "🚀 Updating Homebrew."
@@ -75,6 +79,8 @@ update-all:
     just npm-upgrade
     @echo "🚀 Updating python packages"
     just py-upgrade
+    @echo "🚀 Updating skills"
+    just update-skills
 
 [linux]
 update-all:

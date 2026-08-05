@@ -1,4 +1,12 @@
 skills:
   global:
-    - {package: "casey/just", skill: "just"}
-    - {package: "vercel-labs/skills", skill: "find-skills"}
+    # The Skills CLI's automatic discovery includes clients that cannot accept
+    # global skills, so only list globally supported agent IDs here.
+    agents: [codex, copilot, claude]
+    entries:
+      - source: "casey/just"
+        skill: "just"
+      - source: "vercel-labs/skills"
+        skill: "find-skills"
+      - source: "justin/jww-skills"
+        skill: "jww-swift-style"
