@@ -1,47 +1,8 @@
-## Git workflow
+## Git safety
 
-Apply this workflow when Git operations are appropriate for completing the requested task.
-
-### Authorization
-
-- You may create branches, stage files, and commit completed changes without additional approval when the repository uses Git and Justin requested implementation. Do not commit exploratory edits, incomplete work, or changes made only for analysis.
-- Use Git for local version-control operations.
-- Get Justin's explicit approval before pushing commits or creating or modifying remote GitHub resources.
-- Do not merge branches, force-push, delete branches or tags, rewrite shared history, or modify repository settings without Justin's explicit approval.
-- Never discard uncommitted changes. Preserve changes outside the current task.
-- Do not amend existing commits unless Justin requests it.
-- Before committing, review the staged diff and run the relevant tests, formatters, and linters.
-- Before pushing, verify the branch, remote, and commits being pushed.
-- Preserve and report relevant Git and GitHub CLI output verbatim when it affects a decision, reveals an error, or Justin asks to see it. Do not replace errors with unsupported summaries.
+- You may create branches, stage files, and commit completed implementation work. Do not commit exploratory or incomplete work.
+- Get Justin's explicit approval before pushing, creating or modifying remote resources, merging, force-pushing, deleting branches or tags, rewriting shared history, or changing repository settings.
+- Never discard uncommitted work; preserve changes outside the current task. Do not amend commits without Justin's approval.
+- Before a commit, review the staged diff and run relevant validation. Before a push, verify the branch, remote, and commits being pushed.
+- Preserve and report Git or GitHub CLI output verbatim when it affects a decision, reveals an error, or Justin asks to see it.
 - Do not mention the assistant, model, or tool in source comments, commits, pull requests, or other repository history.
-
-### Commit and branch conventions
-
-- Keep the base branch's history linear so that `git bisect` remains useful.
-- Keep each commit focused on one cohesive change. Put unrelated fixes in separate commits.
-- Follow repository-specific branch, remote, and base-branch conventions.
-- Rebase onto the remote base branch rather than merging it into the feature branch.
-- Follow [commit.style](https://commit.style/). Use a capitalized, present-tense summary of at most 50 characters with no trailing punctuation.
-- Use the commit body to explain why the change is needed, how it works, and any relevant side effects. Wrap body lines at 72 characters.
-- When the work is associated with a tracked work item, follow the repository's reference and closing conventions. For example:
-
-```text
-[ENG-123] Present-tense summary
-
-* Explain why the change is necessary.
-* Explain the approach and relevant side effects.
-
-Fixes ENG-123
-```
-
-```text
-Present-tense summary
-
-* Explain why the change is necessary.
-* Explain the approach and relevant side effects.
-
-Closes #123
-```
-
-- You may clean up unpublished local commits. Do not rewrite commits that have been pushed or shared without Justin's explicit approval.
-- Follow the [Thoughtbot pull-request and review guidelines](https://github.com/thoughtbot/guides/tree/main/git) when preparing a pull request.
