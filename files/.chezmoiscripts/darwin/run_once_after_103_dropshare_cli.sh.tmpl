@@ -1,0 +1,36 @@
+{{- if and (eq .chezmoi.os "darwin") (stat "/Applications/Dropshare 6.app") -}}
+#!/usr/bin/env zsh
+#
+# Symlink the Dropshare CLI into /usr/local/bin.
+
+set -e
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+local cli_source="/Applications/Dropshare 6.app/Contents/Resources/ds.sh"
+local cli_link="/usr/local/bin/ds"
+
+# The app bundle exists (checked at template time), but its internal layout
+# may change across Dropshare releases.
+if [[ ! -f "$cli_source" ]]; then
+  fail "Dropshare CLI script not found at ${cli_source}."
+fi
+
+if [[ "$(readlink "$cli_link" 2>/dev/null)" == "$cli_source" ]]; then
+  success "Dropshare CLI already symlinked."
+  exit 0
+fi
+
+info "Symlinking Dropshare CLI to ${cli_link}."
+sudo mkdir -p /usr/local/bin
+sudo ln -sfn "$cli_source" "$cli_link"
+
+# chmod follows the symlink, so only touch the app bundle when needed.
+if [[ ! -x "$cli_source" ]]; then
+  sudo chmod +x "$cli_source"
+fi
+
+success "Dropshare CLI symlinked."
+
+{{ end -}}
