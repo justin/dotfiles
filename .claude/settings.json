@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chezmoi execute-template:*)",
+      "Bash(chezmoi diff:*)",
+      "Bash(chezmoi data)",
+      "Bash(chezmoi doctor)",
+      "Bash(chezmoi source-path:*)",
+      "Bash(chezmoi managed:*)",
+      "Bash(chezmoi cat:*)",
+      "Bash(just --justfile:*)"
+    ]
+  }
+}
