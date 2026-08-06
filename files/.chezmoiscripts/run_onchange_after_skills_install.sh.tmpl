@@ -12,13 +12,13 @@ had_error=0
 agent_name() {
   case "$1" in
     codex)
-      print -- "codex"
+      printf '%s\n' "codex"
       ;;
     copilot)
-      print -- "github-copilot"
+      printf '%s\n' "github-copilot"
       ;;
     claude)
-      print -- "claude-code"
+      printf '%s\n' "claude-code"
       ;;
     *)
       return 1
@@ -32,21 +32,16 @@ agents=(
   {{- end }}
 )
 
-skills=(
+skill_entries=(
   {{- range $skill := .skills.global.entries }}
-  "{{ $skill.source }}"
-  {{- with index $skill "skill" }}
-  "{{ . }}"
-  {{- else }}
-  ""
-  {{- end }}
+  "{{ $skill.source }}:::{{- with index $skill "skill" }}{{ . }}{{- end }}"
   {{- end }}
 )
 
 processing "Reconciling global agent skills..."
-for (( index = 1; index <= ${#skills[@]}; index += 2 )); do
-  source="${skills[$index]}"
-  name="${skills[$(( index + 1 ))]}"
+for entry in "${skill_entries[@]}"; do
+  source="${entry%%:::*}"
+  name="${entry#*:::}"
 
   arguments=(npx --yes skills add "$source" --global --yes)
   if [[ -n "$name" ]]; then
@@ -64,13 +59,20 @@ for (( index = 1; index <= ${#skills[@]}; index += 2 )); do
     arguments+=(--agent "$cli_agent")
   done
 
-  info "Installing $description from $source for ${agents[*]}"
-  if "${arguments[@]}"; then
-    success "Installed $description"
+  output_file="$(mktemp "${TMPDIR:-/tmp}/run-onchange-skills.XXXXXX")"
+  if "${arguments[@]}" >"$output_file" 2>&1; then
+    if ! rg -iq "already (installed|exists)|up[ -]?to[ -]?date|no changes?" "$output_file"; then
+      success "Updated $description from $source"
+      if [[ "${UPDATE_AGENT_SKILLS_VERBOSE:-0}" == "1" ]] && [[ -s "$output_file" ]]; then
+        cat "$output_file"
+      fi
+    fi
   else
     warning "Failed to install $description"
+    cat "$output_file" >&2
     had_error=1
   fi
+  rm -f "$output_file"
 done
 
 if (( had_error )); then

@@ -7,13 +7,13 @@ set -euo pipefail
 agent_name() {
   case "$1" in
     codex)
-      print -- "codex"
+      printf '%s\n' "codex"
       ;;
     copilot)
-      print -- "github-copilot"
+      printf '%s\n' "github-copilot"
       ;;
     claude)
-      print -- "claude-code"
+      printf '%s\n' "claude-code"
       ;;
     *)
       return 1
@@ -27,25 +27,20 @@ agents=(
   {{- end }}
 )
 
-skills=(
+skill_entries=(
   {{- range $skill := .skills.global.entries }}
-  "{{ $skill.source }}"
-  {{- with index $skill "skill" }}
-  "{{ . }}"
-  {{- else }}
-  ""
-  {{- end }}
+  "{{ $skill.source }}:::{{- with index $skill "skill" }}{{ . }}{{- end }}"
   {{- end }}
 )
 
-if (( ${#skills[@]} == 0 )); then
-  print -- "No global agent skills are configured."
+if (( ${#skill_entries[@]} == 0 )); then
+  printf '%s\n' "No global agent skills are configured."
   exit 0
 fi
 
-for (( index = 1; index <= ${#skills[@]}; index += 2 )); do
-  source="${skills[$index]}"
-  name="${skills[$(( index + 1 ))]}"
+for entry in "${skill_entries[@]}"; do
+  source="${entry%%:::*}"
+  name="${entry#*:::}"
 
   arguments=(npx --yes skills add "$source" --global --yes)
   if [[ -n "$name" ]]; then
@@ -56,13 +51,26 @@ for (( index = 1; index <= ${#skills[@]}; index += 2 )); do
   fi
   for agent in "${agents[@]}"; do
     cli_agent="$(agent_name "$agent")" || {
-      print -u2 -- "Unsupported global skill agent: $agent"
+      printf '%s\n' "Unsupported global skill agent: $agent" >&2
       exit 1
     }
     arguments+=(--agent "$cli_agent")
   done
 
-  print -- "Updating $description from $source for ${agents[*]}"
-  "${arguments[@]}"
+  output_file="$(mktemp "${TMPDIR:-/tmp}/update-agent-skills.XXXXXX")"
+  if "${arguments[@]}" >"$output_file" 2>&1; then
+    if ! rg -iq "already (installed|exists)|up[ -]?to[ -]?date|no changes?" "$output_file"; then
+      printf '%s\n' "Updated $description from $source for ${agents[*]}"
+      if [[ "${UPDATE_AGENT_SKILLS_VERBOSE:-0}" == "1" ]] && [[ -s "$output_file" ]]; then
+        cat "$output_file"
+      fi
+    fi
+  else
+    printf '%s\n' "Failed updating $description from $source" >&2
+    cat "$output_file" >&2
+    rm -f "$output_file"
+    exit 1
+  fi
+  rm -f "$output_file"
 done
 {{- end }}
