@@ -31,6 +31,29 @@ function printHelp() {
     echo "  get_env               Prints the value of an environment variable from the booted simulator"
     echo "  open_url              Opens a URL in the booted simulator"
     echo "  add_media             Adds a media file to the booted simulator"
+    echo "  reactions_seed        Packs, installs, and launches a Reactions starter database"
+    echo "  reactions_pack        Packs a Reactions starter database archive"
+    echo "  reactions_install     Installs a Reactions starter database archive"
+}
+
+###########################################################################
+# Run the helper that manages Reactions starter database archives.
+# Globals:
+#   ZSH_ARGZERO
+# Arguments:
+#   The helper subcommand followed by its arguments.
+# Outputs:
+#   The helper's output.
+###########################################################################
+function reactionsDatabase {
+  local helper="${ZSH_ARGZERO:A:h}/sim-reactions-database"
+
+  if [[ ! -x "$helper" ]]; then
+    echo "Unable to find the Reactions database helper at $helper." >&2
+    return 1
+  fi
+
+  "$helper" "$@"
 }
 
 ##############################################################
@@ -187,6 +210,18 @@ case "$1" in
         ;;
     add_media)
         addMedia $2
+        ;;
+    reactions_pack)
+        shift
+        reactionsDatabase pack "$@"
+        ;;
+    reactions_seed)
+        shift
+        reactionsDatabase seed "$@"
+        ;;
+    reactions_install)
+        shift
+        reactionsDatabase install "$@"
         ;;
     *)  # If we can't determine the proper argument, just print help.
         printHelp >&2

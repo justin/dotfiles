@@ -1,0 +1,745 @@
+#!/usr/bin/env zsh
+#
+# Pack and install Reactions Local Development starter databases.
+
+set -euo pipefail
+
+readonly APP_BUNDLE_ID="com.justinwme.reactions.app"
+readonly APP_GROUP_ID="group.justinwme.reactions"
+readonly ARCHIVE_VERSION="1"
+readonly CONFIGURATION="Local Development"
+readonly DATABASE_NAME="Development.sqlite"
+readonly HISTORY_TOKEN_PATH="Reactions/local-development-history.data"
+readonly SUPPORT_DIRECTORY_NAME=".Development_SUPPORT"
+
+typeset -a temporary_directories=()
+typeset destination=""
+typeset rollback_directory=""
+typeset rollback_needed="false"
+typeset cleanup_running="false"
+typeset installation_completed="false"
+
+print_help() {
+  print -r -- "Usage:"
+  print -r -- "  sim reactions_seed --source ios|macos --device booted|<UDID> --replace [--output <archive>]"
+  print -r -- "  sim reactions_pack --source ios|macos --store Development [--output <archive>]"
+  print -r -- "  sim reactions_install <archive> --device booted|<UDID> --replace"
+  print
+  print -r -- "Run 'sim reactions_seed --help' for the preferred one-step workflow."
+}
+
+print_seed_help() {
+  print -r -- "Usage:"
+  print -r -- "  sim reactions_seed --source ios|macos --device booted|<UDID> --replace [--output <archive>]"
+  print
+  print -r -- "Pack the Development store, install it on one simulator, and launch Reactions"
+  print -r -- "with JWW_LOCAL_DEVELOPMENT=true. The archive is retained for reuse."
+  print
+  print -r -- "Before running, quit the source Reactions app and install Reactions on the"
+  print -r -- "target simulator. --replace is required because the simulator's existing"
+  print -r -- "Local Development store is replaced."
+  print
+  print -r -- "Example with exactly one booted simulator:"
+  print -r -- "  sim reactions_seed --source macos --device booted --replace"
+  print
+  print -r -- "If multiple simulators are booted, the command refuses to choose one. Pass"
+  print -r -- "the intended simulator UDID instead of 'booted'."
+  print
+  print -r -- "The default archive directory is:"
+  print -r -- "  ~/Library/Application Support/sim/Reactions Databases"
+  print
+  print -r -- "Use reactions_pack and reactions_install separately to reuse an archive."
+}
+
+print_pack_help() {
+  print -r -- "Usage:"
+  print -r -- "  sim reactions_pack --source ios|macos --store Development [--output <archive>]"
+  print
+  print -r -- "Source containers:"
+  print -r -- "  ios    ~/Library/Group Containers/group.justinwme.reactions"
+  print -r -- "  macos  ~/Library/Group Containers/7B7LC48KU7.group.justinwme.reactions"
+  print
+  print -r -- "The source app must be closed. The archive contains a consistent SQLite"
+  print -r -- "snapshot, .Development_SUPPORT, and a versioned manifest. WAL, SHM, cache,"
+  print -r -- "CloudKit staging, and history-token data are excluded."
+  print
+  print -r -- "The default archive directory is:"
+  print -r -- "  ~/Library/Application Support/sim/Reactions Databases"
+  print
+  print -r -- "Example:"
+  print -r -- "  sim reactions_pack --source macos --store Development"
+}
+
+print_install_help() {
+  print -r -- "Usage:"
+  print -r -- "  sim reactions_install <archive> --device booted|<UDID> --replace"
+  print
+  print -r -- "Reactions must already be installed on the target simulator. The command"
+  print -r -- "terminates the app, validates the archive and available disk space, and"
+  print -r -- "restores the previous store automatically if installation fails."
+  print
+  print -r -- "'booted' is accepted only when exactly one simulator is booted. If several"
+  print -r -- "are booted, pass the intended simulator UDID explicitly."
+  print
+  print -r -- "After installation, launch with the Reactions App (Local Development) scheme"
+  print -r -- "or JWW_LOCAL_DEVELOPMENT=true."
+  print
+  print -r -- "Example:"
+  print -r -- "  sim reactions_install /path/to/Reactions-Development-macos.zip --device booted --replace"
+}
+
+fail() {
+  print -ru2 -- "error: $*"
+  return 1
+}
+
+usage_error() {
+  local help_function="$1"
+
+  shift
+  print -ru2 -- "error: $*"
+  print -u2
+  "$help_function" >&2
+  return 1
+}
+
+remove_install_payload() {
+  /bin/rm -f -- \
+    "$destination/$DATABASE_NAME" \
+    "$destination/$DATABASE_NAME-wal" \
+    "$destination/$DATABASE_NAME-shm" \
+    "$destination/$HISTORY_TOKEN_PATH"
+  /bin/rm -rf -- "$destination/$SUPPORT_DIRECTORY_NAME"
+}
+
+restore_installation() {
+  local relative_path
+  local restore_failed="false"
+  local store_paths=(
+    "$DATABASE_NAME"
+    "$DATABASE_NAME-wal"
+    "$DATABASE_NAME-shm"
+    "$SUPPORT_DIRECTORY_NAME"
+    "$HISTORY_TOKEN_PATH"
+  )
+
+  if [[ -z "$rollback_directory" || ! -d "$rollback_directory" ]]; then
+    return 0
+  fi
+  if [[ -e "$rollback_directory/.restore-attempted" ]]; then
+    return 0
+  fi
+  /usr/bin/touch "$rollback_directory/.restore-attempted"
+
+  print -ru2 -- "Installation failed; restoring the previous Reactions store."
+  remove_install_payload
+
+  for relative_path in "${store_paths[@]}"; do
+    if [[ -e "$rollback_directory/$relative_path" || -L "$rollback_directory/$relative_path" ]]; then
+      /bin/mkdir -p -- "$destination/${relative_path:h}"
+      if ! /bin/mv -- "$rollback_directory/$relative_path" "$destination/$relative_path"; then
+        restore_failed="true"
+      fi
+    fi
+  done
+
+  if [[ "$restore_failed" == "true" ]]; then
+    print -ru2 -- "Automatic restoration was incomplete. Remaining rollback files are in:"
+    print -ru2 -- "  $rollback_directory"
+  else
+    /bin/rm -rf -- "$rollback_directory"
+    print -ru2 -- "The previous Reactions store was restored."
+  fi
+}
+
+cleanup() {
+  local exit_status=$?
+  local temporary_directory
+
+  if [[ "$cleanup_running" == "true" ]]; then
+    return 0
+  fi
+  cleanup_running="true"
+  trap - EXIT ZERR
+  set +e
+
+  if [[ "$rollback_needed" == "true" ]]; then
+    rollback_needed="false"
+    restore_installation
+  fi
+
+  for temporary_directory in "${temporary_directories[@]}"; do
+    if [[ -n "$temporary_directory" && -d "$temporary_directory" ]]; then
+      /bin/rm -rf -- "$temporary_directory"
+    fi
+  done
+
+  exit "$exit_status"
+}
+
+trap cleanup EXIT
+trap cleanup ZERR
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+require_command() {
+  if ! command -v "$1" >/dev/null 2>&1; then
+    fail "Required command is unavailable: $1"
+  fi
+}
+
+check_database() {
+  local database="$1"
+  local result
+
+  if ! result="$(/usr/bin/sqlite3 \
+    "file:$database?mode=ro&immutable=1" \
+    "PRAGMA quick_check;" 2>&1)"; then
+    fail "SQLite quick_check could not open $database: $result"
+  fi
+  if [[ "$result" != "ok" ]]; then
+    fail "SQLite quick_check failed for $database: $result"
+  fi
+}
+
+find_excluded_runtime_data() {
+  /usr/bin/find "$1" \
+    \( -name "*-wal" -o -name "*-shm" -o -name "*_ckAssets" -o -name "Cache" -o -name "Caches" -o -name "local-development-history.data" \) \
+    -print -quit
+}
+
+refuse_if_database_open() {
+  local source_database="$1"
+  local candidate
+  local open_processes
+  local -a candidates=()
+
+  for candidate in "$source_database" "$source_database-wal" "$source_database-shm"; do
+    if [[ -e "$candidate" ]]; then
+      candidates+=("$candidate")
+    fi
+  done
+
+  open_processes="$(/usr/sbin/lsof -t -- "${candidates[@]}" 2>/dev/null || true)"
+  if [[ -n "$open_processes" ]]; then
+    /usr/sbin/lsof -- "${candidates[@]}" >&2 || true
+    fail "The source database is open. Quit Reactions before packing it."
+  fi
+}
+
+write_manifest() {
+  local manifest="$1"
+  local source_platform="$2"
+  local created_at
+
+  created_at="$(/bin/date -u "+%Y-%m-%dT%H:%M:%SZ")"
+  /usr/bin/printf \
+    '{\n  "version": %s,\n  "store": "Development",\n  "configuration": "%s",\n  "source": "%s",\n  "createdAt": "%s"\n}\n' \
+    "$ARCHIVE_VERSION" \
+    "$CONFIGURATION" \
+    "$source_platform" \
+    "$created_at" >"$manifest"
+}
+
+default_archive_path() {
+  local source_platform="$1"
+
+  print -r -- "$HOME/Library/Application Support/sim/Reactions Databases/Reactions-Development-${source_platform}-$(/bin/date "+%Y%m%d-%H%M%S").zip"
+}
+
+pack_archive() {
+  local source_platform=""
+  local store=""
+  local output=""
+  local source_container
+  local source_database
+  local source_support_directory
+  local staging_directory
+  local output_temporary_directory
+  local temporary_archive
+
+  while (( $# > 0 )); do
+    case "$1" in
+      --source)
+        (( $# >= 2 )) || usage_error print_pack_help "--source requires ios or macos."
+        source_platform="$2"
+        shift 2
+        ;;
+      --store)
+        (( $# >= 2 )) || usage_error print_pack_help "--store requires a store name."
+        store="$2"
+        shift 2
+        ;;
+      --output)
+        (( $# >= 2 )) || usage_error print_pack_help "--output requires an archive path."
+        output="$2"
+        shift 2
+        ;;
+      -h|--help)
+        print_pack_help
+        return 0
+        ;;
+      *)
+        usage_error print_pack_help "Unknown packing argument: $1"
+        ;;
+    esac
+  done
+
+  if [[ -z "$source_platform" ]]; then
+    usage_error print_pack_help "--source ios|macos is required."
+  fi
+  case "$source_platform" in
+    ios)
+      source_container="$HOME/Library/Group Containers/group.justinwme.reactions"
+      ;;
+    macos)
+      source_container="$HOME/Library/Group Containers/7B7LC48KU7.group.justinwme.reactions"
+      ;;
+    *)
+      usage_error print_pack_help "--source must be ios or macos."
+      ;;
+  esac
+
+  if [[ -z "$store" ]]; then
+    usage_error print_pack_help "--store Development is required."
+  fi
+  if [[ "$store" != "Development" ]]; then
+    usage_error print_pack_help "Only the Development store is supported."
+  fi
+
+  if [[ -z "$output" ]]; then
+    output="$(default_archive_path "$source_platform")"
+  fi
+  output="${output:A}"
+
+  if [[ -e "$output" ]]; then
+    fail "Refusing to replace an existing archive: $output"
+  fi
+
+  source_database="$source_container/$DATABASE_NAME"
+  source_support_directory="$source_container/$SUPPORT_DIRECTORY_NAME"
+
+  if [[ ! -f "$source_database" ]]; then
+    fail "Source database does not exist: $source_database"
+  fi
+  if [[ ! -d "$source_support_directory/_EXTERNAL_DATA" ]]; then
+    fail "Required external binary storage does not exist: $source_support_directory/_EXTERNAL_DATA"
+  fi
+  if [[ -n "$(find_excluded_runtime_data "$source_support_directory")" ]]; then
+    fail "The source support directory contains excluded runtime data."
+  fi
+
+  refuse_if_database_open "$source_database"
+
+  /bin/mkdir -p -- "${output:h}"
+  staging_directory="$(/usr/bin/mktemp -d "${TMPDIR:-/tmp}/sim-reactions-pack.XXXXXX")"
+  temporary_directories+=("$staging_directory")
+  output_temporary_directory="$(/usr/bin/mktemp -d "${output:h}/.sim-reactions-output.XXXXXX")"
+  temporary_directories+=("$output_temporary_directory")
+  temporary_archive="$output_temporary_directory/archive.zip"
+
+  print -r -- "Creating a consistent SQLite snapshot..."
+  /usr/bin/sqlite3 \
+    -readonly \
+    "$source_database" \
+    ".backup '$staging_directory/$DATABASE_NAME'"
+  check_database "$staging_directory/$DATABASE_NAME"
+
+  print -r -- "Copying external binary storage..."
+  /usr/bin/ditto \
+    --norsrc \
+    --noextattr \
+    --noqtn \
+    --noacl \
+    "$source_support_directory" \
+    "$staging_directory/$SUPPORT_DIRECTORY_NAME"
+
+  write_manifest "$staging_directory/manifest.json" "$source_platform"
+  refuse_if_database_open "$source_database"
+
+  print -r -- "Creating an uncompressed ZIP archive..."
+  /usr/bin/ditto \
+    -c \
+    -k \
+    --norsrc \
+    --noextattr \
+    --noqtn \
+    --noacl \
+    --zlibCompressionLevel 0 \
+    "$staging_directory" \
+    "$temporary_archive"
+  /bin/mv -- "$temporary_archive" "$output"
+  /bin/rm -rf -- "$staging_directory" "$output_temporary_directory"
+
+  print -r -- "Created Reactions starter database archive:"
+  print -r -- "  $output"
+}
+
+booted_simulator_udids() {
+  xcrun simctl list devices booted | \
+    /usr/bin/grep -Eo -i "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" || true
+}
+
+resolve_device() {
+  local requested_device="$1"
+  local help_function="${2:-}"
+  local candidate
+  local -a booted_devices
+
+  booted_devices=("${(@f)$(booted_simulator_udids)}")
+  if [[ "${booted_devices[1]:-}" == "" ]]; then
+    booted_devices=()
+  fi
+
+  if [[ "$requested_device" == "booted" ]]; then
+    if (( ${#booted_devices[@]} != 1 )); then
+      if (( ${#booted_devices[@]} > 1 )); then
+        print -ru2 -- "Booted simulator UDIDs:"
+        for candidate in "${booted_devices[@]}"; do
+          print -ru2 -- "  $candidate"
+        done
+      fi
+      fail "--device booted requires exactly one booted simulator; found ${#booted_devices[@]}."
+    fi
+    print -r -- "${booted_devices[1]}"
+    return 0
+  fi
+
+  if [[ ! "$requested_device" =~ '^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$' ]]; then
+    if [[ -n "$help_function" ]]; then
+      usage_error "$help_function" "--device must be booted or a simulator UDID."
+    fi
+    fail "--device must be booted or a simulator UDID."
+  fi
+
+  for candidate in "${booted_devices[@]}"; do
+    if [[ "${candidate:l}" == "${requested_device:l}" ]]; then
+      print -r -- "$candidate"
+      return 0
+    fi
+  done
+
+  fail "Simulator $requested_device is not booted."
+}
+
+require_reactions_installed() {
+  local udid="$1"
+  local application_container
+
+  if ! application_container="$(xcrun simctl get_app_container "$udid" "$APP_BUNDLE_ID" app 2>/dev/null)"; then
+    fail "Reactions is not installed on simulator $udid."
+  fi
+  if [[ ! -d "$application_container" ]]; then
+    fail "Reactions is not installed on simulator $udid."
+  fi
+}
+
+validate_archive() {
+  local extracted_directory="$1"
+  local entry
+  local entry_name
+  local unexpected_path
+  local version
+  local store
+  local configuration
+  local -a top_level_entries
+
+  if [[ -n "$(/usr/bin/find "$extracted_directory" -type l -print -quit)" ]]; then
+    fail "The archive must not contain symbolic links."
+  fi
+
+  top_level_entries=("${(@f)$(/usr/bin/find "$extracted_directory" -mindepth 1 -maxdepth 1 -print)}")
+  if (( ${#top_level_entries[@]} != 3 )); then
+    fail "The archive must contain only $DATABASE_NAME, $SUPPORT_DIRECTORY_NAME, and manifest.json."
+  fi
+  for entry in "${top_level_entries[@]}"; do
+    entry_name="${entry:t}"
+    case "$entry_name" in
+      "$DATABASE_NAME"|"$SUPPORT_DIRECTORY_NAME"|manifest.json)
+        ;;
+      *)
+        fail "Unexpected top-level archive entry: $entry_name"
+        ;;
+    esac
+  done
+
+  if [[ ! -f "$extracted_directory/$DATABASE_NAME" ]]; then
+    fail "The archive is missing $DATABASE_NAME."
+  fi
+  if [[ ! -d "$extracted_directory/$SUPPORT_DIRECTORY_NAME/_EXTERNAL_DATA" ]]; then
+    fail "The archive is missing $SUPPORT_DIRECTORY_NAME/_EXTERNAL_DATA."
+  fi
+  if [[ ! -f "$extracted_directory/manifest.json" ]]; then
+    fail "The archive is missing manifest.json."
+  fi
+
+  unexpected_path="$(find_excluded_runtime_data "$extracted_directory")"
+  if [[ -n "$unexpected_path" ]]; then
+    fail "The archive contains excluded runtime data: $unexpected_path"
+  fi
+
+  version="$(/usr/bin/plutil -extract version raw -expect integer "$extracted_directory/manifest.json")"
+  store="$(/usr/bin/plutil -extract store raw -expect string "$extracted_directory/manifest.json")"
+  configuration="$(/usr/bin/plutil -extract configuration raw -expect string "$extracted_directory/manifest.json")"
+  if [[ "$version" != "$ARCHIVE_VERSION" ]]; then
+    fail "Unsupported Reactions archive version: $version"
+  fi
+  if [[ "$store" != "Development" || "$configuration" != "$CONFIGURATION" ]]; then
+    fail "The archive is not a Reactions Local Development store."
+  fi
+
+  check_database "$extracted_directory/$DATABASE_NAME"
+}
+
+preflight_disk_space() {
+  local extracted_directory="$1"
+  local required_kilobytes
+  local reserve_kilobytes
+  local available_kilobytes
+
+  required_kilobytes="$(/usr/bin/du -sk \
+    "$extracted_directory/$DATABASE_NAME" \
+    "$extracted_directory/$SUPPORT_DIRECTORY_NAME" | \
+    /usr/bin/awk '{ total += $1 } END { print total }')"
+  available_kilobytes="$(/bin/df -Pk "$destination" | /usr/bin/awk 'NR == 2 { print $4 }')"
+  reserve_kilobytes=$(( required_kilobytes / 20 ))
+  if (( reserve_kilobytes < 65536 )); then
+    reserve_kilobytes=65536
+  fi
+
+  if (( available_kilobytes < required_kilobytes + reserve_kilobytes )); then
+    fail "Insufficient simulator disk space: need $(( required_kilobytes + reserve_kilobytes )) KB, have $available_kilobytes KB available."
+  fi
+}
+
+move_store_to_rollback() {
+  local relative_path
+  local store_paths=(
+    "$DATABASE_NAME"
+    "$DATABASE_NAME-wal"
+    "$DATABASE_NAME-shm"
+    "$SUPPORT_DIRECTORY_NAME"
+    "$HISTORY_TOKEN_PATH"
+  )
+
+  rollback_directory="$(/usr/bin/mktemp -d "$destination/.sim-reactions-rollback.XXXXXX")"
+  rollback_needed="true"
+
+  for relative_path in "${store_paths[@]}"; do
+    if [[ -e "$destination/$relative_path" || -L "$destination/$relative_path" ]]; then
+      /bin/mkdir -p -- "$rollback_directory/${relative_path:h}"
+      /bin/mv -- "$destination/$relative_path" "$rollback_directory/$relative_path"
+    fi
+  done
+}
+
+install_archive() {
+  local archive=""
+  local requested_device=""
+  local replace="false"
+  local udid
+  local extracted_directory
+
+  if (( $# > 0 )) && [[ "$1" != -* ]]; then
+    archive="$1"
+    shift
+  fi
+
+  while (( $# > 0 )); do
+    case "$1" in
+      --device)
+        (( $# >= 2 )) || usage_error print_install_help "--device requires booted or a simulator UDID."
+        requested_device="$2"
+        shift 2
+        ;;
+      --replace)
+        replace="true"
+        shift
+        ;;
+      -h|--help)
+        print_install_help
+        return 0
+        ;;
+      *)
+        usage_error print_install_help "Unknown installation argument: $1"
+        ;;
+    esac
+  done
+
+  if [[ -z "$archive" ]]; then
+    usage_error print_install_help "A Reactions database archive is required."
+  fi
+  archive="${archive:A}"
+  if [[ ! -f "$archive" ]]; then
+    usage_error print_install_help "Archive does not exist: $archive"
+  fi
+  if [[ -z "$requested_device" ]]; then
+    usage_error print_install_help "--device booted|<UDID> is required."
+  fi
+  if [[ "$replace" != "true" ]]; then
+    usage_error print_install_help "--replace is required because installation replaces the existing Local Development store."
+  fi
+
+  udid="$(resolve_device "$requested_device" print_install_help)"
+  require_reactions_installed "$udid"
+
+  xcrun simctl terminate "$udid" "$APP_BUNDLE_ID" >/dev/null 2>&1 || true
+  destination="$(xcrun simctl get_app_container \
+    "$udid" \
+    "$APP_BUNDLE_ID" \
+    "$APP_GROUP_ID")"
+  if [[ ! -d "$destination" ]]; then
+    fail "Reactions App Group container does not exist: $destination"
+  fi
+
+  extracted_directory="$(/usr/bin/mktemp -d "${TMPDIR:-/tmp}/sim-reactions-install.XXXXXX")"
+  temporary_directories+=("$extracted_directory")
+  /usr/bin/ditto -x -k "$archive" "$extracted_directory"
+  validate_archive "$extracted_directory"
+  preflight_disk_space "$extracted_directory"
+
+  xcrun simctl terminate "$udid" "$APP_BUNDLE_ID" >/dev/null 2>&1 || true
+  move_store_to_rollback
+
+  /usr/bin/ditto \
+    --norsrc \
+    --noextattr \
+    --noqtn \
+    --noacl \
+    "$extracted_directory/$DATABASE_NAME" \
+    "$destination/$DATABASE_NAME"
+  /usr/bin/ditto \
+    --norsrc \
+    --noextattr \
+    --noqtn \
+    --noacl \
+    "$extracted_directory/$SUPPORT_DIRECTORY_NAME" \
+    "$destination/$SUPPORT_DIRECTORY_NAME"
+
+  /bin/rm -f -- \
+    "$destination/$DATABASE_NAME-wal" \
+    "$destination/$DATABASE_NAME-shm" \
+    "$destination/$HISTORY_TOKEN_PATH"
+  check_database "$destination/$DATABASE_NAME"
+
+  rollback_needed="false"
+  /bin/rm -rf -- "$rollback_directory"
+  installation_completed="true"
+
+  print -r -- "Installed the Reactions Local Development store on simulator $udid."
+}
+
+seed_simulator() {
+  local source_platform=""
+  local requested_device=""
+  local replace="false"
+  local output=""
+  local udid
+
+  while (( $# > 0 )); do
+    case "$1" in
+      --source)
+        (( $# >= 2 )) || usage_error print_seed_help "--source requires ios or macos."
+        source_platform="$2"
+        shift 2
+        ;;
+      --device)
+        (( $# >= 2 )) || usage_error print_seed_help "--device requires booted or a simulator UDID."
+        requested_device="$2"
+        shift 2
+        ;;
+      --replace)
+        replace="true"
+        shift
+        ;;
+      --output)
+        (( $# >= 2 )) || usage_error print_seed_help "--output requires an archive path."
+        output="$2"
+        shift 2
+        ;;
+      -h|--help)
+        print_seed_help
+        return 0
+        ;;
+      *)
+        usage_error print_seed_help "Unknown seeding argument: $1"
+        ;;
+    esac
+  done
+
+  if [[ -z "$source_platform" ]]; then
+    usage_error print_seed_help "--source ios|macos is required."
+  fi
+  case "$source_platform" in
+    ios|macos)
+      ;;
+    *)
+      usage_error print_seed_help "--source must be ios or macos."
+      ;;
+  esac
+  if [[ -z "$requested_device" ]]; then
+    usage_error print_seed_help "--device booted|<UDID> is required."
+  fi
+  if [[ "$replace" != "true" ]]; then
+    usage_error print_seed_help "--replace is required because seeding replaces the existing Local Development store."
+  fi
+
+  udid="$(resolve_device "$requested_device" print_seed_help)"
+  require_reactions_installed "$udid"
+
+  if [[ -z "$output" ]]; then
+    output="$(default_archive_path "$source_platform")"
+  fi
+  output="${output:A}"
+
+  pack_archive \
+    --source "$source_platform" \
+    --store Development \
+    --output "$output"
+  install_archive "$output" --device "$udid" --replace
+
+  if ! SIMCTL_CHILD_JWW_LOCAL_DEVELOPMENT=true \
+    xcrun simctl launch "$udid" "$APP_BUNDLE_ID"; then
+    fail "The store was installed, but Reactions could not be launched on simulator $udid."
+  fi
+
+  print -r -- "Launched Reactions with JWW_LOCAL_DEVELOPMENT=true."
+  print -r -- "Retained starter database archive:"
+  print -r -- "  $output"
+}
+
+main() {
+  local command="${1:-}"
+
+  require_command /usr/bin/ditto
+  require_command /usr/bin/sqlite3
+  require_command /usr/bin/plutil
+  require_command /usr/bin/xcrun
+
+  case "$command" in
+    pack)
+      shift
+      pack_archive "$@"
+      ;;
+    install)
+      shift
+      install_archive "$@"
+      if [[ "$installation_completed" == "true" ]]; then
+        print -r -- "Launch with the Reactions App (Local Development) scheme or JWW_LOCAL_DEVELOPMENT=true."
+      fi
+      ;;
+    seed)
+      shift
+      seed_simulator "$@"
+      ;;
+    -h|--help|help|"")
+      print_help
+      ;;
+    *)
+      usage_error print_help "Unknown command: $command"
+      ;;
+  esac
+}
+
+main "$@"

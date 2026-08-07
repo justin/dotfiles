@@ -1,0 +1,124 @@
+#compdef sim
+
+# Zsh completion for the sim wrapper and its Reactions database commands.
+
+_sim_complete() {
+    local command_name
+
+    if (( CURRENT == 2 )); then
+        _sim_commands
+        return
+    fi
+
+    command_name="$words[2]"
+    shift words
+    ((CURRENT--))
+
+    case "$command_name" in
+        booted|delete_all_devices)
+            _message 'no more arguments'
+            ;;
+        create_device)
+            _arguments \
+                '1:device type:(iphone ipad)' \
+                '2:device name:'
+            ;;
+        open_container)
+            _arguments \
+                '1:bundle identifier:' \
+                '2:container type:(app data groups)'
+            ;;
+        get_env)
+            _arguments '1:environment variable:'
+            ;;
+        open_url)
+            _arguments '1:URL:'
+            ;;
+        add_media)
+            _arguments '1:media file or directory:_files'
+            ;;
+        reactions_seed)
+            _sim_reactions_seed
+            ;;
+        reactions_pack)
+            _sim_reactions_pack
+            ;;
+        reactions_install)
+            _sim_reactions_install
+            ;;
+        *)
+            _sim_commands
+            ;;
+    esac
+}
+
+_sim_commands() {
+    local -a commands
+
+    commands=(
+        'booted:Print the UUIDs of booted simulators'
+        'create_device:Create a simulator with the latest SDK'
+        'delete_all_devices:Delete every simulator device'
+        'open_container:Reveal an app container in Finder'
+        'get_env:Print a simulator environment variable'
+        'open_url:Open a URL in booted simulators'
+        'add_media:Add media to booted simulators'
+        'reactions_seed:Pack, install, and launch a Reactions starter database'
+        'reactions_pack:Pack a Reactions starter database archive'
+        'reactions_install:Install a Reactions starter database archive'
+    )
+    _describe 'command' commands
+}
+
+_sim_reactions_seed() {
+    _arguments \
+        '(-h --help)'{-h,--help}'[Show command help]' \
+        '--source[Source platform]:source platform:(ios macos)' \
+        '--device[Target booted simulator]:simulator:_sim_booted_devices' \
+        '--replace[Confirm replacement of the existing Local Development store]' \
+        '--output[Retained archive path]:archive path:_files'
+}
+
+_sim_reactions_pack() {
+    _arguments \
+        '(-h --help)'{-h,--help}'[Show command help]' \
+        '--source[Source platform]:source platform:(ios macos)' \
+        '--store[Store name]:store:(Development)' \
+        '--output[Archive path]:archive path:_files'
+}
+
+_sim_reactions_install() {
+    _arguments \
+        '(-h --help)'{-h,--help}'[Show command help]' \
+        '1:Reactions database archive:_sim_zip_archives' \
+        '--device[Target booted simulator]:simulator:_sim_booted_devices' \
+        '--replace[Confirm replacement of the existing Local Development store]'
+}
+
+_sim_booted_devices() {
+    local device_line
+    local device_name
+    local device_pattern='^[[:space:]]*(.+) \(([0-9A-Fa-f-]{36})\) \(Booted\)'
+    local device_udid
+    local -a devices
+    local -a match
+
+    devices=('booted:Use when exactly one simulator is booted')
+    if (( $+commands[xcrun] )); then
+        while IFS= read -r device_line; do
+            if [[ "$device_line" =~ "$device_pattern" ]]; then
+                device_name="$match[1]"
+                device_udid="$match[2]"
+                devices+=("$device_udid:$device_name")
+            fi
+        done < <(xcrun simctl list devices booted 2>/dev/null)
+    fi
+
+    _describe 'simulator' devices
+}
+
+_sim_zip_archives() {
+    _files -g '*.zip(-.)'
+}
+
+_sim_complete "$@"
