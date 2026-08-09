@@ -4,15 +4,10 @@ personality = "pragmatic"
 project_doc_fallback_filenames = [".claude/CLAUDE.md", "CLAUDE.md"]
 web_search = "live"
 
+approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 [sandbox_workspace_write]
 network_access = true
-writable_roots = [
-  "{{ .chezmoi.homeDir }}/Library/Caches/go-build",
-  "{{ .chezmoi.homeDir }}/go/bin",
-  "{{ .chezmoi.homeDir }}/go/pkg/mod",
-  "{{ .chezmoi.homeDir }}/go/pkg/sumdb",
-]
 
 [desktop]
 enabled-reasoning-efforts = ["high", "low", "max", "medium", "ultra", "xhigh"]

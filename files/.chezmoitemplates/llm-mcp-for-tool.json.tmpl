@@ -1,10 +1,11 @@
 {{- /* Filters llm-mcp-base.yml.tmpl down to the servers tagged for one tool.
        Context: dict with "tool" (string) and "sourceDir" (.chezmoi.sourceDir). */ -}}
 {{- $tool := .tool -}}
+{{- $os := .os -}}
 {{- $base := include (joinPath .sourceDir ".chezmoitemplates/llm-mcp-base.yml.tmpl") | fromYaml -}}
 {{- $servers := dict -}}
 {{- range $name, $def := $base.servers -}}
-  {{- if has $tool $def.tools -}}
+  {{- if and (has $tool $def.tools) (has $os $def.platforms) -}}
     {{- $clean := omit $def "tools" "platforms" -}}
     {{- /* Copilot expects HTTP transport servers as type="http" while
           Claude/Codex consume the canonical type="url" value. */ -}}
