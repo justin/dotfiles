@@ -1,6 +1,10 @@
 # General
 alias mkdir='mkdir -p'
 alias pw='pwd'
+{{ if env "SSH_CONNECTION" -}}
+# 1Password desktop integration is unavailable in remote terminal sessions.
+alias chezmoi='chezmoi --skip-secrets'
+{{ end -}}
 alias dot='chezmoi'
 alias m='micro'
 alias path='echo $PATH | tr ":" "\n"'

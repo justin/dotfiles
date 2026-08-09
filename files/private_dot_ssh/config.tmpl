@@ -4,6 +4,10 @@ Include ~/.orbstack/ssh/config
 {{- end }}
 
 Host *
+{{- if eq .osid "darwin" }}
+  UseKeychain yes              # Store passphrases in the macOS Keychain
+{{- end }}
+  IdentityFile ~/.ssh/id_ed25519
   AddKeysToAgent yes           # Automatically add keys to the SSH agent
   ServerAliveInterval 120      # Send keepalive every 120 seconds
   ServerAliveCountMax 30       # Allow 30 missed keepalives before disconnect

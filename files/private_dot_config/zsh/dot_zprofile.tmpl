@@ -1,4 +1,13 @@
-{{ if eq .osid "linux-ubuntu" }}
+{{ if eq .osid "darwin" }}
+# Prefer macOS's launchd-managed SSH agent over an inherited 1Password or stale socket.
+if [[ ! -S "${SSH_AUTH_SOCK:-}" || "$SSH_AUTH_SOCK" == *1password* ]]; then
+  launchd_ssh_auth_sock=$(/bin/launchctl print "gui/$(/usr/bin/id -u)" 2>/dev/null | /usr/bin/awk '/SSH_AUTH_SOCK => / { socket = $3 } END { print socket }')
+  if [[ -S "$launchd_ssh_auth_sock" ]]; then
+    export SSH_AUTH_SOCK="$launchd_ssh_auth_sock"
+  fi
+  unset launchd_ssh_auth_sock
+fi
+{{ else if eq .osid "linux-ubuntu" }}
 # Added by ssh-agent-setup
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 {{ end }}
