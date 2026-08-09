@@ -1,0 +1,53 @@
+{{ if and (not .ephemeral) (not .synology) (not (env "SSH_CONNECTION")) -}}
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+# Increment after replacing the Personal SSH Key in 1Password.
+# Identity revision: 1
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+readonly identity_dir={{ joinPath .chezmoi.homeDir ".ssh" }}
+readonly private_key_path="$identity_dir/id_ed25519"
+readonly public_key_path="$identity_dir/id_ed25519.pub"
+readonly temporary_directory="$(mktemp -d)"
+readonly temporary_private_key="$temporary_directory/id_ed25519"
+readonly temporary_public_key="$temporary_directory/id_ed25519.pub"
+
+trap 'rm -rf "$temporary_directory"' EXIT
+umask 077
+
+info "Reading the SSH identity from 1Password"
+op read "op://dotfiles/Personal SSH Key/private key" > "$temporary_private_key"
+op read "op://dotfiles/Personal SSH Key/public key" > "$temporary_public_key"
+
+install -d -m 700 "$identity_dir"
+
+identity_changed=false
+if [[ ! -f "$private_key_path" ]] || ! cmp -s "$temporary_private_key" "$private_key_path"; then
+  install -m 600 "$temporary_private_key" "$private_key_path"
+  identity_changed=true
+fi
+
+if [[ ! -f "$public_key_path" ]] || ! cmp -s "$temporary_public_key" "$public_key_path"; then
+  install -m 644 "$temporary_public_key" "$public_key_path"
+  identity_changed=true
+fi
+
+if is_macos; then
+  launchd_ssh_auth_sock=$(/bin/launchctl print "gui/$(/usr/bin/id -u)" 2>/dev/null | /usr/bin/awk '/SSH_AUTH_SOCK => / { socket = $3 } END { print socket }')
+  if [[ -S "$launchd_ssh_auth_sock" ]]; then
+    SSH_AUTH_SOCK="$launchd_ssh_auth_sock" ssh-add --apple-use-keychain "$private_key_path"
+  fi
+elif [[ -S "${SSH_AUTH_SOCK:-}" ]]; then
+  ssh-add "$private_key_path"
+fi
+
+if $identity_changed; then
+  success "Installed the SSH identity"
+else
+  success "The installed SSH identity already matches 1Password"
+fi
+{{ end -}}
