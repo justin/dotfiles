@@ -126,9 +126,9 @@ suffixes give it a stable ownership boundary that MCP server names lack.
 
 | Target | Managed (owned) | Preserved (live-only) |
 | --- | --- | --- |
-| `~/.config/claude/settings.json` | `permissions`, `hooks`, `enableWorkflows`, `editorMode`, `enabledPlugins` entries under `@claude-plugins-official` | Any other key (e.g. `effortLevel`), any `enabledPlugins` entry from another marketplace |
+| `~/.config/claude/settings.json` | `cleanupPeriodDays`, `includeCoAuthoredBy`, `permissions`, `enableWorkflows`, `editorMode`, `enabledPlugins` entries under `@claude-plugins-official` | Any other key (e.g. `effortLevel` and `hooks`), any `enabledPlugins` entry from another marketplace |
 | `~/.claude.json` | `mcpServers` (tag `claude`) | Everything else (auth, caches, sessions, `projects`, ...) |
-| `~/.codex/config.toml` | `personality`, `notify`, `service_tier`, `mcp_servers` (tag `codex`) | `model`, `model_reasoning_effort` (actively changed via the app UI), `projects`, `marketplaces`, `plugins`, `desktop`, `features`, `hooks.state`, `memories`, `apps`, `tui`, `shell_environment_policy`, and the `node_repl`/`computer-use` MCP entries the ChatGPT app injects |
+| `~/.codex/config.toml` | `personality`, `notify`, `service_tier`, `approval_policy`, `sandbox_mode`, `sandbox_workspace_write`, `mcp_servers` (tag `codex`) | `model`, `model_reasoning_effort` (actively changed via the app UI), `projects`, `marketplaces`, `plugins`, `desktop`, `features`, `hooks.state`, `memories`, `apps`, `tui`, `shell_environment_policy`, `approvals_reviewer`, and the `node_repl`/`computer-use` MCP entries the ChatGPT app injects |
 
 Codex plugin enablement (`[plugins."name@marketplace"]`) is intentionally left
 entirely preserved: every entry currently present is under a `source_type =

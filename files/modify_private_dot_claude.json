@@ -20,7 +20,11 @@
 {{- $mcpServers := dict -}}
 {{- range $name, $def := $base -}}
   {{- if has $tool $def.tools -}}
-    {{- $mcpServers = set $mcpServers $name (omit $def "tools" "platforms") -}}
+    {{- $server := omit $def "tools" "platforms" -}}
+    {{- if and (hasKey $server "type") (eq (index $server "type") "url") -}}
+      {{- $server = set $server "type" "http" -}}
+    {{- end -}}
+    {{- $mcpServers = set $mcpServers $name $server -}}
   {{- end -}}
 {{- end -}}
 {{- $existing := dict -}}
