@@ -145,6 +145,9 @@
   report = me --since='2 sundays ago' --until='1 sunday ago' --no-merges
   # Use force-with-lease for force pushing.
   pf = push --force-with-lease
+  # Re-sign every commit on the current branch. Hosted agents commit without a
+  # signing key, so their branches need this before a signature-gated merge.
+  resign = "!f() { b=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null || echo origin/main); git rebase --force-rebase --gpg-sign $(git merge-base HEAD ${1:-$b}); }; f"
 
 {{- if eq .chezmoi.os "darwin" }}
   builds = "!git log --format='%H' --grep='Build increment:' -2 | awk 'NR > 1 { printf(\"...\") } { printf(\"%s%s\", $1, $2) }'"
