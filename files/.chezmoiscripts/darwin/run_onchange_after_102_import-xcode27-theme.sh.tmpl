@@ -1,0 +1,18 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env zsh
+#
+# Import the managed Xcode 27 workspace theme after it changes.
+# xcode27_theme.py hash: {{ include "dot_local/bin/darwin/executable_xcode27_theme.py" | sha256sum }}
+# JWW.xcworkspacecolortheme hash: {{ include "xcode/themes/JWW.xcworkspacecolortheme" | sha256sum }}
+
+set -euo pipefail
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+
+if (( ! $+commands[python3] )); then
+  fail "Xcode 27 theme: python3 is required to import the JWW theme."
+fi
+
+info "Importing the JWW Xcode 27 theme."
+python3 {{ joinPath .chezmoi.sourceDir "dot_local/bin/darwin/executable_xcode27_theme.py" | quote }} import {{ joinPath .chezmoi.sourceDir "xcode/themes/JWW.xcworkspacecolortheme" | quote }} --rename JWW --activate dark
+{{- end }}

@@ -92,6 +92,10 @@ export OPENAI_API_KEY={{ onepasswordRead "op://dotfiles/OpenAI API Key - dotfile
 export XAI_API_KEY={{ onepasswordRead "op://dotfiles/xAI API Key - dotfiles/credential" | trim }}
 
 export HOMEBREW_GITHUB_API_TOKEN={{ onepasswordRead "op://dotfiles/GitHub API Token - dotfiles/token" | trim }}
+
+codex() {
+  env -u OPENAI_API_KEY command codex "$@"
+}
 {{ end }}
 
 
