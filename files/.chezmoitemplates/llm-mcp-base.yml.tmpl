@@ -11,18 +11,24 @@ servers:
   svelte:
     type: url
     url: https://mcp.svelte.dev/mcp
-    tools: [codex, claude, copilot]
+    tools: [claude, copilot]
     platforms: [darwin, linux]
 
   xcodebuildmcp:
     command: npx
     args: [-y, xcodebuildmcp@latest, mcp]
     enabled: true
-    tools: [codex]
+    tools: []
     platforms: [darwin]
 
   1password:
     command: 1password-mcp
     enabled: true
-    tools: [codex]
+    tools: []
+    platforms: [darwin]
+
+  playwright:
+    command: npx
+    args: ["@playwright/mcp@latest"]
+    tools: []
     platforms: [darwin]
