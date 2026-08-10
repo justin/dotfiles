@@ -116,7 +116,7 @@ Temporary Items
 .apdisk
 
 #########################
-## Claude Code
+## Codex / Claude Code
 #########################
 .claude/settings.local.json
 .claude/worktrees
@@ -139,6 +139,11 @@ yarn-error.log*
 #########################
 *.patch
 *.diff
+
+#########################
+## Agent Handoffs
+#########################
+.handoffs/
 
 ## Sources:
 ## https://github.com/github/gitignore/blob/main/Global/Xcode.gitignore
