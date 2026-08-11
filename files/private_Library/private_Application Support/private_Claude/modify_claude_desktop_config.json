@@ -1,0 +1,125 @@
+{
+    {- /* chezmoi:modify-template */ -
+    }
+}
+{
+    {- /* Merges canonical MCP servers tagged for "claude" over the live
+             ~/Library/Application Support/Claude/claude_desktop_config.json
+             (passed in on .chezmoi.stdin). Unknown server keys are preserved.
+
+             Claude Desktop expects command-based MCP entries in mcpServers. Skip
+             URL/http entries (for example, svelte) to avoid invalid-server warnings. */ -
+    }
+}
+{
+    {- $tool := "claude" -
+    }
+}
+{
+    {- $os := .chezmoi.os -
+    }
+}
+{
+    {- $base := (include (joinPath .chezmoi.sourceDir ".chezmoitemplates/llm-mcp-base.yml.tmpl") | fromYaml).servers -
+    }
+}
+{
+    {- $knownNames := keys $base -
+    }
+}
+{
+    {- $mcpServers := dict -
+    }
+}
+{
+    {- range $name, $def := $base -
+    }
+}
+    {
+    {- if and (has $tool $def.tools) (has $os $def.platforms) (hasKey $def "command") -
+    }
+}
+        {
+    {- $server := omit $def "tools""platforms" -
+    }
+}
+        {
+    {- $mcpServers = set $mcpServers $name $server -
+    }
+}
+    {
+    {- end -
+    }
+}
+{
+    {- end -
+    }
+}
+{
+    {- $existing := dict -
+    }
+}
+{
+    {- if .chezmoi.stdin -
+    }
+}
+    {
+    {- $existing = .chezmoi.stdin | fromJson -
+    }
+}
+{
+    {- end -
+    }
+}
+{
+    {- $reconciled := dict -
+    }
+}
+{
+    {- if hasKey $existing "mcpServers" -
+    }
+}
+    {
+    {- range $name, $def := (index $existing "mcpServers") -
+    }
+}
+        {
+    {- if not (has $name $knownNames) -
+    }
+}
+            {
+    {- $reconciled = set $reconciled $name $def -
+    }
+}
+        {
+    {- end -
+    }
+}
+    {
+    {- end -
+    }
+}
+{
+    {- end -
+    }
+}
+{
+    {- range $name, $def := $mcpServers -
+    }
+}
+    {
+    {- $reconciled = set $reconciled $name $def -
+    }
+}
+{
+    {- end -
+    }
+}
+{
+    {- $existing = set $existing "mcpServers" $reconciled -
+    }
+}
+{
+    {- $existing | toPrettyJson -
+    }
+}

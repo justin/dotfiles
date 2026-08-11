@@ -1,5 +1,5 @@
 youtube-dl
-mcp-server-time
 strip-tags
 ttok
 llm
+applemusic-mcp
