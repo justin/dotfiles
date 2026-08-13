@@ -31,6 +31,11 @@ if type_exists 'gh'; then
   success "Successfully generated GitHub CLI autocompletions."
 fi
 
+if type_exists 'xcode-starter-pack'; then
+  xcode-starter-pack completion zsh >"$ZDOTDIR/functions/_xcode-starter-pack"
+  success "Successfully generated Xcode Starter Pack autocompletions."
+fi
+
 if type_exists 'ipatool'; then
   ipatool completion zsh >"$ZDOTDIR/functions/_ipatool"
   success "Successfully generated ipatool autocompletions."

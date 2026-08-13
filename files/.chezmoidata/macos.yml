@@ -38,6 +38,7 @@ packages:
         - {name: "majd/repo", trust: true}
         - {name: "buo/cask-upgrade", trust: true}
         - {name: "fluffypony/yojam", trust: true}
+        - {name: "justin/tap", trust: true}
       trusted_formulae:
         - "artginzburg/tap/sudo-touchid"
         - "jordanbaird/createicns/createicns"
@@ -139,6 +140,7 @@ packages:
         - "periphery"
         - "swiftlint"
         - "swift-format"
+        - "justin/tap/xcode-starter-pack"
       casks:
         - "1password"
         - "cleanshot"
