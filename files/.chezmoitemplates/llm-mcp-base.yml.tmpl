@@ -34,7 +34,10 @@ servers:
     platforms: [darwin]
 
   applemusic:
-    command: applemusic-mcp
+    # Absolute path required: Claude Desktop spawns MCP servers with the
+    # minimal launchd PATH, which doesn't include the uv tool bin dir
+    # (~/.local/bin) where `uv tool install` places this shim.
+    command: /Users/justinwilliams/.local/bin/applemusic-mcp
     args: ["serve"]
     enabled: true
     tools: [claude]
