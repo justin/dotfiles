@@ -154,7 +154,14 @@ uv-install:
     #!/usr/bin/env zsh
     set -euo pipefail
     while read -r package; do
-      uv tool install --upgrade "$package"
+      if [ "$package" = "llm" ]; then
+        # https://github.com/simonw/llm/issues/1608: llm imports httpx directly but
+        # doesn't declare it as a dependency, relying on openai to pull it in
+        # transitively. openai 3.0.0 switched to httpx2, breaking that assumption.
+        uv tool install --upgrade "$package" --with httpx
+      else
+        uv tool install --upgrade "$package"
+      fi
     done < "$XDG_CONFIG_HOME/pip/global_pip_packages.txt"
     cat $XDG_CONFIG_HOME/llm/uv-tool-packages.json | jq '.[]' | xargs -I {} llm install {}
 
