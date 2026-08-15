@@ -81,8 +81,15 @@
 	helper = /usr/local/share/gcm-core/git-credential-manager
 {{ end }}
 
+{{- $ghPath := lookPath "gh" }}
 [credential "https://github.com"]
   username = {{ .github_username}}
+{{- if $ghPath }}
+  helper = !{{ $ghPath }} auth git-credential
+
+[credential "https://gist.github.com"]
+  helper = !{{ $ghPath }} auth git-credential
+{{- end }}
 
 {{ if eq .osid "darwin" -}}
 [difftool "Kaleidoscope"]
