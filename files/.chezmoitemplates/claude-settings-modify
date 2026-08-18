@@ -1,0 +1,30 @@
+{{- /* Merges owned settings over a live Claude Code settings.json (passed in
+       on .chezmoi.stdin), preserving any keys Claude Code writes itself that
+       we don't declare here. Shared by every Claude Code settings.json this
+       repo manages (the default ~/.claude and Xcode's ClaudeAgentConfig).
+
+       enabledPlugins gets reconciliation, not a plain merge: entries under
+       the first-party claude-plugins-official marketplace are fully owned,
+       so removing one from claude-settings-owned.json.tmpl disables it here
+       too. Entries from any other marketplace (trust/install/cache state we
+       don't declare) pass through untouched. */ -}}
+{{- $owned := include (joinPath .chezmoi.sourceDir ".chezmoitemplates/claude-settings-owned.json.tmpl") | fromJson -}}
+{{- $existing := dict -}}
+{{- if .chezmoi.stdin -}}
+  {{- $existing = .chezmoi.stdin | fromJson -}}
+{{- end -}}
+{{- $ownedMarketplaceSuffix := "@claude-plugins-official" -}}
+{{- $reconciledPlugins := dict -}}
+{{- if hasKey $existing "enabledPlugins" -}}
+  {{- range $name, $enabled := (index $existing "enabledPlugins") -}}
+    {{- if not (hasSuffix $ownedMarketplaceSuffix $name) -}}
+      {{- $reconciledPlugins = set $reconciledPlugins $name $enabled -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $name, $enabled := (index $owned "enabledPlugins") -}}
+  {{- $reconciledPlugins = set $reconciledPlugins $name $enabled -}}
+{{- end -}}
+{{- $existing = set $existing "enabledPlugins" $reconciledPlugins -}}
+{{- $owned = unset $owned "enabledPlugins" -}}
+{{- mergeOverwrite (dict) $existing $owned | toPrettyJson -}}

@@ -1,0 +1,79 @@
+{{- /* Merges owned Codex config.toml fields over the live file (.chezmoi.stdin):
+       - owned settings (model, personality, sandbox defaults, notify, ...) from
+         codex-config-owned.toml.tmpl
+       - mcp_servers tagged "codex" from the canonical llm-mcp-base(+darwin) data
+       Everything else (projects, marketplaces, plugins, desktop, features,
+       hooks.state, memories, apps, tui, shell_environment_policy, and
+       approvals_reviewer) is Codex's own runtime/trust state and passes through
+       untouched. Shared by every Codex config.toml this repo manages (the
+       default ~/.config/codex and Xcode's CodingAssistant/codex).
+
+       mcp_servers gets reconciliation, not a plain merge: any existing entry
+       whose name is STILL PRESENT in llm-mcp-base.yml.tmpl (across all
+       tools, not just "codex") is fully owned, so removing "codex" from its
+       tags deletes it here too. Entries the ChatGPT app injects under names
+       we've never declared (node_repl, computer-use) pass through untouched.
+       Caveat: deleting a server's entire entry from llm-mcp-base.yml.tmpl
+       (not just untagging it) makes it indistinguishable from an
+       app-injected key, so it will NOT be auto-removed from files this has
+       already applied to — untag first (empty its "tools" list) to let this
+       delete it, then remove the entry once no live file still has it. */ -}}
+{{- $tool := "codex" -}}
+{{- $scalars := include (joinPath .chezmoi.sourceDir ".chezmoitemplates/codex-config-owned.toml.tmpl") | fromToml -}}
+{{- if eq .chezmoi.os "darwin" -}}
+  {{- $notifyCommand := printf "%s/.config/codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient" .chezmoi.homeDir -}}
+  {{- $scalars = set $scalars "notify" (list $notifyCommand "turn-ended") -}}
+{{- end -}}
+{{- $sandboxWritableRoots := list -}}
+{{- if eq .chezmoi.os "darwin" -}}
+  {{- $sandboxWritableRoots = list
+    (joinPath .chezmoi.homeDir "Library/Caches/go-build")
+    (joinPath .chezmoi.homeDir "Library/Caches/uv")
+    (joinPath .chezmoi.homeDir "Library/Developer/Xcode/DerivedData")
+    (joinPath .chezmoi.homeDir ".cache/npm")
+    (joinPath .chezmoi.homeDir "go/bin")
+    (joinPath .chezmoi.homeDir "go/pkg/mod")
+    (joinPath .chezmoi.homeDir "go/pkg/sumdb")
+  -}}
+{{- else -}}
+  {{- $sandboxWritableRoots = list
+    (joinPath .chezmoi.homeDir ".cache/go-build")
+    (joinPath .chezmoi.homeDir ".cache/uv")
+    (joinPath .chezmoi.homeDir ".cache/npm")
+    (joinPath .chezmoi.homeDir "go/bin")
+    (joinPath .chezmoi.homeDir "go/pkg/mod")
+    (joinPath .chezmoi.homeDir "go/pkg/sumdb")
+  -}}
+{{- end -}}
+{{- $scalars = set $scalars "sandbox_workspace_write" (dict "network_access" true "writable_roots" $sandboxWritableRoots) -}}
+{{- $serverDefs := (include (joinPath .chezmoi.sourceDir ".chezmoitemplates/llm-mcp-base.yml.tmpl") | fromYaml).servers -}}
+{{- /* Keep retired names in reconciliation until their prior managed entry is
+       removed from live configs. */ -}}
+{{- $knownNames := append (keys $serverDefs) "xcode" -}}
+{{- $mcpServers := dict -}}
+{{- range $name, $def := $serverDefs -}}
+  {{- if and (has $tool $def.tools) (has $.chezmoi.os $def.platforms) -}}
+    {{- $server := omit $def "tools" "platforms" "type" -}}
+    {{- if eq $name "xcodebuildmcp" -}}
+      {{- $server = set $server "env" (dict "NPM_CONFIG_CACHE" (joinPath $.chezmoi.homeDir ".cache/npm")) -}}
+    {{- end -}}
+    {{- $mcpServers = set $mcpServers $name $server -}}
+  {{- end -}}
+{{- end -}}
+{{- $existing := dict -}}
+{{- if .chezmoi.stdin -}}
+  {{- $existing = .chezmoi.stdin | fromToml -}}
+{{- end -}}
+{{- $reconciled := dict -}}
+{{- if hasKey $existing "mcp_servers" -}}
+  {{- range $name, $def := (index $existing "mcp_servers") -}}
+    {{- if not (has $name $knownNames) -}}
+      {{- $reconciled = set $reconciled $name $def -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $name, $def := $mcpServers -}}
+  {{- $reconciled = set $reconciled $name $def -}}
+{{- end -}}
+{{- $existing = set $existing "mcp_servers" $reconciled -}}
+{{- mergeOverwrite (dict) $existing $scalars | toToml -}}
