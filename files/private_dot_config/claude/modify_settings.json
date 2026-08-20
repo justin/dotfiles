@@ -3,6 +3,10 @@
        (passed in on .chezmoi.stdin), preserving any keys Claude Code writes
        itself that we don't declare here.
 
+       The GitHub issue session-title hook is owned by its exact command. That
+       handler is reconciled on every apply while unrelated hook events,
+       matcher groups, and handlers pass through untouched.
+
        enabledPlugins gets reconciliation, not a plain merge: entries under
        the first-party claude-plugins-official marketplace are fully owned,
        so removing one from claude-settings-owned.json.tmpl disables it here
@@ -13,6 +17,39 @@
 {{- if .chezmoi.stdin -}}
   {{- $existing = .chezmoi.stdin | fromJson -}}
 {{- end -}}
+{{- $ownedHookCommand := "python3 \"$HOME/.config/agent-workflows/scripts/github_issue_session_title.py\" claude" -}}
+{{- $ownedHook := dict
+      "type" "command"
+      "command" $ownedHookCommand
+      "timeout" 12
+      "statusMessage" "Checking for a GitHub issue" -}}
+{{- $hooks := dict -}}
+{{- if hasKey $existing "hooks" -}}
+  {{- $hooks = index $existing "hooks" -}}
+{{- end -}}
+{{- $promptGroups := list -}}
+{{- if hasKey $hooks "UserPromptSubmit" -}}
+  {{- range $group := (index $hooks "UserPromptSubmit") -}}
+    {{- if hasKey $group "hooks" -}}
+      {{- $handlers := list -}}
+      {{- range $handler := (index $group "hooks") -}}
+        {{- $isOwned := and (hasKey $handler "command") (eq (index $handler "command") $ownedHookCommand) -}}
+        {{- if not $isOwned -}}
+          {{- $handlers = append $handlers $handler -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if gt (len $handlers) 0 -}}
+        {{- $group = set $group "hooks" $handlers -}}
+        {{- $promptGroups = append $promptGroups $group -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $promptGroups = append $promptGroups $group -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $promptGroups = append $promptGroups (dict "hooks" (list $ownedHook)) -}}
+{{- $hooks = set $hooks "UserPromptSubmit" $promptGroups -}}
+{{- $existing = set $existing "hooks" $hooks -}}
 {{- $ownedMarketplaceSuffix := "@claude-plugins-official" -}}
 {{- $reconciledPlugins := dict -}}
 {{- if hasKey $existing "enabledPlugins" -}}

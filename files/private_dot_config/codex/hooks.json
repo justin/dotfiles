@@ -1,0 +1,17 @@
+{
+  "description": "Global developer workflow automation managed by dotfiles.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$HOME/.config/agent-workflows/scripts/github_issue_session_title.py\" codex",
+            "timeout": 12,
+            "statusMessage": "Checking for a GitHub issue"
+          }
+        ]
+      }
+    ]
+  }
+}

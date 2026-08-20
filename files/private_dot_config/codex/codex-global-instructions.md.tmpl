@@ -1,0 +1,5 @@
+{{- template "llm-instructions-general" "Codex" }}
+{{ template "llm-instructions-git" }}
+## Codex automation
+
+- When developer context provides `CODEX_THREAD_TITLE`, use the available thread-title tool once with that exact value before substantive work. Omit the thread ID to target the current task. If the tool is unavailable, continue silently.
