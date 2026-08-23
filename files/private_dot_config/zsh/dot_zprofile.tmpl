@@ -1,3 +1,5 @@
+source "$ZDOTDIR/path.zsh"
+
 {{ if eq .osid "darwin" }}
 # Prefer macOS's launchd-managed SSH agent over an inherited 1Password or stale socket.
 if [[ ! -S "${SSH_AUTH_SOCK:-}" || "$SSH_AUTH_SOCK" == *1password* ]]; then

@@ -14,24 +14,13 @@ setopt extended_glob
 # zmv support
 autoload -U zmv
 
-{{ if eq .osid "darwin" }}
-# Ensure we explicitly set all homebrew related environment variables.
-eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
-{{ end }}
+source "$ZDOTDIR/path.zsh"
 
 # ===== Customize $fignore =====
 fignore=(
   .DS_Store
   $fignore
 )
-
-# JWW: 09/24/23
-# Because of how macOS uses path_helper for setting the PATH it's best to set
-# the path values entirely up front instead of in each config file. This will
-# allow things to be properly ordered.
-#
-# It shouldn't have any negative effect on Linux.
-# https://0xmachos.com/2021-05-13-zsh-path-macos/
 
 # ==== Customize $FPATH =====
 # Prevent duplicates within search paths
@@ -42,25 +31,6 @@ fpath=(
   {{ .homebrew.prefix }}/share/zsh/site-functions(N)
   $XDG_CACHE_HOME/zsh/external/claude-autocompletions(N)
   $fpath
-)
-
-# ===== Customize $PATH =====
-# U for Unique, like a set;
-# (N) == only if exists
-typeset -U path   # Prevent duplicates within search paths
-path=(
-  $HOME/.local/bin
-  {{- if eq .osid "darwin" }}
-  $HOME/.local/bin/darwin
-  {{ .homebrew.prefix }}/opt/findutils/libexec/gnubin(N)
-  {{ output "brew" "--prefix" "python" | trim -}}/libexec/bin(N)
-  {{ else if eq .osid "linux-ubuntu" }}
-  $HOME/.local/bin/ubuntu(N)
-  $HOME/.local/share/../bin/env(N)
-  /snap/bin(N)
-  {{ end }}
-  $XDG_DATA_HOME/cargo/bin(N)
-  $path
 )
 
 {{ if eq .osid "darwin" }}

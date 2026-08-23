@@ -1,0 +1,23 @@
+{{ if eq .osid "darwin" }}
+# Ensure login shells, including BBEdit's non-interactive shell, have Homebrew's environment.
+eval "$({{ .homebrew.prefix }}/bin/brew shellenv)"
+{{ end }}
+
+# Because macOS uses path_helper to set PATH, configure the complete search path
+# in one startup file so login shells retain the intended ordering.
+# https://0xmachos.com/2021-05-13-zsh-path-macos/
+typeset -U path
+path=(
+  $HOME/.local/bin
+  {{- if eq .osid "darwin" }}
+  $HOME/.local/bin/darwin
+  {{ .homebrew.prefix }}/opt/findutils/libexec/gnubin(N)
+  {{ output "brew" "--prefix" "python" | trim -}}/libexec/bin(N)
+  {{ else if eq .osid "linux-ubuntu" }}
+  $HOME/.local/bin/ubuntu(N)
+  $HOME/.local/share/../bin/env(N)
+  /snap/bin(N)
+  {{ end }}
+  $XDG_DATA_HOME/cargo/bin(N)
+  $path
+)
