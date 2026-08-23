@@ -3,6 +3,7 @@
 set shell := ["zsh", "-cu"]
 
 vscode_bundle := "com.microsoft.VSCode"
+bbedit_bundle := "com.barebones.bbedit"
 create_project_script := "$XDG_DATA_HOME/chezmoi/files/dot_local/bin/executable_create-project-from-template"
 
 default:
@@ -16,17 +17,17 @@ fix-touchid:
 fix-uti:
     @echo "Fixing UTI mappings"
 
-    duti -s {{ vscode_bundle }} md all
-    duti -s {{ vscode_bundle }} json all
-    duti -s {{ vscode_bundle }} txt all
-    duti -s {{ vscode_bundle }} js all
-    duti -s {{ vscode_bundle }} ts all
-    duti -s {{ vscode_bundle }} css all
-    duti -s {{ vscode_bundle }} yml all
-    duti -s {{ vscode_bundle }} cfg all
-    duti -s {{ vscode_bundle }} sh all
-    duti -s {{ vscode_bundle }} rb all
-    duti -s {{ vscode_bundle }} py all
+    duti -s {{ bbedit_bundle }} md all
+    duti -s {{ bbedit_bundle }} json all
+    duti -s {{ bbedit_bundle }} txt all
+    duti -s {{ bbedit_bundle }} js all
+    duti -s {{ bbedit_bundle }} ts all
+    duti -s {{ bbedit_bundle }} css all
+    duti -s {{ bbedit_bundle }} yml all
+    duti -s {{ bbedit_bundle }} cfg all
+    duti -s {{ bbedit_bundle }} sh all
+    duti -s {{ bbedit_bundle }} rb all
+    duti -s {{ bbedit_bundle }} py all
     duti -s com.colliderli.iina mp4 all
     duti -s com.colliderli.iina mkv all
     duti -s com.colliderli.iina mov all
