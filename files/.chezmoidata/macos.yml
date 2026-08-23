@@ -127,7 +127,7 @@ packages:
     personal:
       remove:
         taps: []
-        brews: []
+        brews: ["periphery"]
         casks: []
         mas: []
       taps: []
@@ -137,7 +137,6 @@ packages:
         - "codex"
         - "jordanbaird/createicns/createicns"
         - "magic-wormhole"
-        - "periphery"
         - "swiftlint"
         - "swift-format"
         - "justin/tap/xcode-starter-pack"
