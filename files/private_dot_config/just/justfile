@@ -70,6 +70,14 @@ alias up := update-all
 update-skills:
     update-agent-skills
 
+# Check whether the managed Semble instructions match the installed package.
+semble-check-instructions:
+    semble-instructions check
+
+# Refresh the managed Semble instructions from the installed package for review.
+semble-sync-instructions:
+    semble-instructions sync
+
 [macos]
 update-all:
     @echo "🚀 Updating Homebrew."
@@ -169,6 +177,16 @@ uv-install:
 py-upgrade:
     just pipx-uninstall
     just uv-install
+    just semble-check-instructions
+
+# Load chezmoi-managed static context into llm's local fragment database.
+llm-fragments-sync:
+    #!/usr/bin/env zsh
+    set -euo pipefail
+    command -v llm >/dev/null
+    for fragment in "$XDG_CONFIG_HOME"/llm/fragments/*.md(N); do
+      llm fragments set "${fragment:t:r}" "$fragment"
+    done
 
 create-python-project project_path='':
     zsh {{ create_project_script }} git@github.com:justin/jww-python-template.git {{ quote(project_path) }}

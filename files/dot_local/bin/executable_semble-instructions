@@ -1,0 +1,58 @@
+#!/usr/bin/env zsh
+#
+# Compare or refresh the chezmoi-managed Semble instruction fragment from the
+# locally installed Semble package. The result is intentionally source state,
+# so callers can review and commit a package upgrade's instruction changes.
+set -euo pipefail
+
+case "${1:-check}" in
+  check|sync)
+    mode="${1:-check}"
+    ;;
+  *)
+    printf 'Usage: semble-instructions [check|sync]\n' >&2
+    exit 2
+    ;;
+esac
+
+command -v chezmoi >/dev/null 2>&1 || {
+  printf '%s\n' 'chezmoi is required to locate its source state.' >&2
+  exit 1
+}
+
+semble_command="$(command -v semble)" || {
+  printf '%s\n' 'semble is not installed; run `just py-upgrade` first.' >&2
+  exit 1
+}
+semble_python="$(head -n 1 "$semble_command")"
+semble_python="${semble_python#\#!}"
+[[ -x "$semble_python" ]] || {
+  printf '%s\n' "Unable to locate Semble's Python interpreter from $semble_command." >&2
+  exit 1
+}
+
+source_root="$(chezmoi source-path)"
+fragment="$source_root/.chezmoitemplates/llm-instructions-semble"
+[[ -f "$fragment" ]] || {
+  printf '%s\n' "Managed Semble instructions were not found at $fragment." >&2
+  exit 1
+}
+
+temporary_fragment="$(mktemp "${TMPDIR:-/tmp}/semble-instructions.XXXXXX")"
+trap 'rm -f "$temporary_fragment"' EXIT
+
+"$semble_python" -c 'from semble.installer.agents import INSTRUCTIONS; print(INSTRUCTIONS, end="")' >"$temporary_fragment"
+
+if cmp -s "$fragment" "$temporary_fragment"; then
+  printf '%s\n' 'Semble instructions match the installed package.'
+  exit 0
+fi
+
+if [[ "$mode" == "check" ]]; then
+  diff -u "$fragment" "$temporary_fragment" || true
+  printf '%s\n' 'Semble instructions differ; run `just semble-sync-instructions` to refresh the managed fragment.' >&2
+  exit 1
+fi
+
+cp "$temporary_fragment" "$fragment"
+printf '%s\n' "Refreshed $fragment from installed Semble instructions; review and commit the diff."

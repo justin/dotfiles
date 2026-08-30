@@ -3,3 +3,4 @@ strip-tags
 ttok
 llm
 applemusic-mcp
+semble
