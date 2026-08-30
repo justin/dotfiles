@@ -1,0 +1,16 @@
+{
+  "lastChangelogVersion": "0.55.1",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-6",
+  "theme": "jww-pi-theme",
+  "defaultThinkingLevel": "off",
+  "hideThinkingBlock": false,
+  "enabledModels": [
+    "anthropic/claude-opus-4-8",
+    "openai/gpt-5.5",
+  ],
+  "packages": [
+    "npm:pi-mcp-extension",
+    "npm:pi-agents"
+  ]
+}
