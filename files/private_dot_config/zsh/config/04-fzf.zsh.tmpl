@@ -27,12 +27,14 @@ export FZF_ALT_C_COMMAND="fd \
 # CTRL-R − Paste the selected command from history onto the command-line.
 # CTRL-/ to toggle small preview window to see the full command
 # CTRL-Y to copy the command into clipboard using pbcopy
+# CTRL-E to explain the selected command with llm; press q to return to fzf
 export FZF_CTRL_R_OPTS="--preview 'echo {}' \
   --preview-window down:3:hidden:wrap \
   --bind 'ctrl-/:toggle-preview' \
+  --bind 'ctrl-e:execute(echo {2..} | llm -s \"Explain this zsh command concisely, including side effects and destructive behavior.\" | LESS= less -R)' \
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' \
   --color header:italic \
-  --header 'Press CTRL-Y to copy command into clipboard'"
+  --header 'Enter insert • CTRL-E explain (q return) • CTRL-Y copy'"
 
 fzf-history-widget-accept() {
   fzf-history-widget
@@ -90,5 +92,3 @@ if [[ -e "$HOME/.cache/zsh/external/fzf-git.sh" ]]; then
   source "$HOME/.cache/zsh/external/fzf-git.sh" || true
 fi
 {{ end }}
-
-
