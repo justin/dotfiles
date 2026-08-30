@@ -1,8 +1,8 @@
 # Interactive llm workflows.
 #
-# These helpers use the source-managed llm templates and fragment aliases. Run
-# `just llm-fragments-sync` after applying this configuration to install the
-# aliases in llm's local database. Generated commands are always returned for
+# These helpers use the source-managed llm templates and fragment aliases. The
+# chezmoi fragment-sync script installs aliases in llm's local database after
+# managed fragment content changes. Generated commands are always returned for
 # review; they are never executed by these helpers.
 #
 # Templates:

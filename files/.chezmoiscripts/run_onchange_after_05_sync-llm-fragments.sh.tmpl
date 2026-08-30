@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+#
+# Synchronize source-managed llm fragments whenever their content changes.
+# {{ include "private_dot_config/llm/fragments/debugging.md" | sha256sum }}
+# {{ include "private_dot_config/llm/fragments/japanese-study.md" | sha256sum }}
+# {{ include "private_dot_config/llm/fragments/macos-cli.md" | sha256sum }}
+# {{ include "private_dot_config/llm/fragments/swift-review.md" | sha256sum }}
+set -euo pipefail
+
+source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
+source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
+
+if ! is_cmd llm; then
+  warning "llm is not installed; skipping fragment synchronization"
+  exit 0
+fi
+
+export LLM_USER_PATH={{ joinPath .chezmoi.homeDir ".config/llm" }}
+fragment_dir={{ joinPath .chezmoi.homeDir ".config/llm/fragments" }}
+
+processing "Synchronizing llm fragments..."
+for fragment in "$fragment_dir"/*.md(N); do
+  llm fragments set "${fragment:t:r}" "$fragment" >/dev/null
+done
+success "llm: fragment aliases synchronized."

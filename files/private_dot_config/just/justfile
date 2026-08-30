@@ -179,15 +179,6 @@ py-upgrade:
     just uv-install
     just semble-check-instructions
 
-# Load chezmoi-managed static context into llm's local fragment database.
-llm-fragments-sync:
-    #!/usr/bin/env zsh
-    set -euo pipefail
-    command -v llm >/dev/null
-    for fragment in "$XDG_CONFIG_HOME"/llm/fragments/*.md(N); do
-      llm fragments set "${fragment:t:r}" "$fragment"
-    done
-
 create-python-project project_path='':
     zsh {{ create_project_script }} git@github.com:justin/jww-python-template.git {{ quote(project_path) }}
 
