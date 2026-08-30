@@ -249,7 +249,7 @@ function dockerpick() {
 # Usage: llm-command <request>
 function llm-command() {
   __llm_require || return
-  llm -t zsh -f macos-cli "$*"
+  llm -t zsh -f macos-cli -p os "${OS:-$(uname)}" "$*"
 }
 
 # Shorthand for llm-command; the alias avoids extended-glob expansion of ??.
@@ -267,7 +267,7 @@ function llm-command-widget() {
   fi
 
   local generated
-  generated="$(llm -t zsh -f macos-cli "$BUFFER")" || return
+  generated="$(llm -t zsh -f macos-cli -p os "${OS:-$(uname)}" "$BUFFER")" || return
   BUFFER=$generated
   CURSOR=${#BUFFER}
   zle -R
