@@ -1,3 +1,18 @@
 refresh_periods:
   day: "24h"
   week: "168h"
+
+packages:
+  npm:
+    global:
+      - "npm"
+      - "@earendil-works/pi-coding-agent"
+      - "@devcontainers/cli"
+  pip:
+    global:
+      - "youtube-dl"
+      - "strip-tags"
+      - "ttok"
+      - "llm"
+      - "applemusic-mcp"
+      - "semble"
