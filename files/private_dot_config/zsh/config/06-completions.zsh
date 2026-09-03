@@ -15,18 +15,17 @@ setopt always_to_end
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
-# -D: delete any existing dump file before creating a new one.
-# -i: ignore insecure directories when creating the dump file.
-# -u: to update the dump file if it already exists.
-# -C: use caching to speed up the initialization process.
-# -w: write a message to the terminal if it encounters any warnings during initialization.
-zstyle '*:compinit' arguments -D -i -u -C -w
+# Initialize completion functions after fpath is configured. The cache is rebuilt
+# when completion files change, so newly managed functions are discovered.
+autoload -Uz compinit
+compinit -i -d "${ZSH_COMPDUMP:-${ZDOTDIR:-$HOME}/.zcompdump}"
 
 zmodload -i zsh/complist
 
 _tmac_complete() {
-    local word=${COMP_WORDS[COMP_CWORD]}
-    local sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
-    COMPREPLY=( $(compgen -W "$sessions" -- "$word") )
+    local -a sessions
+
+    sessions=("${(@f)$(tmux list-sessions -F "#{session_name}" 2>/dev/null)}")
+    _describe 'tmux session' sessions
 }
-complete -F _tmac_complete tmac
+compdef _tmac_complete tmac

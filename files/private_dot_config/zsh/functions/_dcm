@@ -1,0 +1,37 @@
+#compdef dcm
+
+# Zsh completion for the Dev Container manager.
+
+_dcm() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C -s \
+    '(-w --workspace-folder)'{-w,--workspace-folder}'[Workspace containing the Dev Container configuration]:workspace directory:_directories' \
+    '--config=[Dev Container configuration relative to the workspace]:configuration file:_files -g "devcontainer*.json"' \
+    '(-h --help)'{-h,--help}'[Show usage information]' \
+    '1:command:->command' \
+    '*::argument:->argument'
+
+  case "$state" in
+    command)
+      _values 'command' \
+        'up[Create and run the Dev Container]' \
+        'build[Build the Dev Container]' \
+        'stop[Stop the Dev Container]' \
+        'down[Stop and remove the Dev Container]' \
+        'exec[Execute a command in the Dev Container]' \
+        'shell[Open a shell in the Dev Container]' \
+        'status[Show Dev Container status]' \
+        'logs[Follow Dev Container logs]' \
+        'read-configuration[Print the resolved Dev Container configuration]' \
+        'run-user-commands[Run Dev Container lifecycle commands]' \
+        'menu[Choose an action interactively]'
+      ;;
+    argument)
+      _message 'Dev Container CLI argument'
+      ;;
+  esac
+}
+
+compdef _dcm dcm

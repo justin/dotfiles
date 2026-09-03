@@ -1,0 +1,215 @@
+#!/usr/bin/env zsh
+#
+# Manage a repository's Development Container without an editor integration.
+#
+# Usage:
+#   dcm [manager-options] <command> [devcontainer-options]
+#
+# Manager options must come before the command:
+#   --workspace-folder, -w <path>  Workspace containing the devcontainer configuration.
+#   --config <path>                Explicit devcontainer.json, relative to the workspace.
+#
+# Commands:
+#   up, build, stop, down, exec <command>, shell, status, logs,
+#   read-configuration, run-user-commands, menu
+
+set -euo pipefail
+
+workspace="$PWD"
+config=""
+
+usage() {
+  cat <<'EOF'
+Usage:
+  dcm [manager-options] <command> [devcontainer-options]
+
+Manager options must come before the command:
+  --workspace-folder, -w <path>  Workspace containing the devcontainer configuration.
+  --config <path>                Explicit devcontainer.json, relative to the workspace.
+
+Commands:
+  up, build, stop, down, exec <command>, shell, status, logs,
+  read-configuration, run-user-commands, menu
+EOF
+}
+
+fail() {
+  print -u2 -- "$1"
+  exit 1
+}
+
+require_value() {
+  [[ $# -ge 2 && -n "$2" ]] || fail "Missing value for $1."
+}
+
+while (( $# > 0 )); do
+  case "$1" in
+    --workspace-folder|-w)
+      require_value "$@"
+      workspace="$2"
+      shift 2
+      ;;
+    --config)
+      require_value "$@"
+      config="$2"
+      shift 2
+      ;;
+    --help|-h)
+      usage
+      exit 0
+      ;;
+    *)
+      operation="$1"
+      shift
+      break
+      ;;
+  esac
+done
+
+operation="${operation:-up}"
+arguments=("$@")
+
+[[ -d "$workspace" ]] || fail "Workspace directory does not exist: $workspace"
+workspace="$(cd "$workspace" && pwd -P)"
+
+if [[ -n "$config" && "$config" != /* ]]; then
+  config="$workspace/$config"
+fi
+
+ensure_devcontainer_cli() {
+  command -v devcontainer >/dev/null 2>&1 || fail \
+    "The Dev Container CLI is not installed. Run: npm install -g @devcontainers/cli"
+}
+
+ensure_docker() {
+  command -v docker >/dev/null 2>&1 || fail "Docker is not installed or is not on PATH."
+  docker info >/dev/null 2>&1 || fail "Docker is not running or is not available to this user."
+}
+
+ensure_jq() {
+  command -v jq >/dev/null 2>&1 || fail \
+    "The down command requires jq to inspect the Dev Container configuration."
+}
+
+ensure_configuration() {
+  if [[ -n "$config" ]]; then
+    [[ -f "$config" ]] || fail "Dev Container configuration does not exist: $config"
+    return
+  fi
+
+  [[ -f "$workspace/.devcontainer/devcontainer.json" || -f "$workspace/.devcontainer.json" ]] || fail \
+    "No devcontainer.json found in $workspace. Use --config to specify one."
+}
+
+cli() {
+  local -a cli_arguments
+  cli_arguments=(devcontainer "$1" --workspace-folder "$workspace")
+  [[ -n "$config" ]] && cli_arguments+=(--config "$config")
+  shift
+  cli_arguments+=("$@")
+  "${cli_arguments[@]}"
+}
+
+container_ids() {
+  docker ps -aq --filter "label=devcontainer.local_folder=$workspace"
+}
+
+status() {
+  ensure_docker
+  docker ps -a --filter "label=devcontainer.local_folder=$workspace" \
+    --format 'table {{.Names}}\t{{.Status}}\t{{.Image}}'
+}
+
+logs() {
+  local -a ids
+  ensure_docker
+  ids=("${(@f)$(container_ids)}")
+  (( ${#ids[@]} > 0 )) || fail "No Dev Container found for $workspace."
+  (( ${#ids[@]} == 1 )) || fail "More than one Dev Container was found; use docker logs directly."
+  docker logs --tail 200 -f "$ids[1]"
+}
+
+interactive_menu() {
+  command -v fzf >/dev/null 2>&1 || fail "The menu command requires fzf."
+  local action
+  local -a manager_options
+  action="$(print -l up build stop down shell status logs read-configuration run-user-commands | \
+    fzf --prompt='Dev Container> ' --height=40% --reverse)" || return 0
+  manager_options=(--workspace-folder "$workspace")
+  [[ -n "$config" ]] && manager_options+=(--config "$config")
+  "$0" "${manager_options[@]}" "$action"
+}
+
+configuration_path() {
+  if [[ -n "$config" ]]; then
+    print -r -- "$config"
+  elif [[ -f "$workspace/.devcontainer/devcontainer.json" ]]; then
+    print -r -- "$workspace/.devcontainer/devcontainer.json"
+  else
+    print -r -- "$workspace/.devcontainer.json"
+  fi
+}
+
+down() {
+  local resolved_configuration config_directory compose_file
+  local -a compose_files compose_arguments ids
+
+  resolved_configuration="$(cli read-configuration)"
+  compose_files=("${(@f)$(print -r -- "$resolved_configuration" | jq -r '.configuration.dockerComposeFile[]?')}")
+
+  if (( ${#compose_files[@]} > 0 )); then
+    config_directory="${$(configuration_path):h}"
+    for compose_file in "${compose_files[@]}"; do
+      [[ "$compose_file" = /* ]] || compose_file="$config_directory/$compose_file"
+      compose_arguments+=(-f "$compose_file")
+    done
+    docker compose "${compose_arguments[@]}" down
+    return
+  fi
+
+  ids=("${(@f)$(container_ids)}")
+  (( ${#ids[@]} > 0 )) || return
+  docker rm -f "${ids[@]}"
+}
+
+case "$operation" in
+  up|build|stop|read-configuration|run-user-commands)
+    ensure_devcontainer_cli
+    ensure_configuration
+    [[ "$operation" == "read-configuration" ]] || ensure_docker
+    cli "$operation" "${arguments[@]}"
+    ;;
+  down)
+    ensure_devcontainer_cli
+    ensure_configuration
+    ensure_docker
+    ensure_jq
+    down
+    ;;
+  exec)
+    ensure_devcontainer_cli
+    ensure_configuration
+    ensure_docker
+    (( ${#arguments[@]} > 0 )) || fail "Usage: dcm exec <command> [arguments...]"
+    cli exec "${arguments[@]}"
+    ;;
+  shell)
+    ensure_devcontainer_cli
+    ensure_configuration
+    ensure_docker
+    cli exec /bin/sh "${arguments[@]}"
+    ;;
+  status)
+    status
+    ;;
+  logs)
+    logs
+    ;;
+  menu)
+    interactive_menu
+    ;;
+  *)
+    usage
+    fail "Unknown command: $operation"
+    ;;
+esac

@@ -83,6 +83,19 @@ Use just to keep things current:
 
 Additional tasks are defined in ~/.config/just/justfile.
 
+Install the managed Dev Container CLI with `just npm-upgrade`, then Development Containers are
+available without VS Code:
+
+```sh
+dcm up
+dcm shell
+dcm status
+```
+
+Run `dcm --help` for the full lifecycle commands. In BBEdit, choose
+`Dev Containers` from the Scripts menu, select a project folder, then choose an action in
+the Terminal menu. `down` removes containers and networks but retains volumes.
+
 
 ## Repository layout (simplified)
 
