@@ -10,9 +10,14 @@ rules. Direct user instructions and higher-priority safety requirements win.
 - Edit chezmoi source state under `files/`, not rendered files in the home
   directory. `.chezmoiroot` maps the source root to `files`.
 - Preserve unrelated working-tree changes.
-- Do not run `chezmoi apply`, bootstrap/install scripts, package upgrades, or
-  other state-changing commands unless the task requires them and the user has
-  authorized their effects.
+- Do not run bootstrap/install scripts, package upgrades, or other
+  state-changing commands unless the task requires them and the user has
+  authorized their effects. A scoped `chezmoi apply` is pre-authorized after a
+  successful dry-run only when the requested change affects one managed file or
+  template, the dry-run confirms only its expected target would change, and it
+  does not require authentication, 1Password, network access, or execution of
+  chezmoi scripts. Ask Justin before applying whenever any condition is
+  uncertain.
 - Never hardcode or commit passwords, API keys, tokens, or other secrets.
 - Assume Apple silicon (`arm64`) on macOS. Keep Linux behavior explicit and
   detect its architecture.
@@ -144,7 +149,7 @@ Use the narrowest read-only check that exercises the change.
 | --- | --- |
 | Documentation | Diff/readability check; Markdown checker when available |
 | Chezmoi data | `chezmoi data \| jq .` |
-| Managed file or template | `chezmoi diff` and relevant template rendering |
+| Managed file or template | `chezmoi diff` and relevant template rendering; if applying under the single-file allowance, a successful scoped dry-run |
 | Apply-time script | Shell syntax check plus `chezmoi apply --dry-run --verbose` |
 | `.chezmoi.toml.tmpl` | `chezmoi execute-template --init --promptString email=test@example.com < files/.chezmoi.toml.tmpl` |
 | Justfile | `just --justfile files/private_dot_config/just/justfile --list` |
@@ -162,6 +167,8 @@ execute them, so it does not replace syntax checks or focused script tests.
 - Validate external input and quote shell expansions.
 - Prefer secure temporary directories with cleanup traps.
 - Treat `chezmoi apply`, bootstrap scripts, package recipes, `sudo`, and network
-  downloads as state-changing operations, not validation commands.
+  downloads as state-changing operations, not validation commands. The
+  single-file `chezmoi apply` allowance in Critical Constraints is the only
+  exception to requesting authorization first.
 - Test fresh installation only in an explicitly disposable environment or when
   the user specifically requests it.
