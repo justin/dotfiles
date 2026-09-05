@@ -19,7 +19,7 @@ semble find-related src/auth.py 42 ./my-project
 semble search "save model to disk" ./my-project --top-k 10
 ```
 
-The index is built on first run and cached automatically. If `semble` is not on `$PATH`, use `uvx --from "semble[mcp]==0.5.5" semble`.
+The index is built on first run and cached automatically. If `semble` is not on `$PATH`, use `uvx --from "semble[mcp]==0.5.6" semble`.
 
 ### Workflow
 
