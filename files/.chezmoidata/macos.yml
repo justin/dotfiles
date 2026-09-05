@@ -198,7 +198,6 @@ packages:
         - {name: "Microsoft Word", id: 462054704}
         - {name: "Motion", id: 6746637149}
         - {name: "Numbers", id: 361304891}
-        - {name: "OmniOutliner", id: 1142578772}
         - {name: "Otter Log Console", id: 6479258228}
         - {name: "Pages", id: 361309726}
         - {name: "Paprika Recipe Manager 3", id: 1303222628}
@@ -208,7 +207,6 @@ packages:
         - {name: "Pixelmator Pro", id: 6746662575}
         - {name: "Privacy for Safari", id: 6449850851}
         - {name: "Prompt 3", id: 1594420480}
-        - {name: "Renamer 6", id: 1460229011}
         - {name: "RocketSim for Xcode Simulator", id: 1504940162}
         - {name: "Screens 5: VNC Remote Desktop", id: 1663047912}
         - {name: "Sketch", id: 1667260533}
