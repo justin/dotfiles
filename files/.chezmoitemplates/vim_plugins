@@ -10,13 +10,6 @@
   stripComponents: 1
   refreshPeriod: {{ .refresh_period }}
 
-{{ .base_path -}}/github/start/copilot.vim:
-  type: git-repo
-  url: https://github.com/github/copilot.vim
-  refreshPeriod: {{ .refresh_period }}
-  pull:
-    args: ["--depth=1"]
-
 {{ .base_path }}/jww/start/vim-polyglot:
   type: git-repo
   url: https://github.com/sheerun/vim-polyglot
