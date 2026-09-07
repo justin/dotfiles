@@ -1,5 +1,4 @@
 settings set prompt [lldb]$
-settings set target.language swift
 
 # Kaleidoscope / LLDB Integration
 # https://blog.kaleidoscope.app/2021/02/22/xcode-debugger-integration/
