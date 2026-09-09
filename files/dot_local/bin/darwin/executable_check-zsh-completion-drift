@@ -1,0 +1,149 @@
+#!/usr/bin/env zsh
+#
+# Report changes to CLI command and option surfaces that the managed Zsh
+# completions model. This check is intentionally read-only: help output cannot
+# express argument types, aliases, or dynamic values well enough to regenerate
+# a useful completion without review.
+
+set -euo pipefail
+
+readonly completion_directory="${COMPLETION_DIRECTORY:-${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions}"
+readonly dcm_help_command="${DCM_HELP_COMMAND:-dcm --help}"
+readonly sim_command="${SIM_COMMAND:-sim}"
+readonly sim_reactions_database_command="${SIM_REACTIONS_DATABASE_COMMAND:-sim-reactions-database}"
+typeset -i failures=0
+
+fail() {
+    print -u2 -- "error: $*"
+    (( ++failures ))
+}
+
+require_completion_file() {
+    [[ -r "$completion_directory/$1" ]] || {
+        fail "missing completion file: $completion_directory/$1"
+        return 1
+    }
+}
+
+completion_function() {
+    local completion_file="$1"
+    local function_name="$2"
+
+    sed -n "/^${function_name}() {/,/^}/p" "$completion_directory/$completion_file"
+}
+
+sorted_unique() {
+    LC_ALL=C sort -u
+}
+
+report_difference() {
+    local label="$1"
+    local expected="$2"
+    local actual="$3"
+    local difference
+
+    difference="$(comm -23 <(print -r -- "$expected") <(print -r -- "$actual"))"
+    if [[ -n "$difference" ]]; then
+        print -u2 -- "$label missing from the completion:"
+        print -u2 -- "$difference"
+        (( ++failures ))
+    fi
+
+    difference="$(comm -13 <(print -r -- "$expected") <(print -r -- "$actual"))"
+    if [[ -n "$difference" ]]; then
+        print -u2 -- "$label no longer reported by the command:"
+        print -u2 -- "$difference"
+        (( ++failures ))
+    fi
+}
+
+check_options() {
+    local command_name="$1"
+    local help_command="$2"
+    local completion_file="$3"
+    local function_name="$4"
+    local expected
+    local actual
+
+    require_completion_file "$completion_file" || return
+
+    expected="$(eval "$help_command" 2>&1 \
+        | grep -Eo -- '--[[:alnum:]][[:alnum:]-]*' \
+        | sorted_unique || true)"
+    actual="$(completion_function "$completion_file" "$function_name" \
+        | grep -Eo -- '--[[:alnum:]][[:alnum:]-]*' \
+        | sorted_unique || true)"
+
+    report_difference "$command_name options" "$expected" "$actual"
+}
+
+check_commands() {
+    local command_name="$1"
+    local help_command="$2"
+    local completion_file="$3"
+    local function_name="$4"
+    local format="$5"
+    local expected
+    local actual
+
+    require_completion_file "$completion_file" || return
+
+    case "$format" in
+        indented)
+            expected="$(eval "$help_command" 2>&1 \
+                | awk '/^(Commands:|Available commands:)/{commands=1; next} commands && /^[[:space:]]{2}[[:alnum:]][[:alnum:]_-]*/ { name=$1; sub(/\*$/, "", name); print name }' \
+                | sorted_unique || true)"
+            ;;
+        comma-separated)
+            expected="$(eval "$help_command" 2>&1 \
+                | awk '/^Commands:/{commands=1; next} commands { print; if ($0 !~ /,$/) exit }' \
+                | tr ',' '\n' \
+                | sed -nE 's/^[[:space:]]*([[:alnum:]_-]+).*/\1/p' \
+                | sorted_unique || true)"
+            ;;
+        *)
+            fail "unsupported command-list format: $format"
+            return
+            ;;
+    esac
+
+    if [[ "$function_name" == _dcm ]]; then
+        actual="$(completion_function "$completion_file" "$function_name" \
+            | sed -nE "s/^[[:space:]]*'([[:alnum:]_-]+)\[.*/\\1/p" \
+            | sorted_unique)"
+    else
+        actual="$(completion_function "$completion_file" "$function_name" \
+            | sed -nE "s/^[[:space:]]*'([[:alnum:]_-]+):.*/\\1/p" \
+            | sorted_unique)"
+    fi
+
+    report_difference "$command_name commands" "$expected" "$actual"
+}
+
+for command_name in bbedit bbdiff bbresults bbfind llm; do
+    command -v "$command_name" >/dev/null 2>&1 || fail "required command is unavailable: $command_name"
+done
+[[ -x "$sim_command" || "$sim_command" == sim ]] || fail "sim command is unavailable: $sim_command"
+
+check_options bbedit 'bbedit --help' _bbedit _bbedit
+check_options bbdiff 'bbdiff --help' _bbdiff _bbdiff
+check_options bbresults 'bbresults --help' _bbresults _bbresults
+check_options bbfind 'bbfind --help' _bbfind _bbfind
+check_options 'llm prompt' 'llm prompt --help' _llm _llm_prompt
+check_commands llm 'llm --help' _llm _llm_commands indented
+check_commands 'llm models' 'llm models --help' _llm _llm_models_commands indented
+check_commands 'llm keys' 'llm keys --help' _llm _llm_keys_commands indented
+check_commands 'llm logs' 'llm logs --help' _llm _llm_logs_commands indented
+check_options dcm 'eval "$dcm_help_command"' _dcm _dcm
+check_commands dcm 'eval "$dcm_help_command"' _dcm _dcm comma-separated
+check_commands sim '"$sim_command" --help' _sim _sim_commands indented
+check_options 'sim reactions_seed' 'eval "$sim_reactions_database_command" seed --help' _sim _sim_reactions_seed
+check_options 'sim reactions_pack' 'eval "$sim_reactions_database_command" pack --help' _sim _sim_reactions_pack
+check_options 'sim reactions_install' 'eval "$sim_reactions_database_command" install --help' _sim _sim_reactions_install
+
+if (( failures > 0 )); then
+    print -u2 -- "Zsh completion drift detected. Update the managed completion and rerun this check."
+    exit 1
+fi
+
+print -- 'Zsh completion surfaces match their command help.'

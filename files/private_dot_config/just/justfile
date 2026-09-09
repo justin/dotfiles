@@ -78,6 +78,18 @@ semble-check-instructions:
 semble-sync-instructions:
     semble-instructions sync
 
+# Report CLI changes that require a managed Zsh completion update.
+[macos]
+check-zsh-completion-drift:
+    #!/usr/bin/env zsh
+    set -euo pipefail
+    completion_check="$HOME/.local/bin/darwin/check-zsh-completion-drift"
+    if [[ ! -x "$completion_check" ]]; then
+      print -u2 -- "Missing $completion_check. Apply the managed completion checker first."
+      exit 1
+    fi
+    COMPLETION_DIRECTORY="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions" "$completion_check"
+
 [macos]
 update-all:
     @echo "🚀 Updating Homebrew."
