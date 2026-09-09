@@ -20,6 +20,11 @@
 *.vsix
 
 #########################
+## BBEdit
+#########################
+*.bbprojectd
+
+#########################
 ## Xcode
 #########################
 # My weird xcode_switch file & its versioned Carthage directories.
