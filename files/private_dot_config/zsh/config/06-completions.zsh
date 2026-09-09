@@ -15,11 +15,6 @@ setopt always_to_end
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
-# Initialize completion functions after fpath is configured. The cache is rebuilt
-# when completion files change, so newly managed functions are discovered.
-autoload -Uz compinit
-compinit -i -d "${ZSH_COMPDUMP:-${ZDOTDIR:-$HOME}/.zcompdump}"
-
 zmodload -i zsh/complist
 
 _tmac_complete() {
