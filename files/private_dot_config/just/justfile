@@ -90,6 +90,16 @@ check-zsh-completion-drift:
     fi
     COMPLETION_DIRECTORY="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions" "$completion_check"
 
+# Show changes to the iTerm preferences owned by chezmoi.
+[macos]
+iterm-diff:
+    zsh "$(chezmoi source-path "$HOME/.local/bin/iterm-preferences")" diff
+
+# Capture iTerm UI changes for the preferences owned by chezmoi.
+[macos]
+iterm-capture:
+    zsh "$(chezmoi source-path "$HOME/.local/bin/iterm-preferences")" capture
+
 [macos]
 update-all:
     @echo "🚀 Updating Homebrew."

@@ -1,0 +1,79 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+source_directory="$(chezmoi source-path)"
+manifest_path="$source_directory/.chezmoitemplates/iterm2-preferences-owned.json"
+preferences_path="${XDG_CONFIG_HOME:-$HOME/.config}/iterm2/com.googlecode.iterm2.plist"
+
+usage() {
+  print -u2 -- "Usage: iterm-preferences capture|diff"
+  exit 2
+}
+
+project_preferences() {
+  local output_path="$1"
+  local preference preference_type preference_value
+
+  jq '{preferences: .preferences | with_entries(.value = null)}' "$manifest_path" > "$output_path"
+
+  for preference in "${(@f)$(jq -r '.preferences | to_entries[] | select(.value != null) | .key' "$manifest_path")}"; do
+    if ! preference_type="$(plutil -type "$preference" "$preferences_path" 2>/dev/null)"; then
+      continue
+    fi
+
+    case "$preference_type" in
+      bool|integer|float)
+        preference_value="$(plutil -extract "$preference" raw -o - "$preferences_path")"
+        ;;
+      string)
+        preference_value="$(plutil -extract "$preference" raw -o - "$preferences_path" | jq -Rs 'rtrimstr("\n")')"
+        ;;
+      array|dictionary)
+        preference_value="$(plutil -extract "$preference" json -o - "$preferences_path" | jq -cS .)"
+        ;;
+      *)
+        print -u2 -- "Unsupported plist type for iTerm preference: $preference"
+        exit 1
+        ;;
+    esac
+
+    jq --arg preference "$preference" --argjson value "$preference_value" \
+      '.preferences[$preference] = $value' "$output_path" > "$output_path.next"
+    mv "$output_path.next" "$output_path"
+  done
+
+  jq -S . "$output_path" > "$output_path.next"
+  mv "$output_path.next" "$output_path"
+}
+
+[[ -f "$manifest_path" ]] || {
+  print -u2 -- "Missing managed preferences manifest: $manifest_path"
+  exit 1
+}
+
+[[ -f "$preferences_path" ]] || {
+  print -u2 -- "Missing iTerm preferences: $preferences_path"
+  exit 1
+}
+
+temporary_directory="$(mktemp -d)"
+trap 'rm -rf "$temporary_directory"' EXIT
+projected_path="$temporary_directory/iterm2-preferences-owned.json"
+project_preferences "$projected_path"
+
+case "${1:-}" in
+  capture)
+    if cmp -s "$manifest_path" "$projected_path"; then
+      print -- "iTerm preferences are already current."
+    else
+      cp "$projected_path" "$manifest_path"
+      print -- "Updated $manifest_path"
+    fi
+    ;;
+  diff)
+    diff -u --label managed --label current "$manifest_path" "$projected_path"
+    ;;
+  *)
+    usage
+    ;;
+esac

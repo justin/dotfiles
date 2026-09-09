@@ -1,0 +1,151 @@
+{
+  "preferences": {
+    "AI Safety Check": true,
+    "AI Timeout": 30,
+    "AIFeatureFunctionCalling": true,
+    "AIFeatureHostedCodeInterpeter": true,
+    "AIFeatureHostedFileSearch": true,
+    "AIFeatureHostedWebSearch": true,
+    "AIFeatureStreamingResponses": true,
+    "AITermAPI": 2,
+    "AIVectorStore": 0,
+    "AiMaxTokens": 1050000,
+    "AiModel": "gpt-5.5",
+    "AiResponseMaxTokens": 128000,
+    "AitermURL": "https://api.openai.com/v1/responses",
+    "AllowClipboardAccess": true,
+    "AlternateMouseScroll": true,
+    "AutoHideTmuxClientSession": true,
+    "BootstrapDaemon": false,
+    "CloseBookmarksWindowAfterOpening": true,
+    "Default Bookmark Guid": "jww-dynamic-profile",
+    "DimOnlyText": true,
+    "DynamicProfilesPath": null,
+    "EnableRendezvous": false,
+    "ForceKeyboard": true,
+    "GlobalKeyMap": {
+      "0x5a-0x120000-0x6": {
+        "Action": 11,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0x18 0x1f",
+        "Version": 2
+      },
+      "0x7a-0x100000-0x6": {
+        "Action": 11,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0x1f",
+        "Version": 2
+      },
+      "0x7f-0x100000-0x33": {
+        "Action": 11,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0x15",
+        "Version": 2
+      },
+      "0x7f-0x80000-0x33": {
+        "Action": 11,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0x01b 0x08",
+        "Version": 2
+      },
+      "0xd-0x20000-0x24": {
+        "Action": 12,
+        "Keycode": 13,
+        "Modifiers": 131072,
+        "Text": "\\n",
+        "Version": 1
+      },
+      "0xf702-0x220000-0x7b": {
+        "Action": 45,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0",
+        "Version": 2
+      },
+      "0xf702-0x280000-0x7b": {
+        "Action": 11,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0x1b 0x62",
+        "Version": 2
+      },
+      "0xf702-0x300000-0x7b": {
+        "Action": 11,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0x01",
+        "Version": 2
+      },
+      "0xf703-0x220000-0x7c": {
+        "Action": 46,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0",
+        "Version": 2
+      },
+      "0xf703-0x280000-0x7c": {
+        "Action": 11,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0x1b 0x66",
+        "Version": 2
+      },
+      "0xf703-0x300000-0x7c": {
+        "Action": 11,
+        "Apply Mode": 0,
+        "Escaping": 1,
+        "Text": "0x05",
+        "Version": 2
+      }
+    },
+    "HapticFeedbackForEsc": false,
+    "OpenArrangementAtStartup": false,
+    "OpenBookmark": false,
+    "OpenFileInNewWindows": true,
+    "OpenNoWindowsAtStartup": false,
+    "OpenTmuxWindowsIn": 2,
+    "PointerActions": {
+      "Button,1,1,,": {
+        "Action": "kContextMenuPointerAction"
+      },
+      "Button,2,1,,": {
+        "Action": "kPasteFromClipboardPointerAction"
+      },
+      "Gesture,ThreeFingerSwipeDown,,": {
+        "Action": "kPrevWindowPointerAction"
+      },
+      "Gesture,ThreeFingerSwipeLeft,,": {
+        "Action": "kPrevTabPointerAction"
+      },
+      "Gesture,ThreeFingerSwipeRight,,": {
+        "Action": "kNextTabPointerAction"
+      },
+      "Gesture,ThreeFingerSwipeUp,,": {
+        "Action": "kNextWindowPointerAction"
+      }
+    },
+    "Print In Black And White": true,
+    "PromptOnQuit": false,
+    "PromptOnQuitEvenIfThereAreNoWindows": true,
+    "SoundForEsc": false,
+    "SplitPaneDimmingAmount": 0.197261,
+    "StatusBarPosition": 1,
+    "TabStyleWithAutomaticOption": 5,
+    "TmuxSyncClipboard": true,
+    "TmuxUnpauseAutomatically": true,
+    "TmuxUsesDedicatedProfile": false,
+    "TmuxWarnBeforePausing": true,
+    "TmuxWindowsShouldCloseAfterDetach": true,
+    "ToolbeltTools": [
+      "Command History",
+      "Codecierge"
+    ],
+    "UseMetal": true,
+    "UseTmuxStatusBar": false,
+    "VisualIndicatorForEsc": false
+  }
+}

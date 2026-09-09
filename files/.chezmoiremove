@@ -5,6 +5,7 @@ bin
 .config/claude/hooks/append_agentsmd_context.sh
 .config/pypoetry
 .config/zed
+.config/iterm2/DynamicProfiles/100-my-default-profile.json
 {{- if ne .osid "darwin" }}
 Library
 .local/bin/darwin

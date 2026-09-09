@@ -1,0 +1,67 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+temporary_directory="$(mktemp -d)"
+trap 'rm -rf "$temporary_directory"' EXIT
+
+current_plist="$temporary_directory/current.plist"
+updated_plist="$temporary_directory/updated.plist"
+canonical_current_plist="$temporary_directory/canonical-current.plist"
+canonical_updated_plist="$temporary_directory/canonical-updated.plist"
+manifest_base64={{ includeTemplate "iterm2-preferences-owned.json" . | b64enc | quote }}
+manifest_json="$(base64 -D <<< "$manifest_base64")"
+
+cat > "$current_plist"
+if [[ ! -s "$current_plist" ]]; then
+  plutil -create xml1 "$current_plist"
+fi
+
+cp "$current_plist" "$updated_plist"
+
+for preference in "${(@f)$(jq -r '.preferences | keys[]' <<< "$manifest_json")}"; do
+  expected_value="$(jq -cS --arg preference "$preference" '.preferences[$preference]' <<< "$manifest_json")"
+
+  if [[ "$expected_value" == "null" ]]; then
+    plutil -remove "$preference" "$updated_plist" 2>/dev/null || true
+    continue
+  fi
+
+  value_type="$(jq -r 'type' <<< "$expected_value")"
+  case "$value_type" in
+    boolean)
+      value_arguments=(-bool "$expected_value")
+      ;;
+    number)
+      if [[ "$expected_value" == *.* ]]; then
+        value_arguments=(-float "$expected_value")
+      else
+        value_arguments=(-integer "$expected_value")
+      fi
+      ;;
+    string)
+      value_arguments=(-string "$(jq -r . <<< "$expected_value")")
+      ;;
+    array|object)
+      value_arguments=(-json "$expected_value")
+      ;;
+    *)
+      print -u2 -- "Unsupported JSON type for iTerm preference: $preference"
+      exit 1
+      ;;
+  esac
+
+  if ! plutil -replace "$preference" "${value_arguments[@]}" "$updated_plist" 2>/dev/null; then
+    plutil -insert "$preference" "${value_arguments[@]}" "$updated_plist"
+  fi
+done
+
+cp "$current_plist" "$canonical_current_plist"
+cp "$updated_plist" "$canonical_updated_plist"
+plutil -convert xml1 "$canonical_current_plist"
+plutil -convert xml1 "$canonical_updated_plist"
+
+if cmp -s "$canonical_current_plist" "$canonical_updated_plist"; then
+  cat "$current_plist"
+else
+  cat "$canonical_updated_plist"
+fi
