@@ -26,7 +26,7 @@ _sim_complete() {
         open_container)
             _arguments \
                 '1:bundle identifier:' \
-                '2:container type:(app data groups)'
+                '2:container type or App Group identifier:(app data groups)'
             ;;
         get_env)
             _arguments '1:environment variable:'

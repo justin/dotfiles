@@ -7,7 +7,7 @@
 #
 # This script is designed to work with ZSH. ymmv with other shells.
 
-set -e
+set -euo pipefail
 
 #######################################
 # Print the help message and exit.
@@ -69,25 +69,42 @@ function reactionsDatabase {
 #   0 if the simulator was created, non-zero on error.
 ##############################################################
 function create_device {
-    local os=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-2" | tail -1 | awk '{print $2}'`
+    local device_family="${1:-iphone}"
     local device_type="iPhone 17"
-    local device_os="iOS ${os}"
-    local device_name="${device_type} (${device_os})"
-    local runtime=`xcrun simctl list runtimes | grep "com.apple.CoreSimulator.SimRuntime.iOS-2" | tail -1 | awk '{print $7}'`
+    local runtime_details
+    local runtime
+    local runtime_version
 
-    if [[ $1 == "ipad" ]]; then
+    if [[ "$device_family" == "ipad" ]]; then
         device_type="iPad (A16)"
-        device_os="iPadOS ${os}"
-        device_name="${device_type} (${device_os})"
+    elif [[ "$device_family" != "iphone" ]]; then
+        echo "Device type must be 'iphone' or 'ipad'." >&2
+        return 1
     fi
 
-    if [[ $2 != "" ]]; then
-        device_name="$2"
+    runtime_details=$(xcrun simctl list runtimes --json | jq -r '
+        [.runtimes[]
+            | select(.isAvailable)
+            | select(.identifier | startswith("com.apple.CoreSimulator.SimRuntime.iOS-"))]
+        | sort_by(.version | split(".") | map(tonumber))
+        | last
+        | [.identifier, .version]
+        | @tsv
+    ')
+    runtime="${runtime_details%%$'\t'*}"
+    runtime_version="${runtime_details#*$'\t'}"
+
+    if [[ -z "$runtime" || "$runtime" == "null" ]]; then
+        echo "No available iOS simulator runtime was found." >&2
+        return 1
     fi
+
+    local device_os="iOS ${runtime_version}"
+    [[ "$device_family" == "ipad" ]] && device_os="iPadOS ${runtime_version}"
+    local device_name="${2:-${device_type} (${device_os})}"
 
     echo "Creating ${device_name}..."
     xcrun simctl create "$device_name" "$device_type" "$runtime"
-    exit 0
 }
 
 ##############################################################
@@ -100,8 +117,28 @@ function create_device {
 #   A list of UUIDs of the currently booted simulators.
 ##############################################################
 function booted {
-    local devices=($(xcrun simctl list devices | grep "Booted" | egrep -o -i "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"))
-    echo "${(j: :)devices}"
+    xcrun simctl list devices booted --json \
+        | jq -r '[.devices[][] | select(.state == "Booted") | .udid] | join(" ")'
+}
+
+###########################################################################
+# Generate a list of booted simulators, failing when there are none.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Outputs:
+#   A space-separated list of booted simulator UUIDs.
+###########################################################################
+function requireBootedDevices {
+    local devices
+    devices=$(booted)
+    if [[ -z "$devices" ]]; then
+      echo "No booted simulators were found." >&2
+      return 1
+    fi
+
+    echo "$devices"
 }
 
 ##############################################################
@@ -115,7 +152,6 @@ function booted {
 ##############################################################
 function removeAllSimulators {
     xcrun simctl delete all
-    exit 0
 }
 
 ###########################################################################
@@ -133,9 +169,32 @@ function removeAllSimulators {
 #   None
 ###########################################################################
 function openContainer {
-  local devices=("${(@s: :)$(booted)}")
-  for device in $devices; do
-    open -R $(xcrun simctl get_app_container $device $@)
+  local bundle_identifier="${1:-}"
+  local container_type="${2:-app}"
+  if [[ -z "$bundle_identifier" ]]; then
+    echo "A bundle identifier is required." >&2
+    return 1
+  fi
+
+  local device_list
+  device_list=$(requireBootedDevices) || return
+  local devices=("${(@s: :)device_list}")
+  for device in "$devices[@]"; do
+    local -a container_paths
+    if [[ "$container_type" == "groups" ]]; then
+      local group_identifier
+      local group_path
+      while IFS=$'\t' read -r group_identifier group_path; do
+        [[ -n "$group_path" ]] && container_paths+=("$group_path")
+      done < <(xcrun simctl get_app_container "$device" "$bundle_identifier" groups)
+    else
+      container_paths+=("$(xcrun simctl get_app_container "$device" "$bundle_identifier" "$container_type")")
+    fi
+
+    local container_path
+    for container_path in "$container_paths[@]"; do
+      open -R "$container_path"
+    done
   done
 }
 
@@ -149,9 +208,17 @@ function openContainer {
 #   None
 ###########################################################################
 function getEnvironmentVariable {
-    local devices=("${(@s: :)$(booted)}")
-    for device in $devices; do
-      xcrun simctl getenv $device $@
+    local variable_name="${1:-}"
+    if [[ -z "$variable_name" ]]; then
+      echo "An environment variable name is required." >&2
+      return 1
+    fi
+
+    local device_list
+    device_list=$(requireBootedDevices) || return
+    local devices=("${(@s: :)device_list}")
+    for device in "$devices[@]"; do
+      xcrun simctl getenv "$device" "$variable_name"
     done
 }
 
@@ -165,10 +232,54 @@ function getEnvironmentVariable {
 #   None
 ###########################################################################
 function openUrl {
-  local devices=("${(@s: :)$(booted)}")
-  for device in $devices; do
-    xcrun simctl openurl $device $@
+  local url="${1:-}"
+  if [[ -z "$url" ]]; then
+    echo "A URL is required." >&2
+    return 1
+  fi
+
+  local device_list
+  device_list=$(requireBootedDevices) || return
+  local devices=("${(@s: :)device_list}")
+  for device in "$devices[@]"; do
+    xcrun simctl openurl "$device" "$url"
   done
+}
+
+###########################################################################
+# Add media while handling an Xcode 27 CoreSimulator response crash.
+# Globals:
+#   None
+# Arguments:
+#   The simulator UUID followed by one or more media paths.
+# Outputs:
+#   The underlying error, or a notice for the known post-import crash.
+###########################################################################
+function addMediaToDevice {
+    local device="$1"
+    shift
+
+    local error_file
+    error_file=$(mktemp -t sim-add-media)
+    local command_status
+    if xcrun simctl addmedia "$device" "$@" 2>"$error_file"; then
+      rm -f "$error_file"
+      return 0
+    else
+      command_status=$?
+    fi
+
+    if (( command_status == 134 )) \
+        && grep -Fq "Invalid domain=nil in -[NSError initWithDomain:code:userInfo:]" "$error_file" \
+        && grep -Fq -- "-[SimDevice addMedia:error:]" "$error_file"; then
+      echo "Media import completed; ignored a known Xcode 27 CoreSimulator response crash." >&2
+      rm -f "$error_file"
+      return 0
+    fi
+
+    cat "$error_file" >&2
+    rm -f "$error_file"
+    return "$command_status"
 }
 
 ###########################################################################
@@ -181,35 +292,70 @@ function openUrl {
 #   None
 ###########################################################################
 function addMedia {
-    local files=(${(f)"$(find $1 -not -path '*/[@.]*' -type f)"})
-    local devices=("${(@s: :)$(booted)}")
-    for device in $devices; do
+    local input_path="${1:-}"
+    if [[ -z "$input_path" || ! -e "$input_path" ]]; then
+      echo "An existing media file or directory is required." >&2
+      return 1
+    fi
+
+    local -a candidates
+    local -a files
+    if [[ -f "$input_path" ]]; then
+      candidates=("$input_path")
+    else
+      while IFS= read -r -d $'\0' candidate; do
+        candidates+=("$candidate")
+      done < <(find "$input_path" -type f -print0)
+    fi
+
+    local candidate
+    local content_types
+    for candidate in "$candidates[@]"; do
+      [[ "${candidate:t}" == .* || "${candidate:t}" == @* ]] && continue
+      content_types=$(mdls -raw -name kMDItemContentTypeTree "$candidate" 2>/dev/null || true)
+      if [[ "$content_types" == *public.image* \
+          || "$content_types" == *public.movie* \
+          || "$content_types" == *public.video* \
+          || "$content_types" == *public.vcard* ]]; then
+        files+=("$candidate")
+      fi
+    done
+
+    if (( ${#files} == 0 )); then
+      echo "No supported photos, videos, or contacts were found at $input_path." >&2
+      return 1
+    fi
+
+    local device_list
+    device_list=$(requireBootedDevices) || return
+    local devices=("${(@s: :)device_list}")
+    for device in "$devices[@]"; do
       echo "Adding ${#files} media files to ${device}."
-      xcrun simctl addmedia $device $files
+      addMediaToDevice "$device" "$files[@]"
     done
 }
 
-case "$1" in
+case "${1:-}" in
     booted)
         booted
         ;;
     create_device)
-        create_device $2 $3
+        create_device "${2:-}" "${3:-}"
         ;;
     delete_all_devices)
         removeAllSimulators
         ;;
     open_container)
-        openContainer $2 $3
+        openContainer "${2:-}" "${3:-}"
         ;;
     get_env)
-        getEnvironmentVariable $2
+        getEnvironmentVariable "${2:-}"
         ;;
     open_url)
-        openUrl $2
+        openUrl "${2:-}"
         ;;
     add_media)
-        addMedia $2
+        addMedia "${2:-}"
         ;;
     reactions_pack)
         shift
