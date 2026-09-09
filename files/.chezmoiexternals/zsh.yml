@@ -31,7 +31,7 @@
 
 .cache/zsh/external/zsh-autocomplete:
   type: archive
-  url: https://github.com/marlonrichert/zsh-autocomplete/archive/20f6c34f20270084b21211428afb6d2534aae8e9.tar.gz
+  url: https://github.com/marlonrichert/zsh-autocomplete/archive/refs/tags/25.03.19.tar.gz
   exact: true
   stripComponents: 1
 
