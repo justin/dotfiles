@@ -1,0 +1,45 @@
+#compdef bbedit
+
+# Zsh completion for the BBEdit command-line tool.
+
+_bbedit() {
+    _arguments -s \
+        '--append[Append standard input to the document]' \
+        '(-b --background)'{-b,--background}'[Open files without bringing BBEdit to the front]' \
+        '--clean[Close all documents before opening files]' \
+        '(-c --create)'{-c,--create}'[Create files that do not exist]' \
+        '(-e --encoding)'{-e,--encoding}'[Text encoding for opened files]:encoding:' \
+        '(-F --front-window)'{-F,--front-window}'[Open files in the front window]' \
+        '(-h --help)'{-h,--help}'[Show help]' \
+        '(-l --launch)'{-l,--launch}'[Launch BBEdit if it is not running]' \
+        '(-m --language)'{-m,--language}'[Set document language]:language:' \
+        '--maketags[Create a tags file for the specified files]' \
+        '(-N --new-window)'{-N,--new-window}'[Open files in a new window]' \
+        '--note[Open a new note]' \
+        '--prepend[Prepend standard input to the document]' \
+        '(-p --print)'{-p,--print}'[Print the specified files]' \
+        '(-P --paths)'{-P,--paths}'[Print BBEdit support paths]' \
+        '--preview[Open files in preview mode]' \
+        '--project[Open a project]' \
+        '--resume[Resume the previous command-line operation]' \
+        '--scratchpad[Open the scratchpad]' \
+        '(-S --separate-windows)'{-S,--separate-windows}'[Open each file in a separate window]' \
+        '--tail[Follow files as they change]' \
+        '(-s --worksheet)'{-s,--worksheet}'[Open a worksheet]' \
+        '(-t --pipe-title)'{-t,--pipe-title}'[Title for a document created from standard input]:title:' \
+        '(-v --version)'{-v,--version}'[Show detailed version information]' \
+        '--view-top[Scroll opened documents to the top]' \
+        '(-V --short-version)'{-V,--short-version}'[Show brief version information]' \
+        '(-w --wait)'{-w,--wait}'[Wait until opened documents are closed]' \
+        '*:file or line position:->files'
+
+    case $state in
+        files)
+            if [[ $words[CURRENT] == +<->(|:<->) ]]; then
+                _message 'line number or line number and offset'
+            else
+                _files
+            fi
+            ;;
+    esac
+}

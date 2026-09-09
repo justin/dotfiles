@@ -25,6 +25,11 @@ _llm() {
             ((CURRENT--))
             _llm_aliases
             ;;
+        commit|gemini|grok)
+            shift words
+            ((CURRENT--))
+            _llm_plugin_command
+            ;;
         chat)
             shift words
             ((CURRENT--))
@@ -123,10 +128,13 @@ _llm_commands() {
         'aliases:Manage model aliases'
         'chat:Hold an ongoing chat with a model'
         'collections:View and manage collections of embeddings'
+        'commit:Commit prompt output using the llm-commit plugin'
         'embed:Embed text and store or return the result'
         'embed-models:Manage available embedding models'
         'embed-multi:Store embeddings for multiple strings at once'
         'fragments:Manage fragments that are stored in the database'
+        'gemini:Commands relating to the llm-gemini plugin'
+        'grok:Commands for the Grok model'
         'install:Install packages from PyPI into the same environment as LLM'
         'keys:Manage stored API keys for different models'
         'logs:Tools for exploring logged prompts and responses'
@@ -159,6 +167,7 @@ _llm_prompt() {
         '--tools-approve[Manually approve every tool execution]' \
         '--cl[How many chained tool responses to allow]:chain limit:' \
         '--chain-limit[How many chained tool responses to allow]:chain limit:' \
+        '--options[Show options for the selected model]' \
         '(-o --option)'{-o,--option}'[key/value options for the model]:option key and value:' \
         '--schema[JSON schema, filepath or ID]:schema:_files' \
         '--schema-multi[JSON schema to use for multiple results]:schema:_files' \
@@ -168,6 +177,7 @@ _llm_prompt() {
         '(-t --template)'{-t,--template}'[Template to use]:template:_llm_available_templates' \
         '(-p --param)'{-p,--param}'[Parameters for template]:param key and value:' \
         '--no-stream[Do not stream output]' \
+        '--hide-reasoning[Hide reasoning output]' \
         '(-n --no-log)'{-n,--no-log}'[Don'\''t log to database]' \
         '--log[Log prompt and response to the database]' \
         '(-c --continue)'{-c,--continue}'[Continue the most recent conversation]' \
@@ -180,6 +190,7 @@ _llm_prompt() {
         '(-x --extract)'{-x,--extract}'[Extract first fenced code block]' \
         '--xl[Extract last fenced code block]' \
         '--extract-last[Extract last fenced code block]' \
+        '--json[Output the response as JSON]' \
         '(-h --help)'{-h,--help}'[Show this message and exit]' \
         '*:prompt text:'
 }
@@ -319,6 +330,12 @@ _llm_plugins() {
         '--all[Include built-in default plugins]' \
         '--hook[Filter for plugins that implement this hook]:hook name:' \
         '(-h --help)'{-h,--help}'[Show this message and exit]'
+}
+
+_llm_plugin_command() {
+    _arguments \
+        '(-h --help)'{-h,--help}'[Show this message and exit]' \
+        '*:plugin argument:'
 }
 
 # Placeholder functions for other commands that need minimal completion

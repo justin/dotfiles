@@ -26,6 +26,7 @@ Usage:
 Manager options must come before the command:
   --workspace-folder, -w <path>  Workspace containing the devcontainer configuration.
   --config <path>                Explicit devcontainer.json, relative to the workspace.
+  --help, -h                     Print this help message.
 
 Commands:
   up, build, stop, down, exec <command>, shell, status, logs,

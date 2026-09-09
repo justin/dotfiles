@@ -1,0 +1,28 @@
+#compdef bbfind
+
+# Zsh completion for the BBEdit multi-file search tool.
+
+_bbfind() {
+    _arguments -s \
+        '(-h --help)'{-h,--help}'[Show help]' \
+        '(-v --version)'{-v,--version}'[Show detailed version information]' \
+        '(-V --short-version)'{-V,--short-version}'[Show brief version information]' \
+        '(-n --case-sensitive)'{-n,--case-sensitive}'[Search case-sensitively]' \
+        '(-g --grep)'{-g,--grep}'[Interpret the search string as a regular expression]' \
+        '-r[Replacement pattern for grep extraction]:replacement pattern:' \
+        '(-w --match-words)'{-w,--match-words}'[Match only whole words]' \
+        '(-x --extract)'{-x,--extract}'[Print only matched text]' \
+        '(-R --no-nested-folders)'{-R,--no-nested-folders}'[Do not search nested folders]' \
+        '(-I --search-invisible-folders)'{-I,--search-invisible-folders}'[Search invisible folders]' \
+        '--all-file-types[Search all file types]' \
+        '*--name-pattern[Restrict search to matching file names]:file name pattern:' \
+        '--gui[Open results in BBEdit]' \
+        '(-b --background)'{-b,--background}'[Leave BBEdit in the background when using --gui]' \
+        '(-c --count)'{-c,--count}'[Print only the number of matches]' \
+        '(-Z --null)'{-Z,--null}'[Separate result lines with NUL characters]' \
+        '(-S --suppress-context)'{-S,--suppress-context}'[Print only paths and line numbers]' \
+        '(-E --editor-commands)'{-E,--editor-commands}'[Print results as bbedit commands]' \
+        '-0[Read NUL-separated paths from standard input]' \
+        '1:search string:' \
+        '*:path:_files'
+}

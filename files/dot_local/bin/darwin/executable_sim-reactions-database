@@ -22,6 +22,7 @@ typeset installation_completed="false"
 print_help() {
   print -r -- "Usage:"
   print -r -- "  sim reactions_seed --source ios|macos --device booted|<UDID> --replace [--output <archive>]"
+  print -r -- "  --help  Show this help message."
   print -r -- "  sim reactions_pack --source ios|macos --store Development [--output <archive>]"
   print -r -- "  sim reactions_install <archive> --device booted|<UDID> --replace"
   print
@@ -31,6 +32,7 @@ print_help() {
 print_seed_help() {
   print -r -- "Usage:"
   print -r -- "  sim reactions_seed --source ios|macos --device booted|<UDID> --replace [--output <archive>]"
+  print -r -- "  --help  Show this help message."
   print
   print -r -- "Pack the Development store, install it on one simulator, and launch Reactions"
   print -r -- "with JWW_LOCAL_DEVELOPMENT=true. The archive is retained for reuse."
@@ -54,6 +56,7 @@ print_seed_help() {
 print_pack_help() {
   print -r -- "Usage:"
   print -r -- "  sim reactions_pack --source ios|macos --store Development [--output <archive>]"
+  print -r -- "  --help  Show this help message."
   print
   print -r -- "Source containers:"
   print -r -- "  ios    ~/Library/Group Containers/group.justinwme.reactions"
@@ -73,6 +76,7 @@ print_pack_help() {
 print_install_help() {
   print -r -- "Usage:"
   print -r -- "  sim reactions_install <archive> --device booted|<UDID> --replace"
+  print -r -- "  --help  Show this help message."
   print
   print -r -- "Reactions must already be installed on the target simulator. The command"
   print -r -- "terminates the app, validates the archive and available disk space, and"

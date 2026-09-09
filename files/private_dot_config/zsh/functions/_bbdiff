@@ -1,0 +1,28 @@
+#compdef bbdiff
+
+# Zsh completion for the BBEdit file and folder comparison tool.
+
+_bbdiff() {
+    _arguments -s \
+        '--compare-hidden-folders[Include hidden folders in folder comparisons]' \
+        '(-G --compare-git-ignored-files)'{-G,--compare-git-ignored-files}'[Include Git-ignored files]' \
+        '--flatten-folders[Compare folder contents without their hierarchy]' \
+        '--help[Show help]' \
+        '--ignore-blank-lines[Ignore blank lines]' \
+        '(-i --ignore-case)'{-i,--ignore-case}'[Ignore case differences]' \
+        '--ignore-curly-quotes[Ignore curly quote differences]' \
+        '--ignore-spaces[Ignore all whitespace differences]' \
+        '--ignore-extra-spaces[Ignore runs of whitespace]' \
+        '--ignore-leading-spaces[Ignore leading whitespace]' \
+        '--ignore-trailing-spaces[Ignore trailing whitespace]' \
+        '--resume[Resume the previous comparison]' \
+        '--reverse[Reverse the comparison order]' \
+        '(-V --short-version)'{-V,--short-version}'[Show brief version information]' \
+        '--show-identical-files[Show identical files in folder comparisons]' \
+        '--skip-shielded-folders[Skip shielded folders]' \
+        '--text-files-only[Compare only text files]' \
+        '(-v --version)'{-v,--version}'[Show detailed version information]' \
+        '(-w --wait)'{-w,--wait}'[Wait until the comparison window is closed]' \
+        '1:first file or folder:_files' \
+        '2:second file or folder:_files'
+}

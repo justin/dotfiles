@@ -1,0 +1,16 @@
+#compdef bbresults
+
+# Zsh completion for the BBEdit results-window tool.
+
+_bbresults() {
+    _arguments -s \
+        '(-h --help)'{-h,--help}'[Show help]' \
+        '(-v --version)'{-v,--version}'[Show detailed version information]' \
+        '(-V --short-version)'{-V,--short-version}'[Show brief version information]' \
+        '(-e --errors-default)'{-e,--errors-default}'[Treat unknown message types as errors]' \
+        '(-w --warnings-default)'{-w,--warnings-default}'[Treat unknown message types as warnings]' \
+        '(-n --new-window)'{-n,--new-window}'[Open results in a new window]' \
+        '(-p --pattern)'{-p,--pattern}'[Pattern for interpreting results]:pattern:(default gcc grep flake8 perl ruby)' \
+        '1:search string:' \
+        '*:path:_files'
+}
