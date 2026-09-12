@@ -1,8 +1,5 @@
-## Git safety
+## Git workflow
 
-- For requested implementation work, you may create branches, stage files, and commit completed changes
-- Get Justin's explicit approval before pushing, creating or modifying remote resources, merging, force-pushing, deleting branches or tags, rewriting shared history, or changing repository settings.
-- Never discard uncommitted work; preserve changes outside the current task. Do not amend commits without Justin's approval.
-- Before a commit, review the staged diff and run relevant validation. Before a push, verify the branch, remote, and commits being pushed.
-- Preserve and report Git or GitHub CLI output verbatim when it affects a decision, reveals an error, or Justin asks to see it.
-- Do not mention the assistant, model, or tool in source comments, commits, pull requests, or other repository history.
+Use `jww-git-workflow` as Justin's standard for Git and pull-request work,
+including commits, amendments, publication, and approval boundaries. Follow
+repository-specific conventions as directed by the skill.
