@@ -7,7 +7,7 @@ source {{ joinPath .chezmoi.sourceDir "functions/_logging" }}
 source {{ joinPath .chezmoi.sourceDir "functions/_utilities" }}
 
 info "Installing xcodes cli."
-brew install --formula xcodes
+brew install --formula xcodesorg/made/xcodes
 
 info "Installing latest release of Xcode."
 xcodes install --latest

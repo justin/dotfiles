@@ -77,7 +77,7 @@ packages:
         - {name: "buo/cask-upgrade", trust: true}
         - {name: "fluffypony/yojam", trust: true}
         - {name: "justin/tap", trust: true}
-        - {name: "majd/repo", trust: true}
+        - {name: "xcodesorg/made", trust: true}
       trusted_formulae:
         - "artginzburg/tap/sudo-touchid"
         - "jordanbaird/createicns/createicns"
@@ -97,7 +97,7 @@ packages:
         - "xcode-build-server"
         - "ruff"
         - "shfmt"
-        - "xcodes"
+        - "xcodesorg/made/xcodes"
         - "terror/tap/just-lsp"
         - "awscli"
         - "codex"
