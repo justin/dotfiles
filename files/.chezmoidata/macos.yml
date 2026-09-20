@@ -34,17 +34,8 @@ packages:
           {name: "Pixelmator Pro", id: 1289583905},
         ]
     global:
-      taps:
-        - {name: "majd/repo", trust: true}
-        - {name: "buo/cask-upgrade", trust: true}
-        - {name: "fluffypony/yojam", trust: true}
-        - {name: "justin/tap", trust: true}
-      trusted_formulae:
-        - "artginzburg/tap/sudo-touchid"
-        - "jordanbaird/createicns/createicns"
-        - "terror/tap/just-lsp"
-        - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
-        - "TomAnthony/brews/itermocil"
+      taps: []
+      trusted_formulae: []
       brews:
         - "aria2"
         - "bat"
@@ -66,28 +57,56 @@ packages:
         - "zoxide"
         - "zsh"
         - "vim"
+        - "ffmpeg"
+        - "python"
+        - "uv"
+        - "node"
+        - "ruby"
+        - "mas"
+      casks:
+        - "1password-cli"
+      mas:
+        - {name: "Tailscale", id: 1475387142}
+    personal:
+      remove:
+        taps: []
+        brews: ["periphery"]
+        casks: []
+        mas: []
+      taps:
+        - {name: "buo/cask-upgrade", trust: true}
+        - {name: "fluffypony/yojam", trust: true}
+        - {name: "justin/tap", trust: true}
+        - {name: "majd/repo", trust: true}
+      trusted_formulae:
+        - "artginzburg/tap/sudo-touchid"
+        - "jordanbaird/createicns/createicns"
+        - "terror/tap/just-lsp"
+        - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
+        - "TomAnthony/brews/itermocil"
+      brews:
         - "cloc"
         - "dockutil"
         - "duti"
-        - "ffmpeg"
         - "kin"
-        - "mas"
         - "artginzburg/tap/sudo-touchid"
         - "TomAnthony/brews/itermocil"
         - "unxip"
         - "xcbeautify"
         - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
         - "xcode-build-server"
-        - "python"
         - "ruff"
         - "shfmt"
-        - "uv"
-        - "node"
-        - "ruby"
         - "xcodes"
         - "terror/tap/just-lsp"
+        - "awscli"
+        - "codex"
+        - "jordanbaird/createicns/createicns"
+        - "magic-wormhole"
+        - "swiftlint"
+        - "swift-format"
+        - "justin/tap/xcode-starter-pack"
       casks:
-        - "1password-cli"
         - "visual-studio-code"
         - "bartender"
         - "bbedit"
@@ -114,33 +133,6 @@ packages:
         - "font-sf-arabic"
         - "font-sf-mono"
         - "font-monaspace"
-      mas:
-        - {name: "1Blocker", id: 1365531024}
-        - {name: "Apple Configurator 2", id: 1037126344}
-        - {name: "Dropzone 5", id: 6757682547}
-        - {name: "Kagi for Safari", id: 1622835804}
-        - {name: "Keka", id: 470158793}
-        - {name: "PCalc", id: 403504866}
-        - {name: "Pixeur - Screen Color Picker", id: 1507890049}
-        - {name: "TabPilot", id: 6760547850}
-        - {name: "Tailscale", id: 1475387142}
-    personal:
-      remove:
-        taps: []
-        brews: ["periphery"]
-        casks: []
-        mas: []
-      taps: []
-      trusted_formulae: []
-      brews:
-        - "awscli"
-        - "codex"
-        - "jordanbaird/createicns/createicns"
-        - "magic-wormhole"
-        - "swiftlint"
-        - "swift-format"
-        - "justin/tap/xcode-starter-pack"
-      casks:
         - "1password"
         - "cleanshot"
         - "dash"
@@ -167,6 +159,14 @@ packages:
         - "yojam"
         - "zoom"
       mas:
+        - {name: "1Blocker", id: 1365531024}
+        - {name: "Apple Configurator 2", id: 1037126344}
+        - {name: "Dropzone 5", id: 6757682547}
+        - {name: "Kagi for Safari", id: 1622835804}
+        - {name: "Keka", id: 470158793}
+        - {name: "PCalc", id: 403504866}
+        - {name: "Pixeur - Screen Color Picker", id: 1507890049}
+        - {name: "TabPilot", id: 6760547850}
         - {name: "10ten Japanese Reader", id: 1573540634}
         - {name: "A Companion for SwiftUI", id: 1485436674}
         - {name: "Aeronaut for Bluesky", id: 6670275450}

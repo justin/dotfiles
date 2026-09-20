@@ -28,11 +28,20 @@ taps=(
   {{- range $tap := .packages.homebrew.global.taps }}
   "{{ $tap.name }}"
   {{- end }}
+  {{- if .personal }}
   {{- range $tap := .packages.homebrew.personal.taps }}
   "{{ $tap.name }}"
   {{- end }}
+  {{- end }}
+  {{- if .homelab }}
+  {{- range $tap := .packages.homebrew.homelab.taps }}
+  "{{ $tap.name }}"
+  {{- end }}
+  {{- end }}
+  {{- if .work }}
   {{- range $tap := .packages.homebrew.work.taps }}
   "{{ $tap.name }}"
+  {{- end }}
   {{- end }}
 )
 tap_trust_values=(
@@ -84,11 +93,20 @@ trusted_formulae=(
   {{- range $formula := .packages.homebrew.global.trusted_formulae }}
   "{{ $formula }}"
   {{- end }}
+  {{- if .personal }}
   {{- range $formula := .packages.homebrew.personal.trusted_formulae }}
   "{{ $formula }}"
   {{- end }}
+  {{- end }}
+  {{- if .homelab }}
+  {{- range $formula := .packages.homebrew.homelab.trusted_formulae }}
+  "{{ $formula }}"
+  {{- end }}
+  {{- end }}
+  {{- if .work }}
   {{- range $formula := .packages.homebrew.work.trusted_formulae }}
   "{{ $formula }}"
+  {{- end }}
   {{- end }}
 )
 for formula in "${trusted_formulae[@]}"; do
@@ -107,11 +125,20 @@ brews=(
   {{- range $brew := .packages.homebrew.global.brews }}
   "{{ $brew }}"
   {{- end }}
+  {{- if .personal }}
   {{- range $brew := .packages.homebrew.personal.brews }}
   "{{ $brew }}"
   {{- end }}
+  {{- end }}
+  {{- if .homelab }}
+  {{- range $brew := .packages.homebrew.homelab.brews }}
+  "{{ $brew }}"
+  {{- end }}
+  {{- end }}
+  {{- if .work }}
   {{- range $brew := .packages.homebrew.work.brews }}
   "{{ $brew }}"
+  {{- end }}
   {{- end }}
 )
 
@@ -134,11 +161,20 @@ casks=(
   {{- range $cask := .packages.homebrew.global.casks }}
   "{{ $cask }}"
   {{- end }}
+  {{- if .personal }}
   {{- range $cask := .packages.homebrew.personal.casks }}
   "{{ $cask }}"
   {{- end }}
+  {{- end }}
+  {{- if .homelab }}
+  {{- range $cask := .packages.homebrew.homelab.casks }}
+  "{{ $cask }}"
+  {{- end }}
+  {{- end }}
+  {{- if .work }}
   {{- range $cask := .packages.homebrew.work.casks }}
   "{{ $cask }}"
+  {{- end }}
   {{- end }}
 )
 for cask_pkg in "${casks[@]}"; do
@@ -159,11 +195,20 @@ mas_ids=(
   {{- range $app := .packages.homebrew.global.mas }}
   {{ $app.id }}
   {{- end }}
+  {{- if .personal }}
   {{- range $app := .packages.homebrew.personal.mas }}
   {{ $app.id }}
   {{- end }}
+  {{- end }}
+  {{- if .homelab }}
+  {{- range $app := .packages.homebrew.homelab.mas }}
+  {{ $app.id }}
+  {{- end }}
+  {{- end }}
+  {{- if .work }}
   {{- range $app := .packages.homebrew.work.mas }}
   {{ $app.id }}
+  {{- end }}
   {{- end }}
 )
 for mas_id in "${mas_ids[@]}"; do

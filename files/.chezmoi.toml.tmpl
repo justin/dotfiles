@@ -9,7 +9,7 @@
 
 {{- $hostname := .chezmoi.hostname -}}
 {{- if eq .chezmoi.os "darwin" -}}
-{{-   $hostname := output "scutil" "--get" "LocalHostName" | trim -}}
+{{-   $hostname = output "scutil" "--get" "LocalHostName" | trim -}}
 {{- end -}}
 
 {{- $osid := .chezmoi.os -}}
@@ -24,11 +24,11 @@
 {{- end -}}
 
 {{- $email := "justin@users.noreply.github.com" }}
-{{- $personal := false }}
+{{- $personal := eq ($hostname | lower) "mbp" "studio" }}
 {{- $work := false }}
 {{- if stdinIsATTY }}
 {{- $email = promptStringOnce . "email" "What is your email address" $email -}}
-{{- $personal = promptBoolOnce . "personal" "Is this a personal machine" false -}}
+{{- $personal = promptBoolOnce . "personal" "Is this a personal machine" $personal -}}
 {{- end -}}
 
 {{- if stdinIsATTY -}}
@@ -51,7 +51,7 @@ scriptTempDir = "~/tmp"
   headless = {{ $headless }}
   hostname = {{ $hostname | quote }}
   synology = {{ $synology }}
-  homelab = {{ if or (eq .chezmoi.os "linux") (eq .chezmoi.hostname "m1server") }}true{{ else }}false{{ end }}
+  homelab = {{ if or (eq .chezmoi.os "linux") (eq ($hostname | lower) "m1server") }}true{{ else }}false{{ end }}
 
 [data.homebrew]
   prefix = {{ if eq .chezmoi.os "darwin" -}}"/opt/homebrew"{{ else }}"/home/linuxbrew/.linuxbrew"{{- end }}

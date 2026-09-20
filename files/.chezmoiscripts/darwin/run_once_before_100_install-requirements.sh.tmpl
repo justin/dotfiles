@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "darwin" -}}
+{{- if and (eq .chezmoi.os "darwin") .personal -}}
 #!/usr/bin/env zsh
 
 set -e
@@ -12,8 +12,4 @@ brew install --formula xcodes
 info "Installing latest release of Xcode."
 xcodes install --latest
 
-{{- if eq .chezmoi.arch "arm64" }}
-info "Apple Silicon detected. Installing Rosetta."
-sudo softwareupdate --install-rosetta
-{{ end -}}
 {{ end -}}

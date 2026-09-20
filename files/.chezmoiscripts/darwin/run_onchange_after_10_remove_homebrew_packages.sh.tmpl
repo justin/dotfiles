@@ -16,6 +16,11 @@ remove_brews=(
   {{- range $brew := .packages.homebrew.remove.brews }}
   "{{ $brew }}"
   {{- end }}
+  {{- if .personal }}
+  {{- range $brew := .packages.homebrew.personal.remove.brews }}
+  "{{ $brew }}"
+  {{- end }}
+  {{- end }}
 )
 for brew_pkg in "${remove_brews[@]}"; do
   if brew list --formula "$brew_pkg" &>/dev/null; then
