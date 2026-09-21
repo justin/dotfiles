@@ -21,9 +21,19 @@ machines:
 packages:
   homebrew:
     remove:
-      taps: []
+      taps:
+        - "fluffypony/yojam"
       brews: []
-      casks: []
+      casks:
+        - "yojam"
+        - "bartender"
+        - "keyboard-maestro"
+        - "proxyman"
+        - "codex"
+        - "ghostty"
+        - "openmtp"
+        - "shottr"
+        - "sonos"
       mas:
         [
           {name: "Transloader", id: 572281534},
@@ -70,45 +80,87 @@ packages:
     personal:
       remove:
         taps: []
-        brews: ["periphery"]
+        brews:
+          - "periphery"
+          - "kin"
+          - "xcode-build-server"
+          - "blueutil"
+          - "chafa"
+          - "container"
+          - "mkvtoolnix"
+          - "mpv"
+          - "qt"
+          - "reattach-to-user-namespace"
+          - "websocat"
+          - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
         casks: []
         mas: []
       taps:
         - {name: "buo/cask-upgrade", trust: true}
-        - {name: "fluffypony/yojam", trust: true}
         - {name: "justin/tap", trust: true}
         - {name: "xcodesorg/made", trust: true}
       trusted_formulae:
         - "artginzburg/tap/sudo-touchid"
         - "jordanbaird/createicns/createicns"
         - "terror/tap/just-lsp"
-        - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
         - "TomAnthony/brews/itermocil"
       brews:
         - "cloc"
         - "dockutil"
         - "duti"
-        - "kin"
         - "artginzburg/tap/sudo-touchid"
         - "TomAnthony/brews/itermocil"
         - "unxip"
         - "xcbeautify"
-        - "XCTestHtmlReport/xchtmlreport/xchtmlreport"
-        - "xcode-build-server"
         - "ruff"
         - "shfmt"
         - "xcodesorg/made/xcodes"
         - "terror/tap/just-lsp"
         - "awscli"
-        - "codex"
         - "jordanbaird/createicns/createicns"
         - "magic-wormhole"
         - "swiftlint"
         - "swift-format"
         - "justin/tap/xcode-starter-pack"
+        - "bash"
+        - "bash-language-server"
+        - "bat-extras"
+        - "btop"
+        - "chezmoi"
+        - "cmark"
+        - "coreutils"
+        - "deno"
+        - "docker-language-server"
+        - "exiftool"
+        - "fd"
+        - "findutils"
+        - "git-delta"
+        - "go"
+        - "gopls"
+        - "htop"
+        - "llvm"
+        - "marksman"
+        - "mosh"
+        - "neovim"
+        - "nmap"
+        - "phantom"
+        - "pipx"
+        - "pkgconf"
+        - "python@3.13"
+        - "rust-analyzer"
+        - "rustup"
+        - "swiftformat"
+        - "taplo"
+        - "terraform-ls"
+        - "the_silver_searcher"
+        - "tig"
+        - "tmuxinator"
+        - "typescript-language-server"
+        - "xcodegen"
+        - "yaml-language-server"
+        - "zuban"
       casks:
         - "visual-studio-code"
-        - "bartender"
         - "bbedit"
         - "chatgpt"
         - "claude"
@@ -120,7 +172,6 @@ packages:
         - "itermai"
         - "itermbrowserplugin"
         - "kaleidoscope"
-        - "keyboard-maestro"
         - "launchcontrol"
         - "openinterminal"
         - "orbstack"
@@ -146,7 +197,6 @@ packages:
         - "omnigraffle"
         - "orion"
         - "plistedit-pro"
-        - "proxyman"
         - "permute"
         - "script-debugger"
         - "signal"
@@ -156,8 +206,21 @@ packages:
         - "typora"
         - "transmit"
         - "virtualbuddy"
-        - "yojam"
         - "zoom"
+        - "arq"
+        - "caskhub"
+        - "clop"
+        - "discord"
+        - "opal-composer"
+        - "processspy"
+        - "qlstephen"
+        - "sf-symbols"
+        - "sony-ps-remote-play"
+        - "spamsieve"
+        - "spotify"
+        - "steam"
+        - "transmission"
+        - "xcodes-app"
       mas:
         - {name: "1Blocker", id: 1365531024}
         - {name: "Apple Configurator 2", id: 1037126344}
