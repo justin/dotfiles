@@ -54,7 +54,7 @@
 {{- range $name, $def := $serverDefs -}}
   {{- if and (has $tool $def.tools) (has $.chezmoi.os $def.platforms) -}}
     {{- $server := omit $def "tools" "platforms" "type" -}}
-    {{- if eq $name "xcodebuildmcp" -}}
+    {{- if eq $name "mobilebuildmcp" -}}
       {{- $server = set $server "env" (dict "NPM_CONFIG_CACHE" (joinPath $.chezmoi.homeDir ".cache/npm")) -}}
     {{- end -}}
     {{- $mcpServers = set $mcpServers $name $server -}}

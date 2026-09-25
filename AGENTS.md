@@ -133,13 +133,14 @@ suffixes give it a stable ownership boundary that MCP server names lack.
 | --- | --- | --- |
 | `~/.config/claude/settings.json` | `cleanupPeriodDays`, `includeCoAuthoredBy`, `permissions`, `enableWorkflows`, `editorMode`, `enabledPlugins` entries under `@claude-plugins-official` | Any other key (e.g. `effortLevel` and `hooks`), any `enabledPlugins` entry from another marketplace |
 | `~/.claude.json` | `mcpServers` (tag `claude`) | Everything else (auth, caches, sessions, `projects`, ...) |
-| `~/.codex/config.toml` | `personality`, `notify`, `service_tier`, `approval_policy`, `sandbox_mode`, `sandbox_workspace_write`, `mcp_servers` (tag `codex`) | `model`, `model_reasoning_effort` (actively changed via the app UI), `projects`, `marketplaces`, `plugins`, `desktop`, `features`, `hooks.state`, `memories`, `apps`, `tui`, `shell_environment_policy`, `approvals_reviewer`, and the `node_repl`/`computer-use` MCP entries the ChatGPT app injects |
+| `~/.codex/config.toml` | `model`, `model_reasoning_effort`, `personality`, `project_doc_fallback_filenames`, `web_search`, `notify`, `approval_policy`, `sandbox_mode`, `sandbox_workspace_write`, `mcp_servers` (tag `codex`), and the keys under `desktop`, `features`, and `plugins` listed in `codex-config-owned.toml.tmpl` | `projects`, `marketplaces`, any other `desktop`, `features`, or `plugins` key, `hooks.state`, `memories`, `apps`, `tui`, `shell_environment_policy`, `approvals_reviewer`, and the `node_repl`/`computer-use` MCP entries the ChatGPT app injects |
 
-Codex plugin enablement (`[plugins."name@marketplace"]`) is intentionally left
-entirely preserved: every entry currently present is under a `source_type =
-"local"` marketplace that ships with and regenerates from the ChatGPT/Codex
-app itself, not something curated externally. Revisit this if a real
-third-party Codex plugin marketplace is ever added.
+Codex plugin enablement (`[plugins."name@marketplace"]`) uses a plain merge,
+not reconciliation: entries listed in `codex-config-owned.toml.tmpl` have their
+`enabled` value set, and every other entry is preserved. Removing an entry from
+the template stops managing it but does not delete it from live files. The
+marketplaces ship with and regenerate from the ChatGPT/Codex app itself, so
+there is no stable ownership boundary like Claude's marketplace suffixes.
 
 ## Validation
 

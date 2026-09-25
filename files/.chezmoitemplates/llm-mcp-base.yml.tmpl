@@ -14,9 +14,9 @@ servers:
     tools: [claude, copilot]
     platforms: [darwin, linux]
 
-  xcodebuildmcp:
+  mobilebuildmcp:
     command: npx
-    args: [-y, xcodebuildmcp@latest, mcp]
+    args: [-y, mobilebuildmcp@latest, mcp]
     enabled: true
     tools: []
     platforms: [darwin]
@@ -25,6 +25,15 @@ servers:
     command: 1password-mcp
     enabled: true
     tools: []
+    platforms: [darwin]
+
+  safari-mcp:
+    # Ships with Safari 27 (macOS 27). Requires Safari > Settings > Developer >
+    # "Allow remote automation and external agents".
+    command: /usr/bin/safaridriver
+    args: [--mcp]
+    enabled: true
+    tools: [claude, codex]
     platforms: [darwin]
 
   playwright:
