@@ -1,3 +1,6 @@
 {{ range .packages.pip.global -}}
 {{ . }}
 {{ end -}}
+{{ if eq .chezmoi.os "darwin" }}
+applemusic-mcp
+{{ end }}
