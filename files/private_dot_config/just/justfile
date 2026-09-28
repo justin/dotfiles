@@ -185,6 +185,7 @@ uv-install:
     #!/usr/bin/env zsh
     set -euo pipefail
     while read -r package; do
+      [[ -n "$package" ]] || continue
       if [ "$package" = "llm" ]; then
         # https://github.com/simonw/llm/issues/1608: llm imports httpx directly but
         # doesn't declare it as a dependency, relying on openai to pull it in
