@@ -213,7 +213,6 @@ packages:
         - "discord"
         - "opal-composer"
         - "processspy"
-        - "qlstephen"
         - "sf-symbols"
         - "sony-ps-remote-play"
         - "spamsieve"
