@@ -24,7 +24,7 @@ servers:
   1password:
     command: 1password-mcp
     enabled: true
-    tools: []
+    tools: [claude, codex, copilot]
     platforms: [darwin]
 
   safari-mcp:
@@ -33,7 +33,7 @@ servers:
     command: /usr/bin/safaridriver
     args: [--mcp]
     enabled: true
-    tools: [claude, codex]
+    tools: [claude, codex, copilot]
     platforms: [darwin]
 
   playwright:
@@ -56,5 +56,5 @@ servers:
     command: uvx
     args: [--from, "semble[mcp]", semble, --content, all]
     enabled: true
-    tools: [claude, codex]
+    tools: [claude, codex, copilot]
     platforms: [darwin]
