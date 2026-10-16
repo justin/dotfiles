@@ -1,16 +1,10 @@
-model = "gpt-6-astra"
-model_reasoning_effort = "medium"
 personality = "pragmatic"
-project_doc_fallback_filenames = [".claude/CLAUDE.md", "CLAUDE.md"]
 web_search = "live"
 
-approval_policy = "on-request"
-sandbox_mode = "workspace-write"
 [sandbox_workspace_write]
 network_access = true
 
 [desktop]
-enabled-reasoning-efforts = ["high", "low", "max", "medium", "ultra", "xhigh"]
 followUpQueueMode = "steer"
 mac-menu-bar-enabled = false
 show-context-window-usage = true
@@ -21,27 +15,3 @@ prevent_idle_sleep = true
 chronicle = false
 codex_hooks = true
 js_repl = false
-
-[plugins."build-ios-apps@openai-curated"]
-enabled = false
-
-[plugins."build-macos-apps@openai-curated"]
-enabled = false
-
-[plugins."documents@openai-primary-runtime"]
-enabled = false
-
-[plugins."pdf@openai-primary-runtime"]
-enabled = false
-
-[plugins."presentations@openai-primary-runtime"]
-enabled = false
-
-[plugins."spreadsheets@openai-primary-runtime"]
-enabled = false
-
-[plugins."template-creator@openai-primary-runtime"]
-enabled = true
-
-[plugins."sites@openai-bundled"]
-enabled = true
