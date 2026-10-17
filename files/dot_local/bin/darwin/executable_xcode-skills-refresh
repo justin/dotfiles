@@ -1,0 +1,66 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+if (( $# == 0 )) || [[ "$1" == --help || "$1" == -h ]]; then
+  cat <<'EOF'
+Usage: xcode-skills-refresh SKILL_DIRECTORY [SKILL_DIRECTORY ...]
+
+Export the selected Xcode's skills to a temporary directory and print unified
+diffs against your installed skills (installed first, Apple export second).
+Xcode may open during export. Installed files are never changed.
+
+Example, from an app repository:
+  xcode-skills-refresh .agents/skills .claude/skills > xcode-skills.diff
+
+Only names in Apple's export are compared; custom-only skills are ignored.
+Differences include your customizations, not just changes since the last Xcode
+release. Review and transfer selected changes manually; do not apply blindly.
+Temporary exports are removed on exit. Exit 0 includes ordinary differences;
+export or comparison failures return nonzero. Missing directories are errors.
+EOF
+  exit 0
+fi
+
+for skill_directory in "$@"; do
+  if [[ ! -d "$skill_directory" ]]; then
+    print -u2 -r -- "Not a skill directory: $skill_directory"
+    exit 1
+  fi
+done
+
+readonly review_directory=$(mktemp -d "${TMPDIR:-/tmp}/xcode-skills-refresh.XXXXXXXX")
+trap 'rm -rf -- "$review_directory"' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+mkdir "$review_directory/export" "$review_directory/empty"
+
+# Export only into scratch space, never into a directory containing user skills.
+xcrun agent skills export --output-dir "$review_directory/export" >&2
+typeset -a exported_skills
+exported_skills=("$review_directory"/export/*/SKILL.md(N))
+if (( ${#exported_skills} == 0 )); then
+  print -u2 -- 'Xcode exported no skills; nothing was compared.'
+  exit 1
+fi
+
+for skill_directory in "$@"; do
+  for skill_file in "${exported_skills[@]}"; do
+    exported_directory="${skill_file:h}"
+    skill_name="${exported_directory:t}"
+    installed_directory="${skill_directory:A}/$skill_name"
+    print -r -- "### $installed_directory"
+    if [[ ! -e "$installed_directory" && ! -L "$installed_directory" ]]; then
+      print -- '# Not installed; showing all exported content.'
+      installed_directory="$review_directory/empty"
+    fi
+    if diff -ruN "$installed_directory" "$exported_directory"; then
+      print -- '# No differences.'
+    else
+      comparison_status=$?
+      if (( comparison_status != 1 )); then
+        exit "$comparison_status"
+      fi
+    fi
+  done
+done
