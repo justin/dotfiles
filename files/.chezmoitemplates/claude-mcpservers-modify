@@ -20,7 +20,7 @@
 {{- $knownNames := keys $base -}}
 {{- $mcpServers := dict -}}
 {{- range $name, $def := $base -}}
-  {{- if has $tool $def.tools -}}
+  {{- if and (has $tool $def.tools) (has $.chezmoi.os $def.platforms) -}}
     {{- $server := omit $def "tools" "platforms" -}}
     {{- if and (hasKey $server "type") (eq (index $server "type") "url") -}}
       {{- $server = set $server "type" "http" -}}

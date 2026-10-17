@@ -47,13 +47,15 @@
 {{- end -}}
 {{- $scalars = set $scalars "sandbox_workspace_write" (dict "network_access" true "writable_roots" $sandboxWritableRoots) -}}
 {{- $serverDefs := (include (joinPath .chezmoi.sourceDir ".chezmoitemplates/llm-mcp-base.yml.tmpl") | fromYaml).servers -}}
-{{- /* Keep retired names in reconciliation until their prior managed entry is
-       removed from live configs. */ -}}
-{{- $knownNames := append (keys $serverDefs) "xcode" -}}
+{{- $knownNames := keys $serverDefs -}}
 {{- $mcpServers := dict -}}
 {{- range $name, $def := $serverDefs -}}
   {{- if and (has $tool $def.tools) (has $.chezmoi.os $def.platforms) -}}
     {{- $server := omit $def "tools" "platforms" "type" -}}
+    {{- if eq $name "xcode" -}}
+      {{- $server = set $server "startup_timeout_sec" 30 -}}
+      {{- $server = set $server "default_tools_approval_mode" "approve" -}}
+    {{- end -}}
     {{- if eq $name "mobilebuildmcp" -}}
       {{- $server = set $server "env" (dict "NPM_CONFIG_CACHE" (joinPath $.chezmoi.homeDir ".cache/npm")) -}}
     {{- end -}}
