@@ -23,6 +23,7 @@ packages:
     remove:
       taps:
         - "fluffypony/yojam"
+        - "xcodesorg/made"
       brews: []
       casks:
         - "yojam"
@@ -98,7 +99,6 @@ packages:
       taps:
         - {name: "buo/cask-upgrade", trust: true}
         - {name: "justin/tap", trust: true}
-        - {name: "xcodesorg/made", trust: true}
       trusted_formulae:
         - "artginzburg/tap/sudo-touchid"
         - "jordanbaird/createicns/createicns"
@@ -114,7 +114,7 @@ packages:
         - "xcbeautify"
         - "ruff"
         - "shfmt"
-        - "xcodesorg/made/xcodes"
+        - "xcodes"
         - "terror/tap/just-lsp"
         - "awscli"
         - "jordanbaird/createicns/createicns"
