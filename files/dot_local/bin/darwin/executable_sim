@@ -25,7 +25,7 @@ function printHelp() {
     echo "Available commands:"
     echo
     echo "  booted                Prints the UUIDs of the currently booted simulators"
-    echo "  create_device         Create a new simulator with the latest SDK (iphone or ipad)"
+    echo "  create_device         Create a new simulator with the latest compatible runtime (iphone, ipad, or duo)"
     echo "  delete_all_devices    Remove all simulator devices"
     echo "  open_container        Opens an app container for the currently booted simulators in the Finder"
     echo "  get_env               Prints the value of an environment variable from the booted simulator"
@@ -63,7 +63,8 @@ function reactionsDatabase {
 # Arguments:
 #   The simulator type to create. Defaults to "iphone".
 #       iphone      Create an iPhone simulator (default).
-#       ipad        Create an iPad simulator (default).
+#       ipad        Create an iPad simulator.
+#       duo         Create an iPhone Duo simulator.
 #   The optional name of the simulator to create. Defaults to the device type and runtime version.
 # Outputs:
 #   0 if the simulator was created, non-zero on error.
@@ -77,14 +78,17 @@ function create_device {
 
     if [[ "$device_family" == "ipad" ]]; then
         device_type="iPad (A16)"
+    elif [[ "$device_family" == "duo" ]]; then
+        device_type="iPhone Duo"
     elif [[ "$device_family" != "iphone" ]]; then
-        echo "Device type must be 'iphone' or 'ipad'." >&2
+        echo "Device type must be 'iphone', 'ipad', or 'duo'." >&2
         return 1
     fi
 
-    runtime_details=$(xcrun simctl list runtimes --json | jq -r '
+    runtime_details=$(xcrun simctl list runtimes --json | jq -r --arg device_type "$device_type" '
         [.runtimes[]
             | select(.isAvailable)
+            | select(any(.supportedDeviceTypes[]; .name == $device_type))
             | select(.identifier | startswith("com.apple.CoreSimulator.SimRuntime.iOS-"))]
         | sort_by(.version | split(".") | map(tonumber))
         | last
@@ -95,7 +99,7 @@ function create_device {
     runtime_version="${runtime_details#*$'\t'}"
 
     if [[ -z "$runtime" || "$runtime" == "null" ]]; then
-        echo "No available iOS simulator runtime was found." >&2
+        echo "No available iOS simulator runtime supports ${device_type}." >&2
         return 1
     fi
 
