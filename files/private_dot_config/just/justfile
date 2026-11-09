@@ -2,7 +2,6 @@
 
 set shell := ["zsh", "-cu"]
 
-vscode_bundle := "com.microsoft.VSCode"
 bbedit_bundle := "com.barebones.bbedit"
 create_project_script := "$XDG_DATA_HOME/chezmoi/files/dot_local/bin/executable_create-project-from-template"
 
