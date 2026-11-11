@@ -33,6 +33,7 @@ This file provides general guidance when working with code across all projects.
 - Consider performance where the task or expected workload makes it relevant.
 - Handle expected failures explicitly and degrade gracefully where appropriate.
 - Update documentation when the change makes existing documentation inaccurate or incomplete.
+- Tautological labels, tests, and UI components are considered harmful.
 
 ## Summary instructions
 
