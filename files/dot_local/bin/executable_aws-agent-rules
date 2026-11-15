@@ -1,0 +1,60 @@
+#!/usr/bin/env zsh
+#
+# Compare or refresh the chezmoi-managed AWS Agent Toolkit rules fragment from
+# the upstream rules file. The Agent Toolkit CLI never updates these rules, so
+# this keeps upstream changes as reviewable source state.
+set -euo pipefail
+
+rules_url='https://raw.githubusercontent.com/aws/agent-toolkit-for-aws/refs/heads/main/rules/aws-agent-rules.md'
+
+case "${1:-check}" in
+  check|sync)
+    mode="${1:-check}"
+    ;;
+  *)
+    printf 'Usage: aws-agent-rules [check|sync]\n' >&2
+    exit 2
+    ;;
+esac
+
+command -v chezmoi >/dev/null 2>&1 || {
+  printf '%s\n' 'chezmoi is required to locate its source state.' >&2
+  exit 1
+}
+
+source_root="$(chezmoi source-path)"
+fragment="$source_root/.chezmoitemplates/llm-instructions-aws"
+[[ -f "$fragment" ]] || {
+  printf '%s\n' "Managed AWS rules were not found at $fragment." >&2
+  exit 1
+}
+
+temporary_dir="$(mktemp -d "${TMPDIR:-/tmp}/aws-agent-rules.XXXXXX")"
+trap 'rm -rf "$temporary_dir"' EXIT
+upstream="$temporary_dir/upstream.md"
+temporary_fragment="$temporary_dir/fragment"
+
+curl -fsSL "$rules_url" -o "$upstream"
+
+# Nest upstream headings one level below the instruction file's top-level
+# sections, and escape literal "{{" so chezmoi does not parse it as a template
+# action.
+{
+  printf '%s\n' '<!-- AWS_START -->'
+  sed -E -e 's/^(#+) /#\1 /' -e 's/\{\{/{{ "{{" }}/g' "$upstream"
+  printf '%s\n' '<!-- AWS_END -->'
+} >"$temporary_fragment"
+
+if cmp -s "$fragment" "$temporary_fragment"; then
+  printf '%s\n' 'AWS rules match upstream.'
+  exit 0
+fi
+
+if [[ "$mode" == "check" ]]; then
+  diff -u "$fragment" "$temporary_fragment" || true
+  printf '%s\n' 'AWS rules differ; run `just aws-sync-rules` to refresh the managed fragment.' >&2
+  exit 1
+fi
+
+cp "$temporary_fragment" "$fragment"
+printf '%s\n' "Refreshed $fragment from upstream AWS rules; review and commit the diff."

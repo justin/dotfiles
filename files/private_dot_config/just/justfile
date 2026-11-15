@@ -77,6 +77,14 @@ semble-check-instructions:
 semble-sync-instructions:
     semble-instructions sync
 
+# Check whether the managed AWS Agent Toolkit rules match upstream.
+aws-check-rules:
+    aws-agent-rules check
+
+# Refresh the managed AWS Agent Toolkit rules from upstream for review.
+aws-sync-rules:
+    aws-agent-rules sync
+
 # Report CLI changes that require a managed Zsh completion update.
 [macos]
 check-zsh-completion-drift:
