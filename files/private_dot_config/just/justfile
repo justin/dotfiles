@@ -85,6 +85,14 @@ aws-check-rules:
 aws-sync-rules:
     aws-agent-rules sync
 
+# List AWS Agent Toolkit skills with an update available (service is us-east-1 only).
+aws-check-skills:
+    aws agent-toolkit check-skill-updates --region us-east-1
+
+# Update every out-of-date AWS Agent Toolkit skill for all detected agents.
+aws-update-skills:
+    aws agent-toolkit update-skill --all --region us-east-1
+
 # Report CLI changes that require a managed Zsh completion update.
 [macos]
 check-zsh-completion-drift:
