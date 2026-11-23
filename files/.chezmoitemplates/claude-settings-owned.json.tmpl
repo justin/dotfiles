@@ -13,6 +13,7 @@
       "Bash(aws logs filter-log-events *)",
       "Bash(aws sts get-caller-identity *)",
       "Bash(chezmoi diff *)",
+      "Bash(comm *)",
       "Bash(defaults read *)",
       "Bash(df *)",
       "Bash(docker image ls *)",
@@ -37,15 +38,19 @@
       "Bash(git switch *)",
       "Bash(go build *)",
       "Bash(go test *)",
+      "Bash(go version *)",
       "Bash(go vet *)",
       "Bash(gofmt *)",
       "Bash(lsof *)",
+      "Bash(md5 *)",
       "Bash(mdfind *)",
       "Bash(mkdir *)",
       "Bash(nl *)",
+      "Bash(npm view *)",
       "Bash(pgrep *)",
       "Bash(ps *)",
       "Bash(shasum *)",
+      "Bash(shellcheck *)",
       "Bash(sleep *)",
       "Bash(swift build *)",
       "Bash(swift test *)",
@@ -55,14 +60,18 @@
       "Bash(xmllint *)"
     ],
     "ask": [
+      "Bash(aws cloudwatch set-alarm-state *)",
       "Bash(aws configure export-credentials *)",
       "Bash(aws ecs deregister-task-definition *)",
       "Bash(aws ecs tag-resource *)",
+      "Bash(aws iam put-user-policy *)",
       "Bash(aws login *)",
       "Bash(aws s3 cp *)",
       "Bash(aws s3api delete-objects *)",
+      "Bash(aws sns delete-topic *)",
       "Bash(gh pr merge *)",
       "Bash(gh release create *)",
+      "Bash(gh release delete *)",
       "Bash(gh repo create *)",
       "Bash(gh workflow run *)",
       "Bash(just deploy-nas *)",
@@ -70,6 +79,7 @@
       "Bash(op item *)",
       "Bash(op read *)",
       "Bash(op signin *)",
+      "Bash(rsync *)",
       "Bash(scp *)",
       "Bash(sudo *)",
       "Bash(terraform *)"
@@ -93,7 +103,7 @@
   "autoMode": {
     "environment": [
       "$defaults",
-      "Trusted SSH hosts (ssh-config aliases): nas, homelab. Justin's own NAS (Clickwheel music server) and homelab.",
+      "Trusted SSH hosts (ssh-config aliases): nas, homelab, studio. Justin's own NAS (Clickwheel music server), homelab and Mac Studio.",
       "Trusted internal domains: music.748sj.co, music-staging.748sj.co, lidarr.748sj.co. Justin's own self-hosted services.",
       "Trusted staging domains: api-staging.together-made.com, app-staging.together-made.com, admin-staging.together-made.com. togetherMade staging only; production hosts are not trusted."
     ]
