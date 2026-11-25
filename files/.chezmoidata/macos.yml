@@ -29,8 +29,6 @@ packages:
         - "yojam"
         - "bartender"
         - "keyboard-maestro"
-        - "proxyman"
-        - "codex"
         - "ghostty"
         - "openmtp"
         - "shottr"
