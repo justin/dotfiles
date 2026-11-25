@@ -1,0 +1,14 @@
+[default]
+region = us-east-1
+output = json
+{{- if and .personal (eq .osid "darwin") (not .headless) }}
+credential_process = "{{ .chezmoi.homeDir }}/.local/bin/aws-1password-credentials" personal
+
+[profile personal]
+region = us-east-1
+credential_process = "{{ .chezmoi.homeDir }}/.local/bin/aws-1password-credentials" personal
+
+[profile togethermade-keys]
+region = us-east-1
+credential_process = "{{ .chezmoi.homeDir }}/.local/bin/aws-1password-credentials" togethermade-keys
+{{- end }}
